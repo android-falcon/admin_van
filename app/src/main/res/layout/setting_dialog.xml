@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="350dp"
+    android:layout_height="250dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainLinearAdapter"
+    android:textDirection="locale"
+    android:layoutDirection="locale"
+    android:background="@color/White2"
+    android:padding="2dp"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textDirection="locale"
+        android:padding="5dp"
+        android:layout_marginTop="20dp"
+        android:layoutDirection="locale"
+        android:id="@+id/lineardetail"
+
+
+        android:orientation="horizontal">
+        <RelativeLayout
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_width="match_parent">
+
+
+            <LinearLayout
+                android:id="@+id/linearCheckInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+
+                android:gravity="center"
+                android:elevation="2dp"
+                android:background="@drawable/container"
+
+                android:orientation="vertical"
+                android:padding="2dp">
+
+                <TextView
+                    android:id="@+id/cust_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:layout_gravity="center_horizontal"
+                    android:text="Setting"
+                    android:textSize="14sp"
+
+                    android:textStyle="bold"
+                    android:textColor="@color/colorblue_dark"
+                    />
+                <TextView
+                    android:id="@+id/cust"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_margin="5dp"
+
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center"
+                    android:background="@color/darkOrange"
+                    android:textSize="16sp"
+
+                    android:textStyle="bold"
+                    android:textColor="@color/colorblue_dark" />
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent">
+                    <TextView
+                        android:id="@+id/amount_check"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Ip Address "
+                        android:layout_weight="2"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center_vertical"
+                        android:textStyle="bold"
+
+                        android:textSize="14sp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="1dp"
+
+                        android:textColor="@color/colorblue_dark" />
+                    <EditText
+                        android:id="@+id/setindEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:lines="1"
+                        android:background="@drawable/btn_sighn_up"
+
+                        android:text=""
+
+                        android:textSize="14sp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="1dp"
+
+                        android:textColor="@color/colorblue_dark" />
+                </LinearLayout>
+
+
+
+
+            </LinearLayout>
+
+        </RelativeLayout>
+    </LinearLayout>
+    <LinearLayout android:layout_height="40dp"
+        android:layout_width="match_parent"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_horizontal"
+        android:layout_margin="15dp">
+        <Button
+            android:id="@+id/saveSetting"
+            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:textSize="14sp"
+            android:textColor="@color/colorblue_dark"
+            android:background="@drawable/btn_login"
+            android:text="Save"/>
+    </LinearLayout>
+
+
+</LinearLayout>
