@@ -36,6 +36,7 @@ import java.util.List;
 import java.util.Set;
 
 import static com.example.adminvansales.AccountStatment.getAccountList_text;
+import static com.example.adminvansales.GlobelFunction.salesManInfosList;
 import static com.example.adminvansales.HomeActivity.waitList;
 import static com.example.adminvansales.LogIn.ipAddress;
 import static com.example.adminvansales.MainActivity.isListUpdated;
@@ -61,6 +62,11 @@ public class ImportData {
 
     public void getListRequest() {
         new JSONTask_checkStateRequest().execute();
+    }
+
+
+    public void getSalesMan(Context context,int flag) {
+        new JSONTaskGetSalesMan(context,flag).execute();
     }
 
     public void getCustomerAccountStatment() {
@@ -242,7 +248,141 @@ public class ImportData {
         }
 
     }
+    private class JSONTaskGetSalesMan extends AsyncTask<String, String, String> {
+        Object  context;
+        int flag;
 
+        public JSONTaskGetSalesMan(Object context,int flag) {
+            this.flag=flag;
+            if(flag==0) {
+                this.context = (EditSalesMan) context;
+            }else if(flag==1){
+                this.context = (HomeActivity) context;
+            }
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            String do_ = "my";
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+//            ipAddress = "";
+            try {
+
+
+                if (!ipAddress.equals("")) {
+                    URL_TO_HIT = "http://" + ipAddress + "/VANSALES_WEB_SERVICE/admin_oracle.php";
+                }
+            } catch (Exception e) {
+
+            }
+
+            try {
+
+                String JsonResponse = null;
+                HttpClient client = new DefaultHttpClient();
+                HttpPost request = new HttpPost();
+                request.setURI(new URI(URL_TO_HIT));
+
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+                nameValuePairs.add(new BasicNameValuePair("FLAG", "2"));
+//                nameValuePairs.add(new BasicNameValuePair("SalesManNo",discountRequest.getSalesman_no()));
+
+
+                request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+
+
+                HttpResponse response = client.execute(request);
+
+
+                BufferedReader in = new BufferedReader(new
+                        InputStreamReader(response.getEntity().getContent()));
+
+                StringBuffer sb = new StringBuffer("");
+                String line = "";
+
+                while ((line = in.readLine()) != null) {
+                    sb.append(line);
+                }
+
+                in.close();
+
+
+                JsonResponse = sb.toString();
+                Log.e("tag_requestState", "JsonResponse\t" + JsonResponse);
+
+                return JsonResponse;
+
+
+            }//org.apache.http.conn.HttpHostConnectException: Connection to http://10.0.0.115 refused
+            catch (HttpHostConnectException ex) {
+                ex.printStackTrace();
+//                progressDialog.dismiss();
+
+                Handler h = new Handler(Looper.getMainLooper());
+                h.post(new Runnable() {
+                    public void run() {
+
+                        Toast.makeText(main_context, "Ip Connection Failed ", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
+                return null;
+            } catch (Exception e) {
+                e.printStackTrace();
+//                progressDialog.dismiss();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            if (s != null) {
+                if (s.contains("SalesManInfo")) {
+
+                    try {
+                        salesManInfosList.clear();
+                        JSONObject jsonObject=new JSONObject(s);
+                        JSONArray jsonArray=jsonObject.getJSONArray("SalesManInfo");
+                        for(int i=0;i<jsonArray.length();i++){
+
+                            JSONObject jsonObject1=jsonArray.getJSONObject(i);
+                            SalesManInfo salesManInfo=new SalesManInfo();
+
+                            salesManInfo.setSalesManNo(jsonObject1.getString("SALESNO"));
+                            salesManInfo.setSalesName(jsonObject1.getString("ACCNAME"));
+                            salesManInfo.setSalesPassword(jsonObject1.getString("USER_PASSWORD"));
+                            salesManInfo.setActive(jsonObject1.getString("ACTIVE_USER"));
+                            salesManInfosList.add(salesManInfo);
+                        }
+
+                        if(flag==0) {
+                            EditSalesMan editSalesMan= (EditSalesMan) context;
+                            editSalesMan.searchSalesMan();
+                        }else if(flag==1) {
+                            HomeActivity homeActivity= (HomeActivity) context;
+                            homeActivity.showAllSalesManData(salesManInfosList);
+                        }
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+//                progressDialog.dismiss();
+            }
+        }
+
+    }
     private void ShowNotifi_detail(String type, int state, String contentMessage) {
         String currentapiVersion = Build.VERSION.RELEASE;
         String title = "", content = "", statuse = "";

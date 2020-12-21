@@ -54,17 +54,10 @@ public class SalesManAdapter extends RecyclerView.Adapter<SalesManAdapter.CViewH
             @Override
             public void onClick(View v) {
                 Intent LogHistoryIntent = new Intent(context, EditSalesMan.class);
-//                LogHistoryIntent.putExtra("AccountNo", list.get(i).getAccountNo());
-//                watch = "0";
+                LogHistoryIntent.putExtra("FillData", "FillData");
+                LogHistoryIntent.putExtra("SalesManInfoL", list.get(i));
                 context.startActivity(LogHistoryIntent);
-//                if (!longIsOpen[0]) {
-////                        Toast.makeText(context, "id = " + v.getTag(), Toast.LENGTH_SHORT).show();
-//                    Intent LogHistoryIntent = new Intent(context, EditSalesMan.class);
-//                    LogHistoryIntent.putExtra("AccountNo", list.get(i).getAccountNo());
-//                    watch = "0";
-//                    startActivity(LogHistoryIntent);
-//                    longIsOpen[0] = false;
-//                }
+
 
             }
         });

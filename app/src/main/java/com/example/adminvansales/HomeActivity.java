@@ -25,22 +25,24 @@ public class HomeActivity extends AppCompatActivity {
     public List<SalesManInfo> picforbar;
     public CarouselLayoutManager layoutManagerd;
     public RecyclerView  recyclerViews;
-    public  static  TextView waitList;
+    public  static  TextView waitList,addVanSales;
     RelativeLayout notifyLayout,accountLayout;
+GlobelFunction globelFunction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         initalView();
-        ImportData importData=new ImportData(HomeActivity.this);
-        importData.getSalesManInfo();
+        globelFunction=new GlobelFunction(HomeActivity.this);
+        globelFunction.getSalesManInfo(HomeActivity.this,1);
 
 
     }
 
     private void initalView() {
         notifyLayout=findViewById(R.id.notifyLayout);
+        addVanSales=findViewById(R.id.addVanSales);
         notifyLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,6 +62,15 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+        addVanSales.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intentEditSales=new Intent(HomeActivity.this,EditSalesMan.class);
+                startActivity(intentEditSales);
+            }
+        });
+
         recyclerViews=findViewById(R.id.res);
         waitList=findViewById(R.id.waitList);
         waitList.addTextChangedListener(new TextWatcher() {

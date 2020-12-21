@@ -25,4 +25,9 @@
     <string name="debit">Debit</string>
     <string name="credit">Credit</string>
     <string name="balance">Balance</string>
+    <string name="add_van_sales">Add Sales Man</string>
+    <string name="sales_man_name">Sales Man Name </string>
+    <string name="password">Password</string>
+    <string name="sales_man_no">Sales Man No</string>
+    <string name="Active">DeActive User</string>
 </resources>
