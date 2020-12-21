@@ -7,8 +7,11 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.JsonReader;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.example.adminvansales.Model.SalesManInfo;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -30,6 +33,7 @@ import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
+import static com.example.adminvansales.GlobelFunction.salesManInfosList;
 import static com.example.adminvansales.LogIn.ipAddress;
 import static com.example.adminvansales.MainActivity.isListUpdated;
 
@@ -38,6 +42,8 @@ public class ExportData {
     private JSONArray jsonArrayRequest;
     private String URL_TO_HIT ;
     public static  SweetAlertDialog pd,pdValidation,pdValidationDialog;
+    GlobelFunction globelFunction;
+
 
     Context main_context;
     int flag=0;
@@ -45,7 +51,7 @@ public class ExportData {
     public ExportData(Context context) {
         databaseHandler = new DataBaseHandler(context);
         this.main_context=context;
-
+        globelFunction=new GlobelFunction(context);
 
     }
     public  void updateRowState(String rowId ,String state){
@@ -86,6 +92,14 @@ public class ExportData {
         }
         new JSONTask().execute();
 
+    }
+
+    public void AddSales(Context context,JSONObject jsonObject){
+        new JSONTaskAddSales(context,jsonObject).execute();
+    }
+
+    public void UpdateSales(Context context,JSONObject jsonObject){
+        new JSONTaskUpdateSales(context,jsonObject).execute();
     }
 
     private class JSONTask extends AsyncTask<String, String, String> {
@@ -205,4 +219,219 @@ public class ExportData {
         }
 
     }
+
+
+    private class JSONTaskAddSales extends AsyncTask<String, String, String> {
+        EditSalesMan  context;
+        JSONObject jsonObject;
+        public JSONTaskAddSales(Context context,JSONObject jsonObject) {
+            this.context= (EditSalesMan) context;
+            this.jsonObject=jsonObject;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            String do_ = "my";
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+//            ipAddress = "";
+            try {
+
+
+                if (!ipAddress.equals("")) {
+                    URL_TO_HIT = "http://" + ipAddress + "/VANSALES_WEB_SERVICE/admin_oracle.php";
+                }
+            } catch (Exception e) {
+
+            }
+
+            try {
+
+                String JsonResponse = null;
+                HttpClient client = new DefaultHttpClient();
+                HttpPost request = new HttpPost();
+                request.setURI(new URI(URL_TO_HIT));
+
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+                nameValuePairs.add(new BasicNameValuePair("FLAG", "3"));
+                nameValuePairs.add(new BasicNameValuePair("ADD_SALES_MAN",jsonObject.toString()));
+
+
+                request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+
+
+                HttpResponse response = client.execute(request);
+
+
+                BufferedReader in = new BufferedReader(new
+                        InputStreamReader(response.getEntity().getContent()));
+
+                StringBuffer sb = new StringBuffer("");
+                String line = "";
+
+                while ((line = in.readLine()) != null) {
+                    sb.append(line);
+                }
+
+                in.close();
+
+
+                JsonResponse = sb.toString();
+                Log.e("tag_requestState", "JsonResponse\t" + JsonResponse);
+
+                return JsonResponse;
+
+
+            }//org.apache.http.conn.HttpHostConnectException: Connection to http://10.0.0.115 refused
+            catch (HttpHostConnectException ex) {
+                ex.printStackTrace();
+//                progressDialog.dismiss();
+
+                Handler h = new Handler(Looper.getMainLooper());
+                h.post(new Runnable() {
+                    public void run() {
+
+                        Toast.makeText(main_context, "Ip Connection Failed ", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
+                return null;
+            } catch (Exception e) {
+                e.printStackTrace();
+//                progressDialog.dismiss();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            if (s != null) {
+                if (s.contains("ADD_SALES_MAN_SUCCESS")) {
+                    Log.e("salesManInfo", "ADD_SALES_MAN_SUCCESS\t" + s.toString());
+                    Toast.makeText(context, "ADD SALES MAN SUCCESS", Toast.LENGTH_SHORT).show();
+                    context.clearTextFun();
+                    globelFunction.getSalesManInfo(context,0);
+
+                }
+//                progressDialog.dismiss();
+            }
+        }
+
+    }
+
+    private class JSONTaskUpdateSales extends AsyncTask<String, String, String> {
+        EditSalesMan  context;
+        JSONObject jsonObject;
+        public JSONTaskUpdateSales(Context context,JSONObject jsonObject) {
+            this.context= (EditSalesMan) context;
+            this.jsonObject=jsonObject;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            String do_ = "my";
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+//            ipAddress = "";
+            try {
+
+
+                if (!ipAddress.equals("")) {
+                    URL_TO_HIT = "http://" + ipAddress + "/VANSALES_WEB_SERVICE/admin_oracle.php";
+                }
+            } catch (Exception e) {
+
+            }
+
+            try {
+
+                String JsonResponse = null;
+                HttpClient client = new DefaultHttpClient();
+                HttpPost request = new HttpPost();
+                request.setURI(new URI(URL_TO_HIT));
+
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+                nameValuePairs.add(new BasicNameValuePair("FLAG", "4"));
+                nameValuePairs.add(new BasicNameValuePair("UPDATE_SALES_MAN",jsonObject.toString()));
+
+
+                request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+
+
+                HttpResponse response = client.execute(request);
+
+
+                BufferedReader in = new BufferedReader(new
+                        InputStreamReader(response.getEntity().getContent()));
+
+                StringBuffer sb = new StringBuffer("");
+                String line = "";
+
+                while ((line = in.readLine()) != null) {
+                    sb.append(line);
+                }
+
+                in.close();
+
+
+                JsonResponse = sb.toString();
+                Log.e("tag_requestState", "JsonResponse\t" + JsonResponse);
+
+                return JsonResponse;
+
+
+            }//org.apache.http.conn.HttpHostConnectException: Connection to http://10.0.0.115 refused
+            catch (HttpHostConnectException ex) {
+                ex.printStackTrace();
+//                progressDialog.dismiss();
+
+                Handler h = new Handler(Looper.getMainLooper());
+                h.post(new Runnable() {
+                    public void run() {
+
+                        Toast.makeText(main_context, "Ip Connection Failed ", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
+                return null;
+            } catch (Exception e) {
+                e.printStackTrace();
+//                progressDialog.dismiss();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            if (s != null) {
+                if (s.contains("UPDATE_SALES_MAN_SUCCESS")) {
+                    Log.e("salesManInfo", "UPDATE_SALES_MAN_SUCCESS\t" + s.toString());
+                    Toast.makeText(context, "UPDATE SALES MAN SUCCESS", Toast.LENGTH_SHORT).show();
+                    context.clearTextFun();
+                    globelFunction.getSalesManInfo(context,0);
+
+                }
+//                progressDialog.dismiss();
+            }
+        }
+
+    }
+
+
 }

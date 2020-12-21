@@ -1,6 +1,11 @@
 package com.example.adminvansales.Model;
 
-public class SalesManInfo {
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.Serializable;
+
+public class SalesManInfo implements Serializable {
     private  String salesName;
     private  String salesPassword;
     private  String active;
@@ -49,4 +54,23 @@ public class SalesManInfo {
     public void setTelephone(String telephone) {
         this.telephone = telephone;
     }
+
+
+    public JSONObject getJsonObject(){
+
+        JSONObject jsonObject=new JSONObject();
+
+        try {
+            jsonObject.put("SALESNO", salesManNo);
+            jsonObject.put("ACCNAME", salesName);
+            jsonObject.put("USER_PASSWORD", salesPassword);
+            jsonObject.put("ACTIVE_USER", active);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return jsonObject;
+    }
+
 }
