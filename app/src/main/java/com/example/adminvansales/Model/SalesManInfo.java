@@ -11,7 +11,8 @@ public class SalesManInfo implements Serializable {
     private  String active;
     private  String telephone;
     private  String salesManNo;
-
+    private  String latitudeLocation;
+    private  String longitudeLocation;
     public String getSalesManNo() {
         return salesManNo;
     }
@@ -55,6 +56,21 @@ public class SalesManInfo implements Serializable {
         this.telephone = telephone;
     }
 
+    public String getLatitudeLocation() {
+        return latitudeLocation;
+    }
+
+    public void setLatitudeLocation(String latitudeLocation) {
+        this.latitudeLocation = latitudeLocation;
+    }
+
+    public String getLongitudeLocation() {
+        return longitudeLocation;
+    }
+
+    public void setLongitudeLocation(String longitudeLocation) {
+        this.longitudeLocation = longitudeLocation;
+    }
 
     public JSONObject getJsonObject(){
 

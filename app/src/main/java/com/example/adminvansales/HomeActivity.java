@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -28,6 +29,7 @@ public class HomeActivity extends AppCompatActivity {
     public  static  TextView waitList,addVanSales;
     RelativeLayout notifyLayout,accountLayout;
 GlobelFunction globelFunction;
+Button locationButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +73,7 @@ GlobelFunction globelFunction;
             }
         });
 
+        locationButton=findViewById(R.id.LocationButton);
         recyclerViews=findViewById(R.id.res);
         waitList=findViewById(R.id.waitList);
         waitList.addTextChangedListener(new TextWatcher() {
@@ -93,6 +96,16 @@ GlobelFunction globelFunction;
                         showAllSalesManData(listSalesMan);
                     }
                 }
+
+            }
+        });
+
+        locationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent locationIntent=new Intent(HomeActivity.this,SalesmanMapsActivity.class);
+                startActivity(locationIntent);
 
             }
         });
