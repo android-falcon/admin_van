@@ -308,6 +308,7 @@ public class ImportData {
         protected String doInBackground(String... params) {
 
             try {
+                String s="";
 
 
                 if (!ipAddress.equals("")) {
