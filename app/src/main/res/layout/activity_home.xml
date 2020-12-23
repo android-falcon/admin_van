@@ -156,7 +156,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="5"
-        android:orientation="vertical">
+        android:gravity="bottom"
+        android:orientation="vertical"
+        android:padding="5dp">
+
+        <Button
+            android:id="@+id/LocationButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sales Man Location"
+            android:padding="5dp"
+            android:elevation="5dp"
+            android:layout_margin="5dp"
+            android:textColor="@color/colorblue_dark"
+            android:background="@drawable/btn_login"
+            android:drawableStart="@drawable/ic_location_on_black_24dp"
+            android:drawableLeft="@drawable/ic_location_on_black_24dp" />
     </LinearLayout>
 
 </LinearLayout>

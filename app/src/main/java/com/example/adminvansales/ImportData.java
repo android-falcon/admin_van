@@ -7,12 +7,12 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 import com.example.adminvansales.Model.Account__Statment_Model;
 import com.example.adminvansales.Model.Request;
 import com.example.adminvansales.Model.SalesManInfo;
+import com.google.android.gms.maps.model.LatLng;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -28,14 +28,12 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.lang.reflect.Array;
 import java.net.URI;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import static com.example.adminvansales.AccountStatment.getAccountList_text;
+import static com.example.adminvansales.GlobelFunction.LatLngListMarker;
 import static com.example.adminvansales.GlobelFunction.salesManInfosList;
 import static com.example.adminvansales.HomeActivity.waitList;
 import static com.example.adminvansales.LogIn.ipAddress;
@@ -258,6 +256,8 @@ public class ImportData {
                 this.context = (EditSalesMan) context;
             }else if(flag==1){
                 this.context = (HomeActivity) context;
+            }else if(flag==2){
+                this.context = (SalesmanMapsActivity) context;
             }
         }
 
@@ -350,6 +350,7 @@ public class ImportData {
 
                     try {
                         salesManInfosList.clear();
+                        LatLngListMarker.clear();
                         JSONObject jsonObject=new JSONObject(s);
                         JSONArray jsonArray=jsonObject.getJSONArray("SalesManInfo");
                         for(int i=0;i<jsonArray.length();i++){
@@ -361,7 +362,10 @@ public class ImportData {
                             salesManInfo.setSalesName(jsonObject1.getString("ACCNAME"));
                             salesManInfo.setSalesPassword(jsonObject1.getString("USER_PASSWORD"));
                             salesManInfo.setActive(jsonObject1.getString("ACTIVE_USER"));
+                            salesManInfo.setLatitudeLocation(jsonObject1.getString("LATITUDE"));
+                            salesManInfo.setLongitudeLocation(jsonObject1.getString("LONGITUDE"));
                             salesManInfosList.add(salesManInfo);
+                            LatLngListMarker.add(new LatLng(Double.parseDouble(jsonObject1.getString("LATITUDE")),Double.parseDouble(jsonObject1.getString("LONGITUDE"))));
                         }
 
                         if(flag==0) {
@@ -370,6 +374,10 @@ public class ImportData {
                         }else if(flag==1) {
                             HomeActivity homeActivity= (HomeActivity) context;
                             homeActivity.showAllSalesManData(salesManInfosList);
+                        }
+                        else if(flag==2) {
+                            SalesmanMapsActivity salesmanMapsActivity= (SalesmanMapsActivity) context;
+                            salesmanMapsActivity.location(1);
                         }
 
 
