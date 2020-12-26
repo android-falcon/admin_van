@@ -112,6 +112,16 @@
         android:layout_gravity="bottom"
         android:gravity="bottom|center"
         android:orientation="vertical">
+
+        <!--<TextView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:fontFamily="cursive"-->
+            <!--android:gravity="center"-->
+            <!--android:padding="5dp"-->
+            <!--android:text="Welcome In Admin App"-->
+            <!--android:textSize="18sp"-->
+            <!--android:textColor="@color/colorblue_dark" />-->
         <TextView
             android:id="@+id/addVanSales"
             android:layout_height="wrap_content"
@@ -152,26 +162,96 @@
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="5"
+        android:layout_weight="4"
         android:gravity="bottom"
         android:orientation="vertical"
         android:padding="5dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:gravity="center"
+            android:background="@drawable/blue_back"
+            android:orientation="vertical">
+        <Button
+            android:id="@+id/ReportButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/NoColor"
+            android:drawableStart="@drawable/ic_equalizer_black_24dp"
+            android:drawableLeft="@drawable/ic_equalizer_black_24dp"
+            android:elevation="5dp"
+            android:padding="10dp"
+            android:text="Report"
+            android:textColor="@color/darkOrange2" />
+            <LinearLayout
+                android:id="@+id/ReportLinear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:gravity="center"
+                android:visibility="visible"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/paymentReport"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:drawableStart="@drawable/ic_equalizer_black_24dp"
+                    android:drawableLeft="@drawable/ic_equalizer_black_24dp"
+                    android:padding="10dp"
+                    android:text="@string/payment_details_report"
+                    android:textColor="@color/white"
+                    android:drawableTint="@color/white"/>
+
+                <TextView
+                    android:id="@+id/customerLogReport"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:background="@color/NoColor"
+                    android:drawableStart="@drawable/ic_equalizer_black_24dp"
+                    android:drawableLeft="@drawable/ic_equalizer_black_24dp"
+                    android:padding="10dp"
+                    android:text="@string/customer_log_report"
+                    android:textColor="@color/white"
+                    android:drawableTint="@color/white" />
+
+                <TextView
+                    android:id="@+id/cashReport"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:drawableStart="@drawable/ic_equalizer_black_24dp"
+                    android:drawableLeft="@drawable/ic_equalizer_black_24dp"
+                    android:padding="10dp"
+                    android:text="@string/cash_report"
+                    android:textColor="@color/white"
+                    android:drawableTint="@color/white" />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
 
         <Button
             android:id="@+id/LocationButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Sales Man Location"
-            android:padding="5dp"
-            android:elevation="5dp"
             android:layout_margin="5dp"
-            android:textColor="@color/colorblue_dark"
+            android:layout_weight="0"
             android:background="@drawable/btn_login"
             android:drawableStart="@drawable/ic_location_on_black_24dp"
-            android:drawableLeft="@drawable/ic_location_on_black_24dp" />
+            android:drawableLeft="@drawable/ic_location_on_black_24dp"
+            android:elevation="5dp"
+            android:padding="5dp"
+            android:text="Sales Man Location"
+            android:textColor="@color/colorblue_dark" />
     </LinearLayout>
 
 </LinearLayout>

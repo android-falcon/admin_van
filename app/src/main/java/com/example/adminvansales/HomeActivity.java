@@ -9,6 +9,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -16,6 +17,9 @@ import com.azoft.carousellayoutmanager.CarouselLayoutManager;
 import com.azoft.carousellayoutmanager.CarouselZoomPostLayoutListener;
 import com.azoft.carousellayoutmanager.CenterScrollListener;
 import com.example.adminvansales.Model.SalesManInfo;
+import com.example.adminvansales.Report.CashReport;
+import com.example.adminvansales.Report.CustomerLogReport;
+import com.example.adminvansales.Report.PaymentDetailsReport;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +33,9 @@ public class HomeActivity extends AppCompatActivity {
     public  static  TextView waitList,addVanSales;
     RelativeLayout notifyLayout,accountLayout;
 GlobelFunction globelFunction;
-Button locationButton;
+Button locationButton,ReportButton;
+LinearLayout ReportLinear;
+TextView customerLogReport,paymentReport,cashReport;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,8 +80,14 @@ Button locationButton;
         });
 
         locationButton=findViewById(R.id.LocationButton);
+        ReportButton=findViewById(R.id.ReportButton);
         recyclerViews=findViewById(R.id.res);
         waitList=findViewById(R.id.waitList);
+        ReportLinear=findViewById(R.id.ReportLinear);
+        ReportLinear.setVisibility(View.GONE);
+        customerLogReport=findViewById(R.id.customerLogReport);
+        paymentReport=findViewById(R.id.paymentReport);
+        cashReport=findViewById(R.id.cashReport);
         waitList.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -105,6 +117,46 @@ Button locationButton;
             public void onClick(View view) {
 
                 Intent locationIntent=new Intent(HomeActivity.this,SalesmanMapsActivity.class);
+                startActivity(locationIntent);
+
+            }
+        });
+
+        ReportButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(ReportLinear.getVisibility()==View.VISIBLE) {
+                    ReportLinear.setVisibility(View.GONE);
+                }else {
+                    ReportLinear.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+        customerLogReport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ReportLinear.setVisibility(View.GONE);
+                Intent locationIntent=new Intent(HomeActivity.this, CustomerLogReport.class);
+                startActivity(locationIntent);
+
+            }
+        });
+
+        paymentReport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ReportLinear.setVisibility(View.GONE);
+                Intent locationIntent=new Intent(HomeActivity.this, PaymentDetailsReport.class);
+                startActivity(locationIntent);
+
+            }
+        });
+        cashReport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ReportLinear.setVisibility(View.GONE);
+                Intent locationIntent=new Intent(HomeActivity.this, CashReport.class);
                 startActivity(locationIntent);
 
             }

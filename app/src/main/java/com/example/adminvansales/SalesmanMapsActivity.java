@@ -111,9 +111,13 @@ GlobelFunction globelFunction;
 //        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
 //        mMap.animateCamera(CameraUpdateFactory.newLatLng(sydney));
         if(move==0) {
-            bounds = builder.build();
-            CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, 0);
-            mMap.animateCamera(cu);
+            try {
+                bounds = builder.build();
+                CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, 0);
+                mMap.animateCamera(cu);
+            }catch (Exception e){
+
+            }
         }
         flag=true;
 //        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 0));
