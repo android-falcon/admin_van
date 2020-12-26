@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="2dp">
+
+    <TableRow
+        android:id="@+id/table"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp">
+
+        <TextView
+            android:id="@+id/voucherNo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="10dp"
+
+            android:text="Voucher"
+            android:textColor="@color/colorblue_dark"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/salesManName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.9"
+            android:gravity="center"
+            android:padding="10dp"
+
+            android:text="@string/sales_man_name"
+            android:textColor="@color/colorblue_dark"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/payDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.98"
+            android:gravity="center"
+
+            android:padding="10dp"
+
+            android:text="@string/pay_date"
+            android:textColor="@color/colorblue_dark"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/customerName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.9"
+            android:gravity="center"
+
+            android:padding="10dp"
+
+            android:text="@string/customerName"
+            android:textColor="@color/colorblue_dark"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+
+            android:padding="10dp"
+
+            android:text="@string/amount_word"
+            android:textColor="@color/colorblue_dark"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/remark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+
+            android:padding="10dp"
+
+            android:text="@string/remark"
+            android:textColor="@color/colorblue_dark"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/sales"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+
+            android:padding="10dp"
+
+            android:text="@string/sales"
+            android:textColor="@color/colorblue_dark"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/pay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="@string/pay"
+            android:textColor="@color/colorblue_dark"
+            android:textSize="12sp" />
+
+    </TableRow>
+
+</LinearLayout>
