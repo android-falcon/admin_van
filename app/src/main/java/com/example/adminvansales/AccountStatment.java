@@ -11,90 +11,127 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.adminvansales.Model.Account__Statment_Model;
+import com.example.adminvansales.Model.CustomerInfo;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static android.widget.LinearLayout.VERTICAL;
+import static com.example.adminvansales.ImportData.customername;
+import static com.example.adminvansales.ImportData.listCustomer;
 import static com.example.adminvansales.ImportData.listCustomerInfo;
 import static com.example.adminvansales.ImportData.listSalesMan;
 
 public class AccountStatment extends AppCompatActivity {
-    List<String> customername=new ArrayList<>();
+
+    List<CustomerInfo> customerInfoList=new ArrayList<>();
     ArrayList<Account__Statment_Model> listAccountBalance;
     RecyclerView recyclerView_report;
     LinearLayoutManager layoutManager;
     public  static TextView getAccountList_text;
     Button preview_button_account;
+     Spinner customerSpinner;
+     String customerId="";
     @SuppressLint("WrongConstant")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_statment);
-        ImportData importData= new ImportData(AccountStatment.this);
-        importData.getCustomerAccountStatment();
-        recyclerView_report=findViewById(R.id.recyclerView_report);
-        getAccountList_text=findViewById(R.id.getAccountList_text);
-        preview_button_account=findViewById(R.id.preview_button_account);
+
+//        importData.getCustomerInfo();
+        initialView();
+        Log.e("customername",""+customername.size());
+
         preview_button_account.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("onClick",""+listCustomerInfo.size());
-                if(listCustomerInfo.size()!=0)
+                if(!customerId.equals(""))
+                {
+                    ImportData importData= new ImportData(AccountStatment.this);
+                    importData.getCustomerAccountStatment(customerId);
+                }
+//
+            }
+        });
+        if(customername.size()!=0)
+        {
+            Log.e("customername",""+customername.size());
+            fillCustomerSpenner();
+        }
+
+
+        getAccountList_text.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                Log.e("customername",""+s.toString()+"\t"+listCustomerInfo.size());
+                if(s.toString().equals("1"))
+                {
+                    if(customername.size()!=0)
+                    {
+                        Log.e("customername",""+customername.size());
+                        fillCustomerSpenner();
+                    }
+                }
+                Log.e("customername",""+s.toString());
+                if(s.toString().equals("2"))
+                {
+                    if(listCustomerInfo.size()!=0)
                 {
                     fillAdapter();
+                }
                 }
             }
         });
 
-//        getAccountList_text.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//                if(s.toString().equals("1"))
-//                {
-//                    if(listCustomerInfo.size()!=0)
-//                    {
-//                        fillAdapter();
-//                    }
-//                }
-//            }
-//        });
+        customerSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+
+                customerId= listCustomer.get(position).getCustomerNumber();
+                Log.e("onItemSelected",""+customerId);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+    }
+
+    @SuppressLint("WrongConstant")
+    private void initialView() {
+        recyclerView_report=findViewById(R.id.recyclerView_report);
+        getAccountList_text=findViewById(R.id.getAccountList_text);
+        preview_button_account=findViewById(R.id.preview_button_account);
+        customerSpinner = (Spinner) findViewById(R.id.cat);
+        listAccountBalance=new ArrayList<>();
         layoutManager = new LinearLayoutManager(AccountStatment.this);
         layoutManager.setOrientation(VERTICAL);
         recyclerView_report.setLayoutManager(layoutManager);
-        final Spinner categorySpinner = (Spinner) findViewById(R.id.cat);
+    }
 
-//        List<String> categories = obj.getAllExistingCategories();
-        listAccountBalance=new ArrayList<>();
-
-
-        customername.add("golden meal");
-        customername.add("mall al meal");
-        customername.add("الذمم المدينة ");
-        customername.add("سوبر ماركت السبع ");
-        customername.add("سوبر ماركت ابو دية ");
-        customername.add("أسواق السلام ");
-        customername.add("اسواق الريان ماركا ");
-
+    private void fillCustomerSpenner() {
         final ArrayAdapter<String> ad = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, customername);
-        categorySpinner.setAdapter(ad);
-
+        customerSpinner.setAdapter(ad);
     }
 
     private void fillAdapter() {
@@ -134,8 +171,6 @@ public class AccountStatment extends AppCompatActivity {
 //        accBalance.setCredit(50);
 //        accBalance.setBalance(0);
 //        listAccountBalance.add(accBalance);
-
-        Log.e("listAccountBalance","\t"+listCustomerInfo.size());
         AccountStatmentAdapter adapter = new AccountStatmentAdapter(listCustomerInfo, AccountStatment.this);
         recyclerView_report.setAdapter(adapter);
     }

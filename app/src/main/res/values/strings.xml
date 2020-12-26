@@ -9,7 +9,7 @@
     <string name="accept">Accept</string>
     <string name="Reject">Reject</string>
     <string name="requestType">Request Type</string>
-    <string name="voucherNo"> No </string>
+    <string name="voucherNo">Voucher No </string>
     <string name="TotalVoucher">Total Voucher</string>
     <string name="totalDiscount">Total Discount</string>
     <string name="totalBonus">Total Bonus</string>
