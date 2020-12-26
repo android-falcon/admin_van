@@ -50,7 +50,10 @@ public class LogIn extends AppCompatActivity {
         });
         button_logIn=findViewById(R.id.button_logIn);
         ImportData importData=new ImportData(LogIn.this);
-                importData.getListRequest();
+        importData.getListRequest();
+        Log.e("importData","11111");
+        importData.getCustomerInfo();
+
         button_logIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -143,9 +146,6 @@ public class LogIn extends AppCompatActivity {
             public void onClick(View v) {
                 ipAddress= editTextIp.getText().toString();
                 databaseHandler.addSetting(ipAddress);
-                Log.e("importData","11111");
-                ImportData importData=new ImportData(LogIn.this);
-                importData.getCustomerAccountStatment();
                 dialog.dismiss();
 
             }

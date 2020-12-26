@@ -10,6 +10,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.adminvansales.Model.Account__Statment_Model;
+import com.example.adminvansales.Model.CustomerInfo;
 import com.example.adminvansales.Model.Request;
 import com.example.adminvansales.Model.SalesManInfo;
 import com.google.android.gms.maps.model.LatLng;
@@ -31,7 +32,6 @@ import java.io.InputStreamReader;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
-
 import static com.example.adminvansales.AccountStatment.getAccountList_text;
 import static com.example.adminvansales.GlobelFunction.LatLngListMarker;
 import static com.example.adminvansales.GlobelFunction.salesManInfosList;
@@ -50,7 +50,8 @@ public class ImportData {
     public static ArrayList<Request> listRequest = new ArrayList<Request>();
     public static ArrayList<SalesManInfo> listSalesMan = new ArrayList<SalesManInfo>();
     public static ArrayList<Account__Statment_Model> listCustomerInfo = new ArrayList<Account__Statment_Model>();
-
+    public static ArrayList<CustomerInfo> listCustomer = new ArrayList<CustomerInfo>();
+    public static List<String> customername=new ArrayList<>();
     public ImportData(Context context) {
         databaseHandler = new DataBaseHandler(context);
         this.main_context = context;
@@ -67,8 +68,13 @@ public class ImportData {
         new JSONTaskGetSalesMan(context,flag).execute();
     }
 
-    public void getCustomerAccountStatment() {
-       new JSONTask_AccountStatment().execute();
+    public void getCustomerAccountStatment(String CustomerId) {
+       new JSONTask_AccountStatment(CustomerId).execute();
+    }
+    public void  getCustomerInfo(){
+        Log.e("getCustomerInfo","*****");
+        new JSONTask_CustomerInfo().execute();
+
     }
 
     private class JSONTask_checkStateRequest extends AsyncTask<String, String, String> {
@@ -572,6 +578,11 @@ public class ImportData {
     }
     private class JSONTask_AccountStatment extends AsyncTask<String, String, String> {
 
+        private  String custId="";
+        public JSONTask_AccountStatment(String customerId) {
+            this.custId=customerId;
+        }
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -600,8 +611,9 @@ public class ImportData {
                 request.setURI(new URI(URL_TO_HIT));
 
                 List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+                Log.e("BasicNameValuePair",""+custId);
                 nameValuePairs.add(new BasicNameValuePair("FLAG", "1"));
-                nameValuePairs.add(new BasicNameValuePair("customerNo", "1254"));
+                nameValuePairs.add(new BasicNameValuePair("customerNo", custId));
 
 
 
@@ -659,7 +671,7 @@ public class ImportData {
             JSONObject result = null;
             String impo = "";
             if (s != null) {
-                if (s.contains("CUSTOMER_INFO")) {
+                if (s.contains("CUSTOMER_Account_Statment")) {
                    // Log.e("CUSTOMER_INFO","onPostExecute\t"+s.toString());
                     //{"CUSTOMER_INFO":[{"VHFNo":"0","TransName":"ÞíÏ ÇÝÊÊÇÍí","VHFDATE":"31-DEC-19","DEBIT":"0","Credit":"16194047.851"}
 
@@ -671,7 +683,7 @@ public class ImportData {
                         JSONArray requestArray = null;
                         listCustomerInfo = new ArrayList<>();
 
-                        requestArray = result.getJSONArray("CUSTOMER_INFO");
+                        requestArray = result.getJSONArray("CUSTOMER_Account_Statment");
                         Log.e("requestArray",""+requestArray.length());
 
 
@@ -698,7 +710,135 @@ public class ImportData {
 
 
                         }
-                        getAccountList_text.setText("1");
+                        getAccountList_text.setText("2");
+
+                    } catch (JSONException e) {
+//                        progressDialog.dismiss();
+                        e.printStackTrace();
+                    }
+                }
+                else Log.e("onPostExecute",""+s.toString());
+//                progressDialog.dismiss();
+            }
+        }
+
+    }
+    private class JSONTask_CustomerInfo extends AsyncTask<String, String, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            try {
+
+
+                if (!ipAddress.equals("")) {
+                    URL_TO_HIT = "http://" + ipAddress + "/VANSALES_WEB_SERVICE/admin_oracle.php";
+                }
+            } catch (Exception e) {
+
+            }
+
+            try {
+
+                String JsonResponse = null;
+                HttpClient client = new DefaultHttpClient();
+                HttpPost request = new HttpPost();
+                request.setURI(new URI(URL_TO_HIT));
+
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+                nameValuePairs.add(new BasicNameValuePair("FLAG", "7"));
+
+                request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+
+
+                HttpResponse response = client.execute(request);
+
+
+                BufferedReader in = new BufferedReader(new
+                        InputStreamReader(response.getEntity().getContent()));
+
+                StringBuffer sb = new StringBuffer("");
+                String line = "";
+
+                while ((line = in.readLine()) != null) {
+                    sb.append(line);
+                }
+
+                in.close();
+
+
+                JsonResponse = sb.toString();
+                Log.e("tag_CustomerInfo", "JsonResponse\t" + JsonResponse);
+
+                return JsonResponse;
+
+
+            }//org.apache.http.conn.HttpHostConnectException: Connection to http://10.0.0.115 refused
+            catch (HttpHostConnectException ex) {
+                ex.printStackTrace();
+//                progressDialog.dismiss();
+
+                Handler h = new Handler(Looper.getMainLooper());
+                h.post(new Runnable() {
+                    public void run() {
+
+                        Toast.makeText(main_context, "Ip Connection Failed ", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
+                return null;
+            } catch (Exception e) {
+                e.printStackTrace();
+//                progressDialog.dismiss();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            JSONObject result = null;
+            String impo = "";
+            if (s != null) {
+                if (s.contains("CUSTOMER_INFO")) {
+                    // Log.e("CUSTOMER_INFO","onPostExecute\t"+s.toString());
+                    //{"CUSTOMER_INFO":[{"VHFNo":"0","TransName":"ÞíÏ ÇÝÊÊÇÍí","VHFDATE":"31-DEC-19","DEBIT":"0","Credit":"16194047.851"}
+
+                    try {
+                        result = new JSONObject(s);
+                        CustomerInfo requestDetail;
+
+
+                        JSONArray requestArray = null;
+                        listCustomerInfo = new ArrayList<>();
+
+                        requestArray = result.getJSONArray("CUSTOMER_INFO");
+                        Log.e("requestArray",""+requestArray.length());
+
+
+                        for (int i = 0; i < requestArray.length(); i++) {
+                            JSONObject infoDetail = requestArray.getJSONObject(i);
+                            requestDetail = new CustomerInfo();
+                            requestDetail.setCustomerNumber(infoDetail.get("CUSTID").toString());
+                            requestDetail.setCustomerName(infoDetail.get("CUSTNAME").toString());
+
+
+
+                            listCustomer.add(requestDetail);
+                            customername.add(requestDetail.getCustomerName());
+                            Log.e("listRequest", "CUSTOMER_INFO" + listCustomer.get(i).getCustomerName());
+
+
+                        }
+//                        getAccountList_text.setText("1");
 
                     } catch (JSONException e) {
 //                        progressDialog.dismiss();
