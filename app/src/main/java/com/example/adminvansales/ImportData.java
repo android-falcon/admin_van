@@ -107,10 +107,6 @@ public class ImportData {
             new JSONTaskGetCustomerLogReport(context, SalesNo, fromDate, toDate).execute();
         }
 
-        public void getCustomerAccountStatment () {
-            new JSONTask_AccountStatment().execute();
-        }
-
         private class JSONTask_checkStateRequest extends AsyncTask<String, String, String> {
 
             @Override

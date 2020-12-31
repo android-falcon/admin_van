@@ -31,6 +31,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.content.Context.MODE_PRIVATE;
+import static com.example.adminvansales.ImportData.listId;
 import static com.example.adminvansales.MainActivity.isListUpdated;
 
 public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHolder> {
@@ -72,59 +73,26 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
     @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(@NonNull final RequestAdapter.ViewHolder viewHolder, final int i) {
-//        language= new LocaleAppUtils().getLocale();
-//        if (language.equals("ar")) {
-//
-//
-//            viewHolder.amount_check.setText("\tد.أ\t"+viewHolder.convertToArabic(requestList.get(i).getAMOUNT()));
-//            Log.e("amount_check",""+requestList.get(i).getAMOUNT()+viewHolder.convertToArabic(requestList.get(i).getAMOUNT()));
-//        }
-//        else {
-//            viewHolder.amount_check.setText(requestList.get(i).getAMOUNT()+"\tJD");
-//        }
-//
-//
-//
-//
-//
-//
-//        if(requestList.get(i).getTRANSSTATUS().equals("1"))//for me rejected request
-//        {
-//            viewHolder.checkimage_state.setImageDrawable(context.getResources().getDrawable(R.drawable.reject_images));
-//            viewHolder.checkStateText.setText(R.string.requestRejec);
-//
-//        }
-//        else {
-//            viewHolder.checkimage_state.setImageDrawable(context.getResources().getDrawable(R.drawable.request_download));
-//
-//        }
-//        String myFormat = "dd/MM/yyyy"; //In which you need put here
-//        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-//        String date_=requestList.get(i).getINDATE();
-//        try {
-//            String subDate=date_.substring(0,date_.indexOf(" "));
-//            Log.e("subDate",""+subDate+"\t"+date_);
-//            DateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
-//            Date date = format.parse(subDate);
-//            String dateFormated=sdf.format(date);
-//
-//
-//
-//            viewHolder.date_check.setText(dateFormated+"");
-//        }
-//        catch (Exception e)
-//        {
-//            Log.e("date_checkException",""+e.getMessage());
-//            viewHolder.date_check.setText(requestList.get(i).getINDATE());
-//        }
-//
-
-
-
                 viewHolder.timeRequest.setText(requestList.get(i).getTime());
                 viewHolder.date_request.setText(requestList.get(i).getDate());
                 viewHolder.customerName.setText(requestList.get(i).getCustomerName());
                 viewHolder.amountValue.setText(requestList.get(i).getAmountValue());
+//                if(listId.size()!=0)
+//                {
+//                    for(int j=0;j<listId.size();j++)
+//                    {
+//                        if(listId.get(j).equals(requestList.get(i).getRowId()))
+//                        {
+//                            viewHolder.linearCheckInfo.setBackground(context.getResources().getDrawable((R.drawable.hover_color)));
+//                        }
+//                        else {
+//                            viewHolder.linearCheckInfo.setBackground(context.getResources().getDrawable((R.drawable.btn_sighn_up)));
+//
+//                        }
+//                    }
+//
+//                }
+
                 if(requestList.get(i).getRequestType().equals("1"))
                 {
                     viewHolder.requestType.setText(context.getResources().getString(R.string.totalDiscount));
@@ -133,12 +101,24 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
                 {
                     viewHolder.requestType.setText(context.getResources().getString(R.string.totalBonus));
                 }
+                else
+        if(requestList.get(i).getRequestType().equals("0"))
+        {
+            viewHolder.requestType.setText(context.getResources().getString(R.string.itemDiscount));
+        }
+        else
+        if(requestList.get(i).getRequestType().equals("2"))
+        {
+            viewHolder.requestType.setText(context.getResources().getString(R.string.itemBonus));
+        }
+
 
                 viewHolder.salesManName.setText(requestList.get(i).getSalesmanName());
         viewHolder.lineardetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 row_index = i;
+                viewHolder.linearCheckInfo.setBackground(context.getResources().getDrawable((R.drawable.btn_sighn_up)));
                 viewHolder.showDetails();
             }
         });
@@ -169,6 +149,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
             requestType = itemView.findViewById(R.id.requestType);
             salesManName = itemView.findViewById(R.id.salesManName);
             lineardetail= itemView.findViewById(R.id.lineardetail);
+            linearCheckInfo= itemView.findViewById(R.id.linearCheckInfo);
 
 
         }
