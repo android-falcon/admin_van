@@ -2,14 +2,19 @@ package com.example.adminvansales;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import android.widget.DatePicker;
 import android.widget.TextView;
+
+import androidx.core.content.FileProvider;
 
 import com.example.adminvansales.Model.SalesManInfo;
 import com.example.adminvansales.Report.PaymentDetailsReport;
 import com.google.android.gms.maps.model.LatLng;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -77,6 +82,28 @@ public class GlobelFunction {
 
         };
         return date;
+    }
+
+    public void shareWhatsAppA(File pdfFile,int pdfExcel){
+
+        Uri uri = Uri.fromFile(pdfFile);
+        Intent sendIntent = new Intent();
+        if(pdfFile.exists()) {
+            if(pdfExcel==1) {
+                sendIntent.setType("application/excel");
+            }else if(pdfExcel==2){
+                sendIntent.setType("application/pdf");
+            }
+            sendIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(String.valueOf(uri)));
+
+            sendIntent.putExtra(Intent.EXTRA_SUBJECT,
+                    pdfFile.getName()+" Sharing File...");
+            sendIntent.putExtra(Intent.EXTRA_TEXT, pdfFile.getName()+ " Sharing File");
+
+            Intent shareIntent = Intent.createChooser(sendIntent, null);
+            context.startActivity(shareIntent);
+        }
+
     }
 
 }

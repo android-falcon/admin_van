@@ -107,9 +107,6 @@ public class ImportData {
             new JSONTaskGetCustomerLogReport(context, SalesNo, fromDate, toDate).execute();
         }
 
-        public void getCustomerAccountStatment () {
-            new JSONTask_AccountStatment().execute();
-        }
 
         private class JSONTask_checkStateRequest extends AsyncTask<String, String, String> {
 
@@ -560,6 +557,7 @@ public class ImportData {
                     }
 //                progressDialog.dismiss();
                 } else {
+                    payMentReportList.clear();
                     pdValidation.dismissWithAnimation();
                 }
             }

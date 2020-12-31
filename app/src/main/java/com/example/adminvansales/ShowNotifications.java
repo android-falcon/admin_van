@@ -22,24 +22,24 @@ public class ShowNotifications {
     public static void showNotification(Context context, String title, String messageBody) {
         Log.e("show_Notification",""+title);
 //        notification_btn.setVisibility(View.VISIBLE);
-        boolean result=isAppOnForeground(context,"com.falconssoft.centerbank");
+//        boolean result=isAppOnForeground(context,"com.example.adminvansales");
         String actionType="";
-        Intent intent = null;
-        if(result)
-        {
-            if(title.contains("Request"))
-            {
-                intent = new Intent(context, MainActivity.class);
-                actionType="Request";
-            }
-//            else {
-//                actionType="YES";
-//                intent = new Intent(context, AlertScreen.class);
+//        Intent intent = null;
+//        if(result)
+//        {
+//            if(title.contains("Request"))
+//            {
+////                intent = new Intent(context, MainActivity.class);
+//                actionType="Request";
 //            }
-        }
-        else {
-            intent = new Intent(context, LogIn.class);
-        }
+////            else {
+////                actionType="YES";
+////                intent = new Intent(context, AlertScreen.class);
+////            }
+//        }
+//        else {
+////            intent = new Intent(context, LogIn.class);
+//        }
 
 
 
@@ -58,8 +58,8 @@ public class ShowNotifications {
 
 
 
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0 /* Request code */, intent, PendingIntent.FLAG_ONE_SHOT);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0 /* Request code */, intent, PendingIntent.FLAG_ONE_SHOT);
 
         //Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         //Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_app_notification_icon);
@@ -75,7 +75,7 @@ public class ShowNotifications {
                 .setColor(ContextCompat.getColor(context, R.color.colorblue_dark))
                 .setVibrate(new long[]{1000, 1000})
                 .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
-                .setContentIntent(pendingIntent)
+//                .setContentIntent(pendingIntent)
                 .setPriority(Notification.PRIORITY_HIGH)
                 .setAutoCancel(true);
 

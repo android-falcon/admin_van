@@ -13,12 +13,15 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.adminvansales.ExportToExcel;
 import com.example.adminvansales.GlobelFunction;
 import com.example.adminvansales.ImportData;
 import com.example.adminvansales.Model.PayMentReportModel;
 import com.example.adminvansales.PayMentReportAdapter;
+import com.example.adminvansales.PdfConverter;
 import com.example.adminvansales.R;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -27,7 +30,7 @@ import static com.example.adminvansales.GlobelFunction.salesManInfosList;
 import static com.example.adminvansales.GlobelFunction.salesManNameList;
 
 public class PaymentDetailsReport extends AppCompatActivity {
-    TextView fromDate,toDate;
+    TextView fromDate,toDate,excelConvert,pdfConvert,share;
     GlobelFunction globelFunction;
     String toDay;
     PayMentReportAdapter payMentReportAdapter;
@@ -53,6 +56,9 @@ public class PaymentDetailsReport extends AppCompatActivity {
         previewButton=findViewById(R.id.previewButton);
         payKindSpinner=findViewById(R.id.payKindSpinner);
         salesNameSpinner=findViewById(R.id.salesNameSpinner);
+        excelConvert=findViewById(R.id.excelConvert);
+        pdfConvert=findViewById(R.id.pdfConvert);
+        share=findViewById(R.id.share);
         globelFunction=new GlobelFunction(PaymentDetailsReport.this);
         toDay=globelFunction.DateInToday();
         fromDate.setText(toDay);
@@ -64,6 +70,9 @@ public class PaymentDetailsReport extends AppCompatActivity {
         previewButton.setOnClickListener(onClick);
         fromDate.setOnClickListener(onClick);
         toDate.setOnClickListener(onClick);
+        excelConvert.setOnClickListener(onClick);
+        pdfConvert.setOnClickListener(onClick);
+        share.setOnClickListener(onClick);
 
         fillSalesManSpinner();
 
@@ -87,13 +96,36 @@ public class PaymentDetailsReport extends AppCompatActivity {
                 case R.id.to_date_r :
                     globelFunction.DateClick(toDate);
                     break;
+                case R.id.excelConvert :
+                    convertToExcel();
+                    break;
+                case R.id.pdfConvert :
+                    convertToPdf();
+                    break;
+                case R.id.share :
+                    shareWhatsApp();
+                    break;
 
             }
 
         }
     };
 
+    public void shareWhatsApp(){
+        globelFunction.shareWhatsAppA(convertToPdf(),1);
+    }
+    private File convertToPdf() {
+        PdfConverter pdf =new PdfConverter(PaymentDetailsReport.this);
+       File file= pdf.exportListToPdf(payMentReportList,"Payment Report",toDay,3);
+       return file;
+    }
 
+    private void convertToExcel() {
+        ExportToExcel exportToExcel=new ExportToExcel();
+        exportToExcel.createExcelFile(PaymentDetailsReport.this,"PaymentReport.xls",2,payMentReportList);
+
+
+    }
     public void previewFunction(){
 
         String payKind="-1";
@@ -103,9 +135,9 @@ public class PaymentDetailsReport extends AppCompatActivity {
         if(position==0||position==-1){
             payKind="-1";
         }else if(position==1){
-            payKind="0";
-        }else if(position==2){
             payKind="1";
+        }else if(position==2){
+            payKind="0";
         }
 
 
