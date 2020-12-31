@@ -132,14 +132,15 @@ public class CashReportAdapter extends BaseAdapter {
         double netSalesT=Double.parseDouble(totalCash) + Double.parseDouble(totalCredit);
         Log.e("netSalesT",""+netSalesT);
         holder.netSales.setText("" +netSalesT);
-
+        itemsList.get(i).setNetSale(""+netSalesT);
         holder.paymentCash  .setText(totalPCash);
         holder.sales  .setText(totalPCredit);
         holder.net  .setText(""+(Double.parseDouble(totalPCash)+Double.parseDouble(totalPCredit)));
+        itemsList.get(i).setNetPay(""+(Double.parseDouble(totalPCash)+Double.parseDouble(totalPCredit)));
         holder.credit  .setText(totalPCreditCard);
         double netTotalCash=Double.parseDouble(totalPCreditCard)+Double.parseDouble(totalCash)+Double.parseDouble(totalPCash);
         holder.netCash  .setText(""+netTotalCash);
-
+        itemsList.get(i).setNetCash(""+netTotalCash);
 //        holder.tableRow.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {

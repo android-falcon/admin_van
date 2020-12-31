@@ -80,9 +80,9 @@ public class PayMentReportAdapter extends BaseAdapter {
         holder.amount .setText(itemsList.get(i).getAmount());
         holder.remark  .setText(itemsList.get(i).getNotes());
         holder.sales  .setText(itemsList.get(i).getSalesmanNo());
-        if(itemsList.get(i).getPAYKIND().equals("0")){
+        if(itemsList.get(i).getPAYKIND().equals("1")){
             holder.pay.setText(context.getResources().getString(R.string.cash));
-        }else  if(itemsList.get(i).getPAYKIND().equals("1")){
+        }else  if(itemsList.get(i).getPAYKIND().equals("0")){
             holder.pay.setText(context.getResources().getString(R.string.app_cheque));
         }else  if(itemsList.get(i).getPAYKIND().equals("2")) {
             holder.pay.setText(context.getResources().getString(R.string.credit));
