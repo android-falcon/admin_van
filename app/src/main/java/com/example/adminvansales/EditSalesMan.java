@@ -117,6 +117,7 @@ int isUpdate=0;
                     clearTextFun();
                     break;
                 case R.id.addButton:
+                    String s="";
                     addSalesMan();
                     break;
                 case R.id.updateButton:
