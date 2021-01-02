@@ -90,4 +90,5 @@
     <string name="paymentCredit">payment Credit</string>
     <string name="paymentCheque">payment Cheque</string>
     <string name="export_to_pdf">Export To Pdf</string>
+    <string name="itemName">Item Name</string>
 </resources>

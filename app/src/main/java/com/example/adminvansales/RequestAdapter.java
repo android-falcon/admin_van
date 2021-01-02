@@ -187,6 +187,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
 
             LinearLayout rowNote,rowcompany;
             textnote=dialog.findViewById(R.id.textnote);
+            rowNote=dialog.findViewById(R.id.rowNote);
             textTime=dialog.findViewById(R.id.textTime);//
             textDate= dialog.findViewById(R.id.textDate);
             total_voucher=dialog.findViewById(R.id.total_voucher);
@@ -224,6 +225,12 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
             total_voucher.setText(requestList.get(row_index).getTotalVoucher());
             textDate.setText(requestList.get(row_index).getDate());
             textTime.setText(requestList.get(row_index).getTime());
+            if(requestList.get(row_index).getNote().equals(""))
+            {
+                rowNote.setVisibility(View.GONE);
+
+            }
+
 //            if(requestList.get(row_index).getRequestType().equals("0"))
 //            {
 //
