@@ -178,7 +178,7 @@ public class CashReport extends AppCompatActivity {
         if (positionSales == 0 || positionSales==-1) {
             salesNo = "-1";
             Log.e("salesNo-1", "" + salesNo +"  ");
-            TempReports=cashReportList;
+            TempReports=new ArrayList<>(cashReportList);
             payMentReportAdapter = new CashReportAdapter(CashReport.this, cashReportList);
             listCashReport.setAdapter(payMentReportAdapter);
         } else {

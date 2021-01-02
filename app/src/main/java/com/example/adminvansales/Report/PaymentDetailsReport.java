@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -112,19 +113,33 @@ public class PaymentDetailsReport extends AppCompatActivity {
     };
 
     public void shareWhatsApp(){
-        globelFunction.shareWhatsAppA(convertToPdf(),1);
+        try {
+            globelFunction.shareWhatsAppA(convertToPdf(), 1);
+        }catch (Exception e){
+            Toast.makeText(this, "Storage Permission", Toast.LENGTH_SHORT).show();
+        }
     }
     private File convertToPdf() {
-        PdfConverter pdf =new PdfConverter(PaymentDetailsReport.this);
-       File file= pdf.exportListToPdf(payMentReportList,"Payment Report",toDay,3);
+        File file=null;
+        try {
+            PdfConverter pdf = new PdfConverter(PaymentDetailsReport.this);
+             file = pdf.exportListToPdf(payMentReportList, "Payment Report", toDay, 3);
+        }catch (Exception e){
+            Toast.makeText(this, "Storage Permission", Toast.LENGTH_SHORT).show();
+
+        }
+
        return file;
     }
 
     private void convertToExcel() {
-        ExportToExcel exportToExcel=new ExportToExcel();
-        exportToExcel.createExcelFile(PaymentDetailsReport.this,"PaymentReport.xls",2,payMentReportList);
+        try {
+            ExportToExcel exportToExcel = new ExportToExcel();
+            exportToExcel.createExcelFile(PaymentDetailsReport.this, "PaymentReport.xls", 2, payMentReportList);
 
-
+        }catch (Exception e){
+            Toast.makeText(this, "Storage Permission", Toast.LENGTH_SHORT).show();
+        }
     }
     public void previewFunction(){
 
