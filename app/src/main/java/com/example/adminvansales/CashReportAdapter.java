@@ -94,6 +94,15 @@ public class CashReportAdapter extends BaseAdapter {
 //            Log.e("totalCash0",""+totalCash);
 //        }
 
+//        Log.e("totalCashsize",""+itemsList.size());
+//
+//        try{
+//           Double.parseDouble(totalCash);
+//        }catch(Exception e){
+//            totalCash="0.0";
+//            Log.e("totalCashs",""+totalCash);
+//        }
+
 
 
         if(TextUtils.isEmpty(totalCash)) {

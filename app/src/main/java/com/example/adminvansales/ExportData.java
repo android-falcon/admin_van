@@ -244,7 +244,7 @@ public class ExportData {
 
 
                 if (!ipAddress.equals("")) {
-                    URL_TO_HIT = "http://" + ipAddress + "/VANSALES_WEB_SERVICE/admin_oracle.php";
+                    URL_TO_HIT = "http://" + ipAddress + "/VANSALES_WEB_SERVICE/admin.php";
                 }
             } catch (Exception e) {
 
@@ -258,7 +258,7 @@ public class ExportData {
                 request.setURI(new URI(URL_TO_HIT));
 
                 List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-                nameValuePairs.add(new BasicNameValuePair("FLAG", "3"));
+                nameValuePairs.add(new BasicNameValuePair("_ID", "3"));
                 nameValuePairs.add(new BasicNameValuePair("ADD_SALES_MAN",jsonObject.toString()));
 
 
@@ -350,7 +350,7 @@ public class ExportData {
 
 
                 if (!ipAddress.equals("")) {
-                    URL_TO_HIT = "http://" + ipAddress + "/VANSALES_WEB_SERVICE/admin_oracle.php";
+                    URL_TO_HIT = "http://" + ipAddress + "/VANSALES_WEB_SERVICE/admin.php";
                 }
             } catch (Exception e) {
 
@@ -364,7 +364,7 @@ public class ExportData {
                 request.setURI(new URI(URL_TO_HIT));
 
                 List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-                nameValuePairs.add(new BasicNameValuePair("FLAG", "4"));
+                nameValuePairs.add(new BasicNameValuePair("_ID", "4"));
                 nameValuePairs.add(new BasicNameValuePair("UPDATE_SALES_MAN",jsonObject.toString()));
 
 

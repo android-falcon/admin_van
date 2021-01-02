@@ -62,6 +62,23 @@
             android:textSize="15sp"
             android:textStyle="bold" />
 
+        <TextView
+            android:id="@+id/share"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="0"
+            android:background="@drawable/ic_share_black_24dp"
+            android:drawablePadding="3dp"
+            android:backgroundTint="@color/colorblue_dark"
+            android:padding="5dp"
+            android:textColor="@color/colorblue_dark"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
     </LinearLayout>
 
     <LinearLayout

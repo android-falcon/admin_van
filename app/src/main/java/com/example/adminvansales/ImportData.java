@@ -310,7 +310,7 @@ public class ImportData {
 
 
                     if (!ipAddress.equals("")) {
-                        URL_TO_HIT = "http://" + ipAddress + "/VANSALES_WEB_SERVICE/admin_oracle.php";
+                        URL_TO_HIT = "http://" + ipAddress + "/VANSALES_WEB_SERVICE/admin.php";
                     }
                 } catch (Exception e) {
 
@@ -324,7 +324,7 @@ public class ImportData {
                     request.setURI(new URI(URL_TO_HIT));
 
                     List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-                    nameValuePairs.add(new BasicNameValuePair("FLAG", "2"));
+                    nameValuePairs.add(new BasicNameValuePair("_ID", "2"));
 //                nameValuePairs.add(new BasicNameValuePair("SalesManNo",discountRequest.getSalesman_no()));
 
 
@@ -677,7 +677,7 @@ public class ImportData {
                         CashReportModel gsonObj = gson.fromJson(s, CashReportModel.class);
                         cashReportList.clear();
                         cashReportList.addAll(gsonObj.getCASHREPORT());
-
+                        Log.e("totalCashs","SalesManNo");
                         CashReport cashReport = (CashReport) context;
                         cashReport.fillCashAdapter();
                         pdValidation.dismissWithAnimation();
@@ -687,9 +687,12 @@ public class ImportData {
                         CashReport cashReport = (CashReport) context;
                         cashReport.fillCashAdapter();
                         pdValidation.dismissWithAnimation();
+                        Log.e("totalCashs","SalesManNo2");
+
                     }
 //                progressDialog.dismiss();
                 } else {
+                    Log.e("totalCashs","SalesManNo3");
                     pdValidation.dismissWithAnimation();
                 }
             }
@@ -1030,7 +1033,7 @@ public class ImportData {
 
 
                     if (!ipAddress.equals("")) {
-                        URL_TO_HIT = "http://" + ipAddress + "/VANSALES_WEB_SERVICE/admin_oracle.php";
+                        URL_TO_HIT = "http://" + ipAddress + "/VANSALES_WEB_SERVICE/admin.php";
                     }
                 } catch (Exception e) {
 
