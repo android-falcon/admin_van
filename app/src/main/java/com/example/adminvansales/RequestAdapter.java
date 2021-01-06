@@ -42,13 +42,14 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
     //    public PhotoView photoView,photoDetail;
     CircleImageView circleImageView;
     Bitmap serverPicBitmap;
-     public  static int row_index = -1;
+    public static int row_index = -1;
 
     String requestState = "0", amountArabic = "";
     //    LoginINFO infoUser;
 //    DatabaseHandler databaseHandler;
     public static String languagelocalApp = "";
     public static String acc = "", bankN = "", branch = "", mobileNo = "";
+    int typeDiscountItem=0;
 
 
     public RequestAdapter(Context context, List<Request> notifications) {
@@ -73,53 +74,54 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
     @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(@NonNull final RequestAdapter.ViewHolder viewHolder, final int i) {
-                viewHolder.timeRequest.setText(requestList.get(i).getTime());
-                viewHolder.date_request.setText(requestList.get(i).getDate());
-                viewHolder.customerName.setText(requestList.get(i).getCustomerName());
-                viewHolder.amountValue.setText(requestList.get(i).getAmountValue());
-//                if(listId.size()!=0)
-//                {
-//                    for(int j=0;j<listId.size();j++)
-//                    {
-//                        if(listId.get(j).equals(requestList.get(i).getRowId()))
-//                        {
-//                            viewHolder.linearCheckInfo.setBackground(context.getResources().getDrawable((R.drawable.hover_color)));
-//                        }
-//                        else {
-//                            viewHolder.linearCheckInfo.setBackground(context.getResources().getDrawable((R.drawable.btn_sighn_up)));
-//
-//                        }
-//                    }
-//
-//                }
+        viewHolder.timeRequest.setText(requestList.get(i).getTime());
+        viewHolder.date_request.setText(requestList.get(i).getDate());
+        viewHolder.customerName.setText(requestList.get(i).getCustomerName());
+        viewHolder.amountValue.setText(requestList.get(i).getAmountValue());
+        Log.e("total_voucher", "onBindViewHolder" + requestList.get(i).getTotalVoucher());
 
-                if(requestList.get(i).getRequestType().equals("1"))
-                {
-                    viewHolder.requestType.setText(context.getResources().getString(R.string.totalDiscount));
-                }
-                else if(requestList.get(i).getRequestType().equals("3"))
-                {
-                    viewHolder.requestType.setText(context.getResources().getString(R.string.totalBonus));
-                }
-                else
-        if(requestList.get(i).getRequestType().equals("0"))
+
+        if (requestList.get(i).getRequestType().equals("1"))
         {
+            viewHolder.requestType.setText(context.getResources().getString(R.string.totalDiscount));
+            viewHolder.amountValue.setText( requestList.get(i).getAmountValue()+"\t%");
+
+        }
+        else if (requestList.get(i).getRequestType().equals("10")) {
+            viewHolder.requestType.setText(context.getResources().getString(R.string.totalDiscount));
+            viewHolder.amountValue.setText( requestList.get(i).getAmountValue()+"\tJD");
+        }
+        else if (requestList.get(i).getRequestType().equals("3")) {
+            viewHolder.requestType.setText(context.getResources().getString(R.string.totalBonus));
+        } else if (requestList.get(i).getRequestType().equals("0")) {
             viewHolder.requestType.setText(context.getResources().getString(R.string.itemDiscount));
-        }
-        else
-        if(requestList.get(i).getRequestType().equals("2"))
-        {
+
+            typeDiscountItem=Integer.parseInt(requestList.get(i).getNote().substring(0,1));
+            if(typeDiscountItem==1)
+            {
+                viewHolder.amountValue.setText( requestList.get(i).getAmountValue()+"\t%");
+            }
+            else {
+                viewHolder.amountValue.setText( requestList.get(i).getAmountValue()+"\tJD");
+            }
+
+        } else if (requestList.get(i).getRequestType().equals("2")) {
             viewHolder.requestType.setText(context.getResources().getString(R.string.itemBonus));
+        } else if (requestList.get(i).getRequestType().equals("100")) {
+            viewHolder.requestType.setText(context.getResources().getString(R.string.OverflowDebtlimit));
+            viewHolder.requestType.setTextColor(context.getResources().getColor(R.color.light_red));
+            viewHolder.amountValue.setText( context.getResources().getString(R.string.limit)+"\t"+requestList.get(i).getAmountValue()+"\tJD");
         }
 
 
-                viewHolder.salesManName.setText(requestList.get(i).getSalesmanName());
+        viewHolder.salesManName.setText(requestList.get(i).getSalesmanName());
         viewHolder.lineardetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 row_index = i;
                 viewHolder.linearCheckInfo.setBackground(context.getResources().getDrawable((R.drawable.btn_sighn_up)));
-                viewHolder.showDetails();
+                Log.e("showDetails", "" + requestList.get(i).getTotalVoucher());
+                viewHolder.showDetails(requestList.get(i).getTotalVoucher());
             }
         });
 
@@ -171,9 +173,9 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
 //            dialog.show();
 //        }
 
-        public void showDetails() {
+        public void showDetails(String total) {
             isListUpdated=false;
-            Log.e("checkState", "" + requestState);
+            Log.e("checkState", "" + requestState+"\t"+total);
 //            new LocaleAppUtils().changeLayot(context);
             final Dialog dialog = new Dialog(context, R.style.Theme_Dialog);
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -183,7 +185,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
             LinearLayout linearresone,linear_buttons;
             LinearLayout linearLayout = dialog.findViewById(R.id.mainLinearDetail);
             linear_buttons  = dialog.findViewById(R.id.linearButtons);
-            TextView textnote,textTime,textDate,total_voucher,voucherNo,textAmountNo,requestType,customer_name,Sales_name;
+            TextView textnote,textTime,textDate,total_voucher,voucherNo,textAmountNo,requestType,customer_name,Sales_name,titleNote;
 
             LinearLayout rowNote,rowcompany;
             textnote=dialog.findViewById(R.id.textnote);
@@ -196,6 +198,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
             requestType = dialog.findViewById(R.id.requestType);
             customer_name = dialog.findViewById(R.id.customer_name);
             Sales_name= dialog.findViewById(R.id.Sales_name);
+            titleNote= dialog.findViewById(R.id.titleNote);
 
             //*************** fill Data *********************************************
             Sales_name.setText(requestList.get(row_index).getSalesmanName());
@@ -203,39 +206,71 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
             if(requestList.get(row_index).getRequestType().equals("1"))
             {
                 requestType.setText(context.getResources().getString(R.string.totalDiscount));
+                textAmountNo.setText(requestList.get(row_index).getAmountValue()+ " % ");
+                titleNote.setText(context.getResources().getString(R.string.Note));
+            }
+            if(requestList.get(row_index).getRequestType().equals("10"))
+            {
+                requestType.setText(context.getResources().getString(R.string.totalDiscount));
+                textAmountNo.setText(requestList.get(row_index).getAmountValue()+ " JD ");
+                titleNote.setText(context.getResources().getString(R.string.Note));
             }
             else if(requestList.get(row_index).getRequestType().equals("3"))
             {
                 requestType.setText(context.getResources().getString(R.string.totalBonus));
+                textAmountNo.setText(requestList.get(row_index).getAmountValue()+ " JD ");
+                titleNote.setText(context.getResources().getString(R.string.Note));
             }
             else
             if(requestList.get(row_index).getRequestType().equals("0"))
             {
                 requestType.setText(context.getResources().getString(R.string.itemDiscount));
+                typeDiscountItem=Integer.parseInt(requestList.get(row_index).getNote().substring(0,1));
+                if(typeDiscountItem==1)
+                {
+                    textAmountNo.setText(requestList.get(row_index).getAmountValue()+"\t%");
+                }
+                else {
+                    textAmountNo.setText(requestList.get(row_index).getAmountValue()+"\tJD");
+                }
+                titleNote.setText(context.getResources().getString(R.string.itemName));
             }
             else
             if(requestList.get(row_index).getRequestType().equals("2"))
             {
                 requestType.setText(context.getResources().getString(R.string.itemBonus));
+                textAmountNo.setText(requestList.get(row_index).getAmountValue()+ " JD ");
+                titleNote.setText(context.getResources().getString(R.string.itemName));
+            }
+            else
+            if(requestList.get(row_index).getRequestType().equals("100"))
+            {
+                requestType.setText(context.getResources().getString(R.string.OverflowDebtlimit));
+                textAmountNo.setText( context.getResources().getString(R.string.limit)+"\t"+requestList.get(row_index).getAmountValue()+"\tJD");
+                titleNote.setText(context.getResources().getString(R.string.Note));
             }
 
 
-            textAmountNo.setText(requestList.get(row_index).getAmountValue()+ " JD ");
+
             voucherNo.setText(requestList.get(row_index).getVoucherNo());
-            total_voucher.setText(requestList.get(row_index).getTotalVoucher());
+            Log.e("total_voucher",""+requestList.get(row_index).getTotalVoucher());
+            total_voucher.setText(total);
             textDate.setText(requestList.get(row_index).getDate());
             textTime.setText(requestList.get(row_index).getTime());
             if(requestList.get(row_index).getNote().equals(""))
             {
                 rowNote.setVisibility(View.GONE);
-
+            }
+            if(requestList.get(row_index).getRequestType().equals("0"))
+            {
+                String note=requestList.get(row_index).getNote();
+                textnote.setText(note.substring(1,note.length()));
+            }
+            else {
+                textnote.setText(requestList.get(row_index).getNote());
             }
 
-//            if(requestList.get(row_index).getRequestType().equals("0"))
-//            {
-//
-//            }
-            textnote.setText(requestList.get(row_index).getNote());
+
 
             final Button reject = (Button) dialog.findViewById(R.id.RejectButton);
             final Button accept = (Button) dialog.findViewById(R.id.AcceptButton);

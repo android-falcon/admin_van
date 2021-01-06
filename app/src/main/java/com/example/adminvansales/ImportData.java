@@ -228,6 +228,7 @@ public class ImportData {
                                     requestDetail.setAmountValue(infoDetail.get("amount_value").toString());
                                     requestDetail.setVoucherNo(infoDetail.get("voucher_no").toString());
                                     requestDetail.setTotalVoucher(infoDetail.get("total_voucher").toString());
+                                    Log.e("requestDetail",""+requestDetail.getTotalVoucher());
                                     requestDetail.setStatuse(infoDetail.get("status").toString());
                                     requestDetail.setKeyValidation(infoDetail.get("key_validation").toString());
                                     requestDetail.setDate(infoDetail.get("date").toString());
