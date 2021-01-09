@@ -481,7 +481,7 @@
                         android:gravity="center"
 
                         android:padding="5dp"
-                        android:text="@string/itemNo"
+                        android:text="item No"
                         android:textColor="@color/White2"
                         android:textSize="14sp" />
 
@@ -503,7 +503,7 @@
 
                         android:gravity="center"
                         android:padding="5dp"
-                        android:text="@string/categoryId"
+                        android:text="category Id"
                         android:textColor="@color/White2"
                         android:textSize="14sp" />
 
@@ -515,7 +515,7 @@
 
                         android:padding="5dp"
 
-                        android:text="@string/Barcode"
+                        android:text="Barcode"
                         android:textColor="@color/white" />
 
                     <TextView
@@ -525,7 +525,7 @@
 
                         android:gravity="center"
                         android:padding="5dp"
-                        android:text="@string/price"
+                        android:text="price"
                         android:textColor="@color/White2"
                         android:textSize="14sp" />
 
