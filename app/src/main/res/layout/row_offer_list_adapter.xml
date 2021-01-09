@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="2dp">
+
+    <TableRow
+        android:id="@+id/table"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp">
+
+        <TextView
+            android:id="@+id/itemNo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.9"
+            android:gravity="center"
+            android:padding="10dp"
+
+            android:text="@string/itemNo"
+            android:textColor="@color/colorblue_dark"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/itemName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.9"
+            android:gravity="center"
+            android:padding="10dp"
+
+            android:text="@string/itemName"
+            android:textColor="@color/colorblue_dark"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/categId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.9"
+            android:gravity="center"
+
+            android:padding="10dp"
+
+            android:text="@string/categoryId"
+            android:textColor="@color/colorblue_dark"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/Barcode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.9"
+            android:gravity="center"
+
+            android:padding="10dp"
+
+            android:text="@string/Barcode"
+            android:textColor="@color/colorblue_dark"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.9"
+            android:gravity="center"
+
+            android:padding="10dp"
+
+            android:text="@string/price"
+            android:textColor="@color/colorblue_dark"
+            android:textSize="14sp" />
+
+<!--        <TextView-->
+<!--            android:id="@+id/checkInT"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="0.9"-->
+<!--            android:gravity="center"-->
+
+<!--            android:padding="10dp"-->
+
+<!--            android:text="@string/CHECK_IN_TIME"-->
+<!--            android:textColor="@color/colorblue_dark"-->
+<!--            android:textSize="14sp" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/checkOutD"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="0.9"-->
+<!--            android:gravity="center"-->
+
+<!--            android:padding="10dp"-->
+
+<!--            android:text="@string/CHECK_OUT_DATE"-->
+<!--            android:textColor="@color/colorblue_dark"-->
+<!--            android:textSize="14sp" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/checkOutT"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="0.9"-->
+<!--            android:gravity="center"-->
+<!--            android:padding="10dp"-->
+<!--            android:text="@string/CHECK_OUT_TIME"-->
+<!--            android:textColor="@color/colorblue_dark"-->
+<!--            android:textSize="12sp" />-->
+<!--        <TextView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:gravity="center"-->
+<!--            android:padding="10dp"-->
+<!--            android:textColor="@color/colorblue_dark"-->
+<!--            android:textSize="12sp"-->
+<!--            android:visibility="invisible"/>-->
+<!--        <TextView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:gravity="center"-->
+<!--            android:padding="10dp"-->
+<!--            android:textColor="@color/colorblue_dark"-->
+<!--            android:textSize="12sp"-->
+<!--            android:visibility="invisible"/>-->
+    </TableRow>
+
+</LinearLayout>

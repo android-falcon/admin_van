@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.example.adminvansales.Model.Account__Statment_Model;
 import com.example.adminvansales.Model.CashReportModel;
 import com.example.adminvansales.Model.CustomerLogReportModel;
+import com.example.adminvansales.Model.ItemMaster;
 import com.example.adminvansales.Model.PayMentReportModel;
 import com.example.adminvansales.Model.CustomerInfo;
 import com.example.adminvansales.Model.Request;
@@ -37,7 +38,6 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.io.Reader;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +51,7 @@ import static com.example.adminvansales.GlobelFunction.salesManNameList;
 import static com.example.adminvansales.HomeActivity.waitList;
 import static com.example.adminvansales.LogIn.ipAddress;
 import static com.example.adminvansales.MainActivity.isListUpdated;
+import static com.example.adminvansales.OfferPriceList.ItemCardList;
 import static com.example.adminvansales.Report.CashReport.cashReportList;
 import static com.example.adminvansales.Report.CustomerLogReport.customerLogReportList;
 import static com.example.adminvansales.Report.PaymentDetailsReport.payMentReportList;
@@ -83,6 +84,9 @@ public class ImportData {
 
     public void getSalesMan(Context context,int flag) {
         new JSONTaskGetSalesMan(context,flag).execute();
+    }
+    public void getItemCard(Context context) {
+        new JSONTaskGetItem(context).execute();
     }
 
     public void getCustomerAccountStatment(String CustomerId) {
@@ -535,7 +539,7 @@ public class ImportData {
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
 
-
+                payMentReportList.clear();
                 if (s != null) {
                     if (s.contains("ComapnyNo")) {
 
@@ -558,6 +562,8 @@ public class ImportData {
 //                progressDialog.dismiss();
                 } else {
                     payMentReportList.clear();
+                    PaymentDetailsReport paymentDetailsReport = (PaymentDetailsReport) context;
+                    paymentDetailsReport.fillPaymentAdapter();
                     pdValidation.dismissWithAnimation();
                 }
             }
@@ -1281,5 +1287,141 @@ public class ImportData {
             }
 
         }
+
+    private class JSONTaskGetItem extends AsyncTask<String, String, String> {
+        Object context;
+        int flag;
+
+
+        public  JSONTaskGetItem(Object context) {
+//            this.flag=flag;
+            this.context = (OfferPriceList) context;
+
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            String do_ = "my";
+            pdValidation = new SweetAlertDialog(main_context, SweetAlertDialog.PROGRESS_TYPE);
+            pdValidation.getProgressHelper().setBarColor(Color.parseColor("#FDD835"));
+            pdValidation.setTitleText(main_context.getResources().getString(R.string.process));
+            pdValidation.setCancelable(false);
+            pdValidation.show();
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+//            ipAddress = "";
+            try {
+
+
+                if (!ipAddress.equals("")) {
+                    URL_TO_HIT = "http://" + ipAddress + "/VANSALES_WEB_SERVICE/admin.php";
+                }
+            } catch (Exception e) {
+
+            }
+
+            try {
+
+                String JsonResponse = null;
+                HttpClient client = new DefaultHttpClient();
+                HttpPost request = new HttpPost();
+                request.setURI(new URI(URL_TO_HIT));
+
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(5);
+                nameValuePairs.add(new BasicNameValuePair("_ID", "16"));
+//                nameValuePairs.add(new BasicNameValuePair("FromDate", fromDate));
+//                nameValuePairs.add(new BasicNameValuePair("ToDate", toDate));
+//                nameValuePairs.add(new BasicNameValuePair("PayKind",payKind));
+//                nameValuePairs.add(new BasicNameValuePair("SalesNo",SalesNo));
+
+
+                request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+
+
+                HttpResponse response = client.execute(request);
+
+
+                BufferedReader in = new BufferedReader(new
+                        InputStreamReader(response.getEntity().getContent()));
+
+                StringBuffer sb = new StringBuffer("");
+                String line = "";
+
+                while ((line = in.readLine()) != null) {
+                    sb.append(line);
+                }
+
+                in.close();
+
+
+                JsonResponse = sb.toString();
+                Log.e("tag_paymentReport", "JsonResponse\t" + JsonResponse);
+
+                return JsonResponse;
+
+
+            }//org.apache.http.conn.HttpHostConnectException: Connection to http://10.0.0.115 refused
+            catch (HttpHostConnectException ex) {
+                ex.printStackTrace();
+//                progressDialog.dismiss();
+
+                Handler h = new Handler(Looper.getMainLooper());
+                h.post(new Runnable() {
+                    public void run() {
+
+                        Toast.makeText(main_context, "Ip Connection Failed ", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
+                return null;
+            } catch (Exception e) {
+                e.printStackTrace();
+//                progressDialog.dismiss();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+
+            if (s != null) {
+                if (s.contains("ComapnyNo")) {
+
+                    Gson gson = new Gson();
+
+                    ItemMaster gsonObj = gson.fromJson(s, ItemMaster.class);
+                    ItemCardList.clear();
+                    ItemCardList.addAll(gsonObj.getALL_ITEMS());
+                    Log.e("itemCard","SalesManNo");
+                    OfferPriceList offerPriceList = (OfferPriceList) context;
+                    offerPriceList.fillItemCard();
+                    pdValidation.dismissWithAnimation();
+
+                } else {
+                    ItemCardList.clear();
+                    OfferPriceList offerPriceList = (OfferPriceList) context;
+                    offerPriceList.fillItemCard();
+                    pdValidation.dismissWithAnimation();
+                    Log.e("itemCard","SalesManNo2");
+
+                }
+//                progressDialog.dismiss();
+            } else {
+                Log.e("itemCard","SalesManNo3");
+                pdValidation.dismissWithAnimation();
+            }
+        }
+
+    }
+
+
 
 }

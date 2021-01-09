@@ -52,6 +52,12 @@
         <item>Cheque</item>
     </string-array>
 
+    <string-array name="ListType">
+        <item>normal</item>
+        <item>offer</item>
+        <item>replacement</item>
+    </string-array>
+
     <string name="company_number">Company Number</string>
     <string name="voucher_number">Voucher Number</string>
     <string name="payment_term">Payment term</string>
@@ -91,4 +97,8 @@
     <string name="paymentCheque">payment Cheque</string>
     <string name="export_to_pdf">Export To Pdf</string>
     <string name="itemName">Item Name</string>
+    <string name="itemNo">Item No</string>
+    <string name="categoryId">Category ID</string>
+    <string name="Barcode">Barcode</string>
+    <string name="price">price</string>
 </resources>

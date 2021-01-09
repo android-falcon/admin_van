@@ -33,7 +33,7 @@ public class HomeActivity extends AppCompatActivity {
     public  static  TextView waitList,addVanSales;
     RelativeLayout notifyLayout,accountLayout;
 GlobelFunction globelFunction;
-Button locationButton,ReportButton;
+Button locationButton,ReportButton,offerButton;
 LinearLayout ReportLinear;
 TextView customerLogReport,paymentReport,cashReport;
 
@@ -79,6 +79,7 @@ TextView customerLogReport,paymentReport,cashReport;
             }
         });
 
+        offerButton=findViewById(R.id.offerButton);
         locationButton=findViewById(R.id.LocationButton);
         ReportButton=findViewById(R.id.ReportButton);
         recyclerViews=findViewById(R.id.res);
@@ -118,6 +119,17 @@ TextView customerLogReport,paymentReport,cashReport;
 
                 Intent locationIntent=new Intent(HomeActivity.this,SalesmanMapsActivity.class);
                 startActivity(locationIntent);
+
+            }
+        });
+
+
+        offerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent offerIntent=new Intent(HomeActivity.this,OfferPriceList.class);
+                startActivity(offerIntent);
 
             }
         });

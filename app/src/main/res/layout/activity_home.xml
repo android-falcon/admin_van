@@ -105,43 +105,45 @@
 
         </LinearLayout>
     </androidx.appcompat.widget.Toolbar>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="5"
         android:layout_gravity="bottom"
+        android:layout_weight="6"
         android:gravity="bottom|center"
         android:orientation="vertical">
 
         <!--<TextView-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:fontFamily="cursive"-->
-            <!--android:gravity="center"-->
-            <!--android:padding="5dp"-->
-            <!--android:text="Welcome In Admin App"-->
-            <!--android:textSize="18sp"-->
-            <!--android:textColor="@color/colorblue_dark" />-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:fontFamily="cursive"-->
+        <!--android:gravity="center"-->
+        <!--android:padding="5dp"-->
+        <!--android:text="Welcome In Admin App"-->
+        <!--android:textSize="18sp"-->
+        <!--android:textColor="@color/colorblue_dark" />-->
         <TextView
             android:id="@+id/addVanSales"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:padding="5dp"
-            android:background="@drawable/ic_person_add_black_24dp"/>
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_person_add_black_24dp"
+            android:padding="5dp" />
+
         <TextView
             android:id="@+id/waitList"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:padding="5dp"
-            android:visibility="gone"
-        />
+            android:visibility="gone" />
 
     </LinearLayout>
+
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="5dp"
-        android:layout_weight="4"
+        android:layout_weight="4.5"
         android:elevation="@dimen/cardview_default_elevation"
         app:cardBackgroundColor="@color/White2"
         app:cardCornerRadius="20dp">
@@ -166,36 +168,67 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="4"
+        android:layout_weight="3.5"
         android:gravity="bottom"
         android:orientation="vertical"
         android:padding="5dp">
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="3.5"
+        android:gravity="bottom"
+        android:orientation="vertical"
+        android:padding="5dp">
+
+
+        <Button
+            android:id="@+id/offerButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="0"
+            android:background="@drawable/btn_login"
+            android:drawableStart="@drawable/ic_baseline_local_offer_24"
+            android:drawableLeft="@drawable/ic_baseline_local_offer_24"
+            android:drawableTint="@color/colorblue_dark3"
+            android:elevation="5dp"
+            android:padding="5dp"
+            android:text="Offer List"
+            android:textColor="@color/colorblue_dark" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0"
-            android:gravity="center"
             android:background="@drawable/blue_back"
+            android:gravity="center"
             android:orientation="vertical">
-        <Button
-            android:id="@+id/ReportButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/NoColor"
-            android:drawableStart="@drawable/ic_equalizer_black_24dp"
-            android:drawableLeft="@drawable/ic_equalizer_black_24dp"
-            android:elevation="5dp"
-            android:padding="10dp"
-            android:text="Report"
-            android:textColor="@color/darkOrange2" />
+
+            <Button
+                android:id="@+id/ReportButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/NoColor"
+                android:drawableStart="@drawable/ic_equalizer_black_24dp"
+                android:drawableLeft="@drawable/ic_equalizer_black_24dp"
+                android:elevation="5dp"
+                android:padding="10dp"
+                android:text="Report"
+                android:textColor="@color/darkOrange2" />
+
             <LinearLayout
                 android:id="@+id/ReportLinear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
                 android:gravity="center"
-                android:visibility="visible"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="visible">
 
                 <TextView
                     android:id="@+id/paymentReport"
@@ -204,10 +237,10 @@
                     android:layout_margin="5dp"
                     android:drawableStart="@drawable/ic_equalizer_black_24dp"
                     android:drawableLeft="@drawable/ic_equalizer_black_24dp"
+                    android:drawableTint="@color/white"
                     android:padding="10dp"
                     android:text="@string/payment_details_report"
-                    android:textColor="@color/white"
-                    android:drawableTint="@color/white"/>
+                    android:textColor="@color/white" />
 
                 <TextView
                     android:id="@+id/customerLogReport"
@@ -217,10 +250,10 @@
                     android:background="@color/NoColor"
                     android:drawableStart="@drawable/ic_equalizer_black_24dp"
                     android:drawableLeft="@drawable/ic_equalizer_black_24dp"
+                    android:drawableTint="@color/white"
                     android:padding="10dp"
                     android:text="@string/customer_log_report"
-                    android:textColor="@color/white"
-                    android:drawableTint="@color/white" />
+                    android:textColor="@color/white" />
 
                 <TextView
                     android:id="@+id/cashReport"
@@ -229,10 +262,10 @@
                     android:layout_margin="5dp"
                     android:drawableStart="@drawable/ic_equalizer_black_24dp"
                     android:drawableLeft="@drawable/ic_equalizer_black_24dp"
+                    android:drawableTint="@color/white"
                     android:padding="10dp"
                     android:text="@string/cash_report"
-                    android:textColor="@color/white"
-                    android:drawableTint="@color/white" />
+                    android:textColor="@color/white" />
 
 
             </LinearLayout>
@@ -252,6 +285,13 @@
             android:padding="5dp"
             android:text="Sales Man Location"
             android:textColor="@color/colorblue_dark" />
+
+
+    </LinearLayout>
+
+
+</ScrollView>
+
     </LinearLayout>
 
 </LinearLayout>
