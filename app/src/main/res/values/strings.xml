@@ -97,4 +97,8 @@
     <string name="paymentCheque">payment Cheque</string>
     <string name="export_to_pdf">Export To Pdf</string>
     <string name="itemName">Item Name</string>
+    <string name="OverflowDebtlimit">Over flow Debtlimit</string>
+    <string name="limit">limit</string>
+    <string name="passwordSetting">Password Setting</string>
+    <string name="PassowrdSetting">Passowrd Setting</string>
 </resources>

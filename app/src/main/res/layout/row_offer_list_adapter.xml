@@ -19,7 +19,7 @@
             android:gravity="center"
             android:padding="10dp"
 
-            android:text="@string/itemNo"
+            android:text="item No"
             android:textColor="@color/colorblue_dark"
             android:textSize="14sp" />
 
@@ -44,7 +44,7 @@
 
             android:padding="10dp"
 
-            android:text="@string/categoryId"
+            android:text="category Id"
             android:textColor="@color/colorblue_dark"
             android:textSize="12sp" />
 
@@ -57,7 +57,7 @@
 
             android:padding="10dp"
 
-            android:text="@string/Barcode"
+            android:text="Barcode"
             android:textColor="@color/colorblue_dark"
             android:textSize="14sp" />
 
@@ -70,7 +70,7 @@
 
             android:padding="10dp"
 
-            android:text="@string/price"
+            android:text="price"
             android:textColor="@color/colorblue_dark"
             android:textSize="14sp" />
 
