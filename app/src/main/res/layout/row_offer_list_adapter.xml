@@ -15,11 +15,11 @@
             android:id="@+id/itemNo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.9"
+            android:layout_weight="1"
             android:gravity="center"
             android:padding="10dp"
 
-            android:text="item No"
+            android:text="@string/itemNo"
             android:textColor="@color/colorblue_dark"
             android:textSize="14sp" />
 
@@ -36,98 +36,79 @@
             android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/categId"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.9"
-            android:gravity="center"
-
-            android:padding="10dp"
-
-            android:text="category Id"
-            android:textColor="@color/colorblue_dark"
-            android:textSize="12sp" />
-
-        <TextView
-            android:id="@+id/Barcode"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.9"
-            android:gravity="center"
-
-            android:padding="10dp"
-
-            android:text="Barcode"
-            android:textColor="@color/colorblue_dark"
-            android:textSize="14sp" />
-
-        <TextView
             android:id="@+id/price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+
+            android:padding="10dp"
+
+            android:text="@string/Barcode"
+            android:textColor="@color/colorblue_dark"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/customer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="0.9"
             android:gravity="center"
 
             android:padding="10dp"
 
-            android:text="price"
+            android:text="@string/price"
             android:textColor="@color/colorblue_dark"
             android:textSize="14sp" />
 
-<!--        <TextView-->
-<!--            android:id="@+id/checkInT"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_weight="0.9"-->
-<!--            android:gravity="center"-->
+        <TextView
+            android:id="@+id/cashDiscount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
 
-<!--            android:padding="10dp"-->
+            android:padding="10dp"
 
-<!--            android:text="@string/CHECK_IN_TIME"-->
-<!--            android:textColor="@color/colorblue_dark"-->
-<!--            android:textSize="14sp" />-->
+            android:text="@string/CHECK_IN_TIME"
+            android:textColor="@color/colorblue_dark"
+            android:textSize="14sp" />
 
-<!--        <TextView-->
-<!--            android:id="@+id/checkOutD"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_weight="0.9"-->
-<!--            android:gravity="center"-->
+        <TextView
+            android:id="@+id/otherDiscount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
 
-<!--            android:padding="10dp"-->
+            android:padding="10dp"
 
-<!--            android:text="@string/CHECK_OUT_DATE"-->
-<!--            android:textColor="@color/colorblue_dark"-->
-<!--            android:textSize="14sp" />-->
+            android:text="@string/CHECK_OUT_DATE"
+            android:textColor="@color/colorblue_dark"
+            android:textSize="14sp" />
 
-<!--        <TextView-->
-<!--            android:id="@+id/checkOutT"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_weight="0.9"-->
-<!--            android:gravity="center"-->
-<!--            android:padding="10dp"-->
-<!--            android:text="@string/CHECK_OUT_TIME"-->
-<!--            android:textColor="@color/colorblue_dark"-->
-<!--            android:textSize="12sp" />-->
-<!--        <TextView-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_weight="1"-->
-<!--            android:gravity="center"-->
-<!--            android:padding="10dp"-->
-<!--            android:textColor="@color/colorblue_dark"-->
-<!--            android:textSize="12sp"-->
-<!--            android:visibility="invisible"/>-->
-<!--        <TextView-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_weight="1"-->
-<!--            android:gravity="center"-->
-<!--            android:padding="10dp"-->
-<!--            android:textColor="@color/colorblue_dark"-->
-<!--            android:textSize="12sp"-->
-<!--            android:visibility="invisible"/>-->
+        <!--        <TextView-->
+        <!--            android:id="@+id/categId"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_weight="0.9"-->
+        <!--            android:gravity="center"-->
+
+        <!--            android:padding="10dp"-->
+
+        <!--            android:text="@string/categoryId"-->
+        <!--            android:textColor="@color/colorblue_dark"-->
+        <!--            android:textSize="12sp" />-->
+
+        <!--        <TextView-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_weight="1"-->
+        <!--            android:gravity="center"-->
+        <!--            android:padding="10dp"-->
+        <!--            android:textColor="@color/colorblue_dark"-->
+        <!--            android:textSize="12sp"-->
+        <!--            android:visibility="invisible"/>-->
     </TableRow>
 
 </LinearLayout>
