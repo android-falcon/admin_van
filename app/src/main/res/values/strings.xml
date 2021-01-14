@@ -53,7 +53,8 @@
     </string-array>
 
     <string-array name="ListType">
-        <item>normal</item>
+        <item>price by customer</item>
+        <item>price only</item>
         <item>offer</item>
         <item>replacement</item>
     </string-array>
@@ -97,4 +98,13 @@
     <string name="paymentCheque">payment Cheque</string>
     <string name="export_to_pdf">Export To Pdf</string>
     <string name="itemName">Item Name</string>
+    <string name="price">Price</string>
+    <string name="Barcode">Barcode</string>
+    <string name="categoryId">Category Id</string>
+    <string name="itemNo">item No</string>
+    <string name="OverflowDebtlimit">Over flow Debtlimit</string>
+    <string name="limit">limit</string>
+    <string name="cashDiscount">cash Discount</string>
+    <string name="otherDiscount">other Discount</string>
+    <string name="cheackDate">check Date</string>
 </resources>

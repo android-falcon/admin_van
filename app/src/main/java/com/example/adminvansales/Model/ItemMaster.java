@@ -51,6 +51,9 @@ public class ItemMaster {
     @SerializedName("ALL_ITEMS")
     private List<ItemMaster> ALL_ITEMS;
 
+    private boolean checkedItem;
+    private  String price;
+
 
     public String getComapnyNo() {
         return ComapnyNo;
@@ -154,5 +157,21 @@ public class ItemMaster {
 
     public void setName(String name) {
         Name = name;
+    }
+
+    public boolean isCheckedItem() {
+        return checkedItem;
+    }
+
+    public void setCheckedItem(boolean checkedItem) {
+        this.checkedItem = checkedItem;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
     }
 }

@@ -12,6 +12,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.adminvansales.Model.SalesManInfo;
+import com.google.gson.JsonArray;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -43,6 +44,7 @@ public class ExportData {
     private String URL_TO_HIT ;
     public static  SweetAlertDialog pd,pdValidation,pdValidationDialog;
     GlobelFunction globelFunction;
+    SweetAlertDialog pdValidationAdd;
 
 
     Context main_context;
@@ -100,6 +102,10 @@ public class ExportData {
 
     public void UpdateSales(Context context,JSONObject jsonObject){
         new JSONTaskUpdateSales(context,jsonObject).execute();
+    }
+
+    public void addToList(Context context, JSONArray jsonArray,JSONObject jsonObject){
+        new JSONTaskAddOffer(context,jsonArray,jsonObject).execute();
     }
 
     private class JSONTask extends AsyncTask<String, String, String> {
@@ -433,5 +439,125 @@ public class ExportData {
 
     }
 
+    private class JSONTaskAddOffer extends AsyncTask<String, String, String> {
+        OfferPriceList  context;
+        JSONArray jsonObject;
+        JSONObject jsonObjectList;
+        public JSONTaskAddOffer(Context context,JSONArray jsonObject,JSONObject jsonObjectList) {
+            this.context= (OfferPriceList) context;
+            this.jsonObject=jsonObject;
+            this.jsonObjectList=jsonObjectList;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            String do_ = "my";
+            pdValidationAdd = new SweetAlertDialog(main_context, SweetAlertDialog.PROGRESS_TYPE);
+            pdValidationAdd.getProgressHelper().setBarColor(Color.parseColor("#FDD835"));
+            pdValidationAdd.setTitleText(main_context.getResources().getString(R.string.process)+"1");
+            pdValidationAdd.setCancelable(false);
+            pdValidationAdd.show();
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+//            ipAddress = "";
+            try {
+
+
+                if (!ipAddress.equals("")) {
+                    URL_TO_HIT = "http://" + ipAddress + "/VANSALES_WEB_SERVICE/admin.php";
+                }
+            } catch (Exception e) {
+
+            }
+
+            try {
+
+                String JsonResponse = null;
+                HttpClient client = new DefaultHttpClient();
+                HttpPost request = new HttpPost();
+                request.setURI(new URI(URL_TO_HIT));
+
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(3);
+                nameValuePairs.add(new BasicNameValuePair("_ID", "19"));
+                nameValuePairs.add(new BasicNameValuePair("ADD_OFFER_PRICE",jsonObject.toString()));
+                nameValuePairs.add(new BasicNameValuePair("ADD_LIST",jsonObjectList.toString()));
+
+                request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+
+
+                HttpResponse response = client.execute(request);
+
+
+                BufferedReader in = new BufferedReader(new
+                        InputStreamReader(response.getEntity().getContent()));
+
+                StringBuffer sb = new StringBuffer("");
+                String line = "";
+                Log.e("positionSaveIn","1222");
+
+                while ((line = in.readLine()) != null) {
+                    sb.append(line);
+                }
+
+                in.close();
+
+
+                JsonResponse = sb.toString();
+                Log.e("positionSaveIn", "JsonResponse\t" + JsonResponse);
+
+                return JsonResponse;
+
+
+            }//org.apache.http.conn.HttpHostConnectException: Connection to http://10.0.0.115 refused
+            catch (HttpHostConnectException ex) {
+                ex.printStackTrace();
+//                progressDialog.dismiss();
+
+                Handler h = new Handler(Looper.getMainLooper());
+                h.post(new Runnable() {
+                    public void run() {
+
+                        Toast.makeText(main_context, "Ip Connection Failed ", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
+                return null;
+            } catch (Exception e) {
+                e.printStackTrace();
+//                progressDialog.dismiss();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            if (s != null) {
+                Log.e("positionSaveIn",""+s.toString());
+                if (s.contains("SUCCESS")) {
+                    Log.e("salesManInfo", "SUCCESS\t" + s.toString());
+                    Toast.makeText(context, "SUCCESS", Toast.LENGTH_SHORT).show();
+                    OfferPriceList offerPriceList=(OfferPriceList) context;
+                    offerPriceList.clearList();
+                    //context.clearTextFun();
+                   // globelFunction.getSalesManInfo(context,0);
+
+                    pdValidationAdd.dismissWithAnimation();
+                }
+//                progressDialog.dismiss();
+            }else{
+                Log.e("positionSaveInnull","null");
+                pdValidationAdd.dismissWithAnimation();
+            }
+        }
+
+    }
 
 }
