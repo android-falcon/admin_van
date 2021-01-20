@@ -1,17 +1,30 @@
 package com.example.adminvansales;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.azoft.carousellayoutmanager.CarouselLayoutManager;
 import com.azoft.carousellayoutmanager.CarouselZoomPostLayoutListener;
@@ -22,8 +35,12 @@ import com.example.adminvansales.Report.CustomerLogReport;
 import com.example.adminvansales.Report.ListOfferReport;
 import com.example.adminvansales.Report.PaymentDetailsReport;
 
+import org.json.JSONException;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 import static com.example.adminvansales.ImportData.listSalesMan;
 
@@ -37,6 +54,7 @@ GlobelFunction globelFunction;
 Button locationButton,ReportButton,offerButton;
 LinearLayout ReportLinear;
 TextView customerLogReport,paymentReport,cashReport,offerReport;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,25 +70,8 @@ TextView customerLogReport,paymentReport,cashReport,offerReport;
     private void initalView() {
         notifyLayout=findViewById(R.id.notifyLayout);
         addVanSales=findViewById(R.id.addVanSales);
-        notifyLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                    finish();
-                    Intent i = new Intent(HomeActivity.this, MainActivity.class);
-                    startActivity(i);
-
-            }
-        });
         accountLayout=findViewById(R.id.accountLayout);
-        accountLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-                Intent i = new Intent(HomeActivity.this, AccountStatment.class);
-                startActivity(i);
-            }
-        });
+
 
         addVanSales.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -204,4 +205,80 @@ TextView customerLogReport,paymentReport,cashReport,offerReport;
 
 
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.changePassowrd) {
+            openchangePasswordDialog();
+
+        }
+        else  if(id==R.id.button_notif){
+            finish();
+            Intent i = new Intent(HomeActivity.this, MainActivity.class);
+            startActivity(i);
+        }
+        else  if(id==R.id.button_account){
+            finish();
+            Intent i = new Intent(HomeActivity.this, AccountStatment.class);
+            startActivity(i);}
+        return super.
+
+                onOptionsItemSelected(item);
+    }
+
+    private void openchangePasswordDialog() {
+
+            final Dialog dialog = new Dialog(HomeActivity.this,R.style.Theme_Dialog);
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialog.setCancelable(true);
+            dialog.setContentView(R.layout.password_setting);
+            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+            lp.copyFrom(dialog.getWindow().getAttributes());
+
+            lp.gravity = Gravity.CENTER;
+            dialog.getWindow().setAttributes(lp);
+            Button saveButton = (Button) dialog.findViewById(R.id.saveButton);
+            TextView cancelButton = (TextView) dialog.findViewById(R.id.cancel);
+
+        final EditText editPassword = (EditText) dialog.findViewById(R.id.passowrdEdit);
+//        getCurentPassowrd(  editPassword);
+        editPassword.setText("303090");
+        saveButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    savePassowrdSetting(editPassword.getText().toString());
+                }
+            });
+
+            cancelButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
+            dialog.show();
+        }
+
+    private void getCurentPassowrd( EditText editPassword) {
+        editPassword.setText("303090");
+    }
+
+    private void savePassowrdSetting(String passowrd) {
+       ExportData exportData =new ExportData(HomeActivity.this);
+       exportData.savePassowrdSetting(passowrd);
+    }
+
+
 }

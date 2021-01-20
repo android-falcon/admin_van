@@ -117,4 +117,6 @@
     <string name="ListNo">List No</string>
     <string name="ListName">List Name</string>
     <string name="ListType">List Type</string>
+    <string name="passwordSetting">Password Setting</string>
+    <string name="PassowrdSetting">Passowrd Setting</string>
 </resources>

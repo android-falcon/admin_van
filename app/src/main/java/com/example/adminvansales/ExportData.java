@@ -114,6 +114,9 @@ public class ExportData {
         new JSONTaskAddOffer(context,jsonArray,jsonObject).execute();
     }
 
+    public void savePassowrdSetting(String passowrd) {
+    }
+
     private class JSONTask extends AsyncTask<String, String, String> {
 
         @Override
