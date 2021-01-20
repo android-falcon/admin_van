@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/White2"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:gravity="center"
+            android:text="Update List Date"
+            android:textColor="@color/colorblue_dark3"
+            android:textSize="20sp" />
+        <TextView
+            android:id="@+id/updateText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:gravity="center"
+            android:text="0"
+            android:textColor="@color/colorblue_dark3"
+            android:textSize="20sp"
+            android:visibility="gone"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_weight="0"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="0"
+            android:background="@drawable/btn_sighn_up"
+            android:elevation="10dp"
+            android:orientation="vertical"
+            android:padding="5dp">
+
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="3dp"
+                android:gravity="center"
+                android:padding="5dp">
+
+                <TextView
+                    android:id="@+id/textView14"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="list No :"
+                    android:textColor="@color/colorblue_dark3" />
+
+                <TextView
+                    android:id="@+id/listNo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="1"
+                    android:textColor="@color/darkGray" />
+
+                <TextView
+                    android:id="@+id/textView15"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="List Name :"
+                    android:textColor="@color/colorblue_dark3" />
+
+                <EditText
+                    android:id="@+id/listName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:background="@color/NoColor"
+                    android:ems="5"
+                    android:textColor="@color/colorblue_dark3"
+                    android:fontFamily="sans-serif-light"
+                    android:inputType="text"
+                    android:textColorHint="@color/lightWhite" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="3dp"
+                android:padding="5dp">
+
+                <TextView
+                    android:id="@+id/textView17"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="List Type :"
+                    android:textColor="@color/colorblue_dark3" />
+
+                <TextView
+                    android:id="@+id/listType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text=""
+                    android:textColor="@color/colorblue_dark3" />
+                <!--                <TextView-->
+                <!--                    android:id="@+id/textView18"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_weight="1"-->
+                <!--                    android:gravity="center"-->
+                <!--                    android:textColor="@color/darkGray" />-->
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="3dp"
+                android:padding="3dp">
+
+                <TextView
+                    android:id="@+id/textView22"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/from_date"
+                    android:textColor="@color/colorblue_dark3" />
+
+                <TextView
+                    android:id="@+id/fromDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="10/10/2020"
+                    android:textColor="@color/darkGray" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="To Date :"
+                    android:textColor="@color/colorblue_dark3" />
+
+                <TextView
+                    android:id="@+id/toDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="10/10/2020"
+                    android:textColor="@color/darkGray" />
+            </TableRow>
+            <!--            <TableRow-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="match_parent"-->
+            <!--                android:layout_margin="3dp"-->
+            <!--                android:gravity="center"-->
+            <!--                android:padding="3dp">-->
+
+
+            <!--                <TextView-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_weight="1"-->
+            <!--                    android:textColor="@color/colorblue_dark3" />-->
+
+            <!--                <RadioGroup-->
+            <!--                    android:id="@+id/dateClose"-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:orientation="horizontal">-->
+
+            <!--                    <RadioButton-->
+            <!--                        android:id="@+id/openRadio"-->
+            <!--                        android:layout_width="wrap_content"-->
+            <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:text="open List"-->
+            <!--                        android:textColor="@color/colorblue_dark3" />-->
+
+            <!--                    <RadioButton-->
+            <!--                        android:id="@+id/closeRadio"-->
+            <!--                        android:layout_width="wrap_content"-->
+            <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:checked="true"-->
+            <!--                        android:text="close List"-->
+            <!--                        android:textColor="@color/colorblue_dark3" />-->
+            <!--                </RadioGroup>-->
+
+            <!--            </TableRow>-->
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/cancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/accept_btn"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="@string/dialog_cancel"
+            android:textColor="@color/darkOrange2" />
+
+        <TextView
+            android:layout_width="5dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:background="@color/white"
+            android:gravity="center"
+            android:padding="10dp"
+            android:textColor="@color/colorblue_dark3" />
+
+        <TextView
+            android:id="@+id/update"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/btn_login"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="update"
+            android:textColor="@color/colorblue_dark3" />
+    </LinearLayout>
+</LinearLayout>

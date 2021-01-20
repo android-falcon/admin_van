@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
@@ -25,6 +27,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.adminvansales.Model.CashReportModel;
 import com.example.adminvansales.Model.ItemMaster;
+import com.example.adminvansales.Model.ListPriceOffer;
 import com.example.adminvansales.Model.OfferListModel;
 import com.example.adminvansales.Model.customerInfoModel;
 import com.example.adminvansales.Report.CashReport;
@@ -64,7 +67,7 @@ public class OfferPriceList extends AppCompatActivity {
     public  static  EditText priceOnly ;
     RadioButton openRadio,closeRadio;
     RadioGroup dateClose;
-
+    CheckBox itemCheckBox;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -127,6 +130,23 @@ public class OfferPriceList extends AppCompatActivity {
             }
         });
 
+        itemCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if(isChecked){
+
+
+
+                }else{
+
+
+
+                }
+
+            }
+        });
+
 
     }
 
@@ -170,10 +190,10 @@ public class OfferPriceList extends AppCompatActivity {
                     searchRec.add(listItemPrice.get(i));
                 }
             }
-            listAdapterPrice = new ListAdapterPriceOnly(OfferPriceList.this, searchRec);
+            listAdapterPrice = new ListAdapterPriceOnly(OfferPriceList.this, searchRec,0);
             itemPriceList.setAdapter(listAdapterPrice);
         } else {
-            listAdapterPrice = new ListAdapterPriceOnly(OfferPriceList.this, listItemPrice);
+            listAdapterPrice = new ListAdapterPriceOnly(OfferPriceList.this, listItemPrice,0);
             itemPriceList.setAdapter(listAdapterPrice);
         }
     }
@@ -258,12 +278,12 @@ public class OfferPriceList extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.e("mainListOfferALLsi",""+mainListOffer.size());
-                for(int i=0;i<mainListOffer.size();i++){
-
-                    Log.e("mainListOfferALL",""+mainListOffer.size()+"   \n"+mainListOffer.get(i).getCustomerName()+"   "+
-                            mainListOffer.get(i).getItemName()+"    "+mainListOffer.get(i).getListNo());
-
-                }
+//                for(int i=0;i<mainListOffer.size();i++){
+//
+//                    Log.e("mainListOfferALL",""+mainListOffer.size()+"   \n"+mainListOffer.get(i).getCustomerName()+"   "+
+//                            mainListOffer.get(i).getItemName()+"    "+mainListOffer.get(i).getListNo());
+//
+//                }
 
                 fillItemCard();
                 dialogSearch.dismiss();
@@ -278,7 +298,7 @@ public class OfferPriceList extends AppCompatActivity {
     public void ShowSearchCustomerDialog(final ItemMaster itemMaster) {
         final Dialog dialog = new Dialog(this, R.style.Theme_Dialog);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.search_dialog_show_);
+        dialog.setContentView(R.layout.search_dialog_show_customer);
         dialog.setCancelable(true);
 
         final EditText noteSearch = dialog.findViewById(R.id.noteSearch);
@@ -434,10 +454,10 @@ List<String> getAllCustomerByItem(String ItemNo){
                 qtyLinear.setVisibility(View.GONE);
                 listOfferLinear.setVisibility(View.GONE);
                 qtyPriceLinear.setVisibility(View.VISIBLE);
-               fillItemPriceInList();
+               fillItemPriceInList(0);
                 break;
             case 1:
-                fillItemPriceInList();
+                fillItemPriceInList(0);
                 priceOfferLinear.setVisibility(View.GONE);
                 priceOnlyLinear.setVisibility(View.VISIBLE);
                 mainListOffer.clear();
@@ -459,7 +479,7 @@ List<String> getAllCustomerByItem(String ItemNo){
                 listOfferLinear.setVisibility(View.VISIBLE);
                 qtyPriceLinear.setVisibility(View.GONE);
                 mainListOffer.clear();
-               fillItemPriceInList();
+               fillItemPriceInList(0);
                break;
         }
 
@@ -473,7 +493,7 @@ List<String> getAllCustomerByItem(String ItemNo){
         otherDiscount.setText("0.0");
         cashDiscount.setText("0.0");
         price.setText("0.0");
-        fillItemPriceInList();
+        fillItemPriceInList(0);
         mainListOffer.clear();
         try{
             itemCardAdapter = new ItemCardAdapter(OfferPriceList.this, mainListOffer);
@@ -527,6 +547,7 @@ List<String> getAllCustomerByItem(String ItemNo){
         openRadio=findViewById(R.id.openRadio);
         closeRadio=findViewById(R.id.closeRadio);
         dateClose=findViewById(R.id.dateClose);
+        itemCheckBox=findViewById(R.id.itemCheckBox);
 
 
         fromDate.setOnClickListener(onClickListener);
@@ -535,6 +556,7 @@ List<String> getAllCustomerByItem(String ItemNo){
         selectCustomer.setOnClickListener(onClickListener);
         addList.setOnClickListener(onClickListener);
         cancelList.setOnClickListener(onClickListener);
+
     }
 
     View.OnClickListener onClickListener=new View.OnClickListener() {
@@ -560,6 +582,7 @@ List<String> getAllCustomerByItem(String ItemNo){
                     save();
                     break;
                 case R.id.cancelList:
+                    finish();
                     break;
             }
         }
@@ -618,24 +641,21 @@ List<String> getAllCustomerByItem(String ItemNo){
 
         int position =listTypeSpinner.getSelectedItemPosition();
         Log.e("positionSave",""+position);
+String toDates="";
+        if(openRadio.isChecked()){
 
+            toDates="01/01/9999";
+        }else{
+
+            toDates=toDate.getText().toString();
+        }
 
 
         if(position!=1) {
             if (!listName.getText().toString().equals("")) {
                 Log.e("positionSaveOffer",""+mainListOffer.size());
                 if (mainListOffer.size() != 0) {
-                    importData.ifBetweenDate(OfferPriceList.this, fromDate.getText().toString(), toDate.getText().toString());
-                    switch (position) {
-                        case 0:
-                            break;
-                        case 1:
-                            break;
-                        case 2:
-                            break;
-                        case 3:
-                            break;
-                    }
+                    importData.ifBetweenDate(OfferPriceList.this, fromDate.getText().toString(), toDates,""+position,"0",listNo.getText().toString());
                 } else {
                     Toast.makeText(this, "No Data In List", Toast.LENGTH_SHORT).show();
                 }
@@ -646,7 +666,7 @@ List<String> getAllCustomerByItem(String ItemNo){
         }else  {
             if (!listName.getText().toString().equals("")) {
                 if (listItemPrice.size() != 0) {
-                    importData.ifBetweenDate(OfferPriceList.this, fromDate.getText().toString(), toDate.getText().toString());
+                    importData.ifBetweenDate(OfferPriceList.this, fromDate.getText().toString(), toDates,""+position,"0",listNo.getText().toString());
 
                 } else {
                     Toast.makeText(this, "No Data In List", Toast.LENGTH_SHORT).show();
@@ -769,10 +789,10 @@ Log.e("mmmma","size : "+listItemPrice.size());
 
         }
 
-    public void fillItemPriceInList(){
+    public void fillItemPriceInList(int clear){
 
         listItemPrice=new ArrayList<>(ItemCardList);
-        listAdapterPrice = new ListAdapterPriceOnly(OfferPriceList.this, listItemPrice);
+        listAdapterPrice = new ListAdapterPriceOnly(OfferPriceList.this, listItemPrice,clear);
         itemPriceList.setAdapter(listAdapterPrice);
 
     }

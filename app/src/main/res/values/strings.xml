@@ -51,12 +51,18 @@
         <item>Cash</item>
         <item>Cheque</item>
     </string-array>
-
+    <string-array name="ListTypeAll">
+        <item>ALL</item>
+        <item>price by customer</item>
+        <item>price only</item>
+        <item>offer</item>
+<!--        <item>replacement</item>-->
+    </string-array>
     <string-array name="ListType">
         <item>price by customer</item>
         <item>price only</item>
         <item>offer</item>
-        <item>replacement</item>
+<!--        <item>replacement</item>-->
     </string-array>
 
     <string name="company_number">Company Number</string>
@@ -107,4 +113,8 @@
     <string name="cashDiscount">cash Discount</string>
     <string name="otherDiscount">other Discount</string>
     <string name="cheackDate">check Date</string>
+    <string name="update">Update</string>
+    <string name="ListNo">List No</string>
+    <string name="ListName">List Name</string>
+    <string name="ListType">List Type</string>
 </resources>

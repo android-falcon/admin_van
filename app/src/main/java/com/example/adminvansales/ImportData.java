@@ -14,6 +14,7 @@ import com.example.adminvansales.Model.Account__Statment_Model;
 import com.example.adminvansales.Model.CashReportModel;
 import com.example.adminvansales.Model.CustomerLogReportModel;
 import com.example.adminvansales.Model.ItemMaster;
+import com.example.adminvansales.Model.ListPriceOffer;
 import com.example.adminvansales.Model.PayMentReportModel;
 import com.example.adminvansales.Model.CustomerInfo;
 import com.example.adminvansales.Model.Request;
@@ -21,6 +22,7 @@ import com.example.adminvansales.Model.SalesManInfo;
 import com.example.adminvansales.Model.customerInfoModel;
 import com.example.adminvansales.Report.CashReport;
 import com.example.adminvansales.Report.CustomerLogReport;
+import com.example.adminvansales.Report.ListOfferReport;
 import com.example.adminvansales.Report.PaymentDetailsReport;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
@@ -51,12 +53,14 @@ import static com.example.adminvansales.GlobelFunction.LatLngListMarker;
 import static com.example.adminvansales.GlobelFunction.salesManInfosList;
 import static com.example.adminvansales.GlobelFunction.salesManNameList;
 import static com.example.adminvansales.HomeActivity.waitList;
+import static com.example.adminvansales.ListOfferReportAdapter.controlText;
 import static com.example.adminvansales.LogIn.ipAddress;
 import static com.example.adminvansales.MainActivity.isListUpdated;
 import static com.example.adminvansales.OfferPriceList.ItemCardList;
 import static com.example.adminvansales.OfferPriceList.customerList;
 import static com.example.adminvansales.Report.CashReport.cashReportList;
 import static com.example.adminvansales.Report.CustomerLogReport.customerLogReportList;
+import static com.example.adminvansales.Report.ListOfferReport.listPriceOffers;
 import static com.example.adminvansales.Report.PaymentDetailsReport.payMentReportList;
 import static com.example.adminvansales.ShowNotifications.showNotification;
 
@@ -65,16 +69,17 @@ public class ImportData {
 
     private String URL_TO_HIT;
     SweetAlertDialog pdValidation;
-    SweetAlertDialog pdValidationCustomer,pdValidationSerial;
+    SweetAlertDialog pdValidationCustomer, pdValidationSerial, pdValidationItem;
 
     Context main_context;
-    public  static ArrayList<Integer> listId;
+    public static ArrayList<Integer> listId;
 
     public static ArrayList<Request> listRequest = new ArrayList<Request>();
     public static ArrayList<SalesManInfo> listSalesMan = new ArrayList<SalesManInfo>();
     public static ArrayList<Account__Statment_Model> listCustomerInfo = new ArrayList<Account__Statment_Model>();
     public static ArrayList<CustomerInfo> listCustomer = new ArrayList<CustomerInfo>();
-    public static List<String> customername=new ArrayList<>();
+    public static List<String> customername = new ArrayList<>();
+
     public ImportData(Context context) {
         databaseHandler = new DataBaseHandler(context);
         this.main_context = context;
@@ -86,10 +91,14 @@ public class ImportData {
         new JSONTask_checkStateRequest().execute();
     }
 
-
-    public void getSalesMan(Context context,int flag) {
-        new JSONTaskGetSalesMan(context,flag).execute();
+    public void getAllList(Context context) {
+        new JSONTaskGetList(context).execute();
     }
+
+    public void getSalesMan(Context context, int flag) {
+        new JSONTaskGetSalesMan(context, flag).execute();
+    }
+
     public void getItemCard(Context context) {
         new JSONTaskGetItem(context).execute();
     }
@@ -103,763 +112,764 @@ public class ImportData {
     }
 
 
-    public void ifBetweenDate(Context context,String fromDate,String toDate){
-        new JSONTaskIfDateBetween(context,fromDate,toDate).execute();
+    public void ifBetweenDate(Context context, String fromDate, String toDate, String postion, String upAdd, String listNo) {
+        new JSONTaskIfDateBetween(context, fromDate, toDate, postion, upAdd, listNo).execute();
     }
 
     public void getCustomerAccountStatment(String CustomerId) {
-       new JSONTask_AccountStatment(CustomerId).execute();
+        new JSONTask_AccountStatment(CustomerId).execute();
     }
-    public void  getCustomerInfo() {
+
+    public void getCustomerInfo() {
         Log.e("getCustomerInfo", "*****");
         new JSONTask_CustomerInfo().execute();
     }
 
-        public void getPaymentsReport (Context context, String SalesNo, String fromDate, String
-        toDate, String payKind){
-            new JSONTaskGetPaymentReport(context, SalesNo, fromDate, toDate, payKind).execute();
+    public void getPaymentsReport(Context context, String SalesNo, String fromDate, String
+            toDate, String payKind) {
+        new JSONTaskGetPaymentReport(context, SalesNo, fromDate, toDate, payKind).execute();
+    }
+
+    public void getCashReport(Context context, String fromDate, String toDate) {
+        new JSONTaskGetCashReport(context, fromDate, toDate).execute();
+    }
+
+    public void getCustomerLogReport(Context context, String SalesNo, String fromDate, String
+            toDate) {
+        new JSONTaskGetCustomerLogReport(context, SalesNo, fromDate, toDate).execute();
+    }
+
+
+    private class JSONTask_checkStateRequest extends AsyncTask<String, String, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            String do_ = "my";
+
         }
 
-        public void getCashReport (Context context, String fromDate, String toDate){
-            new JSONTaskGetCashReport(context, fromDate, toDate).execute();
-        }
+        @Override
+        protected String doInBackground(String... params) {
 
-        public void getCustomerLogReport (Context context, String SalesNo, String fromDate, String
-        toDate){
-            new JSONTaskGetCustomerLogReport(context, SalesNo, fromDate, toDate).execute();
-        }
+//            ipAddress = "";
+            try {
 
 
-        private class JSONTask_checkStateRequest extends AsyncTask<String, String, String> {
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                String do_ = "my";
+                if (!ipAddress.equals("")) {
+                    URL_TO_HIT = "http://" + ipAddress + "/VANSALES_WEB_SERVICE/index.php";
+                }
+            } catch (Exception e) {
 
             }
 
-            @Override
-            protected String doInBackground(String... params) {
+            try {
 
-//            ipAddress = "";
-                try {
+                String JsonResponse = null;
+                HttpClient client = new DefaultHttpClient();
+                HttpPost request = new HttpPost();
+                request.setURI(new URI(URL_TO_HIT));
 
-
-                    if (!ipAddress.equals("")) {
-                        URL_TO_HIT = "http://" + ipAddress + "/VANSALES_WEB_SERVICE/index.php";
-                    }
-                } catch (Exception e) {
-
-                }
-
-                try {
-
-                    String JsonResponse = null;
-                    HttpClient client = new DefaultHttpClient();
-                    HttpPost request = new HttpPost();
-                    request.setURI(new URI(URL_TO_HIT));
-
-                    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-                    nameValuePairs.add(new BasicNameValuePair("_ID", "7"));
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+                nameValuePairs.add(new BasicNameValuePair("_ID", "7"));
 //                nameValuePairs.add(new BasicNameValuePair("SalesManNo",discountRequest.getSalesman_no()));
 
 
-                    request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+                request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
 
 
-                    HttpResponse response = client.execute(request);
+                HttpResponse response = client.execute(request);
 
 
-                    BufferedReader in = new BufferedReader(new
-                            InputStreamReader(response.getEntity().getContent()));
+                BufferedReader in = new BufferedReader(new
+                        InputStreamReader(response.getEntity().getContent()));
 
-                    StringBuffer sb = new StringBuffer("");
-                    String line = "";
+                StringBuffer sb = new StringBuffer("");
+                String line = "";
 
-                    while ((line = in.readLine()) != null) {
-                        sb.append(line);
-                    }
-
-                    in.close();
-
-
-                    JsonResponse = sb.toString();
-                    Log.e("tag_requestState", "JsonResponse\t" + JsonResponse);
-
-                    return JsonResponse;
-
-
-                }//org.apache.http.conn.HttpHostConnectException: Connection to http://10.0.0.115 refused
-                catch (HttpHostConnectException ex) {
-                    ex.printStackTrace();
-//                progressDialog.dismiss();
-
-                    Handler h = new Handler(Looper.getMainLooper());
-                    h.post(new Runnable() {
-                        public void run() {
-
-                            Toast.makeText(main_context, "Ip Connection Failed ", Toast.LENGTH_LONG).show();
-                        }
-                    });
-
-
-                    return null;
-                } catch (Exception e) {
-                    e.printStackTrace();
-//                progressDialog.dismiss();
-                    return null;
+                while ((line = in.readLine()) != null) {
+                    sb.append(line);
                 }
+
+                in.close();
+
+
+                JsonResponse = sb.toString();
+                Log.e("tag_requestState", "JsonResponse\t" + JsonResponse);
+
+                return JsonResponse;
+
+
+            }//org.apache.http.conn.HttpHostConnectException: Connection to http://10.0.0.115 refused
+            catch (HttpHostConnectException ex) {
+                ex.printStackTrace();
+//                progressDialog.dismiss();
+
+                Handler h = new Handler(Looper.getMainLooper());
+                h.post(new Runnable() {
+                    public void run() {
+
+                        Toast.makeText(main_context, "Ip Connection Failed ", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
+                return null;
+            } catch (Exception e) {
+                e.printStackTrace();
+//                progressDialog.dismiss();
+                return null;
             }
+        }
 
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
 
-                JSONObject result = null;
-                String impo = "";
-                if (s != null) {
-                    if (s.contains("RequestAdminData")) {
+            JSONObject result = null;
+            String impo = "";
+            if (s != null) {
+                if (s.contains("RequestAdminData")) {
 
-                        try {
-                            result = new JSONObject(s);
-                            Request requestDetail;
-
-
-                            JSONArray requestArray = null;
-                            listRequest = new ArrayList<>();
-                            listId.clear();
-
-                            requestArray = result.getJSONArray("RequestAdminData");
+                    try {
+                        result = new JSONObject(s);
+                        Request requestDetail;
 
 
-                            for (int i = 0; i < requestArray.length(); i++) {
-                                JSONObject infoDetail = requestArray.getJSONObject(i);
-                                requestDetail = new Request();
-                                //salesman_name, salesman_no, customer_name, customer_no, request_type, amount_value, " .
-                                //                        "voucher_no, total_voucher, status, key_validation ,date, time , note , seen_row
+                        JSONArray requestArray = null;
+                        listRequest = new ArrayList<>();
+                        listId.clear();
+
+                        requestArray = result.getJSONArray("RequestAdminData");
+
+
+                        for (int i = 0; i < requestArray.length(); i++) {
+                            JSONObject infoDetail = requestArray.getJSONObject(i);
+                            requestDetail = new Request();
+                            //salesman_name, salesman_no, customer_name, customer_no, request_type, amount_value, " .
+                            //                        "voucher_no, total_voucher, status, key_validation ,date, time , note , seen_row
+                            requestDetail.setStatuse(infoDetail.get("status").toString());
+                            if (requestDetail.getStatuse().equals("0")) {
+                                Log.e("infoDetail", "" + infoDetail.get("status").toString());
+                                Log.e("key_validation", "" + infoDetail.get("key_validation").toString());
+                                requestDetail.setSalesmanName(infoDetail.get("salesman_name").toString());
+                                requestDetail.setSalesmanNo(infoDetail.get("salesman_no").toString());
+                                requestDetail.setCustomerName(infoDetail.get("customer_name").toString());
+                                requestDetail.setCustomer_no(infoDetail.get("customer_no").toString());
+                                requestDetail.setRequestType(infoDetail.get("request_type").toString());
+                                requestDetail.setAmountValue(infoDetail.get("amount_value").toString());
+                                requestDetail.setVoucherNo(infoDetail.get("voucher_no").toString());
+                                requestDetail.setTotalVoucher(infoDetail.get("total_voucher").toString());
+                                Log.e("requestDetail", "" + requestDetail.getTotalVoucher());
                                 requestDetail.setStatuse(infoDetail.get("status").toString());
-                                if (requestDetail.getStatuse().equals("0")) {
-                                    Log.e("infoDetail", "" + infoDetail.get("status").toString());
-                                    Log.e("key_validation", "" + infoDetail.get("key_validation").toString());
-                                    requestDetail.setSalesmanName(infoDetail.get("salesman_name").toString());
-                                    requestDetail.setSalesmanNo(infoDetail.get("salesman_no").toString());
-                                    requestDetail.setCustomerName(infoDetail.get("customer_name").toString());
-                                    requestDetail.setCustomer_no(infoDetail.get("customer_no").toString());
-                                    requestDetail.setRequestType(infoDetail.get("request_type").toString());
-                                    requestDetail.setAmountValue(infoDetail.get("amount_value").toString());
-                                    requestDetail.setVoucherNo(infoDetail.get("voucher_no").toString());
-                                    requestDetail.setTotalVoucher(infoDetail.get("total_voucher").toString());
-                                    Log.e("requestDetail",""+requestDetail.getTotalVoucher());
-                                    requestDetail.setStatuse(infoDetail.get("status").toString());
-                                    requestDetail.setKeyValidation(infoDetail.get("key_validation").toString());
-                                    requestDetail.setDate(infoDetail.get("date").toString());
-                                    requestDetail.setTime(infoDetail.get("time").toString());
-                                    requestDetail.setNote(infoDetail.get("note").toString());
-                                    requestDetail.setSeenRow(infoDetail.get("seen_row").toString());
-                                    requestDetail.setRowId(infoDetail.get("row_id").toString());
+                                requestDetail.setKeyValidation(infoDetail.get("key_validation").toString());
+                                requestDetail.setDate(infoDetail.get("date").toString());
+                                requestDetail.setTime(infoDetail.get("time").toString());
+                                requestDetail.setNote(infoDetail.get("note").toString());
+                                requestDetail.setSeenRow(infoDetail.get("seen_row").toString());
+                                requestDetail.setRowId(infoDetail.get("row_id").toString());
 
-                                    int rowId = 0;
-                                    try {
-                                        rowId = Integer.parseInt((infoDetail.get("row_id").toString()));
-                                        int seen = Integer.parseInt(infoDetail.get("seen_row").toString());
+                                int rowId = 0;
+                                try {
+                                    rowId = Integer.parseInt((infoDetail.get("row_id").toString()));
+                                    int seen = Integer.parseInt(infoDetail.get("seen_row").toString());
 //                                    if (seen == 0) {
-                                        int exist = databaseHandler.getRowId(requestDetail.getRowId());
-                                        if (exist == 1)// dosent exist
-                                        {
-                                            databaseHandler.addRoqId(requestDetail.getRowId());
-                                            listId.add(rowId);
-                                            isListUpdated = true;
+                                    int exist = databaseHandler.getRowId(requestDetail.getRowId());
+                                    if (exist == 1)// dosent exist
+                                    {
+                                        databaseHandler.addRoqId(requestDetail.getRowId());
+                                        listId.add(rowId);
+                                        isListUpdated = true;
 
-                                            ShowNotifi_detail("request", 0, infoDetail.get("salesman_name").toString());
-                                        }
+                                        ShowNotifi_detail("request", 0, infoDetail.get("salesman_name").toString());
+                                    }
 
 //                                    }
-                                    } catch (Exception e) {
-                                    }
-                                    Log.e("listId", "" + listId.size());
-
-                                    listRequest.add(requestDetail);
+                                } catch (Exception e) {
                                 }
+                                Log.e("listId", "" + listId.size());
 
-
-                            }
-                            if (isListUpdated) {
-                                Intent i = new Intent(main_context, MainActivity.class);
-                                main_context.startActivity(i);
+                                listRequest.add(requestDetail);
                             }
 
 
-                            Log.e("listRequest", "" + listRequest.size());
-
-
-                        } catch (JSONException e) {
-//                        progressDialog.dismiss();
-                            e.printStackTrace();
                         }
+                        if (isListUpdated) {
+                            Intent i = new Intent(main_context, MainActivity.class);
+                            main_context.startActivity(i);
+                        }
+
+
+                        Log.e("listRequest", "" + listRequest.size());
+
+
+                    } catch (JSONException e) {
+//                        progressDialog.dismiss();
+                        e.printStackTrace();
                     }
-//                progressDialog.dismiss();
                 }
+//                progressDialog.dismiss();
+            }
+        }
+    }
+
+    private class JSONTaskGetSalesMan extends AsyncTask<String, String, String> {
+        Object context;
+        int flag;
+
+        public JSONTaskGetSalesMan(Object context, int flag) {
+            this.flag = flag;
+            if (flag == 0) {
+                this.context = (EditSalesMan) context;
+            } else if (flag == 1) {
+                this.context = (HomeActivity) context;
+            } else if (flag == 2) {
+                this.context = (SalesmanMapsActivity) context;
             }
         }
 
-        private class JSONTaskGetSalesMan extends AsyncTask<String, String, String> {
-            Object context;
-            int flag;
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            String do_ = "my";
 
-            public JSONTaskGetSalesMan(Object context, int flag) {
-                this.flag = flag;
-                if (flag == 0) {
-                    this.context = (EditSalesMan) context;
-                } else if (flag == 1) {
-                    this.context = (HomeActivity) context;
-                } else if (flag == 2) {
-                    this.context = (SalesmanMapsActivity) context;
-                }
-            }
+        }
 
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                String do_ = "my";
-
-            }
-
-            @Override
-            protected String doInBackground(String... params) {
+        @Override
+        protected String doInBackground(String... params) {
 
 //            ipAddress = "";
-                try {
+            try {
 
 
-                    if (!ipAddress.equals("")) {
-                        URL_TO_HIT = "http://" + ipAddress + "/VANSALES_WEB_SERVICE/admin.php";
-                    }
-                } catch (Exception e) {
-
+                if (!ipAddress.equals("")) {
+                    URL_TO_HIT = "http://" + ipAddress + "/VANSALES_WEB_SERVICE/admin.php";
                 }
+            } catch (Exception e) {
 
-                try {
+            }
 
-                    String JsonResponse = null;
-                    HttpClient client = new DefaultHttpClient();
-                    HttpPost request = new HttpPost();
-                    request.setURI(new URI(URL_TO_HIT));
+            try {
 
-                    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-                    nameValuePairs.add(new BasicNameValuePair("_ID", "2"));
+                String JsonResponse = null;
+                HttpClient client = new DefaultHttpClient();
+                HttpPost request = new HttpPost();
+                request.setURI(new URI(URL_TO_HIT));
+
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+                nameValuePairs.add(new BasicNameValuePair("_ID", "2"));
 //                nameValuePairs.add(new BasicNameValuePair("SalesManNo",discountRequest.getSalesman_no()));
 
 
-                    request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+                request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
 
 
-                    HttpResponse response = client.execute(request);
+                HttpResponse response = client.execute(request);
 
 
-                    BufferedReader in = new BufferedReader(new
-                            InputStreamReader(response.getEntity().getContent()));
+                BufferedReader in = new BufferedReader(new
+                        InputStreamReader(response.getEntity().getContent()));
 
-                    StringBuffer sb = new StringBuffer("");
-                    String line = "";
+                StringBuffer sb = new StringBuffer("");
+                String line = "";
 
-                    while ((line = in.readLine()) != null) {
-                        sb.append(line);
-                    }
-
-                    in.close();
-
-
-                    JsonResponse = sb.toString();
-                    Log.e("tag_requestState", "JsonResponse\t" + JsonResponse);
-
-                    return JsonResponse;
-
-
-                }//org.apache.http.conn.HttpHostConnectException: Connection to http://10.0.0.115 refused
-                catch (HttpHostConnectException ex) {
-                    ex.printStackTrace();
-//                progressDialog.dismiss();
-
-                    Handler h = new Handler(Looper.getMainLooper());
-                    h.post(new Runnable() {
-                        public void run() {
-
-                            Toast.makeText(main_context, "Ip Connection Failed ", Toast.LENGTH_LONG).show();
-                        }
-                    });
-
-
-                    return null;
-                } catch (Exception e) {
-                    e.printStackTrace();
-//                progressDialog.dismiss();
-                    return null;
+                while ((line = in.readLine()) != null) {
+                    sb.append(line);
                 }
+
+                in.close();
+
+
+                JsonResponse = sb.toString();
+                Log.e("tag_requestState", "JsonResponse\t" + JsonResponse);
+
+                return JsonResponse;
+
+
+            }//org.apache.http.conn.HttpHostConnectException: Connection to http://10.0.0.115 refused
+            catch (HttpHostConnectException ex) {
+                ex.printStackTrace();
+//                progressDialog.dismiss();
+
+                Handler h = new Handler(Looper.getMainLooper());
+                h.post(new Runnable() {
+                    public void run() {
+
+                        Toast.makeText(main_context, "Ip Connection Failed ", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
+                return null;
+            } catch (Exception e) {
+                e.printStackTrace();
+//                progressDialog.dismiss();
+                return null;
             }
+        }
 
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
 
-                if (s != null) {
-                    if (s.contains("SalesManInfo")) {
+            if (s != null) {
+                if (s.contains("SalesManInfo")) {
 
-                        try {
-                            salesManInfosList.clear();
-                            LatLngListMarker.clear();
-                            salesManNameList.clear();
-                            salesManNameList.add("All");
-                            JSONObject jsonObject = new JSONObject(s);
-                            JSONArray jsonArray = jsonObject.getJSONArray("SalesManInfo");
-                            for (int i = 0; i < jsonArray.length(); i++) {
+                    try {
+                        salesManInfosList.clear();
+                        LatLngListMarker.clear();
+                        salesManNameList.clear();
+                        salesManNameList.add("All");
+                        JSONObject jsonObject = new JSONObject(s);
+                        JSONArray jsonArray = jsonObject.getJSONArray("SalesManInfo");
+                        for (int i = 0; i < jsonArray.length(); i++) {
 
-                                JSONObject jsonObject1 = jsonArray.getJSONObject(i);
-                                SalesManInfo salesManInfo = new SalesManInfo();
+                            JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+                            SalesManInfo salesManInfo = new SalesManInfo();
 
-                                salesManInfo.setSalesManNo(jsonObject1.getString("SALESNO"));
-                                salesManInfo.setSalesName(jsonObject1.getString("ACCNAME"));
-                                salesManInfo.setSalesPassword(jsonObject1.getString("USER_PASSWORD"));
-                                salesManInfo.setActive(jsonObject1.getString("ACTIVE_USER"));
-                                salesManInfo.setLatitudeLocation(jsonObject1.getString("LATITUDE"));
-                                salesManInfo.setLongitudeLocation(jsonObject1.getString("LONGITUDE"));
-                                salesManInfosList.add(salesManInfo);
-                                salesManNameList.add(salesManInfo.getSalesName());
-                                LatLngListMarker.add(new LatLng(Double.parseDouble(jsonObject1.getString("LATITUDE")), Double.parseDouble(jsonObject1.getString("LONGITUDE"))));
-                            }
-
-                            if (flag == 0) {
-                                EditSalesMan editSalesMan = (EditSalesMan) context;
-                                editSalesMan.searchSalesMan();
-                            } else if (flag == 1) {
-                                HomeActivity homeActivity = (HomeActivity) context;
-                                homeActivity.showAllSalesManData(salesManInfosList);
-                            } else if (flag == 2) {
-                                SalesmanMapsActivity salesmanMapsActivity = (SalesmanMapsActivity) context;
-                                salesmanMapsActivity.location(1);
-                            }
-
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                            salesManInfo.setSalesManNo(jsonObject1.getString("SALESNO"));
+                            salesManInfo.setSalesName(jsonObject1.getString("ACCNAME"));
+                            salesManInfo.setSalesPassword(jsonObject1.getString("USER_PASSWORD"));
+                            salesManInfo.setActive(jsonObject1.getString("ACTIVE_USER"));
+                            salesManInfo.setLatitudeLocation(jsonObject1.getString("LATITUDE"));
+                            salesManInfo.setLongitudeLocation(jsonObject1.getString("LONGITUDE"));
+                            salesManInfosList.add(salesManInfo);
+                            salesManNameList.add(salesManInfo.getSalesName());
+                            LatLngListMarker.add(new LatLng(Double.parseDouble(jsonObject1.getString("LATITUDE")), Double.parseDouble(jsonObject1.getString("LONGITUDE"))));
                         }
 
+                        if (flag == 0) {
+                            EditSalesMan editSalesMan = (EditSalesMan) context;
+                            editSalesMan.searchSalesMan();
+                        } else if (flag == 1) {
+                            HomeActivity homeActivity = (HomeActivity) context;
+                            homeActivity.showAllSalesManData(salesManInfosList);
+                        } else if (flag == 2) {
+                            SalesmanMapsActivity salesmanMapsActivity = (SalesmanMapsActivity) context;
+                            salesmanMapsActivity.location(1);
+                        }
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-//                progressDialog.dismiss();
+
                 }
+//                progressDialog.dismiss();
             }
+        }
+
+    }
+
+
+    private class JSONTaskGetPaymentReport extends AsyncTask<String, String, String> {
+        Object context;
+        int flag;
+        String SalesNo, fromDate, toDate, payKind;
+
+        public JSONTaskGetPaymentReport(Object context, String SalesNo, String fromDate, String toDate, String payKind) {
+//            this.flag=flag;
+            this.context = (PaymentDetailsReport) context;
+            this.SalesNo = SalesNo;
+            this.fromDate = fromDate;
+            this.toDate = toDate;
+            this.payKind = payKind;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            String do_ = "my";
+            pdValidation = new SweetAlertDialog(main_context, SweetAlertDialog.PROGRESS_TYPE);
+            pdValidation.getProgressHelper().setBarColor(Color.parseColor("#FDD835"));
+            pdValidation.setTitleText(main_context.getResources().getString(R.string.process));
+            pdValidation.setCancelable(false);
+            pdValidation.show();
 
         }
 
-
-        private class JSONTaskGetPaymentReport extends AsyncTask<String, String, String> {
-            Object context;
-            int flag;
-            String SalesNo, fromDate, toDate, payKind;
-
-            public JSONTaskGetPaymentReport(Object context, String SalesNo, String fromDate, String toDate, String payKind) {
-//            this.flag=flag;
-                this.context = (PaymentDetailsReport) context;
-                this.SalesNo = SalesNo;
-                this.fromDate = fromDate;
-                this.toDate = toDate;
-                this.payKind = payKind;
-            }
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                String do_ = "my";
-                pdValidation = new SweetAlertDialog(main_context, SweetAlertDialog.PROGRESS_TYPE);
-                pdValidation.getProgressHelper().setBarColor(Color.parseColor("#FDD835"));
-                pdValidation.setTitleText(main_context.getResources().getString(R.string.process));
-                pdValidation.setCancelable(false);
-                pdValidation.show();
-
-            }
-
-            @Override
-            protected String doInBackground(String... params) {
+        @Override
+        protected String doInBackground(String... params) {
 
 //            ipAddress = "";
-                try {
+            try {
 
 
-                    if (!ipAddress.equals("")) {
-                        URL_TO_HIT = "http://" + ipAddress + "/VANSALES_WEB_SERVICE/admin.php";
-                    }
-                } catch (Exception e) {
-
+                if (!ipAddress.equals("")) {
+                    URL_TO_HIT = "http://" + ipAddress + "/VANSALES_WEB_SERVICE/admin.php";
                 }
+            } catch (Exception e) {
 
-                try {
-
-                    String JsonResponse = null;
-                    HttpClient client = new DefaultHttpClient();
-                    HttpPost request = new HttpPost();
-                    request.setURI(new URI(URL_TO_HIT));
-
-                    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(5);
-                    nameValuePairs.add(new BasicNameValuePair("_ID", "11"));
-                    nameValuePairs.add(new BasicNameValuePair("FromDate", fromDate));
-                    nameValuePairs.add(new BasicNameValuePair("ToDate", toDate));
-                    nameValuePairs.add(new BasicNameValuePair("PayKind", payKind));
-                    nameValuePairs.add(new BasicNameValuePair("SalesNo", SalesNo));
-
-
-                    request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
-
-
-                    HttpResponse response = client.execute(request);
-
-
-                    BufferedReader in = new BufferedReader(new
-                            InputStreamReader(response.getEntity().getContent()));
-
-                    StringBuffer sb = new StringBuffer("");
-                    String line = "";
-
-                    while ((line = in.readLine()) != null) {
-                        sb.append(line);
-                    }
-
-                    in.close();
-
-
-                    JsonResponse = sb.toString();
-                    Log.e("tag_paymentReport", "JsonResponse\t" + JsonResponse);
-
-                    return JsonResponse;
-
-
-                }//org.apache.http.conn.HttpHostConnectException: Connection to http://10.0.0.115 refused
-                catch (HttpHostConnectException ex) {
-                    ex.printStackTrace();
-//                progressDialog.dismiss();
-
-                    Handler h = new Handler(Looper.getMainLooper());
-                    h.post(new Runnable() {
-                        public void run() {
-
-                            Toast.makeText(main_context, "Ip Connection Failed ", Toast.LENGTH_LONG).show();
-                        }
-                    });
-
-
-                    return null;
-                } catch (Exception e) {
-                    e.printStackTrace();
-//                progressDialog.dismiss();
-                    return null;
-                }
             }
 
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
+            try {
 
-                payMentReportList.clear();
-                if (s != null) {
-                    if (s.contains("ComapnyNo")) {
+                String JsonResponse = null;
+                HttpClient client = new DefaultHttpClient();
+                HttpPost request = new HttpPost();
+                request.setURI(new URI(URL_TO_HIT));
 
-                        Gson gson = new Gson();
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(5);
+                nameValuePairs.add(new BasicNameValuePair("_ID", "11"));
+                nameValuePairs.add(new BasicNameValuePair("FromDate", fromDate));
+                nameValuePairs.add(new BasicNameValuePair("ToDate", toDate));
+                nameValuePairs.add(new BasicNameValuePair("PayKind", payKind));
+                nameValuePairs.add(new BasicNameValuePair("SalesNo", SalesNo));
 
-                        PayMentReportModel gsonObj = gson.fromJson(s, PayMentReportModel.class);
-                        payMentReportList.clear();
-                        payMentReportList.addAll(gsonObj.getPaymentsTable());
 
-                        PaymentDetailsReport paymentDetailsReport = (PaymentDetailsReport) context;
-                        paymentDetailsReport.fillPaymentAdapter();
-                        pdValidation.dismissWithAnimation();
+                request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
 
-                    } else {
-                        payMentReportList.clear();
-                        PaymentDetailsReport paymentDetailsReport = (PaymentDetailsReport) context;
-                        paymentDetailsReport.fillPaymentAdapter();
-                        pdValidation.dismissWithAnimation();
-                    }
+
+                HttpResponse response = client.execute(request);
+
+
+                BufferedReader in = new BufferedReader(new
+                        InputStreamReader(response.getEntity().getContent()));
+
+                StringBuffer sb = new StringBuffer("");
+                String line = "";
+
+                while ((line = in.readLine()) != null) {
+                    sb.append(line);
+                }
+
+                in.close();
+
+
+                JsonResponse = sb.toString();
+                Log.e("tag_paymentReport", "JsonResponse\t" + JsonResponse);
+
+                return JsonResponse;
+
+
+            }//org.apache.http.conn.HttpHostConnectException: Connection to http://10.0.0.115 refused
+            catch (HttpHostConnectException ex) {
+                ex.printStackTrace();
 //                progressDialog.dismiss();
+
+                Handler h = new Handler(Looper.getMainLooper());
+                h.post(new Runnable() {
+                    public void run() {
+
+                        Toast.makeText(main_context, "Ip Connection Failed ", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
+                return null;
+            } catch (Exception e) {
+                e.printStackTrace();
+//                progressDialog.dismiss();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            payMentReportList.clear();
+            if (s != null) {
+                if (s.contains("ComapnyNo")) {
+
+                    Gson gson = new Gson();
+
+                    PayMentReportModel gsonObj = gson.fromJson(s, PayMentReportModel.class);
+                    payMentReportList.clear();
+                    payMentReportList.addAll(gsonObj.getPaymentsTable());
+
+                    PaymentDetailsReport paymentDetailsReport = (PaymentDetailsReport) context;
+                    paymentDetailsReport.fillPaymentAdapter();
+                    pdValidation.dismissWithAnimation();
+
                 } else {
                     payMentReportList.clear();
                     PaymentDetailsReport paymentDetailsReport = (PaymentDetailsReport) context;
                     paymentDetailsReport.fillPaymentAdapter();
                     pdValidation.dismissWithAnimation();
                 }
+//                progressDialog.dismiss();
+            } else {
+                payMentReportList.clear();
+                PaymentDetailsReport paymentDetailsReport = (PaymentDetailsReport) context;
+                paymentDetailsReport.fillPaymentAdapter();
+                pdValidation.dismissWithAnimation();
             }
+        }
+
+    }
+
+    private class JSONTaskGetCashReport extends AsyncTask<String, String, String> {
+        Object context;
+        int flag;
+        String fromDate, toDate;
+
+        public JSONTaskGetCashReport(Object context, String fromDate, String toDate) {
+//            this.flag=flag;
+            this.context = (CashReport) context;
+            this.fromDate = fromDate;
+            this.toDate = toDate;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            String do_ = "my";
+            pdValidation = new SweetAlertDialog(main_context, SweetAlertDialog.PROGRESS_TYPE);
+            pdValidation.getProgressHelper().setBarColor(Color.parseColor("#FDD835"));
+            pdValidation.setTitleText(main_context.getResources().getString(R.string.process));
+            pdValidation.setCancelable(false);
+            pdValidation.show();
 
         }
 
-        private class JSONTaskGetCashReport extends AsyncTask<String, String, String> {
-            Object context;
-            int flag;
-            String fromDate, toDate;
-
-            public JSONTaskGetCashReport(Object context, String fromDate, String toDate) {
-//            this.flag=flag;
-                this.context = (CashReport) context;
-                this.fromDate = fromDate;
-                this.toDate = toDate;
-            }
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                String do_ = "my";
-                pdValidation = new SweetAlertDialog(main_context, SweetAlertDialog.PROGRESS_TYPE);
-                pdValidation.getProgressHelper().setBarColor(Color.parseColor("#FDD835"));
-                pdValidation.setTitleText(main_context.getResources().getString(R.string.process));
-                pdValidation.setCancelable(false);
-                pdValidation.show();
-
-            }
-
-            @Override
-            protected String doInBackground(String... params) {
+        @Override
+        protected String doInBackground(String... params) {
 
 //            ipAddress = "";
-                try {
+            try {
 
 
-                    if (!ipAddress.equals("")) {
-                        URL_TO_HIT = "http://" + ipAddress + "/VANSALES_WEB_SERVICE/admin.php";
-                    }
-                } catch (Exception e) {
-
+                if (!ipAddress.equals("")) {
+                    URL_TO_HIT = "http://" + ipAddress + "/VANSALES_WEB_SERVICE/admin.php";
                 }
+            } catch (Exception e) {
 
-                try {
+            }
 
-                    String JsonResponse = null;
-                    HttpClient client = new DefaultHttpClient();
-                    HttpPost request = new HttpPost();
-                    request.setURI(new URI(URL_TO_HIT));
+            try {
 
-                    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(5);
-                    nameValuePairs.add(new BasicNameValuePair("_ID", "13"));
-                    nameValuePairs.add(new BasicNameValuePair("FromDate", fromDate));
-                    nameValuePairs.add(new BasicNameValuePair("ToDate", toDate));
+                String JsonResponse = null;
+                HttpClient client = new DefaultHttpClient();
+                HttpPost request = new HttpPost();
+                request.setURI(new URI(URL_TO_HIT));
+
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(5);
+                nameValuePairs.add(new BasicNameValuePair("_ID", "13"));
+                nameValuePairs.add(new BasicNameValuePair("FromDate", fromDate));
+                nameValuePairs.add(new BasicNameValuePair("ToDate", toDate));
 //                nameValuePairs.add(new BasicNameValuePair("PayKind",payKind));
 //                nameValuePairs.add(new BasicNameValuePair("SalesNo",SalesNo));
 
 
-                    request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+                request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
 
 
-                    HttpResponse response = client.execute(request);
+                HttpResponse response = client.execute(request);
 
 
-                    BufferedReader in = new BufferedReader(new
-                            InputStreamReader(response.getEntity().getContent()));
+                BufferedReader in = new BufferedReader(new
+                        InputStreamReader(response.getEntity().getContent()));
 
-                    StringBuffer sb = new StringBuffer("");
-                    String line = "";
+                StringBuffer sb = new StringBuffer("");
+                String line = "";
 
-                    while ((line = in.readLine()) != null) {
-                        sb.append(line);
-                    }
-
-                    in.close();
-
-
-                    JsonResponse = sb.toString();
-                    Log.e("tag_paymentReport", "JsonResponse\t" + JsonResponse);
-
-                    return JsonResponse;
-
-
-                }//org.apache.http.conn.HttpHostConnectException: Connection to http://10.0.0.115 refused
-                catch (HttpHostConnectException ex) {
-                    ex.printStackTrace();
-//                progressDialog.dismiss();
-
-                    Handler h = new Handler(Looper.getMainLooper());
-                    h.post(new Runnable() {
-                        public void run() {
-
-                            Toast.makeText(main_context, "Ip Connection Failed ", Toast.LENGTH_LONG).show();
-                        }
-                    });
-
-
-                    return null;
-                } catch (Exception e) {
-                    e.printStackTrace();
-//                progressDialog.dismiss();
-                    return null;
+                while ((line = in.readLine()) != null) {
+                    sb.append(line);
                 }
-            }
 
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
+                in.close();
 
 
-                if (s != null) {
-                    if (s.contains("SalesManNo")) {
+                JsonResponse = sb.toString();
+                Log.e("tag_paymentReport", "JsonResponse\t" + JsonResponse);
 
-                        Gson gson = new Gson();
+                return JsonResponse;
 
-                        CashReportModel gsonObj = gson.fromJson(s, CashReportModel.class);
-                        cashReportList.clear();
-                        cashReportList.addAll(gsonObj.getCASHREPORT());
-                        Log.e("totalCashs","SalesManNo");
-                        CashReport cashReport = (CashReport) context;
-                        cashReport.fillCashAdapter();
-                        pdValidation.dismissWithAnimation();
 
-                    } else {
-                        cashReportList.clear();
-                        CashReport cashReport = (CashReport) context;
-                        cashReport.fillCashAdapter();
-                        pdValidation.dismissWithAnimation();
-                        Log.e("totalCashs","SalesManNo2");
-
-                    }
+            }//org.apache.http.conn.HttpHostConnectException: Connection to http://10.0.0.115 refused
+            catch (HttpHostConnectException ex) {
+                ex.printStackTrace();
 //                progressDialog.dismiss();
-                } else {
-                    Log.e("totalCashs","SalesManNo3");
+
+                Handler h = new Handler(Looper.getMainLooper());
+                h.post(new Runnable() {
+                    public void run() {
+
+                        Toast.makeText(main_context, "Ip Connection Failed ", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
+                return null;
+            } catch (Exception e) {
+                e.printStackTrace();
+//                progressDialog.dismiss();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+
+            if (s != null) {
+                if (s.contains("SalesManNo")) {
+
+                    Gson gson = new Gson();
+
+                    CashReportModel gsonObj = gson.fromJson(s, CashReportModel.class);
+                    cashReportList.clear();
+                    cashReportList.addAll(gsonObj.getCASHREPORT());
+                    Log.e("totalCashs", "SalesManNo");
+                    CashReport cashReport = (CashReport) context;
+                    cashReport.fillCashAdapter();
                     pdValidation.dismissWithAnimation();
+
+                } else {
+                    cashReportList.clear();
+                    CashReport cashReport = (CashReport) context;
+                    cashReport.fillCashAdapter();
+                    pdValidation.dismissWithAnimation();
+                    Log.e("totalCashs", "SalesManNo2");
+
                 }
+//                progressDialog.dismiss();
+            } else {
+                Log.e("totalCashs", "SalesManNo3");
+                pdValidation.dismissWithAnimation();
             }
+        }
+
+    }
+
+
+    private class JSONTaskGetCustomerLogReport extends AsyncTask<String, String, String> {
+        Object context;
+        int flag;
+        String SalesNo, fromDate, toDate;
+
+        public JSONTaskGetCustomerLogReport(Object context, String SalesNo, String fromDate, String toDate) {
+//            this.flag=flag;
+            this.context = (CustomerLogReport) context;
+            this.SalesNo = SalesNo;
+            this.fromDate = fromDate;
+            this.toDate = toDate;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pdValidation = new SweetAlertDialog(main_context, SweetAlertDialog.PROGRESS_TYPE);
+            pdValidation.getProgressHelper().setBarColor(Color.parseColor("#FDD835"));
+            pdValidation.setTitleText(main_context.getResources().getString(R.string.process));
+            pdValidation.setCancelable(false);
+            pdValidation.show();
 
         }
 
-
-        private class JSONTaskGetCustomerLogReport extends AsyncTask<String, String, String> {
-            Object context;
-            int flag;
-            String SalesNo, fromDate, toDate;
-
-            public JSONTaskGetCustomerLogReport(Object context, String SalesNo, String fromDate, String toDate) {
-//            this.flag=flag;
-                this.context = (CustomerLogReport) context;
-                this.SalesNo = SalesNo;
-                this.fromDate = fromDate;
-                this.toDate = toDate;
-            }
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                pdValidation = new SweetAlertDialog(main_context, SweetAlertDialog.PROGRESS_TYPE);
-                pdValidation.getProgressHelper().setBarColor(Color.parseColor("#FDD835"));
-                pdValidation.setTitleText(main_context.getResources().getString(R.string.process));
-                pdValidation.setCancelable(false);
-                pdValidation.show();
-
-            }
-
-            @Override
-            protected String doInBackground(String... params) {
+        @Override
+        protected String doInBackground(String... params) {
 
 //            ipAddress = "";
-                try {
+            try {
 
 
-                    if (!ipAddress.equals("")) {
-                        URL_TO_HIT = "http://" + ipAddress + "/VANSALES_WEB_SERVICE/admin.php";
-                    }
-                } catch (Exception e) {
-
+                if (!ipAddress.equals("")) {
+                    URL_TO_HIT = "http://" + ipAddress + "/VANSALES_WEB_SERVICE/admin.php";
                 }
+            } catch (Exception e) {
 
-                try {
-
-                    String JsonResponse = null;
-                    HttpClient client = new DefaultHttpClient();
-                    HttpPost request = new HttpPost();
-                    request.setURI(new URI(URL_TO_HIT));
-
-                    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(4);
-                    nameValuePairs.add(new BasicNameValuePair("_ID", "12"));
-                    nameValuePairs.add(new BasicNameValuePair("FromDate", fromDate));
-                    nameValuePairs.add(new BasicNameValuePair("ToDate", toDate));
-                    nameValuePairs.add(new BasicNameValuePair("SalesNo", SalesNo));
-
-
-                    request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
-
-
-                    HttpResponse response = client.execute(request);
-
-
-                    BufferedReader in = new BufferedReader(new
-                            InputStreamReader(response.getEntity().getContent()));
-
-                    StringBuffer sb = new StringBuffer("");
-                    String line = "";
-
-                    while ((line = in.readLine()) != null) {
-                        sb.append(line);
-                    }
-
-                    in.close();
-
-
-                    JsonResponse = sb.toString();
-                    Log.e("tag_paymentReport", "JsonResponse\t" + JsonResponse);
-
-                    return JsonResponse;
-
-
-                }//org.apache.http.conn.HttpHostConnectException: Connection to http://10.0.0.115 refused
-                catch (HttpHostConnectException ex) {
-                    ex.printStackTrace();
-//                progressDialog.dismiss();
-
-                    Handler h = new Handler(Looper.getMainLooper());
-                    h.post(new Runnable() {
-                        public void run() {
-
-                            Toast.makeText(main_context, "Ip Connection Failed ", Toast.LENGTH_LONG).show();
-                        }
-                    });
-
-
-                    return null;
-                } catch (Exception e) {
-                    e.printStackTrace();
-//                progressDialog.dismiss();
-                    return null;
-                }
             }
 
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
+            try {
+
+                String JsonResponse = null;
+                HttpClient client = new DefaultHttpClient();
+                HttpPost request = new HttpPost();
+                request.setURI(new URI(URL_TO_HIT));
+
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(4);
+                nameValuePairs.add(new BasicNameValuePair("_ID", "12"));
+                nameValuePairs.add(new BasicNameValuePair("FromDate", fromDate));
+                nameValuePairs.add(new BasicNameValuePair("ToDate", toDate));
+                nameValuePairs.add(new BasicNameValuePair("SalesNo", SalesNo));
 
 
-                if (s != null) {
-                    if (s.contains("SALES_MAN_ID")) {
+                request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
 
-                        Gson gson = new Gson();
 
-                        CustomerLogReportModel gsonObj = gson.fromJson(s, CustomerLogReportModel.class);
-                        customerLogReportList.clear();
-                        customerLogReportList.addAll(gsonObj.getCustomerLog());
+                HttpResponse response = client.execute(request);
 
-                        CustomerLogReport customerLogReport = (CustomerLogReport) context;
-                        customerLogReport.fillCustomerLogReport();
-                        pdValidation.dismissWithAnimation();
 
-                    } else {
-                        customerLogReportList.clear();
-                        CustomerLogReport customerLogReport = (CustomerLogReport) context;
-                        customerLogReport.fillCustomerLogReport();
-                        pdValidation.dismissWithAnimation();
-                    }
-//                progressDialog.dismiss();
-                } else {
-                    pdValidation.dismissWithAnimation();
+                BufferedReader in = new BufferedReader(new
+                        InputStreamReader(response.getEntity().getContent()));
+
+                StringBuffer sb = new StringBuffer("");
+                String line = "";
+
+                while ((line = in.readLine()) != null) {
+                    sb.append(line);
                 }
-            }
 
+                in.close();
+
+
+                JsonResponse = sb.toString();
+                Log.e("tag_paymentReport", "JsonResponse\t" + JsonResponse);
+
+                return JsonResponse;
+
+
+            }//org.apache.http.conn.HttpHostConnectException: Connection to http://10.0.0.115 refused
+            catch (HttpHostConnectException ex) {
+                ex.printStackTrace();
+//                progressDialog.dismiss();
+
+                Handler h = new Handler(Looper.getMainLooper());
+                h.post(new Runnable() {
+                    public void run() {
+
+                        Toast.makeText(main_context, "Ip Connection Failed ", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
+                return null;
+            } catch (Exception e) {
+                e.printStackTrace();
+//                progressDialog.dismiss();
+                return null;
+            }
         }
 
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
 
-        private void ShowNotifi_detail (String type,int state, String contentMessage){
-            String currentapiVersion = Build.VERSION.RELEASE;
-            String title = "", content = "", statuse = "";
+
+            if (s != null) {
+                if (s.contains("SALES_MAN_ID")) {
+
+                    Gson gson = new Gson();
+
+                    CustomerLogReportModel gsonObj = gson.fromJson(s, CustomerLogReportModel.class);
+                    customerLogReportList.clear();
+                    customerLogReportList.addAll(gsonObj.getCustomerLog());
+
+                    CustomerLogReport customerLogReport = (CustomerLogReport) context;
+                    customerLogReport.fillCustomerLogReport();
+                    pdValidation.dismissWithAnimation();
+
+                } else {
+                    customerLogReportList.clear();
+                    CustomerLogReport customerLogReport = (CustomerLogReport) context;
+                    customerLogReport.fillCustomerLogReport();
+                    pdValidation.dismissWithAnimation();
+                }
+//                progressDialog.dismiss();
+            } else {
+                pdValidation.dismissWithAnimation();
+            }
+        }
+
+    }
+
+
+    private void ShowNotifi_detail(String type, int state, String contentMessage) {
+        String currentapiVersion = Build.VERSION.RELEASE;
+        String title = "", content = "", statuse = "";
 
 
 //        if (type.equals("check")) {
@@ -871,448 +881,451 @@ public class ImportData {
 //
 //        }
 
-            switch (type) {
-                case "check":
-                    title = "Check";
-                    break;
-                case "request":
-                    title = "Request";
-                    break;
-            }
-            String messgaeBody = "";
-            switch (state) {
-                case 0:
-                    statuse = "new\t" + title + "\t";
-                    messgaeBody = "you have " + statuse + "From" + "\t" + contentMessage;
-                    break;
+        switch (type) {
+            case "check":
+                title = "Check";
+                break;
+            case "request":
+                title = "Request";
+                break;
+        }
+        String messgaeBody = "";
+        switch (state) {
+            case 0:
+                statuse = "new\t" + title + "\t";
+                messgaeBody = "you have " + statuse + "From" + "\t" + contentMessage;
+                break;
 
-            }
+        }
 
-            Log.e("messgaeBody", "" + messgaeBody);
+        Log.e("messgaeBody", "" + messgaeBody);
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
 
 //                show_Notification(title);
-                showNotification(main_context, title, messgaeBody);
+            showNotification(main_context, title, messgaeBody);
 
-            } else {
-                showNotification(main_context, title, messgaeBody);
+        } else {
+            showNotification(main_context, title, messgaeBody);
 
 //            notificationShow(title);
-            }
-
-
         }
 
 
-        public void getSalesManInfo () {
-            new JSONTask_SalesManInfo().execute();
-        }
-        private class JSONTask_SalesManInfo extends AsyncTask<String, String, String> {
+    }
 
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                String do_ = "my";
+
+    public void getSalesManInfo() {
+        new JSONTask_SalesManInfo().execute();
+    }
+
+    private class JSONTask_SalesManInfo extends AsyncTask<String, String, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            String do_ = "my";
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            try {
+                String s = "";
+
+
+                if (!ipAddress.equals("")) {
+                    URL_TO_HIT = "http://" + ipAddress + "/VANSALES_WEB_SERVICE/admin.php";
+                }
+            } catch (Exception e) {
 
             }
 
-            @Override
-            protected String doInBackground(String... params) {
+            try {
 
-                try {
-                    String s = "";
+                String JsonResponse = null;
+                HttpClient client = new DefaultHttpClient();
+                HttpPost request = new HttpPost();
+                request.setURI(new URI(URL_TO_HIT));
+
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+                nameValuePairs.add(new BasicNameValuePair("_ID", "10"));
 
 
-                    if (!ipAddress.equals("")) {
-                        URL_TO_HIT = "http://" + ipAddress + "/VANSALES_WEB_SERVICE/admin.php";
-                    }
-                } catch (Exception e) {
+                request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
 
+
+                HttpResponse response = client.execute(request);
+
+
+                BufferedReader in = new BufferedReader(new
+                        InputStreamReader(response.getEntity().getContent()));
+
+                StringBuffer sb = new StringBuffer("");
+                String line = "";
+
+                while ((line = in.readLine()) != null) {
+                    sb.append(line);
                 }
 
-                try {
-
-                    String JsonResponse = null;
-                    HttpClient client = new DefaultHttpClient();
-                    HttpPost request = new HttpPost();
-                    request.setURI(new URI(URL_TO_HIT));
-
-                    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-                    nameValuePairs.add(new BasicNameValuePair("_ID", "10"));
+                in.close();
 
 
-                    request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+                JsonResponse = sb.toString();
+                Log.e("tag_SalesManInfo", "JsonResponse\t" + JsonResponse);
+
+                return JsonResponse;
 
 
-                    HttpResponse response = client.execute(request);
-
-
-                    BufferedReader in = new BufferedReader(new
-                            InputStreamReader(response.getEntity().getContent()));
-
-                    StringBuffer sb = new StringBuffer("");
-                    String line = "";
-
-                    while ((line = in.readLine()) != null) {
-                        sb.append(line);
-                    }
-
-                    in.close();
-
-
-                    JsonResponse = sb.toString();
-                    Log.e("tag_SalesManInfo", "JsonResponse\t" + JsonResponse);
-
-                    return JsonResponse;
-
-
-                }//org.apache.http.conn.HttpHostConnectException: Connection to http://10.0.0.115 refused
-                catch (HttpHostConnectException ex) {
-                    ex.printStackTrace();
+            }//org.apache.http.conn.HttpHostConnectException: Connection to http://10.0.0.115 refused
+            catch (HttpHostConnectException ex) {
+                ex.printStackTrace();
 //                progressDialog.dismiss();
 
-                    Handler h = new Handler(Looper.getMainLooper());
-                    h.post(new Runnable() {
-                        public void run() {
+                Handler h = new Handler(Looper.getMainLooper());
+                h.post(new Runnable() {
+                    public void run() {
 
-                            Toast.makeText(main_context, "Ip Connection Failed ", Toast.LENGTH_LONG).show();
+                        Toast.makeText(main_context, "Ip Connection Failed ", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
+                return null;
+            } catch (Exception e) {
+                e.printStackTrace();
+//                progressDialog.dismiss();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            JSONObject result = null;
+            String impo = "";
+            if (s != null) {
+                if (s.contains("SalesManInfo")) {
+
+                    try {
+                        result = new JSONObject(s);
+                        SalesManInfo requestDetail;
+
+
+                        JSONArray requestArray = null;
+                        listSalesMan = new ArrayList<>();
+
+                        requestArray = result.getJSONArray("SalesManInfo");
+
+
+                        for (int i = 0; i < requestArray.length(); i++) {
+                            JSONObject infoDetail = requestArray.getJSONObject(i);
+                            requestDetail = new SalesManInfo();
+                            requestDetail.setSalesManNo(infoDetail.get("SalesManNo").toString());
+                            requestDetail.setSalesName(infoDetail.get("SalesManName").toString());
+                            requestDetail.setActive(infoDetail.get("IsSuspended").toString());
+                            Log.e("SalesManName", "" + infoDetail.get("SalesManName").toString());
+                            Log.e("SalesManNo", "" + infoDetail.get("SalesManNo").toString());
+
+                            listSalesMan.add(requestDetail);
+                            Log.e("listRequest", "" + listSalesMan.size());
+
+
                         }
-                    });
+                        waitList.setText("1");
 
-
-                    return null;
-                } catch (Exception e) {
-                    e.printStackTrace();
-//                progressDialog.dismiss();
-                    return null;
-                }
-            }
-
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-
-                JSONObject result = null;
-                String impo = "";
-                if (s != null) {
-                    if (s.contains("SalesManInfo")) {
-
-                        try {
-                            result = new JSONObject(s);
-                            SalesManInfo requestDetail;
-
-
-                            JSONArray requestArray = null;
-                            listSalesMan = new ArrayList<>();
-
-                            requestArray = result.getJSONArray("SalesManInfo");
-
-
-                            for (int i = 0; i < requestArray.length(); i++) {
-                                JSONObject infoDetail = requestArray.getJSONObject(i);
-                                requestDetail = new SalesManInfo();
-                                requestDetail.setSalesManNo(infoDetail.get("SalesManNo").toString());
-                                requestDetail.setSalesName(infoDetail.get("SalesManName").toString());
-                                requestDetail.setActive(infoDetail.get("IsSuspended").toString());
-                                Log.e("SalesManName", "" + infoDetail.get("SalesManName").toString());
-                                Log.e("SalesManNo", "" + infoDetail.get("SalesManNo").toString());
-
-                                listSalesMan.add(requestDetail);
-                                Log.e("listRequest", "" + listSalesMan.size());
-
-
-                            }
-                            waitList.setText("1");
-
-                        } catch (JSONException e) {
+                    } catch (JSONException e) {
 //                        progressDialog.dismiss();
-                            e.printStackTrace();
-                        }
+                        e.printStackTrace();
                     }
-//                progressDialog.dismiss();
                 }
+//                progressDialog.dismiss();
             }
+        }
+
+    }
+
+    private class JSONTask_AccountStatment extends AsyncTask<String, String, String> {
+
+        private String custId = "";
+
+        public JSONTask_AccountStatment(String customerId) {
+            this.custId = customerId;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            String do_ = "my";
 
         }
-        private class JSONTask_AccountStatment extends AsyncTask<String, String, String> {
 
-            private String custId = "";
+        @Override
+        protected String doInBackground(String... params) {
 
-            public JSONTask_AccountStatment(String customerId) {
-                this.custId = customerId;
+            try {
+
+
+                if (!ipAddress.equals("")) {
+                    URL_TO_HIT = "http://" + ipAddress + "/VANSALES_WEB_SERVICE/admin.php";
+                }
+            } catch (Exception e) {
+
             }
 
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                String do_ = "my";
+            try {
 
-            }
+                String JsonResponse = null;
+                HttpClient client = new DefaultHttpClient();
+                HttpPost request = new HttpPost();
+                request.setURI(new URI(URL_TO_HIT));
 
-            @Override
-            protected String doInBackground(String... params) {
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+                Log.e("BasicNameValuePair", "" + custId);
+                nameValuePairs.add(new BasicNameValuePair("FLAG", "1"));
+                nameValuePairs.add(new BasicNameValuePair("customerNo", custId));
 
-                try {
+
+                request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
 
 
-                    if (!ipAddress.equals("")) {
-                        URL_TO_HIT = "http://" + ipAddress + "/VANSALES_WEB_SERVICE/admin.php";
-                    }
-                } catch (Exception e) {
+                HttpResponse response = client.execute(request);
 
+
+                BufferedReader in = new BufferedReader(new
+                        InputStreamReader(response.getEntity().getContent()));
+
+                StringBuffer sb = new StringBuffer("");
+                String line = "";
+
+                while ((line = in.readLine()) != null) {
+                    sb.append(line);
                 }
 
-                try {
-
-                    String JsonResponse = null;
-                    HttpClient client = new DefaultHttpClient();
-                    HttpPost request = new HttpPost();
-                    request.setURI(new URI(URL_TO_HIT));
-
-                    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-                    Log.e("BasicNameValuePair", "" + custId);
-                    nameValuePairs.add(new BasicNameValuePair("FLAG", "1"));
-                    nameValuePairs.add(new BasicNameValuePair("customerNo", custId));
+                in.close();
 
 
-                    request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+                JsonResponse = sb.toString();
+                Log.e("tag_Customer", "JsonResponse\t" + JsonResponse);
+
+                return JsonResponse;
 
 
-                    HttpResponse response = client.execute(request);
+            }//org.apache.http.conn.HttpHostConnectException: Connection to http://10.0.0.115 refused
+            catch (HttpHostConnectException ex) {
+                ex.printStackTrace();
+//                progressDialog.dismiss();
 
+                Handler h = new Handler(Looper.getMainLooper());
+                h.post(new Runnable() {
+                    public void run() {
 
-                    BufferedReader in = new BufferedReader(new
-                            InputStreamReader(response.getEntity().getContent()));
-
-                    StringBuffer sb = new StringBuffer("");
-                    String line = "";
-
-                    while ((line = in.readLine()) != null) {
-                        sb.append(line);
+                        Toast.makeText(main_context, "Ip Connection Failed ", Toast.LENGTH_LONG).show();
                     }
-
-                    in.close();
-
-
-                    JsonResponse = sb.toString();
-                    Log.e("tag_Customer", "JsonResponse\t" + JsonResponse);
-
-                    return JsonResponse;
+                });
 
 
-                }//org.apache.http.conn.HttpHostConnectException: Connection to http://10.0.0.115 refused
-                catch (HttpHostConnectException ex) {
-                    ex.printStackTrace();
+                return null;
+            } catch (Exception e) {
+                e.printStackTrace();
 //                progressDialog.dismiss();
-
-                    Handler h = new Handler(Looper.getMainLooper());
-                    h.post(new Runnable() {
-                        public void run() {
-
-                            Toast.makeText(main_context, "Ip Connection Failed ", Toast.LENGTH_LONG).show();
-                        }
-                    });
-
-
-                    return null;
-                } catch (Exception e) {
-                    e.printStackTrace();
-//                progressDialog.dismiss();
-                    return null;
-                }
+                return null;
             }
+        }
 
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
 
-                JSONObject result = null;
-                String impo = "";
-                if (s != null) {
-                    if (s.contains("CUSTOMER_Account_Statment")) {
-                        // Log.e("CUSTOMER_INFO","onPostExecute\t"+s.toString());
-                        //{"CUSTOMER_INFO":[{"VHFNo":"0","TransName":"ÞíÏ ÇÝÊÊÇÍí","VHFDATE":"31-DEC-19","DEBIT":"0","Credit":"16194047.851"}
+            JSONObject result = null;
+            String impo = "";
+            if (s != null) {
+                if (s.contains("CUSTOMER_Account_Statment")) {
+                    // Log.e("CUSTOMER_INFO","onPostExecute\t"+s.toString());
+                    //{"CUSTOMER_INFO":[{"VHFNo":"0","TransName":"ÞíÏ ÇÝÊÊÇÍí","VHFDATE":"31-DEC-19","DEBIT":"0","Credit":"16194047.851"}
 
-                        try {
-                            result = new JSONObject(s);
-                            Account__Statment_Model requestDetail;
-
-
-                            JSONArray requestArray = null;
-                            listCustomerInfo = new ArrayList<>();
-
-                            requestArray = result.getJSONArray("CUSTOMER_Account_Statment");
-                            Log.e("requestArray", "" + requestArray.length());
+                    try {
+                        result = new JSONObject(s);
+                        Account__Statment_Model requestDetail;
 
 
-                            for (int i = 0; i < requestArray.length(); i++) {
-                                JSONObject infoDetail = requestArray.getJSONObject(i);
-                                requestDetail = new Account__Statment_Model();
-                                requestDetail.setVoucherNo(infoDetail.get("VHFNo").toString());
-                                requestDetail.setTranseNmae(infoDetail.get("TransName").toString());
-                                requestDetail.setDate_voucher(infoDetail.get("VHFDATE").toString());
+                        JSONArray requestArray = null;
+                        listCustomerInfo = new ArrayList<>();
 
-                                try {
-                                    requestDetail.setDebit(Double.parseDouble(infoDetail.get("DEBIT").toString()));
-                                    requestDetail.setCredit(Double.parseDouble(infoDetail.get("Credit").toString()));
-                                } catch (Exception e) {
-                                    requestDetail.setDebit(0);
-                                    requestDetail.setCredit(0);
-                                }
+                        requestArray = result.getJSONArray("CUSTOMER_Account_Statment");
+                        Log.e("requestArray", "" + requestArray.length());
 
 
-                                listCustomerInfo.add(requestDetail);
-                                Log.e("listRequest", "listCustomerInfo" + listCustomerInfo.size());
+                        for (int i = 0; i < requestArray.length(); i++) {
+                            JSONObject infoDetail = requestArray.getJSONObject(i);
+                            requestDetail = new Account__Statment_Model();
+                            requestDetail.setVoucherNo(infoDetail.get("VHFNo").toString());
+                            requestDetail.setTranseNmae(infoDetail.get("TransName").toString());
+                            requestDetail.setDate_voucher(infoDetail.get("VHFDATE").toString());
 
-
+                            try {
+                                requestDetail.setDebit(Double.parseDouble(infoDetail.get("DEBIT").toString()));
+                                requestDetail.setCredit(Double.parseDouble(infoDetail.get("Credit").toString()));
+                            } catch (Exception e) {
+                                requestDetail.setDebit(0);
+                                requestDetail.setCredit(0);
                             }
-                            getAccountList_text.setText("2");
 
-                        } catch (JSONException e) {
+
+                            listCustomerInfo.add(requestDetail);
+                            Log.e("listRequest", "listCustomerInfo" + listCustomerInfo.size());
+
+
+                        }
+                        getAccountList_text.setText("2");
+
+                    } catch (JSONException e) {
 //                        progressDialog.dismiss();
-                            e.printStackTrace();
-                        }
-                    } else Log.e("onPostExecute", "" + s.toString());
+                        e.printStackTrace();
+                    }
+                } else Log.e("onPostExecute", "" + s.toString());
 //                progressDialog.dismiss();
-                }
             }
+        }
+
+    }
+
+    private class JSONTask_CustomerInfo extends AsyncTask<String, String, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
 
         }
-        private class JSONTask_CustomerInfo extends AsyncTask<String, String, String> {
 
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
+        @Override
+        protected String doInBackground(String... params) {
+
+            try {
+
+
+                if (!ipAddress.equals("")) {
+                    URL_TO_HIT = "http://" + ipAddress + "/VANSALES_WEB_SERVICE/admin_oracle.php";
+                }
+            } catch (Exception e) {
 
             }
 
-            @Override
-            protected String doInBackground(String... params) {
+            try {
 
-                try {
+                String JsonResponse = null;
+                HttpClient client = new DefaultHttpClient();
+                HttpPost request = new HttpPost();
+                request.setURI(new URI(URL_TO_HIT));
+
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+                nameValuePairs.add(new BasicNameValuePair("FLAG", "7"));
+
+                request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
 
 
-                    if (!ipAddress.equals("")) {
-                        URL_TO_HIT = "http://" + ipAddress + "/VANSALES_WEB_SERVICE/admin_oracle.php";
-                    }
-                } catch (Exception e) {
+                HttpResponse response = client.execute(request);
 
+
+                BufferedReader in = new BufferedReader(new
+                        InputStreamReader(response.getEntity().getContent()));
+
+                StringBuffer sb = new StringBuffer("");
+                String line = "";
+
+                while ((line = in.readLine()) != null) {
+                    sb.append(line);
                 }
 
-                try {
-
-                    String JsonResponse = null;
-                    HttpClient client = new DefaultHttpClient();
-                    HttpPost request = new HttpPost();
-                    request.setURI(new URI(URL_TO_HIT));
-
-                    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-                    nameValuePairs.add(new BasicNameValuePair("FLAG", "7"));
-
-                    request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+                in.close();
 
 
-                    HttpResponse response = client.execute(request);
+                JsonResponse = sb.toString();
+                Log.e("tag_CustomerInfo", "JsonResponse\t" + JsonResponse);
+
+                return JsonResponse;
 
 
-                    BufferedReader in = new BufferedReader(new
-                            InputStreamReader(response.getEntity().getContent()));
-
-                    StringBuffer sb = new StringBuffer("");
-                    String line = "";
-
-                    while ((line = in.readLine()) != null) {
-                        sb.append(line);
-                    }
-
-                    in.close();
-
-
-                    JsonResponse = sb.toString();
-                    Log.e("tag_CustomerInfo", "JsonResponse\t" + JsonResponse);
-
-                    return JsonResponse;
-
-
-                }//org.apache.http.conn.HttpHostConnectException: Connection to http://10.0.0.115 refused
-                catch (HttpHostConnectException ex) {
-                    ex.printStackTrace();
+            }//org.apache.http.conn.HttpHostConnectException: Connection to http://10.0.0.115 refused
+            catch (HttpHostConnectException ex) {
+                ex.printStackTrace();
 //                progressDialog.dismiss();
 
-                    Handler h = new Handler(Looper.getMainLooper());
-                    h.post(new Runnable() {
-                        public void run() {
+                Handler h = new Handler(Looper.getMainLooper());
+                h.post(new Runnable() {
+                    public void run() {
 
-                            Toast.makeText(main_context, "Ip Connection Failed ", Toast.LENGTH_LONG).show();
+                        Toast.makeText(main_context, "Ip Connection Failed ", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
+                return null;
+            } catch (Exception e) {
+                e.printStackTrace();
+//                progressDialog.dismiss();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            JSONObject result = null;
+            String impo = "";
+            if (s != null) {
+                if (s.contains("CUSTOMER_INFO")) {
+                    // Log.e("CUSTOMER_INFO","onPostExecute\t"+s.toString());
+                    //{"CUSTOMER_INFO":[{"VHFNo":"0","TransName":"ÞíÏ ÇÝÊÊÇÍí","VHFDATE":"31-DEC-19","DEBIT":"0","Credit":"16194047.851"}
+
+                    try {
+                        result = new JSONObject(s);
+                        CustomerInfo requestDetail;
+
+
+                        JSONArray requestArray = null;
+                        listCustomerInfo = new ArrayList<>();
+
+                        requestArray = result.getJSONArray("CUSTOMER_INFO");
+                        Log.e("requestArray", "" + requestArray.length());
+
+
+                        for (int i = 0; i < requestArray.length(); i++) {
+                            JSONObject infoDetail = requestArray.getJSONObject(i);
+                            requestDetail = new CustomerInfo();
+                            requestDetail.setCustomerNumber(infoDetail.get("CUSTID").toString());
+                            requestDetail.setCustomerName(infoDetail.get("CUSTNAME").toString());
+
+
+                            listCustomer.add(requestDetail);
+                            customername.add(requestDetail.getCustomerName());
+                            Log.e("listRequest", "CUSTOMER_INFO" + listCustomer.get(i).getCustomerName());
+
+
                         }
-                    });
-
-
-                    return null;
-                } catch (Exception e) {
-                    e.printStackTrace();
-//                progressDialog.dismiss();
-                    return null;
-                }
-            }
-
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-
-                JSONObject result = null;
-                String impo = "";
-                if (s != null) {
-                    if (s.contains("CUSTOMER_INFO")) {
-                        // Log.e("CUSTOMER_INFO","onPostExecute\t"+s.toString());
-                        //{"CUSTOMER_INFO":[{"VHFNo":"0","TransName":"ÞíÏ ÇÝÊÊÇÍí","VHFDATE":"31-DEC-19","DEBIT":"0","Credit":"16194047.851"}
-
-                        try {
-                            result = new JSONObject(s);
-                            CustomerInfo requestDetail;
-
-
-                            JSONArray requestArray = null;
-                            listCustomerInfo = new ArrayList<>();
-
-                            requestArray = result.getJSONArray("CUSTOMER_INFO");
-                            Log.e("requestArray", "" + requestArray.length());
-
-
-                            for (int i = 0; i < requestArray.length(); i++) {
-                                JSONObject infoDetail = requestArray.getJSONObject(i);
-                                requestDetail = new CustomerInfo();
-                                requestDetail.setCustomerNumber(infoDetail.get("CUSTID").toString());
-                                requestDetail.setCustomerName(infoDetail.get("CUSTNAME").toString());
-
-
-                                listCustomer.add(requestDetail);
-                                customername.add(requestDetail.getCustomerName());
-                                Log.e("listRequest", "CUSTOMER_INFO" + listCustomer.get(i).getCustomerName());
-
-
-                            }
 //                        getAccountList_text.setText("1");
 
-                        } catch (JSONException e) {
+                    } catch (JSONException e) {
 //                        progressDialog.dismiss();
-                            e.printStackTrace();
-                        }
-                    } else Log.e("onPostExecute", "" + s.toString());
+                        e.printStackTrace();
+                    }
+                } else Log.e("onPostExecute", "" + s.toString());
 //                progressDialog.dismiss();
-                }
             }
-
         }
+
+    }
 
     private class JSONTaskGetItem extends AsyncTask<String, String, String> {
         Object context;
         int flag;
 
 
-        public  JSONTaskGetItem(Object context) {
+        public JSONTaskGetItem(Object context) {
 //            this.flag=flag;
             this.context = (OfferPriceList) context;
 
@@ -1324,7 +1337,7 @@ public class ImportData {
             String do_ = "my";
             pdValidation = new SweetAlertDialog(main_context, SweetAlertDialog.PROGRESS_TYPE);
             pdValidation.getProgressHelper().setBarColor(Color.parseColor("#FDD835"));
-            pdValidation.setTitleText(main_context.getResources().getString(R.string.process)+"3");
+            pdValidation.setTitleText(main_context.getResources().getString(R.string.process) + "3");
             pdValidation.setCancelable(false);
             pdValidation.show();
 
@@ -1429,7 +1442,7 @@ public class ImportData {
                     ItemMaster gsonObj = gson.fromJson(s, ItemMaster.class);
                     ItemCardList.clear();
                     ItemCardList.addAll(gsonObj.getALL_ITEMS());
-                    Log.e("itemCard","SalesManNo");
+                    Log.e("itemCard", "SalesManNo");
                     OfferPriceList offerPriceList = (OfferPriceList) context;
 //                    offerPriceList.fillItemCard();
                     pdValidation.dismissWithAnimation();
@@ -1440,12 +1453,12 @@ public class ImportData {
                     OfferPriceList offerPriceList = (OfferPriceList) context;
 //                    offerPriceList.fillItemCard();
                     pdValidation.dismissWithAnimation();
-                    Log.e("itemCard","SalesManNo2");
+                    Log.e("itemCard", "SalesManNo2");
 
                 }
 //                progressDialog.dismiss();
             } else {
-                Log.e("itemCard","SalesManNo3");
+                Log.e("itemCard", "SalesManNo3");
                 pdValidation.dismissWithAnimation();
             }
         }
@@ -1457,7 +1470,7 @@ public class ImportData {
         int flag;
 
 
-        public  JSONTaskGetCustomer(Object context) {
+        public JSONTaskGetCustomer(Object context) {
 //            this.flag=flag;
             this.context = (OfferPriceList) context;
 
@@ -1469,7 +1482,7 @@ public class ImportData {
             String do_ = "my";
             pdValidationCustomer = new SweetAlertDialog(main_context, SweetAlertDialog.PROGRESS_TYPE);
             pdValidationCustomer.getProgressHelper().setBarColor(Color.parseColor("#FDD835"));
-            pdValidationCustomer.setTitleText(main_context.getResources().getString(R.string.process)+"2");
+            pdValidationCustomer.setTitleText(main_context.getResources().getString(R.string.process) + "2");
             pdValidationCustomer.setCancelable(false);
             pdValidationCustomer.show();
 
@@ -1574,7 +1587,7 @@ public class ImportData {
                     customerInfoModel gsonObj = gson.fromJson(s, customerInfoModel.class);
                     customerList.clear();
                     customerList.addAll(gsonObj.getALL_CUSTOMER());
-                    Log.e("item_customer","SalesManNo");
+                    Log.e("item_customer", "SalesManNo");
                     OfferPriceList offerPriceList = (OfferPriceList) context;
 //                    offerPriceList.fillItemCard();
                     pdValidationCustomer.dismissWithAnimation();
@@ -1586,12 +1599,12 @@ public class ImportData {
 //                    OfferPriceList offerPriceList = (OfferPriceList) context;
 //                    offerPriceList.fillItemCard();
                     pdValidationCustomer.dismissWithAnimation();
-                    Log.e("item_customer","SalesManNo2");
+                    Log.e("item_customer", "SalesManNo2");
 
                 }
 //                progressDialog.dismiss();
             } else {
-                Log.e("item_customer","SalesManNo3");
+                Log.e("item_customer", "SalesManNo3");
                 pdValidationCustomer.dismissWithAnimation();
             }
         }
@@ -1600,16 +1613,25 @@ public class ImportData {
 
     private class JSONTaskIfDateBetween extends AsyncTask<String, String, String> {
         Object context;
+        Context contextMaster;
         int flag;
-        String fromDate,toDate;
+        String fromDate, toDate, listType, UpAddFlag, listNO;
 
 
-        public  JSONTaskIfDateBetween(Object context,String fromDate,String toDate) {
+        public JSONTaskIfDateBetween(Object context, String fromDate, String toDate, String listType, String upAddFlag, String listNO) {
 //            this.flag=flag;
-            this.context = (OfferPriceList) context;
-
-            this.fromDate=fromDate;
-            this.toDate=toDate;
+            if (upAddFlag.equals("0")) {
+                this.context = (OfferPriceList) context;
+                this.contextMaster = (OfferPriceList) context;
+            } else {
+                this.context = (ListOfferReport) context;
+                this.contextMaster = (ListOfferReport) context;
+            }
+            this.fromDate = fromDate;
+            this.toDate = toDate;
+            this.listType = listType;
+            this.UpAddFlag = upAddFlag;
+            this.listNO = listNO;
         }
 
         @Override
@@ -1645,12 +1667,13 @@ public class ImportData {
                 HttpPost request = new HttpPost();
                 request.setURI(new URI(URL_TO_HIT));
 
-                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(5);
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(6);
                 nameValuePairs.add(new BasicNameValuePair("_ID", "18"));
                 nameValuePairs.add(new BasicNameValuePair("FromDate", fromDate));
                 nameValuePairs.add(new BasicNameValuePair("ToDate", toDate));
-//                nameValuePairs.add(new BasicNameValuePair("PayKind",payKind));
-//                nameValuePairs.add(new BasicNameValuePair("SalesNo",SalesNo));
+                nameValuePairs.add(new BasicNameValuePair("PO_LIST_TYPE", listType));
+                nameValuePairs.add(new BasicNameValuePair("UPDATE_ADD_FLAG", UpAddFlag));
+                nameValuePairs.add(new BasicNameValuePair("PO_LIST_NO", listNO));
 
 
                 request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
@@ -1713,49 +1736,36 @@ public class ImportData {
 
             if (s != null) {
                 if (s.contains("DATE")) {
-//
-//                    Gson gson = new Gson();
-//
-////                    Gson gson = new GsonBuilder()
-////                            .setLenient()
-////                            .create();
-//
-//                    customerInfoModel gsonObj = gson.fromJson(s, customerInfoModel.class);
-//                    customerList.clear();
-//                    customerList.addAll(gsonObj.getALL_CUSTOMER());
-//                    Log.e("item_customer","SalesManNo");
-//                    OfferPriceList offerPriceList = (OfferPriceList) context;
-////                    offerPriceList.fillItemCard();
-//                    pdValidationCustomer.dismissWithAnimation();
-//                    offerPriceList.fillCustomerListId();
 
-
-                    SweetAlertDialog sweet =new SweetAlertDialog((OfferPriceList) context,SweetAlertDialog.WARNING_TYPE);
+                    SweetAlertDialog sweet = new SweetAlertDialog(contextMaster, SweetAlertDialog.WARNING_TYPE);
                     sweet.setTitleText("Please change the Date");
                     sweet.setContentText("");
                     sweet.setCancelButton("cancel", new SweetAlertDialog.OnSweetClickListener() {
-                                @Override
-                                public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                    sweetAlertDialog.dismissWithAnimation();
-                                }
-                            });
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            sweetAlertDialog.dismissWithAnimation();
+                        }
+                    });
                     sweet.show();
 
-                pdValidationCustomer.dismissWithAnimation();
-
+                    pdValidationCustomer.dismissWithAnimation();
 
 
                 } else {
 //                    ItemCardList.clear();
-                    OfferPriceList offerPriceList = (OfferPriceList) context;
-                    offerPriceList.saveInDB();
+                    if (UpAddFlag.equals("0")) {
+                        OfferPriceList offerPriceList = (OfferPriceList) context;
+                        offerPriceList.saveInDB();
+                    } else {
+                        controlText.setText("1");
+                    }
                     pdValidationCustomer.dismissWithAnimation();
 //                    Log.e("item_customer","SalesManNo2");
 
                 }
 //                progressDialog.dismiss();
             } else {
-                Log.e("item_customer","SalesManNo3");
+                Log.e("item_customer", "SalesManNo3");
                 pdValidationCustomer.dismissWithAnimation();
             }
         }
@@ -1767,7 +1777,7 @@ public class ImportData {
         int flag;
 
 
-        public  JSONTaskMaxSerial(Object context) {
+        public JSONTaskMaxSerial(Object context) {
 //            this.flag=flag;
             this.context = (OfferPriceList) context;
         }
@@ -1778,7 +1788,7 @@ public class ImportData {
             String do_ = "my";
             pdValidationSerial = new SweetAlertDialog(main_context, SweetAlertDialog.PROGRESS_TYPE);
             pdValidationSerial.getProgressHelper().setBarColor(Color.parseColor("#FDD835"));
-            pdValidationSerial.setTitleText(main_context.getResources().getString(R.string.process)+"1");
+            pdValidationSerial.setTitleText(main_context.getResources().getString(R.string.process) + "1");
             pdValidationSerial.setCancelable(false);
             pdValidationSerial.show();
 
@@ -1890,31 +1900,173 @@ public class ImportData {
 //                    offerPriceList.fillCustomerListId();
 
 
-
                     try {
-                        JSONObject jsonObject=new JSONObject(s);
-                        String serial= jsonObject.getString("serialList");
+                        JSONObject jsonObject = new JSONObject(s);
+                        String serial = jsonObject.getString("serialList");
                         OfferPriceList offerPriceList = (OfferPriceList) context;
-                         offerPriceList.fillSerial(serial);
+                        offerPriceList.fillSerial(serial);
                         pdValidationSerial.dismissWithAnimation();
                     } catch (JSONException e) {
-                        Log.e("serialmAX","SalesManNoEX");
+                        Log.e("serialmAX", "SalesManNoEX");
                         e.printStackTrace();
                     }
-
-
-
 
 
                 } else {
 //                    ItemCardList.clear();
                     pdValidationSerial.dismissWithAnimation();
-                    Log.e("serialmAX","SalesManNo2");
+                    Log.e("serialmAX", "SalesManNo2");
                 }
 //                progressDialog.dismiss();
             } else {
-                Log.e("serialmAX","SalesManNo3");
+                Log.e("serialmAX", "SalesManNo3");
                 pdValidationSerial.dismissWithAnimation();
+            }
+        }
+
+    }
+
+
+    private class JSONTaskGetList extends AsyncTask<String, String, String> {
+        Object context;
+        int flag;
+
+
+        public JSONTaskGetList(Object context) {
+//            this.flag=flag;
+            this.context = (ListOfferReport) context;
+
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            String do_ = "my";
+            pdValidationItem = new SweetAlertDialog(main_context, SweetAlertDialog.PROGRESS_TYPE);
+            pdValidationItem.getProgressHelper().setBarColor(Color.parseColor("#FDD835"));
+            pdValidationItem.setTitleText(main_context.getResources().getString(R.string.process) + "2");
+            pdValidationItem.setCancelable(false);
+            pdValidationItem.show();
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+//            ipAddress = "";
+            try {
+
+
+                if (!ipAddress.equals("")) {
+                    URL_TO_HIT = "http://" + ipAddress + "/VANSALES_WEB_SERVICE/admin.php";
+                }
+            } catch (Exception e) {
+
+            }
+
+            try {
+
+                String JsonResponse = null;
+                HttpClient client = new DefaultHttpClient();
+                HttpPost request = new HttpPost();
+                request.setURI(new URI(URL_TO_HIT));
+
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(5);
+                nameValuePairs.add(new BasicNameValuePair("_ID", "22"));
+//                nameValuePairs.add(new BasicNameValuePair("FromDate", fromDate));
+//                nameValuePairs.add(new BasicNameValuePair("ToDate", toDate));
+//                nameValuePairs.add(new BasicNameValuePair("PayKind",payKind));
+//                nameValuePairs.add(new BasicNameValuePair("SalesNo",SalesNo));
+
+
+                request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+
+
+                HttpResponse response = client.execute(request);
+
+
+                BufferedReader in = new BufferedReader(new
+                        InputStreamReader(response.getEntity().getContent()));
+
+
+//                JsonReader reader = new JsonReader(new StringReader(myFooString));
+//                reader.setLenient(true);
+//                new JsonParser().parse(reader);
+
+
+                StringBuffer sb = new StringBuffer("");
+                String line = "";
+
+                while ((line = in.readLine()) != null) {
+                    sb.append(line);
+                }
+
+                in.close();
+
+
+                JsonResponse = sb.toString();
+                Log.e("tag_paymentReport", "JsonResponse\t" + JsonResponse);
+
+                return JsonResponse;
+
+
+            }//org.apache.http.conn.HttpHostConnectException: Connection to http://10.0.0.115 refused
+            catch (HttpHostConnectException ex) {
+                ex.printStackTrace();
+//                progressDialog.dismiss();
+
+                Handler h = new Handler(Looper.getMainLooper());
+                h.post(new Runnable() {
+                    public void run() {
+
+                        Toast.makeText(main_context, "Ip Connection Failed ", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
+                return null;
+            } catch (Exception e) {
+                e.printStackTrace();
+//                progressDialog.dismiss();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+
+            if (s != null) {
+                if (s.contains("ALL_LIST")) {
+
+                    Gson gson = new Gson();
+
+//                    Gson gson = new GsonBuilder()
+//                            .setLenient()
+//                            .create();
+
+                    ListPriceOffer gsonObj = gson.fromJson(s, ListPriceOffer.class);
+                    listPriceOffers.clear();
+                    listPriceOffers.addAll(gsonObj.getALL_LIST());
+                    Log.e("item_customer", "SalesManNo");
+                    ListOfferReport offerPriceList = (ListOfferReport) context;
+                    offerPriceList.fillCashAdapter();
+                    pdValidationItem.dismissWithAnimation();
+
+
+                } else {
+                    listPriceOffers.clear();
+//                    OfferPriceList offerPriceList = (OfferPriceList) context;
+//                    offerPriceList.fillItemCard();
+                    pdValidationItem.dismissWithAnimation();
+                    Log.e("item_customer", "SalesManNo2");
+
+                }
+//                progressDialog.dismiss();
+            } else {
+                Log.e("item_customer", "SalesManNo3");
+                pdValidationItem.dismissWithAnimation();
             }
         }
 

@@ -24,7 +24,8 @@ public class ListAdapterPriceOnly extends BaseAdapter {
     private OfferPriceList context;
     private Context contexts;
     List<ItemMaster> itemsList;
-    public ListAdapterPriceOnly(OfferPriceList context, List<ItemMaster> itemsList) {
+    int clear=0;
+    public ListAdapterPriceOnly(OfferPriceList context, List<ItemMaster> itemsList,int clear) {
         this.context = context;
         this.itemsList = itemsList;
 
@@ -83,10 +84,15 @@ public class ListAdapterPriceOnly extends BaseAdapter {
 
         holder.itemNo.setText(itemsList.get(i).getItemNo());
         holder.itemName.setText(itemsList.get(i).getName());
-        holder.itemCheckBox.setChecked(itemsList.get(i).isCheckedItem());
+        if(clear==1){
+           itemsList.get(i).setCheckedItem(false);
+           itemsList.get(i).setPrice(itemsList.get(i).getF_D());
+        }
+
+
 //        itemsList.get(i).setPrice(itemsList.get(i).getF_D());
         holder.price.setText(itemsList.get(i).getPrice());
-
+        holder.itemCheckBox.setChecked(itemsList.get(i).isCheckedItem());
         holder.itemCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

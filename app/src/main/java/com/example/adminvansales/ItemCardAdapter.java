@@ -10,16 +10,21 @@ import android.widget.TextView;
 import com.example.adminvansales.Model.CustomerLogReportModel;
 import com.example.adminvansales.Model.ItemMaster;
 import com.example.adminvansales.Model.OfferListModel;
+import com.example.adminvansales.Model.SalesManInfo;
 
 import java.util.List;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
+import static com.example.adminvansales.OfferPriceList.mainListOffer;
+
 
 public class ItemCardAdapter extends BaseAdapter {
-    private Context context;
+    private OfferPriceList context;
     List<OfferListModel> itemsList;
 
 
-    public ItemCardAdapter(Context context, List<OfferListModel> itemsList) {
+    public ItemCardAdapter(OfferPriceList context, List<OfferListModel> itemsList) {
         this.context = context;
         this.itemsList = itemsList;
     }
@@ -80,6 +85,43 @@ public class ItemCardAdapter extends BaseAdapter {
         holder.customer .setText(itemsList.get(i).getCustomerName());
         holder.cashDiscount .setText(itemsList.get(i).getCashOffer());
         holder.otherDiscount .setText(itemsList.get(i).getOtherOffer());
+
+        holder.tableRow.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+               // itemsList.remove(i);
+
+                new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE)
+                        .setTitleText("Delete Item ")
+                        .setContentText("")
+                        .setCancelButton("cancel", new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                sweetAlertDialog.dismissWithAnimation();
+                            }
+                        })
+                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sweetAlertDialog) {
+
+                                mainListOffer.remove(i);
+                                context.fillItemCard();
+                                sweetAlertDialog.dismissWithAnimation();
+
+
+                            }
+                        })
+                        .show();
+
+
+
+
+
+                return false;
+            }
+        });
+
         return view;
     }
 

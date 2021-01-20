@@ -12,6 +12,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.adminvansales.Model.SalesManInfo;
+import com.example.adminvansales.Report.ListOfferReport;
 import com.google.gson.JsonArray;
 
 import org.apache.http.HttpResponse;
@@ -35,6 +36,7 @@ import java.util.List;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 import static com.example.adminvansales.GlobelFunction.salesManInfosList;
+import static com.example.adminvansales.ListOfferReportAdapter.controlText;
 import static com.example.adminvansales.LogIn.ipAddress;
 import static com.example.adminvansales.MainActivity.isListUpdated;
 
@@ -98,6 +100,10 @@ public class ExportData {
 
     public void AddSales(Context context,JSONObject jsonObject){
         new JSONTaskAddSales(context,jsonObject).execute();
+    }
+
+    public void updateList(Context context,JSONObject jsonObject){
+        new JSONTaskUpdateList(context,jsonObject).execute();
     }
 
     public void UpdateSales(Context context,JSONObject jsonObject){
@@ -555,6 +561,119 @@ public class ExportData {
             }else{
                 Log.e("positionSaveInnull","null");
                 pdValidationAdd.dismissWithAnimation();
+            }
+        }
+
+    }
+
+    private class JSONTaskUpdateList extends AsyncTask<String, String, String> {
+        ListOfferReport context;
+        JSONObject jsonObject;
+        public JSONTaskUpdateList(Context context,JSONObject jsonObject) {
+            this.context= (ListOfferReport) context;
+            this.jsonObject=jsonObject;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pd = new SweetAlertDialog(main_context, SweetAlertDialog.PROGRESS_TYPE);
+            pd.getProgressHelper().setBarColor(Color.parseColor("#FDD835"));
+            pd.setTitleText(main_context.getResources().getString(R.string.update));
+            pd.setCancelable(false);
+            pd.show();
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+//            ipAddress = "";
+            try {
+
+
+                if (!ipAddress.equals("")) {
+                    URL_TO_HIT = "http://" + ipAddress + "/VANSALES_WEB_SERVICE/admin.php";
+                }
+            } catch (Exception e) {
+
+            }
+
+            try {
+
+                String JsonResponse = null;
+                HttpClient client = new DefaultHttpClient();
+                HttpPost request = new HttpPost();
+                request.setURI(new URI(URL_TO_HIT));
+
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+                nameValuePairs.add(new BasicNameValuePair("_ID", "23"));
+                nameValuePairs.add(new BasicNameValuePair("UPDATE_LIST_OFFER_PRICE",jsonObject.toString()));
+
+
+                request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+
+
+                HttpResponse response = client.execute(request);
+
+
+                BufferedReader in = new BufferedReader(new
+                        InputStreamReader(response.getEntity().getContent()));
+
+                StringBuffer sb = new StringBuffer("");
+                String line = "";
+
+                while ((line = in.readLine()) != null) {
+                    sb.append(line);
+                }
+
+                in.close();
+
+
+                JsonResponse = sb.toString();
+                Log.e("UPDATE_LIST_SUCCESS", "JsonResponse\t" + JsonResponse);
+
+                return JsonResponse;
+
+
+            }//org.apache.http.conn.HttpHostConnectException: Connection to http://10.0.0.115 refused
+            catch (HttpHostConnectException ex) {
+                ex.printStackTrace();
+//                progressDialog.dismiss();
+
+                Handler h = new Handler(Looper.getMainLooper());
+                h.post(new Runnable() {
+                    public void run() {
+
+                        Toast.makeText(main_context, "Ip Connection Failed ", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
+                return null;
+            } catch (Exception e) {
+                e.printStackTrace();
+//                progressDialog.dismiss();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            if (s != null) {
+                if (s.contains("UPDATE_LIST_SUCCESS")) {
+                    Log.e("salesManInfo", "UPDATE_LIST_SUCCESS\t" + s.toString());
+                    Toast.makeText(context, "UPDATE LIST SUCCESS", Toast.LENGTH_SHORT).show();
+                    controlText.setText("2");
+                    pd.dismissWithAnimation();
+                }else {
+                    pd.dismissWithAnimation();
+                }
+//                progressDialog.dismiss();
+            }else {
+                pd.dismissWithAnimation();
             }
         }
 

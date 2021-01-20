@@ -16,6 +16,7 @@ import androidx.core.content.FileProvider;
 
 import com.example.adminvansales.Model.CashReportModel;
 import com.example.adminvansales.Model.CustomerLogReportModel;
+import com.example.adminvansales.Model.ListPriceOffer;
 import com.example.adminvansales.Model.PayMentReportModel;
 import com.example.adminvansales.Report.CustomerLogReport;
 import com.itextpdf.text.BaseColor;
@@ -37,6 +38,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
+
+import jxl.write.Label;
 
 import static com.itextpdf.text.Element.ALIGN_CENTER;
 
@@ -123,6 +126,9 @@ public class PdfConverter {
                 break;
             case 3:
                 tableContent=createPaymentReport((List<PayMentReportModel>) list);
+                break;
+            case 4:
+                tableContent=createListOfferPrice((List<ListPriceOffer>) list);
                 break;
         }
         return  tableContent;
@@ -244,6 +250,45 @@ public class PdfConverter {
         return pdfPTable;
 
     }
+
+    private PdfPTable createListOfferPrice(List<ListPriceOffer> list)
+    {
+        createPDF("ListOfferPrice" + ".pdf");
+        PdfPTable pdfPTable = new PdfPTable(8);
+        pdfPTable.setWidthPercentage(100f);
+        pdfPTable.setRunDirection(PdfWriter.RUN_DIRECTION_LTR);
+        insertCell(pdfPTable,context.getString(R.string.ListNo)                    , ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+        insertCell(pdfPTable,context.getString(R.string.ListName      )                        , ALIGN_CENTER   , 1, arabicFont, BaseColor.BLACK);
+        insertCell(pdfPTable,context.getString(R.string.ListType      )                        , ALIGN_CENTER   , 1, arabicFont, BaseColor.BLACK);
+        insertCell(pdfPTable,context.getResources().getString(R.string.from_date   )   , ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+        insertCell(pdfPTable,context.getResources().getString(R.string.to_date  )  , ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+
+        pdfPTable.setHeaderRows(1);
+        for (int i = 0; i < list.size(); i++) {
+            insertCell(pdfPTable, String.valueOf(list.get(i).getPO_LIST_NO() ) , ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+            insertCell(pdfPTable, String.valueOf(list.get(i).getPO_LIST_NAME()) , ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+            switch (list.get(i).getPO_LIST_TYPE()){
+                case "0":
+                    insertCell(pdfPTable, "Price BY Customer" , ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+
+                    break;
+                case "1":
+                    insertCell(pdfPTable,"Price Only" , ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+
+                    break;
+                case "2":
+                    insertCell(pdfPTable, "OFFer", ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+
+                    break;
+            }
+            insertCell(pdfPTable, String.valueOf(list.get(i).getFROM_DATE()) , ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+            insertCell(pdfPTable, String.valueOf(list.get(i).getTO_DATE()) , ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+
+        }
+        return pdfPTable;
+
+    }
+
 
     private PdfPTable getHeaderTable(List<?> list, int reportType , String headerDate, String date) {
         PdfPTable pdfPTableHeader = new PdfPTable(7);

@@ -103,33 +103,7 @@
 
                             android:gravity="center"
 
-                            android:text="رقم المادة"
-                            android:textColor="@color/colorblue_dark3"
-                            android:textSize="18sp" />
-
-                        <TextView
-                            android:id="@+id/body2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="serif-monospace"
-
-                            android:gravity="center"
-
-                            android:text="اسم المادة"
-                            android:textColor="@color/colorblue_dark3"
-                            android:textSize="18sp" />
-
-                        <TextView
-                            android:id="@+id/body"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="serif-monospace"
-
-                            android:gravity="center"
-
-                            android:text="السعر"
+                            android:text="رقم العميل "
                             android:textColor="@color/colorblue_dark3"
                             android:textSize="18sp" />
 
@@ -142,7 +116,7 @@
 
                             android:gravity="center"
 
-                            android:text="العميل "
+                            android:text="اسم العميل"
                             android:textColor="@color/colorblue_dark3"
                             android:textSize="18sp" />
                     </TableRow>

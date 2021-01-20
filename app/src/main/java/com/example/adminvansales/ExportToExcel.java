@@ -10,6 +10,7 @@ import androidx.core.content.FileProvider;
 
 import com.example.adminvansales.Model.CashReportModel;
 import com.example.adminvansales.Model.CustomerLogReportModel;
+import com.example.adminvansales.Model.ListPriceOffer;
 import com.example.adminvansales.Model.PayMentReportModel;
 import com.example.adminvansales.Report.CustomerLogReport;
 
@@ -73,6 +74,9 @@ public class ExportToExcel {
 
             case 3:
                 workbook = cashReport(workbook , (List<CashReportModel>) list );
+                break;
+            case 4:
+                workbook = listReport(workbook , (List<ListPriceOffer>) list );
                 break;
         }
 
@@ -217,7 +221,63 @@ public class ExportToExcel {
         return workbook;
 
     }
+    WritableWorkbook listReport(WritableWorkbook workbook, List<ListPriceOffer> list) {
 
+        try {
+            WritableSheet sheet = workbook.createSheet("Sheet1", 0);//Excel sheet name. 0 represents first sheet
+
+            try {
+                sheet.addCell(new Label(0, 0, context.getString(R.string.ListNo)            )); // column and row
+                sheet.addCell(new Label(2, 0, context.getString(R.string.ListName   )                          )  );
+                sheet.addCell(new Label(3, 0, context.getResources().getString(R.string.ListType  )  ) );
+                sheet.addCell(new Label(4, 0, context.getResources().getString(R.string.from_date )   ));
+                sheet.addCell(new Label(5, 0, context.getResources().getString(R.string.to_date     )  ));
+
+                sheet.mergeCells(0,1, 1, 1);// col , row, to col , to row
+
+                for (int i = 0; i < list.size(); i++) {
+                    sheet.addCell(new Label(0, i + 2, list.get(i).getPO_LIST_NO()+""));
+                    sheet.addCell(new Label(2, i + 2,      list.get(i).getPO_LIST_NAME()));
+
+                    switch (list.get(i).getPO_LIST_TYPE()){
+                        case "0":
+                            sheet.addCell(new Label(3, i + 2,  "Price BY Customer"));
+
+                            break;
+                        case "1":
+                            sheet.addCell(new Label(3, i + 2,  "Price Only"));
+
+                            break;
+                        case "2":
+                            sheet.addCell(new Label(3, i + 2,  "OFFer"));
+
+                            break;
+                    }
+
+                    sheet.addCell(new Label(4, i + 2,  list.get(i).getFROM_DATE()+""));
+                    sheet.addCell(new Label(5, i + 2,      list.get(i).getTO_DATE()));
+
+                    sheet.mergeCells(0,i + 2, 1, i + 2);// col , row, to col , to row
+
+                }
+
+            } catch (RowsExceededException e) {
+                e.printStackTrace();
+            } catch (WriteException e) {
+                e.printStackTrace();
+            }
+            workbook.write();
+            try {
+                workbook.close();
+            } catch (WriteException e) {
+                e.printStackTrace();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return workbook;
+
+    }
 
     WritableWorkbook paymentReport(WritableWorkbook workbook, List<PayMentReportModel> list) {
 

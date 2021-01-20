@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="2dp">
+
+    <TableRow
+        android:id="@+id/table"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp">
+
+        <TextView
+            android:id="@+id/salesNo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="10dp"
+
+            android:text="@string/SALES_MAN_ID"
+            android:textColor="@color/colorblue_dark"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/salesManName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="10dp"
+
+            android:text="@string/sales_man_name"
+            android:textColor="@color/colorblue_dark"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/cashSales"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+
+            android:padding="10dp"
+
+            android:text="@string/cash_sale"
+            android:textColor="@color/colorblue_dark"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/creditSale"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+
+            android:padding="10dp"
+
+            android:text="@string/credit_sales"
+            android:textColor="@color/colorblue_dark"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/netSales"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+
+            android:padding="10dp"
+
+            android:text="@string/net_sales"
+            android:textColor="@color/colorblue_dark"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/paymentCash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:gravity="center"
+
+            android:padding="10dp"
+
+            android:textColor="@color/colorblue_dark"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/sales"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:gravity="center"
+
+            android:padding="10dp"
+
+            android:textColor="@color/colorblue_dark"
+            android:textSize="14sp" />
+
+
+    </TableRow>
+
+</LinearLayout>

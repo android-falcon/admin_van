@@ -19,6 +19,7 @@ import com.azoft.carousellayoutmanager.CenterScrollListener;
 import com.example.adminvansales.Model.SalesManInfo;
 import com.example.adminvansales.Report.CashReport;
 import com.example.adminvansales.Report.CustomerLogReport;
+import com.example.adminvansales.Report.ListOfferReport;
 import com.example.adminvansales.Report.PaymentDetailsReport;
 
 import java.util.ArrayList;
@@ -35,7 +36,7 @@ public class HomeActivity extends AppCompatActivity {
 GlobelFunction globelFunction;
 Button locationButton,ReportButton,offerButton;
 LinearLayout ReportLinear;
-TextView customerLogReport,paymentReport,cashReport;
+TextView customerLogReport,paymentReport,cashReport,offerReport;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +90,8 @@ TextView customerLogReport,paymentReport,cashReport;
         customerLogReport=findViewById(R.id.customerLogReport);
         paymentReport=findViewById(R.id.paymentReport);
         cashReport=findViewById(R.id.cashReport);
+        offerReport=findViewById(R.id.offerReport);
+
         waitList.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -173,7 +176,15 @@ TextView customerLogReport,paymentReport,cashReport;
 
             }
         });
+        offerReport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ReportLinear.setVisibility(View.GONE);
+                Intent listIntent=new Intent(HomeActivity.this, ListOfferReport.class);
+                startActivity(listIntent);
 
+            }
+        });
 
 
     }
