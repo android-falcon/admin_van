@@ -157,7 +157,7 @@ public class ImportData {
 
 
                 if (!ipAddress.equals("")) {
-                    URL_TO_HIT = "http://" + ipAddress + "/VANSALES_WEB_SERVICE/index.php";
+                    URL_TO_HIT = "http://" + ipAddress + "/VANSALES_WEB_SERVICE/admin.php";
                 }
             } catch (Exception e) {
 

@@ -142,7 +142,7 @@ android:drawableEnd="@drawable/ic_person_black_24dp"
                 android:layout_width="match_parent"
                 android:drawableRight="@drawable/ic_person_black_24dp" />
         <EditText
-            android:id="@+id/button_sighnup"
+            android:id="@+id/userName_edit"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fontFamily="sans-serif-light"
@@ -193,7 +193,7 @@ android:drawableEnd="@drawable/ic_person_black_24dp"
                 android:layout_width="match_parent"
                 android:drawableRight="@drawable/ic_lock_open_black_24dp" />
         <EditText
-            android:id="@+id/button_password"
+            android:id="@+id/password_edit"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fontFamily="sans-serif-light"

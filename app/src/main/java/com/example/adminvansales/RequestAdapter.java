@@ -95,8 +95,15 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
             viewHolder.requestType.setText(context.getResources().getString(R.string.totalBonus));
         } else if (requestList.get(i).getRequestType().equals("0")) {
             viewHolder.requestType.setText(context.getResources().getString(R.string.itemDiscount));
+            try {
+                typeDiscountItem=Integer.parseInt(requestList.get(i).getNote().substring(0,1));
+            }
+            catch (Exception e)
+            {
+                typeDiscountItem=2;
+            }
 
-            typeDiscountItem=Integer.parseInt(requestList.get(i).getNote().substring(0,1));
+
             if(typeDiscountItem==1)
             {
                 viewHolder.amountValue.setText( requestList.get(i).getAmountValue()+"\t%");

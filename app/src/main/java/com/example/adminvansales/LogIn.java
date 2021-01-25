@@ -26,6 +26,7 @@ public class LogIn extends AppCompatActivity {
     Button button_logIn,button_sighnup;
     public  static String ipAddress="";
     private DataBaseHandler databaseHandler;
+    EditText userName_edit,password_edit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,9 @@ public class LogIn extends AppCompatActivity {
             }
         });
         button_logIn=findViewById(R.id.button_logIn);
+        password_edit=findViewById(R.id.password_edit);
+        userName_edit=findViewById(R.id.userName_edit);
+
         ImportData importData=new ImportData(LogIn.this);
         importData.getListRequest();
         Log.e("importData","11111");
@@ -58,8 +62,22 @@ public class LogIn extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                if(userName_edit.getText().toString().equals("admin"))
+                {
+                    if(password_edit.getText().toString().equals("100"))
+                    {
+                        goToMain();
+                    }
+                    else {
+                        password_edit.setError("Required");
+                    }
+                }
+                else {
+                    userName_edit.setError("Required");
+                }
+
 //
-                goToMain();
+
 //
             }
         });
