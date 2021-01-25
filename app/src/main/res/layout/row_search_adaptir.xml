@@ -59,6 +59,7 @@
             android:layout_height="30dp"
             android:background="@drawable/accept_btn"
             android:text="cus"
+            android:visibility="gone"
             android:textColor="@color/White2" />
 
     </TableRow>

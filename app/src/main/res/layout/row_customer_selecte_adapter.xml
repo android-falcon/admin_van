@@ -13,7 +13,7 @@
         android:layout_marginTop="5dp">
 
         <TextView
-            android:id="@+id/itemNo"
+            android:id="@+id/custNo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -25,7 +25,7 @@
             android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/itemName"
+            android:id="@+id/custName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.9"
@@ -33,59 +33,6 @@
             android:padding="10dp"
 
             android:text="@string/itemName"
-            android:textColor="@color/colorblue_dark"
-            android:textSize="14sp" />
-
-        <EditText
-            android:id="@+id/price"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:inputType="numberDecimal"
-            android:padding="10dp"
-            android:text="@string/Barcode"
-            android:textColor="@color/colorblue_dark"
-            android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/customer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.9"
-            android:gravity="center"
-
-            android:padding="10dp"
-
-            android:text="@string/price"
-            android:textColor="@color/colorblue_dark"
-            android:textSize="14sp"
-            android:visibility="gone" />
-
-        <EditText
-            android:id="@+id/cashDiscount"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:inputType="numberDecimal"
-            android:padding="10dp"
-
-            android:text="@string/CHECK_IN_TIME"
-            android:textColor="@color/colorblue_dark"
-            android:textSize="14sp" />
-
-        <EditText
-            android:id="@+id/otherDiscount"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:inputType="numberDecimal"
-
-            android:padding="10dp"
-
-            android:text="@string/CHECK_OUT_DATE"
             android:textColor="@color/colorblue_dark"
             android:textSize="14sp" />
 

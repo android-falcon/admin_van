@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.TableRow;
 import android.widget.TextView;
 
@@ -60,7 +61,8 @@ public class ListAdapterPriceOnly extends BaseAdapter {
     }
 
     private class ViewHolder {
-        TextView itemNo,price, itemName;
+        TextView itemNo, itemName;
+        EditText price;
         CheckBox itemCheckBox;
         TableRow tableRow;
 
@@ -93,24 +95,42 @@ public class ListAdapterPriceOnly extends BaseAdapter {
 //        itemsList.get(i).setPrice(itemsList.get(i).getF_D());
         holder.price.setText(itemsList.get(i).getPrice());
         holder.itemCheckBox.setChecked(itemsList.get(i).isCheckedItem());
-        holder.itemCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//        holder.itemCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//
+//                if(!priceOnly.getText().toString().equals("")) {
+//                    if (isChecked) {
+//                        itemsList.get(i).setCheckedItem(true);
+//                        itemsList.get(i).setPrice(""+Double.parseDouble(priceOnly.getText().toString()));
+//
+//                        holder.price.setText(""+Double.parseDouble(priceOnly.getText().toString()));
+//                    } else {
+//                        itemsList.get(i).setCheckedItem(false);
+//                        itemsList.get(i).setPrice(itemsList.get(i).getF_D());
+//
+//                        holder.price.setText(itemsList.get(i).getF_D());
+//                    }
+//                }else{
+//                    priceOnly.setError("Required!");
+//                }
+//
+//            }
+//        });
+
+        holder.price.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            public void onFocusChange(View v, boolean hasFocus) {
 
-                if(!priceOnly.getText().toString().equals("")) {
-                    if (isChecked) {
-                        itemsList.get(i).setCheckedItem(true);
-                        itemsList.get(i).setPrice(""+Double.parseDouble(priceOnly.getText().toString()));
+                if (!hasFocus) {
 
-                        holder.price.setText(""+Double.parseDouble(priceOnly.getText().toString()));
-                    } else {
-                        itemsList.get(i).setCheckedItem(false);
-                        itemsList.get(i).setPrice(itemsList.get(i).getF_D());
+                    if(!holder.price.getText().toString().equals("")) {
+                        // itemsList.get(i).setCheckedItem(true);
+                        itemsList.get(i).setPrice("" + Double.parseDouble(holder.price.getText().toString()));
 
-                        holder.price.setText(itemsList.get(i).getF_D());
+                    }else{
+                        holder.price.setError("Required!");
                     }
-                }else{
-                    priceOnly.setError("Required!");
                 }
 
             }

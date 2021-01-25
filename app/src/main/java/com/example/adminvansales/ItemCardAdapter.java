@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.TableRow;
 import android.widget.TextView;
 
@@ -23,10 +24,12 @@ public class ItemCardAdapter extends BaseAdapter {
     private OfferPriceList context;
     List<OfferListModel> itemsList;
 
+    int flag;
 
-    public ItemCardAdapter(OfferPriceList context, List<OfferListModel> itemsList) {
+    public ItemCardAdapter(OfferPriceList context, List<OfferListModel> itemsList,int flag) {
         this.context = context;
         this.itemsList = itemsList;
+        this.flag=flag;
     }
 
     public ItemCardAdapter() {
@@ -54,7 +57,8 @@ public class ItemCardAdapter extends BaseAdapter {
     }
 
     private class ViewHolder {
-        TextView itemNo,itemName,categoryId,price ,customer,cashDiscount,otherDiscount;
+        TextView itemNo,itemName,categoryId /*,customer*/;
+        EditText price ,cashDiscount,otherDiscount;
         TableRow tableRow;
 
 
@@ -72,7 +76,7 @@ public class ItemCardAdapter extends BaseAdapter {
         holder.itemName = view.findViewById(R.id.itemName);
 //        holder.categoryId = view.findViewById(R.id.categId);
         holder.price = view.findViewById(R.id.price);
-        holder.customer=view.findViewById(R.id.customer);
+        //holder.customer=view.findViewById(R.id.customer);
         holder.cashDiscount=view.findViewById(R.id.cashDiscount);
         holder.otherDiscount=view.findViewById(R.id.otherDiscount);
 
@@ -82,9 +86,79 @@ public class ItemCardAdapter extends BaseAdapter {
 //        holder.categoryId.setText(itemsList.get(i).get());
         holder.price .setText(itemsList.get(i).getPrice());
 
-        holder.customer .setText(itemsList.get(i).getCustomerName());
+       // holder.customer .setText(itemsList.get(i).getCustomerName());
         holder.cashDiscount .setText(itemsList.get(i).getCashOffer());
         holder.otherDiscount .setText(itemsList.get(i).getOtherOffer());
+        if(flag==0){
+            holder.price.setEnabled(true);
+            holder.otherDiscount.setEnabled(false);
+            holder.cashDiscount.setEnabled(false);
+        }else if(flag==2){
+            holder.price.setEnabled(false);
+            holder.otherDiscount.setEnabled(true);
+            holder.cashDiscount.setEnabled(true);
+        }
+
+
+        holder.price.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+
+                if (!hasFocus) {
+
+                    if(!holder.price.getText().toString().equals("")) {
+                        if(!holder.price.getText().toString().equals(".")) {
+                            itemsList.get(i).setPrice("" + Double.parseDouble(holder.price.getText().toString()));
+                        }else {
+                            holder.price.setError("Dot!");
+                        }
+                    }else{
+                        holder.price.setError("Required!");
+                    }
+                }
+
+            }
+        });
+
+        holder.otherDiscount.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+
+                if (!hasFocus) {
+
+                    if(!holder.otherDiscount.getText().toString().equals("")) {
+                        if(!holder.otherDiscount.getText().toString().equals(".")) {
+                            itemsList.get(i).setOtherOffer("" + Double.parseDouble(holder.otherDiscount.getText().toString()));
+                        }else {
+                            holder.otherDiscount.setError("Dot!");
+                        }
+                    }else{
+                        holder.otherDiscount.setError("Required!");
+                    }
+                }
+
+            }
+        });
+        holder.cashDiscount.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+
+                if (!hasFocus) {
+
+                    if(!holder.cashDiscount.getText().toString().equals("")) {
+                        if(!holder.cashDiscount.getText().toString().equals(".")) {
+                            itemsList.get(i).setCashOffer("" + Double.parseDouble(holder.cashDiscount.getText().toString()));
+
+                        }else {
+                            holder.cashDiscount.setError("Dot!");
+                        }
+                    }else{
+                        holder.cashDiscount.setError("Required!");
+                    }
+                }
+
+            }
+        });
 
         holder.tableRow.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -105,8 +179,8 @@ public class ItemCardAdapter extends BaseAdapter {
                             @Override
                             public void onClick(SweetAlertDialog sweetAlertDialog) {
 
-                                mainListOffer.remove(i);
-                                context.fillItemCard();
+//                                mainListOffer.remove(i);
+//                                context.fillItemCard();
                                 sweetAlertDialog.dismissWithAnimation();
 
 

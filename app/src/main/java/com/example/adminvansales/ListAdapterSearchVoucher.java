@@ -16,12 +16,20 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.adminvansales.Model.ItemMaster;
+import com.example.adminvansales.Model.OfferListModel;
 import com.example.adminvansales.Model.customerInfoModel;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.adminvansales.OfferPriceList.cashDiscount;
+import static com.example.adminvansales.OfferPriceList.customerSelectTemp;
+import static com.example.adminvansales.OfferPriceList.itemSelectList;
+import static com.example.adminvansales.OfferPriceList.otherDiscount;
+import static com.example.adminvansales.OfferPriceList.price;
 
 
 public class ListAdapterSearchVoucher extends BaseAdapter {
@@ -73,7 +81,7 @@ public class ListAdapterSearchVoucher extends BaseAdapter {
         TextView accNo, voucherNo, customerName;
         CheckBox itemCheckBox;
 
-        Button customerButton;
+       // Button customerButton;
         TableRow tableRow;
 
 
@@ -90,7 +98,7 @@ public class ListAdapterSearchVoucher extends BaseAdapter {
         holder.voucherNo = view.findViewById(R.id.voNo);
         holder.customerName = view.findViewById(R.id.custName);
         holder.itemCheckBox = view.findViewById(R.id.itemCheckBox);
-        holder.customerButton=view.findViewById(R.id.customerButton);
+//        holder.customerButton=view.findViewById(R.id.customerButton);
 
 
 //        holder.state.setText("" + itemsList.get(i).getStatus());
@@ -99,31 +107,68 @@ public class ListAdapterSearchVoucher extends BaseAdapter {
         holder.voucherNo.setText(itemsList.get(i).getF_D());
         holder.customerName.setText(itemsList.get(i).getName());
         holder.itemCheckBox.setChecked(itemsList.get(i).isCheckedItem());
-        holder.customerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                context.ShowSearchCustomerDialog(itemsList.get(i));
-
-            }
-        });
 
         holder.itemCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                if(isChecked){
 
-                    itemsList.get(i).setCheckedItem(true);
+                boolean found=false;
+                int deletePos=-1;
+                if (itemSelectList.size() != 0){
+                    for (int k = 0; k < itemSelectList.size(); k++) {
+                        Log.e("mainListOffer12", "" + itemSelectList.size());
+                        if (itemsList.get(i).getItemNo().equals(itemSelectList.get(k).getItemNo())) {
+                            deletePos=k;
+                            found=true;
+                            break;
 
-                }else{
-                    itemsList.get(i).setCheckedItem(false);
+                        }
+
+                    }
+
+
+                    if(found){
+                        if (isChecked) {
+
+                            Toast.makeText(context, "The Item In List ", Toast.LENGTH_SHORT).show();
+                        }
+//                        else {
+//                            itemSelectList.remove(deletePos);
+//                        }
+                    }else{
+
+                        itemSelectList.add(returnOfferListModel(itemsList.get(i)));
+                        Toast.makeText(context, "The Item Add List ", Toast.LENGTH_SHORT).show();
+
+                    }
+
+
+                }else {
+                    itemSelectList.add(returnOfferListModel(itemsList.get(i)));
+                    Toast.makeText(context, "The Item Add List ", Toast.LENGTH_SHORT).show();
+
+
                 }
+
 
             }
         });
 
         return view;
+    }
+
+    public OfferListModel returnOfferListModel(ItemMaster itemMaster){
+        OfferListModel offerListModel=new OfferListModel();
+        offerListModel.setItemNo(itemMaster.getItemNo());
+        offerListModel.setItemName(itemMaster.getName());
+        offerListModel.setPrice(price.getText().toString());
+        offerListModel.setCashOffer(cashDiscount.getText().toString());
+        offerListModel.setOtherOffer(otherDiscount.getText().toString());
+        offerListModel.setItemNo(itemMaster.getItemNo());
+        offerListModel.setItemName(itemMaster.getName());
+
+        return  offerListModel;
     }
 
 

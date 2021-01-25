@@ -144,6 +144,7 @@
             </TableRow>
 
             <TableRow
+                android:id="@+id/dateLinear"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="3dp"
@@ -183,6 +184,7 @@
                     android:textColor="@color/darkGray" />
             </TableRow>
         <TableRow
+            android:id="@+id/listDateType"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="3dp"
@@ -228,7 +230,7 @@
         android:layout_weight="1"
         android:orientation="vertical"
         android:padding="2dp"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -476,7 +478,7 @@
                 android:gravity="center"
                 android:padding="10dp"
                 android:textColor="@color/colorblue_dark3"
-                android:visibility="gone" />
+                android:visibility="visible" />
 
             <TextView
                 android:id="@+id/selectCustomer"
@@ -486,8 +488,7 @@
                 android:gravity="center"
                 android:padding="10dp"
                 android:text="select Customer"
-                android:textColor="@color/colorblue_dark3"
-                android:visibility="gone" />
+                android:textColor="@color/colorblue_dark3" />
 
         </LinearLayout>
 
@@ -495,10 +496,14 @@
             android:id="@+id/HorizontalScrollView01"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/darkOrange2"
             android:layout_weight="1"
             android:fillViewport="true">
-
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -507,7 +512,8 @@
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="0dp"
+                    android:gravity="center"
                     android:background="@color/colorblue_dark">
 
                     <TextView
@@ -553,6 +559,7 @@
 
                         android:padding="5dp"
 
+                        android:visibility="gone"
                         android:text="@string/customerName"
                         android:textColor="@color/white" />
 
@@ -560,12 +567,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:background="@drawable/white_and_blue"
+
 
                         android:gravity="center"
                         android:padding="5dp"
                         android:text="@string/cashDiscount"
-                        android:textColor="@color/colorblue_dark"
+                        android:textColor="@color/White2"
                         android:textSize="14sp" />
 
                     <TextView
@@ -573,11 +580,11 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
-
+                        android:background="@drawable/white_and_blue"
                         android:padding="5dp"
 
                         android:text="@string/otherDiscount"
-                        android:textColor="@color/white"
+                        android:textColor="@color/colorblue_dark3"
                         android:textSize="14sp" />
 
 
@@ -718,6 +725,57 @@
                     android:background="@color/layer6" />
 
             </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="5dp">
+
+
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorblue_dark"
+                        android:gravity="center">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/white_and_blue"
+                            android:gravity="center"
+
+                            android:padding="5dp"
+                            android:text="@string/CUS_CODE"
+                            android:textColor="@color/colorblue_dark"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.9"
+                            android:gravity="center"
+                            android:padding="5dp"
+
+                            android:text="@string/CUS_NAME"
+                            android:textColor="@color/white"
+                            android:textSize="14sp" />
+
+
+                    </TableRow>
+
+                    <ListView
+                        android:id="@+id/customerListView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@color/layer6" />
+
+                </LinearLayout>
+            </LinearLayout>
         </HorizontalScrollView>
     </LinearLayout>
 
@@ -728,14 +786,15 @@
         android:layout_weight="1"
         android:orientation="vertical"
         android:padding="5dp"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0"
             android:orientation="vertical"
-            android:padding="2dp">
+            android:padding="2dp"
+            android:visibility="visible">
 
 
             <LinearLayout
@@ -824,7 +883,8 @@
                         android:id="@+id/itemCheckBox"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/white_and_blue" />
+                        android:background="@drawable/white_and_blue"
+                        android:visibility="gone"/>
 
                     <TextView
                         android:layout_width="match_parent"

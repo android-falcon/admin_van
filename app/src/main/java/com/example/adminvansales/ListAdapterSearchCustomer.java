@@ -16,6 +16,7 @@ import com.example.adminvansales.Model.customerInfoModel;
 
 import java.util.List;
 
+import static com.example.adminvansales.OfferPriceList.customerSelect;
 import static com.example.adminvansales.OfferPriceList.customerSelectTemp;
 
 
@@ -105,10 +106,10 @@ this.flag=flag;
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 boolean found=false;
                 int deletePos=-1;
-                if (customerSelectTemp.size() != 0){
-                    for (int k = 0; k < customerSelectTemp.size(); k++) {
-                        Log.e("mainListOffer12", "" + customerSelectTemp.size());
-                        if (itemsList.get(i).getCustID().equals(customerSelectTemp.get(k).getCustID())) {
+                if (customerSelect.size() != 0){
+                    for (int k = 0; k < customerSelect.size(); k++) {
+                        Log.e("mainListOffer12", "" + customerSelect.size());
+                        if (itemsList.get(i).getCustID().equals(customerSelect.get(k).getCustID())) {
                             deletePos=k;
                             found=true;
                             break;
@@ -122,15 +123,15 @@ this.flag=flag;
                         if (isChecked) {
 
                         } else {
-                            customerSelectTemp.remove(deletePos);
+                            customerSelect.remove(deletePos);
                         }
                     }else{
-                        customerSelectTemp.add(itemsList.get(i));
+                        customerSelect.add(itemsList.get(i));
                     }
 
 
             }else {
-                    customerSelectTemp.add(itemsList.get(i));
+                    customerSelect.add(itemsList.get(i));
 
             }
 

@@ -16,7 +16,8 @@
         <CheckBox
             android:id="@+id/itemCheckBox"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/itemNo"
@@ -41,14 +42,14 @@
             android:textColor="@color/colorblue_dark3"
             android:textSize="14sp" />
 
-        <TextView
+        <EditText
             android:id="@+id/price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
             android:text="Tital"
-
+            android:inputType="numberDecimal"
             android:textColor="@color/colorblue_dark3"
             android:textSize="14sp" />
 
