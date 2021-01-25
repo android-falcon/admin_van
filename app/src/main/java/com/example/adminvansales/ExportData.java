@@ -36,6 +36,7 @@ import java.util.List;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 import static com.example.adminvansales.GlobelFunction.salesManInfosList;
+import static com.example.adminvansales.HomeActivity.editPassword;
 import static com.example.adminvansales.ListOfferReportAdapter.controlText;
 import static com.example.adminvansales.LogIn.ipAddress;
 import static com.example.adminvansales.MainActivity.isListUpdated;
@@ -62,7 +63,7 @@ public class ExportData {
         flag=2;
         jsonArrayRequest = new JSONArray();
 
-        Log.e("rowId",""+rowId+"\t"+state);
+        Log.e("rowId","updateRowState"+rowId+"\t"+state);
 
             JSONObject obj = new JSONObject();
             try {
@@ -115,6 +116,12 @@ public class ExportData {
     }
 
     public void savePassowrdSetting(String passowrd) {
+
+        new JSONTask_savePassword(passowrd).execute();
+    }
+
+    public void getPassowrdSetting() {
+        new JSONTask_getPassword().execute();
     }
 
     private class JSONTask extends AsyncTask<String, String, String> {
@@ -138,7 +145,7 @@ public class ExportData {
                 ipAddress=databaseHandler.getAllSetting();
                 if(!ipAddress.equals(""))
                 {
-                    URL_TO_HIT = "http://" + ipAddress + "/VANSALES_WEB_SERVICE/index.php";
+                    URL_TO_HIT = "http://" + ipAddress + "/VANSALES_WEB_SERVICE/admin.php";
                 }
             }
             catch (Exception e)
@@ -159,6 +166,7 @@ public class ExportData {
                     nameValuePairs.add(new BasicNameValuePair("Update_SeenRow", jsonArrayRequest.toString().trim()));
                 }
                 else {
+                    Log.e("rowId","BasicNameValuePair"+jsonArrayRequest.get(0).toString());
                     nameValuePairs.add(new BasicNameValuePair("_ID", "9"));
                     nameValuePairs.add(new BasicNameValuePair("Update_StateRow", jsonArrayRequest.toString().trim()));
                 }
@@ -217,7 +225,7 @@ public class ExportData {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-
+            Log.e("tag", "onPostExecute"+s.toString());
             String impo = "";
             pdValidation.dismissWithAnimation();
             if (s != null) {
@@ -677,6 +685,253 @@ public class ExportData {
 //                progressDialog.dismiss();
             }else {
                 pd.dismissWithAnimation();
+            }
+        }
+
+    }
+    private class JSONTask_savePassword extends AsyncTask<String, String, String> {
+
+        public  String passwordValue="";
+        public  JSONTask_savePassword(String password_key){
+            this.passwordValue=password_key;
+        }
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pdValidation = new SweetAlertDialog(main_context, SweetAlertDialog.PROGRESS_TYPE);
+            pdValidation.getProgressHelper().setBarColor(Color.parseColor("#FDD835"));
+            pdValidation.setTitleText(main_context.getResources().getString(R.string.process));
+            pdValidation.setCancelable(false);
+            pdValidation.show();
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            try {
+
+                ipAddress=databaseHandler.getAllSetting();
+                if(!ipAddress.equals(""))
+                {
+                    URL_TO_HIT = "http://" + ipAddress + "/VANSALES_WEB_SERVICE/admin.php";
+                }
+            }
+            catch (Exception e)
+            {
+
+            }
+            try {
+
+                String JsonResponse = null;
+                HttpClient client = new DefaultHttpClient();
+                HttpPost request = new HttpPost();
+                request.setURI(new URI(URL_TO_HIT));
+
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+
+                    Log.e("rowId","BasicNameValuePair"+passwordValue);
+                    nameValuePairs.add(new BasicNameValuePair("_ID", "24"));
+
+                nameValuePairs.add(new BasicNameValuePair("PasswordType", "1"));
+                nameValuePairs.add(new BasicNameValuePair("passwordKey", passwordValue.toString()));
+
+
+                request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+
+
+                HttpResponse response = client.execute(request);
+
+
+                BufferedReader in = new BufferedReader(new
+                        InputStreamReader(response.getEntity().getContent()));
+
+                StringBuffer sb = new StringBuffer("");
+                String line = "";
+
+                while ((line = in.readLine()) != null) {
+                    sb.append(line);
+                }
+
+                in.close();
+
+
+                JsonResponse = sb.toString();
+                Log.e("tagUpdate", "JsonResponse\t" + JsonResponse);
+
+                return JsonResponse;
+
+
+            }
+            //org.apache.http.conn.HttpHostConnectException: Connection to http://10.0.0.115 refused
+            catch (HttpHostConnectException ex) {
+                ex.printStackTrace();
+
+
+                Handler h = new Handler(Looper.getMainLooper());
+                h.post(new Runnable() {
+                    public void run() {
+
+                        Toast.makeText(main_context, "Ip Connection Failed ", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
+                return null;
+            } catch (Exception e) {
+                e.printStackTrace();
+//                progressDialog.dismiss();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.e("tag", "onPostExecute"+s.toString());
+            String impo = "";
+            pdValidation.dismissWithAnimation();
+            if (s != null) {
+                if (s.contains("UPDATE_PASSWORD_SUCCESS")) {
+
+
+                    Toast.makeText(main_context, "Success", Toast.LENGTH_SHORT).show();
+                    Log.e("tag", "****Success"+s.toString());
+
+
+                }
+
+            }
+        }
+
+    }
+    private class JSONTask_getPassword extends AsyncTask<String, String, String> {
+
+        public  String passwordValue="";
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pdValidation = new SweetAlertDialog(main_context, SweetAlertDialog.PROGRESS_TYPE);
+            pdValidation.getProgressHelper().setBarColor(Color.parseColor("#FDD835"));
+            pdValidation.setTitleText(main_context.getResources().getString(R.string.process));
+            pdValidation.setCancelable(false);
+            pdValidation.show();
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            try {
+
+                ipAddress=databaseHandler.getAllSetting();
+                if(!ipAddress.equals(""))
+                {
+                    URL_TO_HIT = "http://" + ipAddress + "/VANSALES_WEB_SERVICE/admin.php";
+                }
+            }
+            catch (Exception e)
+            {
+
+            }
+            try {
+
+                String JsonResponse = null;
+                HttpClient client = new DefaultHttpClient();
+                HttpPost request = new HttpPost();
+                request.setURI(new URI(URL_TO_HIT));
+
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+
+                Log.e("rowId","BasicNameValuePair"+passwordValue);
+                nameValuePairs.add(new BasicNameValuePair("_ID", "25"));
+
+                nameValuePairs.add(new BasicNameValuePair("PasswordType", "1"));
+
+
+                request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+
+
+                HttpResponse response = client.execute(request);
+
+
+                BufferedReader in = new BufferedReader(new
+                        InputStreamReader(response.getEntity().getContent()));
+
+                StringBuffer sb = new StringBuffer("");
+                String line = "";
+
+                while ((line = in.readLine()) != null) {
+                    sb.append(line);
+                }
+
+                in.close();
+
+
+                JsonResponse = sb.toString();
+                Log.e("tagUpdate", "JsonResponse\t" + JsonResponse);
+
+                return JsonResponse;
+
+
+            }
+            //org.apache.http.conn.HttpHostConnectException: Connection to http://10.0.0.115 refused
+            catch (HttpHostConnectException ex) {
+                ex.printStackTrace();
+
+
+                Handler h = new Handler(Looper.getMainLooper());
+                h.post(new Runnable() {
+                    public void run() {
+
+                        Toast.makeText(main_context, "Ip Connection Failed ", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
+                return null;
+            } catch (Exception e) {
+                e.printStackTrace();
+//                progressDialog.dismiss();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.e("tag", "onPostExecute"+s.toString());
+            String impo = "";
+            JSONObject result=null;
+            pdValidation.dismissWithAnimation();
+            if (s != null) {
+                if (s.contains("PasswordKeyValue")) {
+                        try {
+                            result = new JSONObject(s);
+                            JSONArray notificationInfo = null;
+                            notificationInfo = result.getJSONArray("PasswordKeyValue");
+                            JSONObject infoDetail=null;
+                            infoDetail = notificationInfo.getJSONObject(0);
+
+                                Log.e("infoDetail",""+infoDetail.get("passwordKey").toString());
+                            editPassword.setText(infoDetail.get("passwordKey").toString());
+
+
+
+
+
+
+
+                        } catch (JSONException e) {
+//                        progressDialog.dismiss();
+                            e.printStackTrace();
+                        }
+
+
+
+                }
+
             }
         }
 
