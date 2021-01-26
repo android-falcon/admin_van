@@ -73,6 +73,7 @@ public class OfferPriceList extends AppCompatActivity {
     RadioGroup dateClose;
     CheckBox itemCheckBox;
     int listTypes=0;
+    JSONArray array;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -799,14 +800,17 @@ List<String> getAllCustomerByItem(String ItemNo){
 
 
         addToMainList();
+if(position!=1) {
+    if (openRadio.isChecked()) {
 
-        if(openRadio.isChecked()){
+        toDates = "01/01/9999";
+    } else {
 
-            toDates="01/01/9999";
-        }else{
-
-            toDates=toDate.getText().toString();
-        }
+        toDates = toDate.getText().toString();
+    }
+}else {
+    toDates = "01/01/9999";
+}
 
 
         if(position!=1) {
@@ -815,7 +819,7 @@ List<String> getAllCustomerByItem(String ItemNo){
                 if (itemSelectList.size() != 0) {
                     if (customerSelect.size() != 0) {
                         if (mainListOffer.size() != 0) {
-                            importData.ifBetweenDate(OfferPriceList.this, fromDate.getText().toString(), toDates, "" + position, "0", listNo.getText().toString());
+                            importData.ifBetweenDate(OfferPriceList.this, fromDate.getText().toString(), toDates, "" + position, "0", listNo.getText().toString(),array);
                         } else {
                             Toast.makeText(this, "No Data In List", Toast.LENGTH_SHORT).show();
                         }
@@ -832,7 +836,7 @@ List<String> getAllCustomerByItem(String ItemNo){
         }else  {
             if (!listName.getText().toString().equals("")) {
                 if (listItemPrice.size() != 0) {
-                    importData.ifBetweenDate(OfferPriceList.this, fromDate.getText().toString(), toDates,""+position,"0",listNo.getText().toString());
+                    importData.ifBetweenDate(OfferPriceList.this, fromDate.getText().toString(), toDates,""+position,"0",listNo.getText().toString(),array);
 
                 } else {
                     Toast.makeText(this, "No Data In List", Toast.LENGTH_SHORT).show();
@@ -848,7 +852,7 @@ List<String> getAllCustomerByItem(String ItemNo){
 
     private void addToMainList() {
         mainListOffer.clear();
-
+        array=new JSONArray();
         for(int i=0;i<itemSelectList.size();i++){
             for (int k=0;k<customerSelect.size();k++) {
                 OfferListModel offerListModel = new OfferListModel();
@@ -873,6 +877,14 @@ List<String> getAllCustomerByItem(String ItemNo){
                 offerListModel.setCustomerName(customerSelect.get(k).getCustName());
                 //offerListModel.setIsSelectCustomer(1);
                 mainListOffer.add(offerListModel);
+                if(i==0) {
+
+                    customerInfoModel customerInfoModel=new customerInfoModel();
+
+                    customerInfoModel=customerSelect.get(k);
+                    array.put(customerInfoModel.getJsonObjectList());
+
+                }
             }
 
         }

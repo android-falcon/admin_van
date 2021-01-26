@@ -2,6 +2,9 @@ package com.example.adminvansales.Model;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.List;
 
 public class customerInfoModel {
@@ -77,6 +80,9 @@ public class customerInfoModel {
     public customerInfoModel(String custID, String custName) {
         CustID = custID;
         CustName = custName;
+    }
+    public customerInfoModel() {
+
     }
 
     public customerInfoModel(String comapnyNo, String custID, String custName, String address, String isSuspended,
@@ -235,5 +241,22 @@ public class customerInfoModel {
 
     public void setCheckedItem(boolean checkedItem) {
         this.checkedItem = checkedItem;
+    }
+
+
+    public JSONObject getJsonObjectList(){
+
+        JSONObject jsonObject=new JSONObject();
+
+        try {
+            jsonObject.put("CUST_ID", CustID);
+            jsonObject.put("CUST_NAME", CustName);
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return jsonObject;
     }
 }
