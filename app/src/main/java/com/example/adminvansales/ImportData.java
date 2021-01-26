@@ -112,8 +112,9 @@ public class ImportData {
     }
 
 
-    public void ifBetweenDate(Context context, String fromDate, String toDate, String postion, String upAdd, String listNo) {
-        new JSONTaskIfDateBetween(context, fromDate, toDate, postion, upAdd, listNo).execute();
+    public void ifBetweenDate(Context context, String fromDate, String toDate, String postion, String upAdd, String listNo,JSONArray listOfCustomer) {
+        new JSONTaskIfDateBetween(context, fromDate, toDate, postion, upAdd, listNo,listOfCustomer).execute();
+        Log.e("master","ggg = "+listOfCustomer.toString()+ "  "+fromDate +"  "+toDate);
     }
 
     public void getCustomerAccountStatment(String CustomerId) {
@@ -1616,9 +1617,10 @@ public class ImportData {
         Context contextMaster;
         int flag;
         String fromDate, toDate, listType, UpAddFlag, listNO;
+        JSONArray listOfCustomer;
 
 
-        public JSONTaskIfDateBetween(Object context, String fromDate, String toDate, String listType, String upAddFlag, String listNO) {
+        public JSONTaskIfDateBetween(Object context, String fromDate, String toDate, String listType, String upAddFlag, String listNO,JSONArray listOfCustomer ) {
 //            this.flag=flag;
             if (upAddFlag.equals("0")) {
                 this.context = (OfferPriceList) context;
@@ -1632,6 +1634,7 @@ public class ImportData {
             this.listType = listType;
             this.UpAddFlag = upAddFlag;
             this.listNO = listNO;
+            this.listOfCustomer=listOfCustomer;
         }
 
         @Override
@@ -1674,7 +1677,7 @@ public class ImportData {
                 nameValuePairs.add(new BasicNameValuePair("PO_LIST_TYPE", listType));
                 nameValuePairs.add(new BasicNameValuePair("UPDATE_ADD_FLAG", UpAddFlag));
                 nameValuePairs.add(new BasicNameValuePair("PO_LIST_NO", listNO));
-
+                nameValuePairs.add(new BasicNameValuePair("LIST_OF_CUSTOMER", listOfCustomer.toString()));
 
                 request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
 
@@ -1735,21 +1738,38 @@ public class ImportData {
 
 
             if (s != null) {
-                if (s.contains("DATE")) {
+                Log.e("ressssss", "JsonResponse\t" + s);
+                if (s.contains("CUST_NAME")) {
 
-                    SweetAlertDialog sweet = new SweetAlertDialog(contextMaster, SweetAlertDialog.WARNING_TYPE);
-                    sweet.setTitleText("Please change the Date");
-                    sweet.setContentText("");
-                    sweet.setCancelButton("cancel", new SweetAlertDialog.OnSweetClickListener() {
-                        @Override
-                        public void onClick(SweetAlertDialog sweetAlertDialog) {
-                            sweetAlertDialog.dismissWithAnimation();
-                        }
-                    });
-                    sweet.show();
-
+                    if (listType.equals("0")) {
+                        SweetAlertDialog sweet = new SweetAlertDialog(contextMaster, SweetAlertDialog.WARNING_TYPE);
+                        sweet.setTitleText("Please change Customer");
+                        sweet.setContentText(" ( Customer in this List Found in other List )");
+                        sweet.setCancelButton("cancel", new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                sweetAlertDialog.dismissWithAnimation();
+                            }
+                        });
+                        sweet.show();
+                    }else {
+                        SweetAlertDialog sweet = new SweetAlertDialog(contextMaster, SweetAlertDialog.WARNING_TYPE);
+                        sweet.setTitleText("price only list");
+                        sweet.setContentText(" ( the system found other price only list  )");
+                        sweet.setCancelButton("cancel", new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                sweetAlertDialog.dismissWithAnimation();
+                            }
+                        });
+                        sweet.show();
+                    }
                     pdValidationCustomer.dismissWithAnimation();
 
+//                    if (UpAddFlag.equals("0")) {
+//                        int s.toString().lastIndexOf(",");
+//
+//                    }
 
                 } else {
 //                    ItemCardList.clear();

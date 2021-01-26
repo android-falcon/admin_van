@@ -237,7 +237,7 @@ public class ListOfferReportAdapter extends BaseAdapter {
             public void onClick(View v) {
                 if (!listName.getText().toString().equals("")) {
 
-                    importData.ifBetweenDate(context, fromDate.getText().toString(), toDate.getText().toString(),""+listPriceOffer.getPO_LIST_TYPE(),"1",listPriceOffer.getPO_LIST_NO());
+                    importData.ifBetweenDate(context, fromDate.getText().toString(), toDate.getText().toString(),""+listPriceOffer.getPO_LIST_TYPE(),"1",listPriceOffer.getPO_LIST_NO(),null);
 
                 } else {
                     listName.setError("Required!");
