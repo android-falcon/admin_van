@@ -568,6 +568,10 @@ public class ExportData {
 
                     pdValidationAdd.dismissWithAnimation();
                 }
+                else {
+                    pdValidationAdd.dismissWithAnimation();
+                }
+
 //                progressDialog.dismiss();
             }else{
                 Log.e("positionSaveInnull","null");
