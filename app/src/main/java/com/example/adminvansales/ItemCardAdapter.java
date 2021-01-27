@@ -89,15 +89,15 @@ public class ItemCardAdapter extends BaseAdapter {
        // holder.customer .setText(itemsList.get(i).getCustomerName());
         holder.cashDiscount .setText(itemsList.get(i).getCashOffer());
         holder.otherDiscount .setText(itemsList.get(i).getOtherOffer());
-        if(flag==0){
+//        if(flag==0){
+//            holder.price.setEnabled(true);
+//            holder.otherDiscount.setEnabled(false);
+//            holder.cashDiscount.setEnabled(false);
+//        }else if(flag==2){
             holder.price.setEnabled(true);
-            holder.otherDiscount.setEnabled(false);
-            holder.cashDiscount.setEnabled(false);
-        }else if(flag==2){
-            holder.price.setEnabled(false);
             holder.otherDiscount.setEnabled(true);
             holder.cashDiscount.setEnabled(true);
-        }
+//        }
 
 
         holder.price.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -108,7 +108,12 @@ public class ItemCardAdapter extends BaseAdapter {
 
                     if(!holder.price.getText().toString().equals("")) {
                         if(!holder.price.getText().toString().equals(".")) {
-                            itemsList.get(i).setPrice("" + Double.parseDouble(holder.price.getText().toString()));
+                            try {
+
+                                itemsList.get(i).setPrice("" + Double.parseDouble(holder.price.getText().toString()));
+                            }catch (Exception e){
+
+                            }
                         }else {
                             holder.price.setError("Dot!");
                         }
@@ -128,7 +133,11 @@ public class ItemCardAdapter extends BaseAdapter {
 
                     if(!holder.otherDiscount.getText().toString().equals("")) {
                         if(!holder.otherDiscount.getText().toString().equals(".")) {
-                            itemsList.get(i).setOtherOffer("" + Double.parseDouble(holder.otherDiscount.getText().toString()));
+                            try {
+                                itemsList.get(i).setOtherOffer("" + Double.parseDouble(holder.otherDiscount.getText().toString()));
+                            }catch (Exception e){
+
+                            }
                         }else {
                             holder.otherDiscount.setError("Dot!");
                         }
@@ -147,7 +156,11 @@ public class ItemCardAdapter extends BaseAdapter {
 
                     if(!holder.cashDiscount.getText().toString().equals("")) {
                         if(!holder.cashDiscount.getText().toString().equals(".")) {
-                            itemsList.get(i).setCashOffer("" + Double.parseDouble(holder.cashDiscount.getText().toString()));
+                            try {
+                                itemsList.get(i).setCashOffer("" + Double.parseDouble(holder.cashDiscount.getText().toString()));
+                            }catch (Exception e){
+
+                            }
 
                         }else {
                             holder.cashDiscount.setError("Dot!");

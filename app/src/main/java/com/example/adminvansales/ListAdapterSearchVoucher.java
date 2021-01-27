@@ -162,7 +162,12 @@ public class ListAdapterSearchVoucher extends BaseAdapter {
         OfferListModel offerListModel=new OfferListModel();
         offerListModel.setItemNo(itemMaster.getItemNo());
         offerListModel.setItemName(itemMaster.getName());
-        offerListModel.setPrice(price.getText().toString());
+        if(Double.parseDouble(price.getText().toString())!=0) {
+            offerListModel.setPrice(price.getText().toString());
+        }else {
+            offerListModel.setPrice(itemMaster.getF_D());
+
+        }
         offerListModel.setCashOffer(cashDiscount.getText().toString());
         offerListModel.setOtherOffer(otherDiscount.getText().toString());
         offerListModel.setItemNo(itemMaster.getItemNo());

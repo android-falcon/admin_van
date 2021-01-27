@@ -46,6 +46,7 @@ import static com.example.adminvansales.GlobelFunction.salesManInfosList;
 public class OfferPriceList extends AppCompatActivity {
     public static List<ItemMaster> ItemCardList;
     public static List<customerInfoModel> customerList;
+    public static List<customerInfoModel> customerListFoundInOtherList;
     public static List<OfferListModel>mainListOffer;
     public  List<ItemMaster> tempList;
     static public List<OfferListModel> itemSelectList;
@@ -157,6 +158,10 @@ public class OfferPriceList extends AppCompatActivity {
 
     }
 
+    public void notifyCustomerSelectAdapter(){
+
+        customerSelectAdapter.notifyDataSetChanged();
+    }
 
     void searchInMainOfferListPrice(){
         if (!listSearch.getText().toString().equals("")) {
@@ -215,6 +220,20 @@ public class OfferPriceList extends AppCompatActivity {
             String f_d=ItemCardList.get(i).getF_D();
             ItemCardList.get(i).setPrice(f_d);
         }
+    }
+
+
+    void selectItemFoundInOtherList(){
+        for(int i=0;i<customerListFoundInOtherList.size();i++){
+            for(int k=0;k<customerSelect.size();k++) {
+                if (customerListFoundInOtherList.get(i).getCustID().equals(customerSelect.get(k).getCustID())) {
+
+                    customerSelect.get(k).setCheckedItem(true);
+                    break;
+                }
+            }
+        }
+        customerSelectAdapter.notifyDataSetChanged();
     }
 
     public void ShowSearchDialog() {
@@ -441,6 +460,7 @@ public class OfferPriceList extends AppCompatActivity {
         final EditText noteSearch = dialog.findViewById(R.id.noteSearch);
         final ListView ListNote = dialog.findViewById(R.id.ListNote);
         Button cancelButton,addButton;
+        CheckBox customerCheckAll=dialog.findViewById(R.id.customerCheckAll);
         cancelButton=dialog.findViewById(R.id.cancelButton);
         addButton=dialog.findViewById(R.id.addButton);
         listCustomerD.clear();
@@ -451,14 +471,31 @@ public class OfferPriceList extends AppCompatActivity {
             int pos =custIdList.indexOf(customerSelect.get(m).getCustID());
             Log.e("poAaaaaa", "" + pos);
             if(pos!=-1){
-                Log.e("poAaaaaa", "" + listCustomerD.get(pos).getCustName()+"     "+listCustomerD.get(pos).getCustID());
+            try {
+                Log.e("poAaaaaa", "" + listCustomerD.get(pos).getCustName() + "     " + listCustomerD.get(pos).getCustID());
                 listCustomerD.remove(pos);
+            }catch (Exception e){
+                Log.e("poAaaaaaError", "" + pos);
+
+            }
 
             }
 
         }
 
 
+        customerCheckAll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+
+                    customerSelect.clear();
+                    customerSelect=new ArrayList<>(customerList);
+                }else {
+                customerSelect.clear();
+                }
+            }
+        });
 
         listAdapterSearchCustomer = new ListAdapterSearchCustomer(OfferPriceList.this, listCustomerD, dialog, 1, OfferPriceList.this);
         ListNote.setAdapter(listAdapterSearchCustomer);
@@ -566,7 +603,7 @@ public class OfferPriceList extends AppCompatActivity {
 
     }
 
-List<String> getAllCustomerByItem(String ItemNo){
+    List<String> getAllCustomerByItem(String ItemNo){
         List<String>item=new ArrayList<>();
 
         for(int i=0;i<mainListOffer.size();i++){
@@ -590,8 +627,8 @@ List<String> getAllCustomerByItem(String ItemNo){
                 price.setText("0.0");
                 otherDiscount.setText("0.0");
                 cashDiscount.setText("0.0");
-                qtyLinear.setVisibility(View.GONE);
-                listOfferLinear.setVisibility(View.GONE);
+                qtyLinear.setVisibility(View.VISIBLE);
+                listOfferLinear.setVisibility(View.VISIBLE);
                 qtyPriceLinear.setVisibility(View.VISIBLE);
                 dateLinear.setVisibility(View.VISIBLE);
                 listDateType.setVisibility(View.VISIBLE);
@@ -600,7 +637,9 @@ List<String> getAllCustomerByItem(String ItemNo){
                 itemSelectList.clear();
                 fillCustomerSelect();
                 fillItemSelect();
-               fillItemPriceInList(0);
+                fillItemPriceInList(0);
+                listName.setText("");
+
                 break;
             case 1:
                 fillItemPriceInList(0);
@@ -613,6 +652,7 @@ List<String> getAllCustomerByItem(String ItemNo){
                 itemSelectList.clear();
                 fillCustomerSelect();
                 fillItemSelect();
+                listName.setText("End User Price List 0");
 
                 break;
             case 2:
@@ -632,7 +672,9 @@ List<String> getAllCustomerByItem(String ItemNo){
                 fillCustomerSelect();
                 fillItemSelect();
                fillItemPriceInList(0);
-               break;
+                listName.setText("");
+
+                break;
         }
 
 
@@ -641,7 +683,12 @@ List<String> getAllCustomerByItem(String ItemNo){
     public void clearList(){
 
         priceOnly.setText("0.0");
-        listName.setText("");
+        if(listTypes!=1) {
+            listName.setText("");
+        }else {
+            listName.setText("End User Price List 0");
+            importData.getItemCard(OfferPriceList.this);
+        }
         otherDiscount.setText("0.0");
         cashDiscount.setText("0.0");
         price.setText("0.0");
@@ -654,7 +701,10 @@ List<String> getAllCustomerByItem(String ItemNo){
 
         importData.getMaxNo(OfferPriceList.this);
 
-
+        if(listTypes!=1) {
+        }else {
+            importData.getItemCard(OfferPriceList.this);
+        }
     }
 
     void initial(){
@@ -663,6 +713,7 @@ List<String> getAllCustomerByItem(String ItemNo){
         customerSelect=new ArrayList<>();
         mainListOffer=new ArrayList<>();
         customerList=new ArrayList<>();
+        customerListFoundInOtherList=new ArrayList<>();
         ItemCardList=new ArrayList<>();
         tempList=new ArrayList<>();
         itemSelectList=new ArrayList<>();
@@ -750,13 +801,13 @@ List<String> getAllCustomerByItem(String ItemNo){
         switch (position){
             case 0:
                 if(!price.getText().toString().equals("")) {
-                    if (Double.parseDouble(price.getText().toString()) != 0) {
+//                    if (Double.parseDouble(price.getText().toString()) != 0) {
 
                         ShowSearchDialog();
 
-                    }else {
-                        price.setError(" not Zero !");
-                    }
+//                    }else {
+//                        price.setError(" not Zero !");
+//                    }
                 }else {
                     price.setError("Required!");
                 }
@@ -965,7 +1016,8 @@ Log.e("mmmma","size : "+listItemPrice.size());
 
         OfferListModel oofer=new OfferListModel();
         oofer.setListNo(listNo.getText().toString());
-        oofer.setListName(listName.getText().toString());
+//        oofer.setListName(listName.getText().toString());
+        oofer.setListName("End User Price List 0");
         oofer.setListType(""+position);
         oofer.setFromDate(fromDate.getText().toString());
 //        if(closeRadio.isChecked()){

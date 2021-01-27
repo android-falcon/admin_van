@@ -13,6 +13,8 @@ import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
+import static com.example.adminvansales.OfferPriceList.customerSelect;
+
 
 public class CustomerSelectAdapter extends BaseAdapter {
     private OfferPriceList context;
@@ -69,6 +71,18 @@ public class CustomerSelectAdapter extends BaseAdapter {
         holder.custName.setText(itemsList.get(i).getCustName());
         holder.custId.setText(itemsList.get(i).getCustID());
 
+        try{
+        if(itemsList.get(i).isCheckedItem()){
+
+            holder.tableRow.setBackgroundColor(context.getResources().getColor(R.color.light_red));
+        }else {
+            holder.tableRow.setBackgroundColor(context.getResources().getColor(R.color.NoColor));
+
+        }}catch (Exception e){
+            holder.tableRow.setBackgroundColor(context.getResources().getColor(R.color.NoColor));
+
+        }
+
         holder.tableRow.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -88,8 +102,9 @@ public class CustomerSelectAdapter extends BaseAdapter {
                             @Override
                             public void onClick(SweetAlertDialog sweetAlertDialog) {
 
-//                                mainListOffer.remove(i);
-//                                context.fillItemCard();
+                                customerSelect.remove(i);
+
+                                context.notifyCustomerSelectAdapter();
                                 sweetAlertDialog.dismissWithAnimation();
 
 

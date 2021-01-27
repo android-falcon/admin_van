@@ -58,6 +58,7 @@ import static com.example.adminvansales.LogIn.ipAddress;
 import static com.example.adminvansales.MainActivity.isListUpdated;
 import static com.example.adminvansales.OfferPriceList.ItemCardList;
 import static com.example.adminvansales.OfferPriceList.customerList;
+import static com.example.adminvansales.OfferPriceList.customerListFoundInOtherList;
 import static com.example.adminvansales.Report.CashReport.cashReportList;
 import static com.example.adminvansales.Report.CustomerLogReport.customerLogReportList;
 import static com.example.adminvansales.Report.ListOfferReport.listPriceOffers;
@@ -114,7 +115,7 @@ public class ImportData {
 
     public void ifBetweenDate(Context context, String fromDate, String toDate, String postion, String upAdd, String listNo,JSONArray listOfCustomer) {
         new JSONTaskIfDateBetween(context, fromDate, toDate, postion, upAdd, listNo,listOfCustomer).execute();
-        Log.e("master","ggg = "+listOfCustomer.toString()+ "  "+fromDate +"  "+toDate);
+        Log.e("master","ggg = "+listOfCustomer.toString());
     }
 
     public void getCustomerAccountStatment(String CustomerId) {
@@ -1432,7 +1433,7 @@ public class ImportData {
 
 
             if (s != null) {
-                if (s.contains("ComapnyNo")) {
+                if (s.contains("ItemNo")) {
 
                     Gson gson = new Gson();
 
@@ -1739,7 +1740,7 @@ public class ImportData {
 
             if (s != null) {
                 Log.e("ressssss", "JsonResponse\t" + s);
-                if (s.contains("CUST_NAME")) {
+                if (s.contains("CustName")) {
 
                     if (listType.equals("0")) {
                         SweetAlertDialog sweet = new SweetAlertDialog(contextMaster, SweetAlertDialog.WARNING_TYPE);
@@ -1752,6 +1753,28 @@ public class ImportData {
                             }
                         });
                         sweet.show();
+
+                        Log.e("sttttb",""+s.toString());
+                        s=s.replace("},]","}]");
+                        Log.e("stttta",""+s.toString());
+
+                        Gson gson = new Gson();
+
+//                    Gson gson = new GsonBuilder()
+//                            .setLenient()
+//                            .create();
+
+                        customerInfoModel gsonObj = gson.fromJson(s, customerInfoModel.class);
+                        customerListFoundInOtherList.clear();
+                        customerListFoundInOtherList.addAll(gsonObj.getALL_CUSTOMER());
+                        Log.e("item_customer", "SalesManNo");
+                        OfferPriceList offerPriceList = (OfferPriceList) context;
+//                    offerPriceList.fillItemCard();
+                        pdValidationCustomer.dismissWithAnimation();
+                        offerPriceList.selectItemFoundInOtherList();
+
+
+
                     }else {
                         SweetAlertDialog sweet = new SweetAlertDialog(contextMaster, SweetAlertDialog.WARNING_TYPE);
                         sweet.setTitleText("price only list");

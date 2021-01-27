@@ -19,7 +19,7 @@ public class ItemMaster {
 //                    "ITEMHASSERIAL": "0",
 //                    "ITEMPICSPATH": null
 
-    @SerializedName("ComapnyNo")
+//    @SerializedName("ComapnyNo")
     private  String   ComapnyNo;
 
     @SerializedName("ItemNo")
@@ -28,24 +28,24 @@ public class ItemMaster {
     @SerializedName("Name")
     private  String   Name;
 
-    @SerializedName("CateogryID")
+//    @SerializedName("CateogryID")
     private  String   CateogryID;
 
-    @SerializedName("Barcode")
+//    @SerializedName("Barcode")
     private  String   Barcode;
-    @SerializedName("IsSuspended")
+//    @SerializedName("IsSuspended")
     private  String   IsSuspended;
-    @SerializedName("ItemL")
+//    @SerializedName("ItemL")
     private  String   ItemL;
-    @SerializedName("MINPRICE")
+//    @SerializedName("MINPRICE")
     private  String   MINPRICE;
     @SerializedName("F_D")
     private  String   F_D;
-    @SerializedName("ItemK")
+//    @SerializedName("ItemK")
     private  String   ItemK;
-    @SerializedName("ITEMHASSERIAL")
+//    @SerializedName("ITEMHASSERIAL")
     private  String   ITEMHASSERIAL;
-    @SerializedName("ITEMPICSPATH")
+//    @SerializedName("ITEMPICSPATH")
     private  String   ITEMPICSPATH;
 
     @SerializedName("ALL_ITEMS")

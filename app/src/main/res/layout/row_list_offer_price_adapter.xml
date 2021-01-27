@@ -3,12 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:gravity="center"
     android:padding="2dp">
 
     <TableRow
         android:id="@+id/table"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:layout_marginTop="5dp">
 
         <TextView
@@ -75,15 +77,15 @@
             android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/paymentCash"
+            android:id="@+id/closeList"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0"
             android:gravity="center"
-
             android:padding="10dp"
-
-            android:textColor="@color/colorblue_dark"
+            android:text="Close List"
+            android:background="@drawable/accept_btn"
+            android:textColor="@color/white"
             android:textSize="14sp" />
 
         <TextView
