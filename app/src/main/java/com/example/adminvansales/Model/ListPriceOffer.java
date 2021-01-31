@@ -7,9 +7,10 @@ import com.google.gson.annotations.SerializedName;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class ListPriceOffer {
+public class ListPriceOffer implements Serializable {
 //
 //    {
 //        "PO_LIST_NO": "34",
@@ -34,6 +35,12 @@ public class ListPriceOffer {
 
     @SerializedName("TO_DATE")
     private String TO_DATE;
+
+    @SerializedName("CLOSE_OPEN_LIST")
+    private String CLOSE_OPEN_LIST;
+
+    @SerializedName("ACTIVATE_LIST")
+    private String ACTIVATE_LIST;
 
     @SerializedName("ALL_LIST")
     private List<ListPriceOffer>ALL_LIST;
@@ -89,6 +96,22 @@ public class ListPriceOffer {
 
     public void setALL_LIST(List<ListPriceOffer> ALL_LIST) {
         this.ALL_LIST = ALL_LIST;
+    }
+
+    public String getCLOSE_OPEN_LIST() {
+        return CLOSE_OPEN_LIST;
+    }
+
+    public void setCLOSE_OPEN_LIST(String CLOSE_OPEN_LIST) {
+        this.CLOSE_OPEN_LIST = CLOSE_OPEN_LIST;
+    }
+
+    public String getACTIVATE_LIST() {
+        return ACTIVATE_LIST;
+    }
+
+    public void setACTIVATE_LIST(String ACTIVATE_LIST) {
+        this.ACTIVATE_LIST = ACTIVATE_LIST;
     }
 
     public JSONObject getJsonObjectList(){

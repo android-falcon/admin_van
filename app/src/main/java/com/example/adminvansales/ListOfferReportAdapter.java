@@ -3,8 +3,10 @@ package com.example.adminvansales;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -63,7 +65,7 @@ public class ListOfferReportAdapter extends BaseAdapter {
     }
 
     private class ViewHolder {
-        TextView listNO, listName, listType, fromDate, toDate;
+        TextView listNO, listName, listType, fromDate, toDate,closeOpenList,intentText,updateList;
         TableRow tableRow;
 
 
@@ -82,7 +84,21 @@ public class ListOfferReportAdapter extends BaseAdapter {
         holder.listType = view.findViewById(R.id.cashSales);
         holder.fromDate = view.findViewById(R.id.creditSale);
         holder.toDate = view.findViewById(R.id.netSales);
+        holder.closeOpenList=view.findViewById(R.id.closeList);
+        holder.intentText=view.findViewById(R.id.intentText);
+        holder.updateList=view.findViewById(R.id.updateList);
 
+        try {
+            if (itemsList.get(i).getCLOSE_OPEN_LIST().equals("1")||itemsList.get(i).getPO_LIST_TYPE().equals("1")) {
+                if(itemsList.get(i).getACTIVATE_LIST().equals("0")) {
+                    holder.closeOpenList.setVisibility(View.INVISIBLE);
+                }
+            } else {
+                holder.closeOpenList.setVisibility(View.VISIBLE);
+            }
+        }catch (Exception e){
+            holder.closeOpenList.setVisibility(View.VISIBLE);
+        }
 
         holder.listNO.setText(itemsList.get(i).getPO_LIST_NO());
         holder.listName.setText(itemsList.get(i).getPO_LIST_NAME());
@@ -104,23 +120,21 @@ public class ListOfferReportAdapter extends BaseAdapter {
                 break;
 
         }
+        holder.closeOpenList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-//        holder.fromDate.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                holder.fromDate.setBackgroundColor(context.getResources().getColor(R.color.layer1));
-//                globelFunction.DateClick(holder.fromDate);
-//            }
-//        });
-//
-//
-//        holder.toDate.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                holder.fromDate.setBackgroundColor(context.getResources().getColor(R.color.layer1));
-//                globelFunction.DateClick(holder.toDate);
-//            }
-//        });
+                Log.e("closeList","lll"+itemsList.get(i).getPO_LIST_TYPE());
+                if(!itemsList.get(i).getPO_LIST_TYPE().equals("1")){
+                    Log.e("closeList","lll2");
+                    context.getItem(itemsList.get(i));
+                    importData.getItemCustomerByListNo(context,itemsList.get(i).getPO_LIST_NO() );
+
+                }
+
+            }
+        });
+
 
         holder.tableRow.setOnLongClickListener(new View.OnLongClickListener() {
             @Override

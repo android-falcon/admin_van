@@ -30,6 +30,22 @@
         android:textStyle="bold" />
 
     <TextView
+        android:id="@+id/control"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_weight="0"
+        android:background="@drawable/excel_e"
+        android:drawablePadding="3dp"
+        android:padding="5dp"
+        android:textColor="@color/colorblue_dark"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:visibility="gone"/>
+    <TextView
         android:id="@+id/excelConvert"
         android:layout_width="35dp"
         android:layout_height="35dp"
@@ -236,7 +252,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="0.9"
                     android:background="@drawable/white_and_blue"
                     android:gravity="center"
 
@@ -259,7 +275,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.98"
+                    android:layout_weight="0.9"
                     android:background="@drawable/white_and_blue"
 
                     android:gravity="center"
@@ -282,7 +298,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="0.9"
                     android:background="@drawable/white_and_blue"
 
                     android:gravity="center"
@@ -292,12 +308,15 @@
                     android:textSize="14sp" />
 
                 <TextView
+                    android:id="@+id/closeList"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0"
                     android:gravity="center"
-                    android:padding="5dp"
-                    android:textColor="@color/white"
+                    android:padding="10dp"
+                    android:text="Close List"
+                    android:background="@color/colorblue_dark3"
+                    android:textColor="@color/colorblue_dark3"
                     android:textSize="14sp" />
 
                 <TextView

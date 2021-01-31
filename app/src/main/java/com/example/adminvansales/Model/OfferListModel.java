@@ -1,26 +1,60 @@
 package com.example.adminvansales.Model;
 
 import com.google.gson.JsonObject;
+import com.google.gson.annotations.SerializedName;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
+
 public class OfferListModel {
+
+    //{
+    //    "ALL_LIST": [
+    //        {
+    //            "ITEMNO": "10100001",
+    //            "CUSTOMER_NO": "1110010002",
+    //            "PRICE": "90",
+    //            "DISCOUNT": "10",
+    //            "OTHER_DISCOUNT": "10",
+    //            "FROM_DATE": "27/01/2021",
+    //            "TO_DATE": "27/01/2021",
+    //            "LIST_NO": "21",
+    //            "LIST_TYPE": "0",
+    //            "CustName": "المعلم بلال"
+    //
+    //    ],
+
+
+    @SerializedName("LIST_NO")
     private String listNo;
     private String listName;
+    @SerializedName("LIST_TYPE")
     private String listType;
+    @SerializedName("FROM_DATE")
     private String fromDate;
+    @SerializedName("TO_DATE")
     private String toDate;
 
+    @SerializedName("PRICE")
 
     private String price;
+    @SerializedName("DISCOUNT")
     private String cashOffer;
+    @SerializedName("OTHER_DISCOUNT")
     private String otherOffer;
-
+    @SerializedName("ITEMNO")
     private String itemNo;
     private String itemName;
+
+    @SerializedName("CUSTOMER_NO")
     private String customerNo;
+    @SerializedName("CustName")
     private String customerName;
+
+    @SerializedName("ALL_LIST")
+    private List<OfferListModel> ALL_LIST;
 
     private int isSelectCustomer;
 
@@ -146,6 +180,14 @@ public class OfferListModel {
 
     public void setIsSelectCustomer(int isSelectCustomer) {
         this.isSelectCustomer = isSelectCustomer;
+    }
+
+    public List<OfferListModel> getALL_LIST() {
+        return ALL_LIST;
+    }
+
+    public void setALL_LIST(List<OfferListModel> ALL_LIST) {
+        this.ALL_LIST = ALL_LIST;
     }
 
     public JSONObject getJsonObject(){
