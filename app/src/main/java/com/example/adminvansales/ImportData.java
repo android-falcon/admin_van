@@ -65,6 +65,7 @@ import static com.example.adminvansales.Report.CustomerLogReport.customerLogRepo
 import static com.example.adminvansales.Report.ListOfferReport.control;
 import static com.example.adminvansales.Report.ListOfferReport.listPriceOffers;
 import static com.example.adminvansales.Report.ListOfferReport.selectCustomerIfClose;
+import static com.example.adminvansales.Report.ListOfferReport.selectItemIfUpdate;
 import static com.example.adminvansales.Report.PaymentDetailsReport.payMentReportList;
 import static com.example.adminvansales.ShowNotifications.showNotification;
 
@@ -73,7 +74,7 @@ public class ImportData {
 
     private String URL_TO_HIT;
     SweetAlertDialog pdValidation;
-    SweetAlertDialog pdValidationCustomer, pdValidationSerial, pdValidationItem;
+    SweetAlertDialog pdValidationCustomer, pdValidationSerial, pdValidationItem,getPdValidationItemCard;
 
     Context main_context;
     public static ArrayList<Integer> listId;
@@ -106,12 +107,16 @@ public class ImportData {
     public void getItemCard(Context context) {
         new JSONTaskGetItem(context).execute();
     }
-    public void getItemCustomerByListNo(Context context,String listNo) {
-        new JSONTaskGetItemCustomerByListNo(context,listNo).execute();
+    public void getItemCustomerByListNo(Context context,String listNo ,String UpClose) {
+        new JSONTaskGetItemCustomerByListNo(context,listNo,UpClose).execute();
     }
 
     public void getItemUpdateClosOpenList(Context context,String listNo,String closeSwitch) {
         new JSONTaskGetUpdateCloseOpenList(context,listNo,closeSwitch).execute();
+    }
+
+    public void getItemUpdateActivateList(Context context,String listNo) {
+        new JSONTaskGetUpdateActivateList(context,listNo).execute();
     }
 
     public void getCustomer(Context context) {
@@ -444,6 +449,14 @@ public class ImportData {
                             salesManInfo.setActive(jsonObject1.getString("ACTIVE_USER"));
                             salesManInfo.setLatitudeLocation(jsonObject1.getString("LATITUDE"));
                             salesManInfo.setLongitudeLocation(jsonObject1.getString("LONGITUDE"));
+
+                            salesManInfo.setfVoucherSerial(jsonObject1.getString("FROM_VOUCHER_SERIAL"));
+                            salesManInfo.settVoucherSerial(jsonObject1.getString("TO_VOUCHER_SERIAL"));
+                            salesManInfo.setfReturnSerial(jsonObject1.getString("FROM_RETURN_SERIAL"));
+                            salesManInfo.settReturnSerial(jsonObject1.getString("TO_RETURN_SERIAL"));
+                            salesManInfo.setFstockSerial(jsonObject1.getString("FROM_STOCK_SERIAL"));
+                            salesManInfo.settStockSerial(jsonObject1.getString("TO_STOCK_SERIAL"));
+
                             salesManInfosList.add(salesManInfo);
                             salesManNameList.add(salesManInfo.getSalesName());
                             LatLngListMarker.add(new LatLng(Double.parseDouble(jsonObject1.getString("LATITUDE")), Double.parseDouble(jsonObject1.getString("LONGITUDE"))));
@@ -1346,11 +1359,11 @@ public class ImportData {
         protected void onPreExecute() {
             super.onPreExecute();
             String do_ = "my";
-            pdValidation = new SweetAlertDialog(main_context, SweetAlertDialog.PROGRESS_TYPE);
-            pdValidation.getProgressHelper().setBarColor(Color.parseColor("#FDD835"));
-            pdValidation.setTitleText(main_context.getResources().getString(R.string.process) + "3");
-            pdValidation.setCancelable(false);
-            pdValidation.show();
+            getPdValidationItemCard = new SweetAlertDialog(main_context, SweetAlertDialog.PROGRESS_TYPE);
+            getPdValidationItemCard.getProgressHelper().setBarColor(Color.parseColor("#FDD835"));
+            getPdValidationItemCard.setTitleText(main_context.getResources().getString(R.string.process) + "3");
+            getPdValidationItemCard.setCancelable(false);
+            getPdValidationItemCard.show();
 
         }
 
@@ -1456,21 +1469,21 @@ public class ImportData {
                     Log.e("itemCard", "SalesManNo");
                     OfferPriceList offerPriceList = (OfferPriceList) context;
 //                    offerPriceList.fillItemCard();
-                    pdValidation.dismissWithAnimation();
+                    getPdValidationItemCard.dismissWithAnimation();
                     offerPriceList.fillItemListPrice();
 
                 } else {
                     ItemCardList.clear();
                     OfferPriceList offerPriceList = (OfferPriceList) context;
 //                    offerPriceList.fillItemCard();
-                    pdValidation.dismissWithAnimation();
+                    getPdValidationItemCard.dismissWithAnimation();
                     Log.e("itemCard", "SalesManNo2");
 
                 }
 //                progressDialog.dismiss();
             } else {
                 Log.e("itemCard", "SalesManNo3");
-                pdValidation.dismissWithAnimation();
+                getPdValidationItemCard.dismissWithAnimation();
             }
         }
 
@@ -2136,12 +2149,14 @@ public class ImportData {
         Object context;
         int flag;
         String listNo;
+        String upClose;
 
 
-        public JSONTaskGetItemCustomerByListNo(Object context,String listNo) {
+        public JSONTaskGetItemCustomerByListNo(Object context,String listNo,String UpClose) {
 //            this.flag=flag;
             this.context =  (ListOfferReport)context;
             this.listNo =listNo;
+            this.upClose=UpClose;
 
         }
 
@@ -2204,7 +2219,7 @@ public class ImportData {
                 StringBuffer sb = new StringBuffer("");
                 String line = "";
 
-                while ((line = in.readLine()) != null) {
+                while ((line = in.readLine()) != null)  {
                     sb.append(line);
                 }
 
@@ -2266,11 +2281,17 @@ public class ImportData {
 //                    offerPriceList.fillItemCard();
 
                     selectCustomerIfClose=customerList;
+                    selectItemIfUpdate=itemsList;
                     Log.e("closeList","lll4   "+selectCustomerIfClose.size());
                     pdValidation.dismissWithAnimation();
 
                     ListOfferReport listOfferReport=(ListOfferReport) context;
-                    listOfferReport.control.setText("close");
+
+                    if(upClose.equals("0")) {
+                        listOfferReport.control.setText("close");
+                    }else {
+                        listOfferReport.control.setText("update");
+                    }
 //                    offerPriceList.fillItemListPrice();
 
                 } else {
@@ -2421,6 +2442,158 @@ public class ImportData {
 //                    Log.e("itemCard", "SalesManNo");
                     OfferPriceList offerPriceList = (OfferPriceList) context;
                     offerPriceList.finishLayout();
+
+                    control.setText("main");
+                    //selectCustomerIfClose=customerList;
+
+                    Log.e("closeList","lll3");
+
+                    pdValidation.dismissWithAnimation();
+//                    controlText.setText("close");
+//                    offerPriceList.fillItemListPrice();
+
+                } else {
+//                    OfferPriceList offerPriceList = (OfferPriceList) context;
+//                    offerPriceList.fillItemCard();
+                    pdValidation.dismissWithAnimation();
+                    Log.e("itemCard", "SalesManNo2");
+
+                }
+//                progressDialog.dismiss();
+            } else {
+                Log.e("itemCard", "SalesManNo3");
+                pdValidation.dismissWithAnimation();
+            }
+        }
+
+    }
+    private class JSONTaskGetUpdateActivateList extends AsyncTask<String, String, String> {
+        Context context;
+        int flag;
+        String listNo;
+
+
+        public JSONTaskGetUpdateActivateList(Context context,String listNo) {
+//            this.flag=flag;
+            this.context =  context;
+            this.listNo =listNo;
+
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            String do_ = "my";
+            pdValidation = new SweetAlertDialog(main_context, SweetAlertDialog.PROGRESS_TYPE);
+            pdValidation.getProgressHelper().setBarColor(Color.parseColor("#FDD835"));
+            pdValidation.setTitleText(main_context.getResources().getString(R.string.process) + "3");
+            pdValidation.setCancelable(false);
+            pdValidation.show();
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+//            ipAddress = "";
+            try {
+
+
+                if (!ipAddress.equals("")) {
+                    URL_TO_HIT = "http://" + ipAddress + "/VANSALES_WEB_SERVICE/admin.php";
+                }
+            } catch (Exception e) {
+
+            }
+
+            try {
+
+                String JsonResponse = null;
+                HttpClient client = new DefaultHttpClient();
+                HttpPost request = new HttpPost();
+                request.setURI(new URI(URL_TO_HIT));
+
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(5);
+                nameValuePairs.add(new BasicNameValuePair("_ID", "28"));
+                nameValuePairs.add(new BasicNameValuePair("LIST_NO", listNo));
+//                nameValuePairs.add(new BasicNameValuePair("PayKind",payKind));
+//                nameValuePairs.add(new BasicNameValuePair("SalesNo",SalesNo));
+
+
+                request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+
+
+                HttpResponse response = client.execute(request);
+
+
+                BufferedReader in = new BufferedReader(new
+                        InputStreamReader(response.getEntity().getContent()));
+
+
+//                JsonReader reader = new JsonReader(new StringReader(myFooString));
+//                reader.setLenient(true);
+//                new JsonParser().parse(reader);
+
+
+                StringBuffer sb = new StringBuffer("");
+                String line = "";
+
+                while ((line = in.readLine()) != null) {
+                    sb.append(line);
+                }
+
+                in.close();
+
+
+                JsonResponse = sb.toString();
+                Log.e("tag_paymentReport", "JsonResponse\t" + JsonResponse);
+
+                return JsonResponse;
+
+
+            }//org.apache.http.conn.HttpHostConnectException: Connection to http://10.0.0.115 refused
+            catch (HttpHostConnectException ex) {
+                ex.printStackTrace();
+//                progressDialog.dismiss();
+
+                Handler h = new Handler(Looper.getMainLooper());
+                h.post(new Runnable() {
+                    public void run() {
+
+                        Toast.makeText(main_context, "Ip Connection Failed ", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
+                return null;
+            } catch (Exception e) {
+                e.printStackTrace();
+//                progressDialog.dismiss();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            if (s != null) {
+                if (s.contains("UPDATE_LIST_SUCCESS")) {
+
+//                    Gson gson = new Gson();
+//
+////                    Gson gson = new GsonBuilder()
+////                            .setLenient()
+////                            .create();
+//
+//
+//                    OfferListModel gsonObj = gson.fromJson(s, OfferListModel.class);
+//                    customerInfoModel customerInfoModel=gson.fromJson(s,customerInfoModel.class);
+//                    itemsList.clear();
+//                    itemsList.addAll(gsonObj.getALL_LIST());
+//                    customerList.clear();
+//                    customerList.addAll(customerInfoModel.getALL_CUSTOMER());
+//                    Log.e("itemCard", "SalesManNo");
 
                     control.setText("main");
                     //selectCustomerIfClose=customerList;

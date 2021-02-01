@@ -27,7 +27,7 @@ ListView salesManList;
 SalesMenListAdapter salesMenListAdapter;
 GlobelFunction globelFunction;
 TextView salesNo,clearText;
-EditText salesName,password,searchSalesMan;
+EditText salesName,password,searchSalesMan,fVSerial,tVSerial,tRSerial,fRSerial,fSSerial,tSSerial;
 Button addButton,updateButton;
 CheckBox activeCheck;
 
@@ -62,6 +62,12 @@ int isUpdate=0;
         salesName.setText(salesManInfo.getSalesName());
         password.setText(salesManInfo.getSalesPassword());
         salesNo.setText(salesManInfo.getSalesManNo());
+        fVSerial.setText(salesManInfo.getfVoucherSerial());
+        tVSerial.setText(salesManInfo.gettVoucherSerial());
+        tRSerial.setText(salesManInfo.gettReturnSerial());
+        fRSerial.setText(salesManInfo.getfReturnSerial());
+        fSSerial.setText(salesManInfo.getFstockSerial());
+        tSSerial.setText(salesManInfo.gettStockSerial());
         if(salesManInfo.getActive().equals("0")) {
             activeCheck.setChecked(false);
         }else {
@@ -81,6 +87,13 @@ int isUpdate=0;
         addButton=findViewById(R.id.addButton);
         updateButton=findViewById(R.id.updateButton);
         activeCheck=findViewById(R.id.ActiveCheck);
+        fVSerial=findViewById(R.id.FVserial);
+        tVSerial=findViewById(R.id.TVserial);
+        tRSerial=findViewById(R.id.FRserial);
+        fRSerial=findViewById(R.id.TRserial);
+        fSSerial=findViewById(R.id.FstockSerial);
+        tSSerial=findViewById(R.id.TstockSerial);
+
         clearText.setOnClickListener(onClick);
         addButton.setOnClickListener(onClick);
         updateButton.setOnClickListener(onClick);
@@ -132,37 +145,63 @@ int isUpdate=0;
 
         if(!salesName.getText().toString().equals("")) {
             if(!password.getText().toString().equals("")) {
+                if(!fVSerial.getText().toString().equals("")) {
+                    if(!tVSerial.getText().toString().equals("")) {
+                        if(!fRSerial.getText().toString().equals("")) {
+                            if(!tRSerial.getText().toString().equals("")) {
+                                if(!fSSerial.getText().toString().equals("")) {
+                                    if(!tSSerial.getText().toString().equals("")) {
 
-                new SweetAlertDialog(EditSalesMan.this, SweetAlertDialog.WARNING_TYPE)
-                        .setTitleText("Add Sales Men")
-                        .setContentText("")
-                        .setCancelButton("cancel", new SweetAlertDialog.OnSweetClickListener() {
-                            @Override
-                            public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                sweetAlertDialog.dismissWithAnimation();
-                            }
-                        })
-                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                            @Override
-                            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                        new SweetAlertDialog(EditSalesMan.this, SweetAlertDialog.WARNING_TYPE)
+                                                .setTitleText("Add Sales Men")
+                                                .setContentText("")
+                                                .setCancelButton("cancel", new SweetAlertDialog.OnSweetClickListener() {
+                                                    @Override
+                                                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                                        sweetAlertDialog.dismissWithAnimation();
+                                                    }
+                                                })
+                                                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                                    @Override
+                                                    public void onClick(SweetAlertDialog sweetAlertDialog) {
 
-                                SalesManInfo salesManInfo = new SalesManInfo();
-                                salesManInfo.setSalesPassword(password.getText().toString());
-                                salesManInfo.setSalesName(salesName.getText().toString());
-                                salesManInfo.setSalesManNo(salesNo.getText().toString());
-                                if(activeCheck.isChecked()) {
-                                    salesManInfo.setActive("1");
-                                }else {
-                                    salesManInfo.setActive("0");
-                                }
-                                ExportData exportData = new ExportData(EditSalesMan.this);
-                                exportData.AddSales(EditSalesMan.this, salesManInfo.getJsonObject());
-                                sweetAlertDialog.dismissWithAnimation();
+                                                        SalesManInfo salesManInfo = new SalesManInfo();
+                                                        salesManInfo.setSalesPassword(password.getText().toString());
+                                                        salesManInfo.setSalesName(salesName.getText().toString());
+                                                        salesManInfo.setSalesManNo(salesNo.getText().toString());
+                                                        salesManInfo.setfVoucherSerial(fVSerial.getText().toString());
+                                                        salesManInfo.settVoucherSerial(tVSerial.getText().toString());
+                                                        salesManInfo.setfReturnSerial(fRSerial.getText().toString());
+                                                        salesManInfo.settReturnSerial(tRSerial.getText().toString());
+                                                        salesManInfo.setFstockSerial(fSSerial.getText().toString());
+                                                        salesManInfo.settStockSerial(tSSerial.getText().toString());
+
+                                                        if (activeCheck.isChecked()) {
+                                                            salesManInfo.setActive("1");
+                                                        } else {
+                                                            salesManInfo.setActive("0");
+                                                        }
+                                                        ExportData exportData = new ExportData(EditSalesMan.this);
+                                                        exportData.AddSales(EditSalesMan.this, salesManInfo.getJsonObject());
+                                                        sweetAlertDialog.dismissWithAnimation();
 
 
-                            }
-                        })
-                        .show();
+                                                    }
+                                                })
+                                                .show();
+                                    }else{
+                                        tSSerial.setError("Required!");
+                                }   }else{
+                                    fSSerial.setError("Required!");
+                                }   }else{
+                                tRSerial.setError("Required!");
+                            }   }else{
+                            fRSerial.setError("Required!");
+                        }   }else{
+                        tVSerial.setError("Required!");
+                    }   }else{
+                    fVSerial.setError("Required!");
+                }
             }else {
                 password.setError("Required!");
             }
@@ -175,7 +214,12 @@ int isUpdate=0;
     void updateSaleMan(){
         if(!salesName.getText().toString().equals("")) {
             if(!password.getText().toString().equals("")) {
-
+                if(!fVSerial.getText().toString().equals("")) {
+                    if(!tVSerial.getText().toString().equals("")) {
+                        if(!fRSerial.getText().toString().equals("")) {
+                            if(!tRSerial.getText().toString().equals("")) {
+                                if(!fSSerial.getText().toString().equals("")) {
+                                    if(!tSSerial.getText().toString().equals("")) {
                 new SweetAlertDialog(EditSalesMan.this, SweetAlertDialog.WARNING_TYPE)
                         .setTitleText("Update Sales Men")
                         .setContentText("")
@@ -193,6 +237,13 @@ int isUpdate=0;
                                 salesManInfo.setSalesPassword(password.getText().toString());
                                 salesManInfo.setSalesName(salesName.getText().toString());
                                 salesManInfo.setSalesManNo(salesNo.getText().toString());
+                                salesManInfo.setfVoucherSerial(fVSerial.getText().toString());
+                                salesManInfo.settVoucherSerial(tVSerial.getText().toString());
+                                salesManInfo.setfReturnSerial(fRSerial.getText().toString());
+                                salesManInfo.settReturnSerial(tRSerial.getText().toString());
+                                salesManInfo.setFstockSerial(fSSerial.getText().toString());
+                                salesManInfo.settStockSerial(tSSerial.getText().toString());
+
                                 if(activeCheck.isChecked()) {
                                     salesManInfo.setActive("1");
                                 }else {
@@ -206,6 +257,20 @@ int isUpdate=0;
                             }
                         })
                         .show();
+
+                                    }else{
+                                        tSSerial.setError("Required!");
+                                    }   }else{
+                                    fSSerial.setError("Required!");
+                                }   }else{
+                                tRSerial.setError("Required!");
+                            }   }else{
+                            fRSerial.setError("Required!");
+                        }   }else{
+                        tVSerial.setError("Required!");
+                    }   }else{
+                    fVSerial.setError("Required!");
+                }
             }else {
                 password.setError("Required!");
             }
@@ -222,6 +287,12 @@ int isUpdate=0;
         password.setText("");
         salesNo.setText("00000");
         activeCheck.setChecked(false);
+        fVSerial.setText("");
+        tVSerial.setText("");
+        tRSerial.setText("");
+        fRSerial.setText("");
+        fSSerial.setText("");
+        tSSerial.setText("");
     }
 
     public void searchSalesMan() {

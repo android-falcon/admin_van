@@ -320,6 +320,21 @@
                     android:textSize="14sp" />
 
                 <TextView
+                    android:id="@+id/updateList"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="Update List"
+                    android:elevation="10dp"
+                    android:background="@drawable/accept_btn"
+                    android:textColor="@color/white"
+                    android:visibility="invisible"
+                    android:textSize="14sp" />
+
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0"

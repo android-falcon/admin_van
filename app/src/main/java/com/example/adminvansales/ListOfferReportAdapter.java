@@ -17,10 +17,13 @@ import android.widget.Toast;
 
 import com.example.adminvansales.Model.ListPriceOffer;
 import com.example.adminvansales.Report.ListOfferReport;
+import com.google.gson.internal.$Gson$Preconditions;
 
 import org.w3c.dom.Text;
 
 import java.util.List;
+
+import static com.example.adminvansales.Report.ListOfferReport.control;
 
 
 public class ListOfferReportAdapter extends BaseAdapter {
@@ -65,7 +68,7 @@ public class ListOfferReportAdapter extends BaseAdapter {
     }
 
     private class ViewHolder {
-        TextView listNO, listName, listType, fromDate, toDate,closeOpenList,intentText,updateList;
+        TextView listNO, listName, listType, fromDate, toDate,closeOpenList,intentText,updateList,activateList;
         TableRow tableRow;
 
 
@@ -87,18 +90,48 @@ public class ListOfferReportAdapter extends BaseAdapter {
         holder.closeOpenList=view.findViewById(R.id.closeList);
         holder.intentText=view.findViewById(R.id.intentText);
         holder.updateList=view.findViewById(R.id.updateList);
+        holder.activateList=view.findViewById(R.id.activateList);
 
         try {
-            if (itemsList.get(i).getCLOSE_OPEN_LIST().equals("1")||itemsList.get(i).getPO_LIST_TYPE().equals("1")) {
-                if(itemsList.get(i).getACTIVATE_LIST().equals("0")) {
+            if(itemsList.get(i).getACTIVATE_LIST().equals("0")) {
+                holder.activateList.setVisibility(View.INVISIBLE);
+                holder.updateList.setVisibility(View.GONE);
+                if (itemsList.get(i).getCLOSE_OPEN_LIST().equals("1") ||  itemsList.get(i).getPO_LIST_TYPE().equals("1")) {
+
+                    holder.closeOpenList.setVisibility(View.INVISIBLE);
+
+                } else {
+                    holder.closeOpenList.setVisibility(View.VISIBLE);
+                }
+
+                if( itemsList.get(i).getPO_LIST_TYPE().equals("1")){
+                    holder.closeOpenList.setVisibility(View.GONE);
+                    holder.updateList.setVisibility(View.VISIBLE);
+                }
+
+            }else  if(itemsList.get(i).getACTIVATE_LIST().equals("1")) {
+                holder.activateList.setVisibility(View.VISIBLE);
+                holder.closeOpenList.setVisibility(View.GONE);
+                if (itemsList.get(i).getCLOSE_OPEN_LIST().equals("0") ) {
+
+                    holder.updateList.setVisibility(View.VISIBLE);
+
+                } else {
+                    holder.updateList.setVisibility(View.GONE);
                     holder.closeOpenList.setVisibility(View.INVISIBLE);
                 }
-            } else {
-                holder.closeOpenList.setVisibility(View.VISIBLE);
             }
         }catch (Exception e){
             holder.closeOpenList.setVisibility(View.VISIBLE);
         }
+
+
+        holder.activateList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               importData.getItemUpdateActivateList(context,itemsList.get(i).getPO_LIST_NO());
+            }
+        });
 
         holder.listNO.setText(itemsList.get(i).getPO_LIST_NO());
         holder.listName.setText(itemsList.get(i).getPO_LIST_NAME());
@@ -128,8 +161,26 @@ public class ListOfferReportAdapter extends BaseAdapter {
                 if(!itemsList.get(i).getPO_LIST_TYPE().equals("1")){
                     Log.e("closeList","lll2");
                     context.getItem(itemsList.get(i));
-                    importData.getItemCustomerByListNo(context,itemsList.get(i).getPO_LIST_NO() );
+                    importData.getItemCustomerByListNo(context,itemsList.get(i).getPO_LIST_NO() ,"0");
 
+                }
+
+            }
+        });
+
+        holder.updateList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Log.e("updateList","lll"+itemsList.get(i).getPO_LIST_TYPE());
+                if(!itemsList.get(i).getPO_LIST_TYPE().equals("1")){
+                    Log.e("updateList","lll2");
+                    context.getItem(itemsList.get(i));
+                    importData.getItemCustomerByListNo(context,itemsList.get(i).getPO_LIST_NO(),"1" );
+
+                }else {
+                    context.getItem(itemsList.get(i));
+                    control.setText("update");
                 }
 
             }
@@ -140,7 +191,7 @@ public class ListOfferReportAdapter extends BaseAdapter {
             @Override
             public boolean onLongClick(View v) {
 
-                dialogToUpdateDate(itemsList.get(i));
+                //dialogToUpdateDate(itemsList.get(i));
 
                 return false;
             }
@@ -183,7 +234,7 @@ public class ListOfferReportAdapter extends BaseAdapter {
                     listPriceOffer.setFROM_DATE(fromDate.getText().toString());
                     listPriceOffer.setTO_DATE(toDate.getText().toString());
 
-                    exportData.updateList(context,listPriceOffer.getJsonObjectList());
+                   // exportData.updateList(context,listPriceOffer.getJsonObjectList());
                     Toast.makeText(context, "update", Toast.LENGTH_SHORT).show();
                 }else   if(updateText.getText().toString().equals("2")){
                     context.previewFunction();

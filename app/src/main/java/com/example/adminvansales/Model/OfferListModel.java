@@ -46,6 +46,8 @@ public class OfferListModel {
     private String otherOffer;
     @SerializedName("ITEMNO")
     private String itemNo;
+
+    @SerializedName("Name")
     private String itemName;
 
     @SerializedName("CUSTOMER_NO")

@@ -22,6 +22,7 @@ import com.example.adminvansales.ImportData;
 import com.example.adminvansales.ListOfferReportAdapter;
 import com.example.adminvansales.Model.CashReportModel;
 import com.example.adminvansales.Model.ListPriceOffer;
+import com.example.adminvansales.Model.OfferListModel;
 import com.example.adminvansales.Model.customerInfoModel;
 import com.example.adminvansales.OfferPriceList;
 import com.example.adminvansales.PdfConverter;
@@ -49,6 +50,8 @@ public class ListOfferReport extends AppCompatActivity {
     List<ListPriceOffer> TempReports;
     ListPriceOffer listTempClose;
     static public List<customerInfoModel> selectCustomerIfClose;
+    static public List<OfferListModel> selectItemIfUpdate;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,16 +68,25 @@ public class ListOfferReport extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Log.e("closeList","lll9 "+control.getText().toString());
 
-                if(control.getText().toString().equals("close")){
-                    Log.e("closeList","lll3");
-                    Intent intent=new Intent(ListOfferReport.this, OfferPriceList.class);
-                    intent.putExtra("CloseList","CloseList");
-                    intent.putExtra("listClose",listTempClose);
+                if(control.getText().toString().equals("close")) {
+                    Log.e("closeList", "lll3");
+                    Intent intent = new Intent(ListOfferReport.this, OfferPriceList.class);
+                    intent.putExtra("ListIntent", "CloseList");
+                    intent.putExtra("listClose", listTempClose);
                     control.setText("0");
                     startActivity(intent);
+                }else      if(control.getText().toString().equals("update")){
+                    Log.e("UpdateList","lll3");
+                    Intent intent=new Intent(ListOfferReport.this, OfferPriceList.class);
+                    intent.putExtra("ListIntent","UpdateList");
+                    intent.putExtra("listUpdate",listTempClose);
+                    Log.e("ListType",""+listTempClose.getPO_LIST_NO());
+                    control.setText("0");
+                    startActivity(intent);
+
                 }else  if(control.getText().toString().equals("main")){
                     importData.getAllList(ListOfferReport.this);
-                    control.setText("off");
+                    control.setText("0");
                 }
             }
 
