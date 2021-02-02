@@ -27,7 +27,7 @@ public class ListAdapterSearchCustomer extends BaseAdapter {
     TextView customerText;
     List<customerInfoModel> itemsList;
     int flag;
- String phoneNo,language;
+    String phoneNo,language;
     Dialog dialog;
     public ListAdapterSearchCustomer(OfferPriceList context, List<customerInfoModel> itemsList, Dialog dialog, int flag, Context contexts) {
         this.context = context;
