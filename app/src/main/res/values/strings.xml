@@ -119,4 +119,7 @@
     <string name="ListType">List Type</string>
     <string name="passwordSetting">Password Setting</string>
     <string name="PassowrdSetting">Passowrd Setting</string>
+    <string name="voucherSerial">Voucher Serial</string>
+    <string name="returnSerial">Return Serial</string>
+    <string name="StockSerial">Stock Serial</string>
 </resources>

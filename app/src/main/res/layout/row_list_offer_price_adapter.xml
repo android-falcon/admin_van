@@ -17,7 +17,7 @@
             android:id="@+id/salesNo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="0.9"
             android:gravity="center"
             android:padding="10dp"
 
@@ -29,7 +29,7 @@
             android:id="@+id/salesManName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="0.9"
             android:gravity="center"
             android:padding="10dp"
 
@@ -41,7 +41,7 @@
             android:id="@+id/cashSales"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="0.9"
             android:gravity="center"
 
             android:padding="10dp"
@@ -54,7 +54,7 @@
             android:id="@+id/creditSale"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="0.9"
             android:gravity="center"
 
             android:padding="10dp"
@@ -67,7 +67,7 @@
             android:id="@+id/netSales"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="0.9"
             android:gravity="center"
 
             android:padding="10dp"
@@ -84,12 +84,41 @@
             android:gravity="center"
             android:padding="10dp"
             android:text="Close List"
+            android:elevation="10dp"
             android:background="@drawable/accept_btn"
             android:textColor="@color/white"
             android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/sales"
+            android:id="@+id/updateList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="Update List"
+            android:elevation="10dp"
+            android:background="@drawable/accept_btn"
+            android:textColor="@color/white"
+            android:visibility="gone"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/activateList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="Active"
+            android:elevation="10dp"
+            android:background="@drawable/accept_btn"
+            android:textColor="@color/white"
+            android:visibility="gone"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/intentText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0"
@@ -97,6 +126,7 @@
 
             android:padding="10dp"
 
+            android:visibility="gone"
             android:textColor="@color/colorblue_dark"
             android:textSize="14sp" />
 

@@ -19,6 +19,8 @@ import com.smarteist.autoimageslider.IndicatorAnimations;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderLayout;
 import com.smarteist.autoimageslider.SliderView;
+import static com.example.adminvansales.GlobelFunction.adminId;
+import static com.example.adminvansales.GlobelFunction.adminName;
 
 public class LogIn extends AppCompatActivity {
     SliderLayout sliderLayout;
@@ -27,6 +29,7 @@ public class LogIn extends AppCompatActivity {
     public  static String ipAddress="";
     private DataBaseHandler databaseHandler;
     EditText userName_edit,password_edit;
+    GlobelFunction globelFunction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +56,7 @@ public class LogIn extends AppCompatActivity {
         password_edit=findViewById(R.id.password_edit);
         userName_edit=findViewById(R.id.userName_edit);
 
+        globelFunction=new GlobelFunction(LogIn.this);
         ImportData importData=new ImportData(LogIn.this);
         importData.getListRequest();
         Log.e("importData","11111");
@@ -85,6 +89,8 @@ public class LogIn extends AppCompatActivity {
 
     }
     private void goToMain() {
+        adminName=userName_edit.getText().toString();
+        adminId=password_edit.getText().toString();
         finish();
         Intent i = new Intent(LogIn.this, HomeActivity.class);
         startActivity(i);

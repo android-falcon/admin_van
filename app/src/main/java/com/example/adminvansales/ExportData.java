@@ -40,6 +40,7 @@ import static com.example.adminvansales.HomeActivity.editPassword;
 import static com.example.adminvansales.ListOfferReportAdapter.controlText;
 import static com.example.adminvansales.LogIn.ipAddress;
 import static com.example.adminvansales.MainActivity.isListUpdated;
+import static com.example.adminvansales.Report.ListOfferReport.control;
 
 public class ExportData {
     private DataBaseHandler databaseHandler;
@@ -103,8 +104,8 @@ public class ExportData {
         new JSONTaskAddSales(context,jsonObject).execute();
     }
 
-    public void updateList(Context context,JSONObject jsonObject){
-        new JSONTaskUpdateList(context,jsonObject).execute();
+    public void updateList(Context context,JSONObject jsonObject , JSONArray jsonArray){
+        new JSONTaskUpdateList(context,jsonObject, jsonArray).execute();
     }
 
     public void UpdateSales(Context context,JSONObject jsonObject){
@@ -582,11 +583,13 @@ public class ExportData {
     }
 
     private class JSONTaskUpdateList extends AsyncTask<String, String, String> {
-        ListOfferReport context;
+        OfferPriceList context;
         JSONObject jsonObject;
-        public JSONTaskUpdateList(Context context,JSONObject jsonObject) {
-            this.context= (ListOfferReport) context;
+        JSONArray jsonArray;
+        public JSONTaskUpdateList(Context context,JSONObject jsonObject ,JSONArray jsonArray) {
+            this.context= (OfferPriceList) context;
             this.jsonObject=jsonObject;
+            this.jsonArray=jsonArray;
         }
 
         @Override
@@ -624,6 +627,7 @@ public class ExportData {
                 List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
                 nameValuePairs.add(new BasicNameValuePair("_ID", "23"));
                 nameValuePairs.add(new BasicNameValuePair("UPDATE_LIST_OFFER_PRICE",jsonObject.toString()));
+                nameValuePairs.add(new BasicNameValuePair("UPDATE_OFFER_PRICE",jsonArray.toString()));
 
 
                 request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
@@ -681,7 +685,8 @@ public class ExportData {
                 if (s.contains("UPDATE_LIST_SUCCESS")) {
                     Log.e("salesManInfo", "UPDATE_LIST_SUCCESS\t" + s.toString());
                     Toast.makeText(context, "UPDATE LIST SUCCESS", Toast.LENGTH_SHORT).show();
-                    controlText.setText("2");
+                    context.finishLayout();
+                    control.setText("main");
                     pd.dismissWithAnimation();
                 }else {
                     pd.dismissWithAnimation();

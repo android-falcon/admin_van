@@ -5,9 +5,10 @@ import com.google.gson.annotations.SerializedName;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class customerInfoModel {
+public class customerInfoModel implements Serializable {
 // "ComapnyNo": "291",
 //            "CustID": "1110010002",
 //            "CustName": "المعلم بلال",

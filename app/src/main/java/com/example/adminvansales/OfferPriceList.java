@@ -41,7 +41,12 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import static com.example.adminvansales.GlobelFunction.adminId;
+import static com.example.adminvansales.GlobelFunction.adminName;
 import static com.example.adminvansales.GlobelFunction.salesManInfosList;
+
+import static com.example.adminvansales.Report.ListOfferReport.selectCustomerIfClose;
+import static com.example.adminvansales.Report.ListOfferReport.selectItemIfUpdate;
 
 public class OfferPriceList extends AppCompatActivity {
     public static List<ItemMaster> ItemCardList;
@@ -75,12 +80,45 @@ public class OfferPriceList extends AppCompatActivity {
     CheckBox itemCheckBox;
     int listTypes=0;
     JSONArray array;
+    String intentReSend ="";
+    ListPriceOffer listSelectForClose;
+    String listNoClos="",listNoS,listTypesC;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.offer_price_list_activity);
+        intentReSend = getIntent().getStringExtra("ListIntent");
         initial();
+
+//        intentReSend = getIntent().getStringExtra("ListIntent");
+//       //intentReSend = getIntent().getStringExtra("UpdateList");
+//        Log.e("listType",""+intentReSend.toString());
+
+              if (intentReSend != null &&intentReSend.equals("CloseList")) {
+                       listSelectForClose=(ListPriceOffer) getIntent().getSerializableExtra("listClose");
+                       Log.e("ListNoClose=",""+listSelectForClose.getPO_LIST_NO());
+                  listNoClos=listSelectForClose.getPO_LIST_NO();
+                  listTypesC=listSelectForClose.getPO_LIST_TYPE();
+                       customerSelect=new ArrayList<>(selectCustomerIfClose);
+                       listTypeSpinner.setSelection(Integer.parseInt(listSelectForClose.getPO_LIST_TYPE()));
+                  listTypeSpinner.setEnabled(false);
+                  }else  if (intentReSend != null &&intentReSend.equals("UpdateList")) {
+                  listSelectForClose=(ListPriceOffer) getIntent().getSerializableExtra("listUpdate");
+                  Log.e("ListNoUpdate =",""+listSelectForClose.getPO_LIST_NO());
+
+                  listNoClos=listSelectForClose.getPO_LIST_NO();
+                  listTypesC=listSelectForClose.getPO_LIST_TYPE();
+
+                  Log.e("ListType",""+listSelectForClose.getPO_LIST_NO());
+
+                  if(!listSelectForClose.getPO_LIST_TYPE().equals("1")) {
+                      customerSelect = new ArrayList<>(selectCustomerIfClose);
+                      itemSelectList = new ArrayList<>(selectItemIfUpdate);
+                  }
+                  listTypeSpinner.setSelection(Integer.parseInt(listSelectForClose.getPO_LIST_TYPE()));
+                  listTypeSpinner.setEnabled(false);
+              }
         listTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -216,9 +254,14 @@ public class OfferPriceList extends AppCompatActivity {
         }
     }
     void fillItemListPrice(){
+
         for(int i=0;i<ItemCardList.size();i++){
             String f_d=ItemCardList.get(i).getF_D();
             ItemCardList.get(i).setPrice(f_d);
+        }
+        if (intentReSend != null && intentReSend.equals("UpdateList")) {
+
+            fillItemPriceInList(0);
         }
     }
 
@@ -246,9 +289,28 @@ public class OfferPriceList extends AppCompatActivity {
         Button cancelButton,addButton;
         cancelButton=dialogSearch.findViewById(R.id.cancelButton);
         addButton=dialogSearch.findViewById(R.id.addButton);
+        CheckBox itemCheckAll=dialogSearch.findViewById(R.id.itemCheckAll);
 
         listAdapterSearchVoucher = new ListAdapterSearchVoucher(OfferPriceList.this, ItemCardList, dialogSearch, 1, OfferPriceList.this);
         ListNote.setAdapter(listAdapterSearchVoucher);
+
+
+        itemCheckAll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+
+                    itemSelectList.clear();
+                    List<OfferListModel>masterItemCard=new ArrayList<>();
+                    for (int i=0;i<ItemCardList.size();i++){
+                        masterItemCard.add(returnOfferListModel(ItemCardList.get(i)));
+                    }
+                    itemSelectList=new ArrayList<>(masterItemCard);
+                }else {
+                    itemSelectList.clear();
+                }
+            }
+        });
 
         noteSearch.addTextChangedListener(new TextWatcher() {
             @Override
@@ -620,7 +682,9 @@ public class OfferPriceList extends AppCompatActivity {
 
 
     void goneVisibleLinear(int cases){
+        Log.e("lisss",""+cases);
         switch (cases){
+
             case 0:
                 priceOfferLinear.setVisibility(View.VISIBLE);
                 priceOnlyLinear.setVisibility(View.GONE);
@@ -633,16 +697,35 @@ public class OfferPriceList extends AppCompatActivity {
                 dateLinear.setVisibility(View.VISIBLE);
                 listDateType.setVisibility(View.VISIBLE);
                 mainListOffer.clear();
-                customerSelect.clear();
-                itemSelectList.clear();
+
+
+                if (intentReSend != null && intentReSend.equals("CloseList")) {
+                    listName.setText("");
+                    itemSelectList.clear();
+                }else  if (intentReSend != null && intentReSend.equals("UpdateList")) {
+                    listName.setText(listSelectForClose.getPO_LIST_NAME());
+                    listNo.setText(listSelectForClose.getPO_LIST_NO());
+                    fromDate.setText(listSelectForClose.getFROM_DATE());
+                    toDate.setText(listSelectForClose.getTO_DATE());
+                }else{
+                    customerSelect.clear();
+                    itemSelectList.clear();
+                    listName.setText("");
+                }
+
                 fillCustomerSelect();
                 fillItemSelect();
                 fillItemPriceInList(0);
-                listName.setText("");
+
 
                 break;
             case 1:
-                fillItemPriceInList(0);
+                if (intentReSend != null && intentReSend.equals("UpdateList")) {
+
+                    listNo.setText(listNoClos);
+                }else {
+                    fillItemPriceInList(0);
+                }
                 priceOfferLinear.setVisibility(View.GONE);
                 priceOnlyLinear.setVisibility(View.VISIBLE);
                 dateLinear.setVisibility(View.GONE);
@@ -667,12 +750,25 @@ public class OfferPriceList extends AppCompatActivity {
                 dateLinear.setVisibility(View.VISIBLE);
                 listDateType.setVisibility(View.VISIBLE);
                 mainListOffer.clear();
-                customerSelect.clear();
-                itemSelectList.clear();
+                if (intentReSend != null && intentReSend.equals("CloseList")) {
+                    listName.setText("");
+                    itemSelectList.clear();
+                }else  if (intentReSend != null && intentReSend.equals("UpdateList")) {
+                    listName.setText(listSelectForClose.getPO_LIST_NAME());
+                    listNo.setText(listSelectForClose.getPO_LIST_NO());
+                    fromDate.setText(listSelectForClose.getFROM_DATE());
+                    toDate.setText(listSelectForClose.getTO_DATE());
+                    importData.getItemCard(OfferPriceList.this);
+                }else {
+                    customerSelect.clear();
+                    itemSelectList.clear();
+                    listName.setText("");
+                }
+
                 fillCustomerSelect();
                 fillItemSelect();
                fillItemPriceInList(0);
-                listName.setText("");
+
 
                 break;
         }
@@ -683,6 +779,7 @@ public class OfferPriceList extends AppCompatActivity {
     public void clearList(){
 
         priceOnly.setText("0.0");
+
         if(listTypes!=1) {
             listName.setText("");
         }else {
@@ -698,13 +795,21 @@ public class OfferPriceList extends AppCompatActivity {
         itemSelectList.clear();
         fillItemSelect();
         fillCustomerSelect();
+        if (intentReSend != null && (intentReSend.equals("CloseList") ||  intentReSend.equals("UpdateList"))) {
+            Log.e("intent22","9009");
+            importData.getItemUpdateClosOpenList(OfferPriceList.this,listNoClos,listNoS ,listTypesC);
+        }else{
+//noThing
+            Log.e("intent22","9009kkk");
+            importData.getMaxNo(OfferPriceList.this);
 
-        importData.getMaxNo(OfferPriceList.this);
-
-        if(listTypes!=1) {
-        }else {
-            importData.getItemCard(OfferPriceList.this);
+//            if(listTypes!=1) {
+//            }else {
+//                importData.getItemCard(OfferPriceList.this);
+//            }
         }
+
+
     }
 
     void initial(){
@@ -719,7 +824,6 @@ public class OfferPriceList extends AppCompatActivity {
         itemSelectList=new ArrayList<>();
         listCustomerD=new ArrayList<>(customerList);
         listItemPrice=new ArrayList<>(ItemCardList);
-
         itemList=findViewById(R.id.itemListV);
         customerListView=findViewById(R.id.customerListView);
         globelFunction =new GlobelFunction(OfferPriceList.this);
@@ -731,7 +835,13 @@ public class OfferPriceList extends AppCompatActivity {
         importData=new ImportData(OfferPriceList.this);
         importData.getItemCard(OfferPriceList.this);
         importData.getCustomer(OfferPriceList.this);
-        importData.getMaxNo(OfferPriceList.this);
+     if(intentReSend != null && intentReSend.equals("UpdateList")) {
+         Log.e("listType","uuuuuu");
+
+     }else {
+         Log.e("listType","llll");
+         importData.getMaxNo(OfferPriceList.this);
+     }
         qtyPriceLinear=findViewById(R.id.qtyPrice);
         listOfferLinear=findViewById(R.id.listOfferLinear);
         qtyLinear=findViewById(R.id.qtyLinear);
@@ -756,6 +866,7 @@ public class OfferPriceList extends AppCompatActivity {
         dateLinear=findViewById(R.id.dateLinear);
         listDateType=findViewById(R.id.listDateType);
 
+        listTypeSpinner.setEnabled(true);
 
         fromDate.setOnClickListener(onClickListener);
         toDate.setOnClickListener(onClickListener);
@@ -851,6 +962,7 @@ public class OfferPriceList extends AppCompatActivity {
 
 
         addToMainList();
+        listNoS=listNo.getText().toString();
 if(position!=1) {
     if (openRadio.isChecked()) {
 
@@ -870,7 +982,15 @@ if(position!=1) {
                 if (itemSelectList.size() != 0) {
                     if (customerSelect.size() != 0) {
                         if (mainListOffer.size() != 0) {
-                            importData.ifBetweenDate(OfferPriceList.this, fromDate.getText().toString(), toDates, "" + position, "0", listNo.getText().toString(),array);
+                            if (intentReSend != null && (intentReSend.equals("CloseList") || intentReSend.equals("UpdateList") )) {
+                                Log.e("intent22","99");
+                                importData.ifBetweenDate(OfferPriceList.this, fromDate.getText().toString(), toDates, "" + position, "2", listNoClos, array);
+
+                            }else{
+                                Log.e("intent22","990");
+                                importData.ifBetweenDate(OfferPriceList.this, fromDate.getText().toString(), toDates, "" + position, "0", listNo.getText().toString(), array);
+
+                            }
                         } else {
                             Toast.makeText(this, "No Data In List", Toast.LENGTH_SHORT).show();
                         }
@@ -887,7 +1007,18 @@ if(position!=1) {
         }else  {
             if (!listName.getText().toString().equals("")) {
                 if (listItemPrice.size() != 0) {
-                    importData.ifBetweenDate(OfferPriceList.this, fromDate.getText().toString(), toDates,""+position,"0",listNo.getText().toString(),array);
+
+                    if (intentReSend != null && (intentReSend.equals("CloseList") || intentReSend.equals("UpdateList") )) {
+                        Log.e("intent22","99");
+                        importData.ifBetweenDate(OfferPriceList.this, fromDate.getText().toString(), toDates,""+position,"2",listNo.getText().toString(),array);
+
+                    }else{
+                        Log.e("intent22","990");
+                        importData.ifBetweenDate(OfferPriceList.this, fromDate.getText().toString(), toDates,""+position,"0",listNo.getText().toString(),array);
+
+                    }
+
+
 
                 } else {
                     Toast.makeText(this, "No Data In List", Toast.LENGTH_SHORT).show();
@@ -993,12 +1124,19 @@ if(position!=1) {
         }else if(openRadio.isChecked()){
             oofer.setToDate("01/01/9999");
         }
+        oofer.setAdminId(adminId);
+        oofer.setAdminName(adminName);
 
         jsonObject=oofer.getJsonObjectList();
 
         ExportData exportData=new ExportData(OfferPriceList.this);
-        exportData.addToList(OfferPriceList.this,jsonArrayList,jsonObject);
 
+        if(intentReSend != null && intentReSend.equals("UpdateList")) {
+            exportData.updateList(OfferPriceList.this, jsonObject,jsonArrayList);
+        }else{
+            exportData.addToList(OfferPriceList.this, jsonArrayList, jsonObject);
+
+        }
 
     }
     public void savePriceList(int position){
@@ -1025,12 +1163,27 @@ Log.e("mmmma","size : "+listItemPrice.size());
 //        }else if(openRadio.isChecked()){
             oofer.setToDate("01/01/9999");
 //        }
+
+        oofer.setAdminId(adminId);
+        oofer.setAdminName(adminName);
         jsonObject=oofer.getJsonObjectList();
 
         ExportData exportData=new ExportData(OfferPriceList.this);
-        exportData.addToList(OfferPriceList.this,jsonArrayList,jsonObject);
 
 
+        if(intentReSend != null && intentReSend.equals("UpdateList")) {
+            exportData.updateList(OfferPriceList.this, jsonObject,jsonArrayList);
+        }else{
+            exportData.addToList(OfferPriceList.this,jsonArrayList,jsonObject);
+
+        }
+
+
+
+    }
+
+    public void finishLayout(){
+        finish();
     }
 
     public void fillSerial(String listNos){
@@ -1065,10 +1218,12 @@ Log.e("mmmma","size : "+listItemPrice.size());
         }
 
     public void fillItemPriceInList(int clear){
-
+        listItemPrice.clear();
         listItemPrice=new ArrayList<>(ItemCardList);
         listAdapterPrice = new ListAdapterPriceOnly(OfferPriceList.this, listItemPrice,clear);
         itemPriceList.setAdapter(listAdapterPrice);
+
+        Log.e("masterrrrr",""+ItemCardList.size()+"  "+listItemPrice.size());
 
     }
 
@@ -1087,7 +1242,23 @@ Log.e("mmmma","size : "+listItemPrice.size());
 
     }
 
+    public OfferListModel returnOfferListModel(ItemMaster itemMaster){
+        OfferListModel offerListModel=new OfferListModel();
+        offerListModel.setItemNo(itemMaster.getItemNo());
+        offerListModel.setItemName(itemMaster.getName());
+        if(Double.parseDouble(price.getText().toString())!=0) {
+            offerListModel.setPrice(price.getText().toString());
+        }else {
+            offerListModel.setPrice(itemMaster.getF_D());
 
+        }
+        offerListModel.setCashOffer(cashDiscount.getText().toString());
+        offerListModel.setOtherOffer(otherDiscount.getText().toString());
+        offerListModel.setItemNo(itemMaster.getItemNo());
+        offerListModel.setItemName(itemMaster.getName());
+
+        return  offerListModel;
+    }
 
 }
 

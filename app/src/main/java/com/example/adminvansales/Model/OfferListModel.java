@@ -1,26 +1,65 @@
 package com.example.adminvansales.Model;
 
 import com.google.gson.JsonObject;
+import com.google.gson.annotations.SerializedName;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
+
 public class OfferListModel {
+
+    //{
+    //    "ALL_LIST": [
+    //        {
+    //            "ITEMNO": "10100001",
+    //            "CUSTOMER_NO": "1110010002",
+    //            "PRICE": "90",
+    //            "DISCOUNT": "10",
+    //            "OTHER_DISCOUNT": "10",
+    //            "FROM_DATE": "27/01/2021",
+    //            "TO_DATE": "27/01/2021",
+    //            "LIST_NO": "21",
+    //            "LIST_TYPE": "0",
+    //            "CustName": "المعلم بلال"
+    //
+    //    ],
+
+
+    @SerializedName("LIST_NO")
     private String listNo;
     private String listName;
+    @SerializedName("LIST_TYPE")
     private String listType;
+    @SerializedName("FROM_DATE")
     private String fromDate;
+    @SerializedName("TO_DATE")
     private String toDate;
 
+    @SerializedName("PRICE")
 
     private String price;
+    @SerializedName("DISCOUNT")
     private String cashOffer;
+    @SerializedName("OTHER_DISCOUNT")
     private String otherOffer;
-
+    @SerializedName("ITEMNO")
     private String itemNo;
+
+    @SerializedName("Name")
     private String itemName;
+
+    @SerializedName("CUSTOMER_NO")
     private String customerNo;
+    @SerializedName("CustName")
     private String customerName;
+
+    @SerializedName("ALL_LIST")
+    private List<OfferListModel> ALL_LIST;
+
+    private String adminId;
+    private String adminName;
 
     private int isSelectCustomer;
 
@@ -148,6 +187,30 @@ public class OfferListModel {
         this.isSelectCustomer = isSelectCustomer;
     }
 
+    public String getAdminId() {
+        return adminId;
+    }
+
+    public void setAdminId(String adminId) {
+        this.adminId = adminId;
+    }
+
+    public String getAdminName() {
+        return adminName;
+    }
+
+    public void setAdminName(String adminName) {
+        this.adminName = adminName;
+    }
+
+    public List<OfferListModel> getALL_LIST() {
+        return ALL_LIST;
+    }
+
+    public void setALL_LIST(List<OfferListModel> ALL_LIST) {
+        this.ALL_LIST = ALL_LIST;
+    }
+
     public JSONObject getJsonObject(){
 
         JSONObject jsonObject=new JSONObject();
@@ -184,6 +247,9 @@ public class OfferListModel {
             jsonObject.put("ListType", listType);
             jsonObject.put("FromDate", fromDate);
             jsonObject.put("ToDate",toDate);
+
+            jsonObject.put("ADMIN_ID", adminId);
+            jsonObject.put("ADMIN_NAME",adminName);
 
 //            jsonObject.put("Price",price);
 //            jsonObject.put("CashOffer", cashOffer);

@@ -1,6 +1,9 @@
 package com.example.adminvansales.Report;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -19,6 +22,9 @@ import com.example.adminvansales.ImportData;
 import com.example.adminvansales.ListOfferReportAdapter;
 import com.example.adminvansales.Model.CashReportModel;
 import com.example.adminvansales.Model.ListPriceOffer;
+import com.example.adminvansales.Model.OfferListModel;
+import com.example.adminvansales.Model.customerInfoModel;
+import com.example.adminvansales.OfferPriceList;
 import com.example.adminvansales.PdfConverter;
 import com.example.adminvansales.R;
 
@@ -31,6 +37,7 @@ import static com.example.adminvansales.GlobelFunction.salesManNameList;
 public class ListOfferReport extends AppCompatActivity {
 
     TextView fromDate,toDate,excelConvert,pdfConvert,share;
+    public  static TextView control;
     GlobelFunction globelFunction;
     String toDay;
     ListOfferReportAdapter listOfferReportAdapter;
@@ -41,17 +48,61 @@ public class ListOfferReport extends AppCompatActivity {
     Button previewButton;
     Spinner salesNameSpinner;
     List<ListPriceOffer> TempReports;
+    ListPriceOffer listTempClose;
+    static public List<customerInfoModel> selectCustomerIfClose;
+    static public List<OfferListModel> selectItemIfUpdate;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_price_offer);
         initial();
+
+        control.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Log.e("closeList","lll9 "+control.getText().toString());
+
+                if(control.getText().toString().equals("close")) {
+                    Log.e("closeList", "lll3");
+                    Intent intent = new Intent(ListOfferReport.this, OfferPriceList.class);
+                    intent.putExtra("ListIntent", "CloseList");
+                    intent.putExtra("listClose", listTempClose);
+                    control.setText("0");
+                    startActivity(intent);
+                }else      if(control.getText().toString().equals("update")){
+                    Log.e("UpdateList","lll3");
+                    Intent intent=new Intent(ListOfferReport.this, OfferPriceList.class);
+                    intent.putExtra("ListIntent","UpdateList");
+                    intent.putExtra("listUpdate",listTempClose);
+                    Log.e("ListType",""+listTempClose.getPO_LIST_NO());
+                    control.setText("0");
+                    startActivity(intent);
+
+                }else  if(control.getText().toString().equals("main")){
+                    importData.getAllList(ListOfferReport.this);
+                    control.setText("0");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
     }
 
 
     private void initial() {
 
         fromDate=findViewById(R.id.from_date_r);
+        control=findViewById(R.id.control);
         toDate=findViewById(R.id.to_date_r);
         listCashReport=findViewById(R.id.listCashReport);
         previewButton=findViewById(R.id.previewButton);
@@ -65,6 +116,8 @@ public class ListOfferReport extends AppCompatActivity {
         fromDate.setText(toDay);
         toDate.setText(toDay);
         TempReports=new ArrayList<>();
+        listTempClose=new ListPriceOffer();
+        selectCustomerIfClose=new ArrayList<>();
         importData=new ImportData(ListOfferReport.this);
         importData.getAllList(ListOfferReport.this);
 
@@ -131,7 +184,9 @@ public class ListOfferReport extends AppCompatActivity {
     }
 
 
-
+public void getItem(ListPriceOffer listOfferReports){
+    listTempClose=listOfferReports;
+}
 
 
     public void previewFunction(){
