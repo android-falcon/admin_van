@@ -55,6 +55,8 @@ import static com.example.adminvansales.GlobelFunction.salesManInfosList;
 import static com.example.adminvansales.GlobelFunction.salesManNameList;
 import static com.example.adminvansales.HomeActivity.waitList;
 import static com.example.adminvansales.ListOfferReportAdapter.controlText;
+import static com.example.adminvansales.GlobelFunction.adminId;
+import static com.example.adminvansales.GlobelFunction.adminName;
 import static com.example.adminvansales.LogIn.ipAddress;
 import static com.example.adminvansales.MainActivity.isListUpdated;
 import static com.example.adminvansales.OfferPriceList.ItemCardList;
@@ -111,8 +113,8 @@ public class ImportData {
         new JSONTaskGetItemCustomerByListNo(context,listNo,UpClose).execute();
     }
 
-    public void getItemUpdateClosOpenList(Context context,String listNo,String closeSwitch) {
-        new JSONTaskGetUpdateCloseOpenList(context,listNo,closeSwitch).execute();
+    public void getItemUpdateClosOpenList(Context context,String listNo,String closeSwitch,String listType) {
+        new JSONTaskGetUpdateCloseOpenList(context,listNo,closeSwitch,listType).execute();
     }
 
     public void getItemUpdateActivateList(Context context,String listNo) {
@@ -2314,15 +2316,16 @@ public class ImportData {
     private class JSONTaskGetUpdateCloseOpenList extends AsyncTask<String, String, String> {
         Context context;
         int flag;
-        String listNo,closeSwitch;
+        String listNo,closeSwitch,listType;
 
 
-        public JSONTaskGetUpdateCloseOpenList(Context context,String listNo,String closeSwitch) {
+        public JSONTaskGetUpdateCloseOpenList(Context context,String listNo,String closeSwitch,String listType) {
 //            this.flag=flag;
             this.context =  context;
             this.listNo =listNo;
             this.closeSwitch=closeSwitch;
 
+            this.listType=listType;
         }
 
         @Override
@@ -2362,8 +2365,9 @@ public class ImportData {
                 nameValuePairs.add(new BasicNameValuePair("_ID", "27"));
                 nameValuePairs.add(new BasicNameValuePair("LIST_NO", listNo));
                 nameValuePairs.add(new BasicNameValuePair("LIST_SWITCH", closeSwitch));
-//                nameValuePairs.add(new BasicNameValuePair("PayKind",payKind));
-//                nameValuePairs.add(new BasicNameValuePair("SalesNo",SalesNo));
+                nameValuePairs.add(new BasicNameValuePair("ADMIN_ID",adminId));
+                nameValuePairs.add(new BasicNameValuePair("ADMIN_NAME",adminName));
+                nameValuePairs.add(new BasicNameValuePair("ListType",listType));
 
 
                 request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));

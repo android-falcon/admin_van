@@ -31,7 +31,8 @@ public class GlobelFunction {
     public static  List<String> salesManNameList=new ArrayList<>();
 
     public static  List<LatLng> LatLngListMarker=new ArrayList<>();
-
+    
+    public static String adminId="",adminName="";
     public GlobelFunction(Context context) {
         importData=new ImportData(context);
         this.context =context;

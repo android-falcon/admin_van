@@ -41,7 +41,10 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import static com.example.adminvansales.GlobelFunction.adminId;
+import static com.example.adminvansales.GlobelFunction.adminName;
 import static com.example.adminvansales.GlobelFunction.salesManInfosList;
+
 import static com.example.adminvansales.Report.ListOfferReport.selectCustomerIfClose;
 import static com.example.adminvansales.Report.ListOfferReport.selectItemIfUpdate;
 
@@ -79,7 +82,7 @@ public class OfferPriceList extends AppCompatActivity {
     JSONArray array;
     String intentReSend ="";
     ListPriceOffer listSelectForClose;
-    String listNoClos="",listNoS;
+    String listNoClos="",listNoS,listTypesC;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -96,6 +99,7 @@ public class OfferPriceList extends AppCompatActivity {
                        listSelectForClose=(ListPriceOffer) getIntent().getSerializableExtra("listClose");
                        Log.e("ListNoClose=",""+listSelectForClose.getPO_LIST_NO());
                   listNoClos=listSelectForClose.getPO_LIST_NO();
+                  listTypesC=listSelectForClose.getPO_LIST_TYPE();
                        customerSelect=new ArrayList<>(selectCustomerIfClose);
                        listTypeSpinner.setSelection(Integer.parseInt(listSelectForClose.getPO_LIST_TYPE()));
                   listTypeSpinner.setEnabled(false);
@@ -104,6 +108,8 @@ public class OfferPriceList extends AppCompatActivity {
                   Log.e("ListNoUpdate =",""+listSelectForClose.getPO_LIST_NO());
 
                   listNoClos=listSelectForClose.getPO_LIST_NO();
+                  listTypesC=listSelectForClose.getPO_LIST_TYPE();
+
                   Log.e("ListType",""+listSelectForClose.getPO_LIST_NO());
 
                   if(!listSelectForClose.getPO_LIST_TYPE().equals("1")) {
@@ -791,9 +797,7 @@ public class OfferPriceList extends AppCompatActivity {
         fillCustomerSelect();
         if (intentReSend != null && (intentReSend.equals("CloseList") ||  intentReSend.equals("UpdateList"))) {
             Log.e("intent22","9009");
-            importData.getItemUpdateClosOpenList(OfferPriceList.this,listNoClos,listNoS);
-
-
+            importData.getItemUpdateClosOpenList(OfferPriceList.this,listNoClos,listNoS ,listTypesC);
         }else{
 //noThing
             Log.e("intent22","9009kkk");
@@ -1120,6 +1124,8 @@ if(position!=1) {
         }else if(openRadio.isChecked()){
             oofer.setToDate("01/01/9999");
         }
+        oofer.setAdminId(adminId);
+        oofer.setAdminName(adminName);
 
         jsonObject=oofer.getJsonObjectList();
 
@@ -1157,6 +1163,9 @@ Log.e("mmmma","size : "+listItemPrice.size());
 //        }else if(openRadio.isChecked()){
             oofer.setToDate("01/01/9999");
 //        }
+
+        oofer.setAdminId(adminId);
+        oofer.setAdminName(adminName);
         jsonObject=oofer.getJsonObjectList();
 
         ExportData exportData=new ExportData(OfferPriceList.this);

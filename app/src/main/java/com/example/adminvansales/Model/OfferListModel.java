@@ -58,6 +58,9 @@ public class OfferListModel {
     @SerializedName("ALL_LIST")
     private List<OfferListModel> ALL_LIST;
 
+    private String adminId;
+    private String adminName;
+
     private int isSelectCustomer;
 
     public OfferListModel() {
@@ -184,6 +187,22 @@ public class OfferListModel {
         this.isSelectCustomer = isSelectCustomer;
     }
 
+    public String getAdminId() {
+        return adminId;
+    }
+
+    public void setAdminId(String adminId) {
+        this.adminId = adminId;
+    }
+
+    public String getAdminName() {
+        return adminName;
+    }
+
+    public void setAdminName(String adminName) {
+        this.adminName = adminName;
+    }
+
     public List<OfferListModel> getALL_LIST() {
         return ALL_LIST;
     }
@@ -228,6 +247,9 @@ public class OfferListModel {
             jsonObject.put("ListType", listType);
             jsonObject.put("FromDate", fromDate);
             jsonObject.put("ToDate",toDate);
+
+            jsonObject.put("ADMIN_ID", adminId);
+            jsonObject.put("ADMIN_NAME",adminName);
 
 //            jsonObject.put("Price",price);
 //            jsonObject.put("CashOffer", cashOffer);
