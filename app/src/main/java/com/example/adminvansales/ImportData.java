@@ -15,15 +15,18 @@ import com.example.adminvansales.Model.CashReportModel;
 import com.example.adminvansales.Model.CustomerLogReportModel;
 import com.example.adminvansales.Model.ItemMaster;
 import com.example.adminvansales.Model.ListPriceOffer;
+import com.example.adminvansales.Model.LogHistoryModel;
 import com.example.adminvansales.Model.OfferListModel;
 import com.example.adminvansales.Model.PayMentReportModel;
 import com.example.adminvansales.Model.CustomerInfo;
 import com.example.adminvansales.Model.Request;
 import com.example.adminvansales.Model.SalesManInfo;
+import com.example.adminvansales.Model.SettingModel;
 import com.example.adminvansales.Model.customerInfoModel;
 import com.example.adminvansales.Report.CashReport;
 import com.example.adminvansales.Report.CustomerLogReport;
 import com.example.adminvansales.Report.ListOfferReport;
+import com.example.adminvansales.Report.LogHistoryReport;
 import com.example.adminvansales.Report.PaymentDetailsReport;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
@@ -58,6 +61,7 @@ import static com.example.adminvansales.ListOfferReportAdapter.controlText;
 import static com.example.adminvansales.GlobelFunction.adminId;
 import static com.example.adminvansales.GlobelFunction.adminName;
 import static com.example.adminvansales.LogIn.ipAddress;
+import static com.example.adminvansales.LogIn.portSettings;
 import static com.example.adminvansales.MainActivity.isListUpdated;
 import static com.example.adminvansales.OfferPriceList.ItemCardList;
 import static com.example.adminvansales.OfferPriceList.customerList;
@@ -68,6 +72,8 @@ import static com.example.adminvansales.Report.ListOfferReport.control;
 import static com.example.adminvansales.Report.ListOfferReport.listPriceOffers;
 import static com.example.adminvansales.Report.ListOfferReport.selectCustomerIfClose;
 import static com.example.adminvansales.Report.ListOfferReport.selectItemIfUpdate;
+import static com.example.adminvansales.Report.LogHistoryReport.logHistoryDetail;
+import static com.example.adminvansales.Report.LogHistoryReport.logHistoryList;
 import static com.example.adminvansales.Report.PaymentDetailsReport.payMentReportList;
 import static com.example.adminvansales.ShowNotifications.showNotification;
 
@@ -76,7 +82,7 @@ public class ImportData {
 
     private String URL_TO_HIT;
     SweetAlertDialog pdValidation;
-    SweetAlertDialog pdValidationCustomer, pdValidationSerial, pdValidationItem,getPdValidationItemCard;
+    SweetAlertDialog pdValidationCustomer, pdValidationSerial, pdValidationItem,getPdValidationItemCard,getPdValidationLogHistory;
 
     Context main_context;
     public static ArrayList<Integer> listId;
@@ -119,6 +125,14 @@ public class ImportData {
 
     public void getItemUpdateActivateList(Context context,String listNo) {
         new JSONTaskGetUpdateActivateList(context,listNo).execute();
+    }
+
+    public void getItemUpdateActivateList(Context context,String serialNo,String listNo , String listType ) {
+        new JSONTaskGetLogHistoryDetail(context,serialNo,listNo ,listType).execute();
+    }
+
+    public void getLogHistory(Context context){
+       new  JSONTaskGetLogHistory(context).execute();
     }
 
     public void getCustomer(Context context) {
@@ -1094,9 +1108,12 @@ public class ImportData {
 
             try {
 
-
+                SettingModel settingModel =new SettingModel();
+                settingModel=databaseHandler.getAllSetting();
+                ipAddress=settingModel.getIpAddress();
+                portSettings=settingModel.getPort();
                 if (!ipAddress.equals("")) {
-                    URL_TO_HIT = "http://" + ipAddress + "/VANSALES_WEB_SERVICE/admin.php";
+                    URL_TO_HIT = "http://" + ipAddress.trim()+portSettings.trim() + "/VANSALES_WEB_SERVICE/admin.php"+custId;
                 }
             } catch (Exception e) {
 
@@ -1109,13 +1126,13 @@ public class ImportData {
                 HttpPost request = new HttpPost();
                 request.setURI(new URI(URL_TO_HIT));
 
-                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-                Log.e("BasicNameValuePair", "" + custId);
-                nameValuePairs.add(new BasicNameValuePair("FLAG", "1"));
-                nameValuePairs.add(new BasicNameValuePair("customerNo", custId));
+//                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+//                Log.e("BasicNameValuePair", "" + custId);
+//                nameValuePairs.add(new BasicNameValuePair("FLAG", "1"));
+//                nameValuePairs.add(new BasicNameValuePair("customerNo", custId));
 
 
-                request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+//                request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
 
 
                 HttpResponse response = client.execute(request);
@@ -1169,19 +1186,19 @@ public class ImportData {
             JSONObject result = null;
             String impo = "";
             if (s != null) {
-                if (s.contains("CUSTOMER_Account_Statment")) {
+                if (s.contains("VHFNo")) {
                     // Log.e("CUSTOMER_INFO","onPostExecute\t"+s.toString());
                     //{"CUSTOMER_INFO":[{"VHFNo":"0","TransName":"ÞíÏ ÇÝÊÊÇÍí","VHFDATE":"31-DEC-19","DEBIT":"0","Credit":"16194047.851"}
 
                     try {
-                        result = new JSONObject(s);
+//                        result = new JSONObject(s);
                         Account__Statment_Model requestDetail;
 
 
                         JSONArray requestArray = null;
                         listCustomerInfo = new ArrayList<>();
 
-                        requestArray = result.getJSONArray("CUSTOMER_Account_Statment");
+                        requestArray = new JSONArray(s);
                         Log.e("requestArray", "" + requestArray.length());
 
 
@@ -2623,4 +2640,290 @@ public class ImportData {
         }
 
     }
+
+    private class JSONTaskGetLogHistory extends AsyncTask<String, String, String> {
+        Object context;
+        int flag;
+
+
+        public JSONTaskGetLogHistory(Object context) {
+//            this.flag=flag;
+            this.context = (LogHistoryReport) context;
+
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            String do_ = "my";
+            pdValidationItem = new SweetAlertDialog(main_context, SweetAlertDialog.PROGRESS_TYPE);
+            pdValidationItem.getProgressHelper().setBarColor(Color.parseColor("#FDD835"));
+            pdValidationItem.setTitleText(main_context.getResources().getString(R.string.process) + "2");
+            pdValidationItem.setCancelable(false);
+            pdValidationItem.show();
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+//            ipAddress = "";
+            try {
+
+
+                if (!ipAddress.equals("")) {
+                    URL_TO_HIT = "http://" + ipAddress + "/VANSALES_WEB_SERVICE/admin.php";
+                }
+            } catch (Exception e) {
+
+            }
+
+            try {
+
+                String JsonResponse = null;
+                HttpClient client = new DefaultHttpClient();
+                HttpPost request = new HttpPost();
+                request.setURI(new URI(URL_TO_HIT));
+
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(5);
+                nameValuePairs.add(new BasicNameValuePair("_ID", "29"));
+//                nameValuePairs.add(new BasicNameValuePair("FromDate", fromDate));
+//                nameValuePairs.add(new BasicNameValuePair("ToDate", toDate));
+//                nameValuePairs.add(new BasicNameValuePair("PayKind",payKind));
+//                nameValuePairs.add(new BasicNameValuePair("SalesNo",SalesNo));
+
+
+                request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+
+
+                HttpResponse response = client.execute(request);
+
+
+                BufferedReader in = new BufferedReader(new
+                        InputStreamReader(response.getEntity().getContent()));
+
+
+//                JsonReader reader = new JsonReader(new StringReader(myFooString));
+//                reader.setLenient(true);
+//                new JsonParser().parse(reader);
+
+
+                StringBuffer sb = new StringBuffer("");
+                String line = "";
+
+                while ((line = in.readLine()) != null) {
+                    sb.append(line);
+                }
+
+                in.close();
+
+
+                JsonResponse = sb.toString();
+                Log.e("tag_paymentReport", "JsonResponse\t" + JsonResponse);
+
+                return JsonResponse;
+
+
+            }//org.apache.http.conn.HttpHostConnectException: Connection to http://10.0.0.115 refused
+            catch (HttpHostConnectException ex) {
+                ex.printStackTrace();
+//                progressDialog.dismiss();
+
+                Handler h = new Handler(Looper.getMainLooper());
+                h.post(new Runnable() {
+                    public void run() {
+
+                        Toast.makeText(main_context, "Ip Connection Failed ", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
+                return null;
+            } catch (Exception e) {
+                e.printStackTrace();
+//                progressDialog.dismiss();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+
+            if (s != null) {
+                if (s.contains("ALL_LOG_FILE")) {
+
+                    Gson gson = new Gson();
+
+                    LogHistoryModel gsonObj = gson.fromJson(s, LogHistoryModel.class);
+                    logHistoryList.clear();
+                    logHistoryList.addAll(gsonObj.getALL_LOG_FILE());
+                    Log.e("getALL_LOG_FILE", "getALL_LOG_FILE"+logHistoryList.size());
+                    LogHistoryReport logHistoryReport = (LogHistoryReport) context;
+                    logHistoryReport.fillLogHistory();
+                    pdValidationItem.dismissWithAnimation();
+
+
+                } else {
+                    listPriceOffers.clear();
+//                    OfferPriceList offerPriceList = (OfferPriceList) context;
+//                    offerPriceList.fillItemCard();
+                    pdValidationItem.dismissWithAnimation();
+                    Log.e("item_customer", "SalesManNo2");
+
+                }
+//                progressDialog.dismiss();
+            } else {
+                Log.e("item_customer", "SalesManNo3");
+                pdValidationItem.dismissWithAnimation();
+            }
+        }
+
+    }
+
+    private class JSONTaskGetLogHistoryDetail extends AsyncTask<String, String, String> {
+        Object context;
+        int flag;
+        String serialNo,listNo,listType;
+
+
+        public JSONTaskGetLogHistoryDetail(Object context,String serialNo , String listNo ,String listType) {
+//            this.flag=flag;
+            this.context = (LogHistoryReport) context;
+            this.serialNo =serialNo;
+            this.listNo = listNo;
+            this .listType=listType;
+
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            String do_ = "my";
+            getPdValidationLogHistory = new SweetAlertDialog(main_context, SweetAlertDialog.PROGRESS_TYPE);
+            getPdValidationLogHistory.getProgressHelper().setBarColor(Color.parseColor("#FDD835"));
+            getPdValidationLogHistory.setTitleText(main_context.getResources().getString(R.string.process) + "2");
+            getPdValidationLogHistory.setCancelable(false);
+            getPdValidationLogHistory.show();
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+//            ipAddress = "";
+            try {
+
+
+                if (!ipAddress.equals("")) {
+                    URL_TO_HIT = "http://" + ipAddress + "/VANSALES_WEB_SERVICE/admin.php";
+                }
+            } catch (Exception e) {
+
+            }
+
+            try {
+
+                String JsonResponse = null;
+                HttpClient client = new DefaultHttpClient();
+                HttpPost request = new HttpPost();
+                request.setURI(new URI(URL_TO_HIT));
+
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(5);
+                nameValuePairs.add(new BasicNameValuePair("_ID", "30"));
+                nameValuePairs.add(new BasicNameValuePair("SERIAL_NO", serialNo));
+                nameValuePairs.add(new BasicNameValuePair("LIST_NO", listNo));
+                nameValuePairs.add(new BasicNameValuePair("LIST_TYPE",listType));
+
+
+                request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+
+
+                HttpResponse response = client.execute(request);
+
+
+                BufferedReader in = new BufferedReader(new
+                        InputStreamReader(response.getEntity().getContent()));
+
+
+//                JsonReader reader = new JsonReader(new StringReader(myFooString));
+//                reader.setLenient(true);
+//                new JsonParser().parse(reader);
+
+
+                StringBuffer sb = new StringBuffer("");
+                String line = "";
+
+                while ((line = in.readLine()) != null) {
+                    sb.append(line);
+                }
+
+                in.close();
+
+
+                JsonResponse = sb.toString();
+                Log.e("tag_paymentReport", "JsonResponse\t" + JsonResponse);
+
+                return JsonResponse;
+
+
+            }//org.apache.http.conn.HttpHostConnectException: Connection to http://10.0.0.115 refused
+            catch (HttpHostConnectException ex) {
+                ex.printStackTrace();
+//                progressDialog.dismiss();
+
+                Handler h = new Handler(Looper.getMainLooper());
+                h.post(new Runnable() {
+                    public void run() {
+
+                        Toast.makeText(main_context, "Ip Connection Failed ", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
+                return null;
+            } catch (Exception e) {
+                e.printStackTrace();
+//                progressDialog.dismiss();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+
+            if (s != null) {
+                if (s.contains("LOG_DETAIL")) {
+
+                    Gson gson = new Gson();
+
+                    LogHistoryModel gsonObj = gson.fromJson(s, LogHistoryModel.class);
+                    logHistoryDetail.clear();
+                    logHistoryDetail.addAll(gsonObj.getALL_LOG_FILE());
+                    Log.e("LOG_DETAIL", "LOG_DETAIL"+logHistoryDetail.size());
+                    LogHistoryReport logHistoryReport = (LogHistoryReport) context;
+                    logHistoryReport.fillDialogLogDetail();
+                    getPdValidationLogHistory.dismissWithAnimation();
+
+
+                } else {
+                    logHistoryDetail.clear();
+//                    OfferPriceList offerPriceList = (OfferPriceList) context;
+//                    offerPriceList.fillItemCard();
+                    getPdValidationLogHistory.dismissWithAnimation();
+                    Log.e("item_customer", "SalesManNo2");
+
+                }
+//                progressDialog.dismiss();
+            } else {
+                Log.e("item_customer", "SalesManNo3");
+                getPdValidationLogHistory.dismissWithAnimation();
+            }
+        }
+
+    }
+
 }

@@ -12,6 +12,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.adminvansales.Model.SalesManInfo;
+import com.example.adminvansales.Model.SettingModel;
 import com.example.adminvansales.Report.ListOfferReport;
 import com.google.gson.JsonArray;
 
@@ -142,8 +143,10 @@ public class ExportData {
         protected String doInBackground(String... params) {
 
             try {
+                SettingModel settingModels=new SettingModel();
 
-                ipAddress=databaseHandler.getAllSetting();
+                settingModels =databaseHandler.getAllSetting();
+                ipAddress=settingModels.getIpAddress();
                 if(!ipAddress.equals(""))
                 {
                     URL_TO_HIT = "http://" + ipAddress + "/VANSALES_WEB_SERVICE/admin.php";
@@ -720,7 +723,10 @@ public class ExportData {
 
             try {
 
-                ipAddress=databaseHandler.getAllSetting();
+                SettingModel settingModels=new SettingModel();
+
+                settingModels =databaseHandler.getAllSetting();
+                ipAddress=settingModels.getIpAddress();
                 if(!ipAddress.equals(""))
                 {
                     URL_TO_HIT = "http://" + ipAddress + "/VANSALES_WEB_SERVICE/admin.php";
@@ -834,7 +840,10 @@ public class ExportData {
 
             try {
 
-                ipAddress=databaseHandler.getAllSetting();
+                SettingModel settingModels=new SettingModel();
+
+                settingModels =databaseHandler.getAllSetting();
+                ipAddress=settingModels.getIpAddress();
                 if(!ipAddress.equals(""))
                 {
                     URL_TO_HIT = "http://" + ipAddress + "/VANSALES_WEB_SERVICE/admin.php";
