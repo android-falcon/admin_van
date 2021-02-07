@@ -1825,7 +1825,7 @@ public class ImportData {
                     }else {
                         SweetAlertDialog sweet = new SweetAlertDialog(contextMaster, SweetAlertDialog.WARNING_TYPE);
                         sweet.setTitleText("price only list");
-                        sweet.setContentText(" ( the system found other price only list  )");
+                        sweet.setContentText(" ( the system found other price regular only list  )");
                         sweet.setCancelButton("cancel", new SweetAlertDialog.OnSweetClickListener() {
                             @Override
                             public void onClick(SweetAlertDialog sweetAlertDialog) {
