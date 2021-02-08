@@ -1113,7 +1113,7 @@ public class ImportData {
                 ipAddress=settingModel.getIpAddress();
                 portSettings=settingModel.getPort();
                 if (!ipAddress.equals("")) {
-                    URL_TO_HIT = "http://" + ipAddress.trim()+portSettings.trim() + "/VANSALES_WEB_SERVICE/admin.php"+custId;
+                    URL_TO_HIT = "http://" + ipAddress.trim()+":"+portSettings.trim() + "/VANSALES_WEB_SERVICE/admin.php"+custId;
                 }
             } catch (Exception e) {
 
