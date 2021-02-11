@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.adminvansales.Model.SettingModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.smarteist.autoimageslider.DefaultSliderView;
 import com.smarteist.autoimageslider.IndicatorAnimations;
@@ -26,6 +27,9 @@ import com.smarteist.autoimageslider.SliderView;
 import java.util.Timer;
 import java.util.TimerTask;
 
+
+import java.util.List;
+
 import static com.example.adminvansales.GlobelFunction.adminId;
 import static com.example.adminvansales.GlobelFunction.adminName;
 import static com.example.adminvansales.ImportData.listId;
@@ -34,7 +38,8 @@ public class LogIn extends AppCompatActivity {
     SliderLayout sliderLayout;
     FloatingActionButton setting_floatingBtn;
     Button button_logIn,button_sighnup;
-    public  static String ipAddress="";
+    public  static String ipAddress="",portSettings="";
+    SettingModel settingModelList;
     private DataBaseHandler databaseHandler;
     EditText userName_edit,password_edit;
     GlobelFunction globelFunction;
@@ -55,7 +60,13 @@ public class LogIn extends AppCompatActivity {
         sliderLayout = findViewById(R.id.imageSlider_2);
         setting_floatingBtn=findViewById(R.id.setting_floatingBtn);
         databaseHandler = new DataBaseHandler(LogIn.this);
-        ipAddress = databaseHandler.getAllSetting();
+        settingModelList=new SettingModel();
+        try {
+            settingModelList = databaseHandler.getAllSetting();
+            ipAddress = settingModelList.getIpAddress();
+        }catch (Exception t){
+            Log.e("ipAddress","error");
+        }
         setting_floatingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -200,13 +211,19 @@ public class LogIn extends AppCompatActivity {
         dialog.setContentView(R.layout.setting_dialog);
         Button saveSetting=dialog.findViewById(R.id.saveSetting);
         final EditText editTextIp=dialog.findViewById(R.id.setindEditText);
+        final EditText  portSetting=dialog.findViewById(R.id.portSetting);
         ipAddress="";
+        portSettings="";
+        SettingModel settingModels=new SettingModel();
         try {
 
-            ipAddress=databaseHandler.getAllSetting();
+           settingModels =databaseHandler.getAllSetting();
+           ipAddress=settingModels.getIpAddress();
             if(!ipAddress.equals(""))
             {
+                portSettings=settingModels.getPort();
                 editTextIp.setText(ipAddress);
+                portSetting.setText(portSettings);
             }
         }
         catch (Exception e)
@@ -217,7 +234,8 @@ public class LogIn extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 ipAddress= editTextIp.getText().toString();
-                databaseHandler.addSetting(ipAddress);
+                portSettings=portSetting.getText().toString();
+                databaseHandler.addSetting(ipAddress,portSettings);
                 dialog.dismiss();
 
             }

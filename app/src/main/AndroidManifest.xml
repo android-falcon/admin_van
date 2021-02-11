@@ -55,6 +55,10 @@
             android:name=".HomeActivity"
            />
         <activity
+            android:name=".Report.LogHistoryReport"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
+        <activity
             android:name=".LogIn"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden">

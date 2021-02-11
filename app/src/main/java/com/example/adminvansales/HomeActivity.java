@@ -33,6 +33,7 @@ import com.example.adminvansales.Model.SalesManInfo;
 import com.example.adminvansales.Report.CashReport;
 import com.example.adminvansales.Report.CustomerLogReport;
 import com.example.adminvansales.Report.ListOfferReport;
+import com.example.adminvansales.Report.LogHistoryReport;
 import com.example.adminvansales.Report.PaymentDetailsReport;
 
 import org.json.JSONException;
@@ -54,7 +55,7 @@ public class HomeActivity extends AppCompatActivity {
     Button locationButton, ReportButton, offerButton;
     LinearLayout ReportLinear;
     public static EditText editPassword;
-    TextView customerLogReport, paymentReport, cashReport, offerReport;
+    TextView customerLogReport, paymentReport, cashReport, offerReport,LogReport;
 
 
     @Override
@@ -93,6 +94,7 @@ public class HomeActivity extends AppCompatActivity {
         paymentReport = findViewById(R.id.paymentReport);
         cashReport = findViewById(R.id.cashReport);
         offerReport = findViewById(R.id.offerReport);
+        LogReport=findViewById(R.id.LogReport);
 
         waitList.addTextChangedListener(new TextWatcher() {
             @Override
@@ -185,7 +187,15 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
+        LogReport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ReportLinear.setVisibility(View.GONE);
+                Intent listIntent = new Intent(HomeActivity.this, LogHistoryReport.class);
+                startActivity(listIntent);
 
+            }
+        });
 
     }
 

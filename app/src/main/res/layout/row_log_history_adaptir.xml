@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="2dp">
+
+    <TableRow
+        android:id="@+id/table"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/adminNo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.9"
+            android:gravity="center"
+            android:text="Admin No "
+            android:textColor="@color/colorblue_dark3"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/adminName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.9"
+            android:gravity="center"
+            android:text="Admin Name"
+            android:textColor="@color/colorblue_dark3"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/listType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.9"
+            android:gravity="center"
+            android:text="@string/ListType"
+            android:textColor="@color/colorblue_dark3"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/listNo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.9"
+            android:gravity="center"
+            android:text="@string/ListNo"
+            android:textColor="@color/colorblue_dark3"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.9"
+            android:gravity="center"
+            android:text="@string/date"
+            android:textColor="@color/colorblue_dark3"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_margin="3dp"
+            android:background="@color/colorblue1"
+
+            android:textColor="@color/colorblue_dark3" />
+
+        <TextView
+            android:id="@+id/updateType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.9"
+            android:gravity="center"
+            android:text="update Type "
+            android:textColor="@color/colorblue_dark3"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_margin="3dp"
+            android:background="@color/colorblue1"
+
+            />
+
+        <!--<TextView-->
+        <!--android:layout_width="1dp"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_margin="3dp"-->
+        <!--android:background="@color/colorblue1"-->
+
+        <!--/>-->
+
+    </TableRow>
+
+</LinearLayout>
