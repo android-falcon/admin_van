@@ -122,4 +122,5 @@
     <string name="voucherSerial">Voucher Serial</string>
     <string name="returnSerial">Return Serial</string>
     <string name="StockSerial">Stock Serial</string>
+    <string name="paymentSerial">Payment Serial</string>
 </resources>

@@ -1,5 +1,9 @@
 package com.example.adminvansales;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -9,6 +13,8 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
+
+import androidx.annotation.RequiresApi;
 
 import com.example.adminvansales.Model.Account__Statment_Model;
 import com.example.adminvansales.Model.CashReportModel;
@@ -49,6 +55,8 @@ import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
+import static android.content.Context.*;
+import static androidx.core.content.ContextCompat.getSystemService;
 import static com.example.adminvansales.AccountStatment.getAccountList_text;
 import static com.example.adminvansales.GlobelFunction.LatLngListMarker;
 import static com.example.adminvansales.GlobelFunction.salesManInfosList;
@@ -240,6 +248,7 @@ public class ImportData {
             }
         }
 
+        @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
@@ -313,8 +322,8 @@ public class ImportData {
 
                         }
                         if (isListUpdated) {
-                            Intent i = new Intent(main_context, MainActivity.class);
-                            main_context.startActivity(i);
+//                            Intent i = new Intent(main_context, MainActivity.class);
+//                            main_context.startActivity(i);
                         }
 
 
@@ -452,12 +461,12 @@ public class ImportData {
                             salesManInfo.setLatitudeLocation(jsonObject1.getString("LATITUDE"));
                             salesManInfo.setLongitudeLocation(jsonObject1.getString("LONGITUDE"));
 
-                            salesManInfo.setfVoucherSerial(jsonObject1.getString("FROM_VOUCHER_SERIAL"));
-                            salesManInfo.settVoucherSerial(jsonObject1.getString("TO_VOUCHER_SERIAL"));
-                            salesManInfo.setfReturnSerial(jsonObject1.getString("FROM_RETURN_SERIAL"));
-                            salesManInfo.settReturnSerial(jsonObject1.getString("TO_RETURN_SERIAL"));
-                            salesManInfo.setFstockSerial(jsonObject1.getString("FROM_STOCK_SERIAL"));
-                            salesManInfo.settStockSerial(jsonObject1.getString("TO_STOCK_SERIAL"));
+//                            salesManInfo.setfVoucherSerial(jsonObject1.getString("FROM_VOUCHER_SERIAL"));
+//                            salesManInfo.settVoucherSerial(jsonObject1.getString("TO_VOUCHER_SERIAL"));
+//                            salesManInfo.setfReturnSerial(jsonObject1.getString("FROM_RETURN_SERIAL"));
+//                            salesManInfo.settReturnSerial(jsonObject1.getString("TO_RETURN_SERIAL"));
+//                            salesManInfo.setFstockSerial(jsonObject1.getString("FROM_STOCK_SERIAL"));
+//                            salesManInfo.settStockSerial(jsonObject1.getString("TO_STOCK_SERIAL"));
 
                             salesManInfosList.add(salesManInfo);
                             salesManNameList.add(salesManInfo.getSalesName());
@@ -893,6 +902,7 @@ public class ImportData {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void ShowNotifi_detail(String type, int state, String contentMessage) {
         String currentapiVersion = Build.VERSION.RELEASE;
         String title = "", content = "", statuse = "";
@@ -924,15 +934,15 @@ public class ImportData {
 
         }
 
-        Log.e("messgaeBody", "" + messgaeBody);
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
 
 
 //                show_Notification(title);
             showNotification(main_context, title, messgaeBody);
 
         } else {
+//            show_Notification(title);
             showNotification(main_context, title, messgaeBody);
 
 //            notificationShow(title);
@@ -940,7 +950,37 @@ public class ImportData {
 
 
     }
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void show_Notification(String detail) {
 
+        Intent intent = new Intent(main_context, notificationReciver.class);
+        intent.putExtra("action", "YES");
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(main_context, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        String CHANNEL_ID = "MYCHANNEL";
+        NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID, "name", NotificationManager.IMPORTANCE_HIGH);
+        Notification notification = new Notification.Builder(main_context, CHANNEL_ID)
+                .setContentText("Show Details ......")
+                .setContentTitle("Receive New Request, Click To Show Details")
+                .setStyle(new Notification.BigTextStyle()
+                        .bigText(detail)
+                        .setBigContentTitle(" ")
+                        .setSummaryText(""))
+                .setContentIntent(pendingIntent)
+                .addAction(android.R.drawable.sym_action_chat, "YES", pendingIntent)
+                .setDefaults(Notification.DEFAULT_SOUND)
+                .setChannelId(CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_notifications_black_24dp)
+                .setOngoing(true)
+                .setAutoCancel(true)
+                .build();
+
+
+        NotificationManager notificationManager = (NotificationManager)main_context.getSystemService(Context.NOTIFICATION_SERVICE) ;
+        notificationManager.createNotificationChannel(notificationChannel);
+        notificationManager.notify(1, notification);
+
+
+    }
 
     public void getSalesManInfo() {
         new JSONTask_SalesManInfo().execute();

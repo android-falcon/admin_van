@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
                     public void run(){
                         // update ui here
                         if (isNetworkAvailable()) {
-                            getData();
+//                            getData();
                             if(listId.size()!=0)
                             {
 

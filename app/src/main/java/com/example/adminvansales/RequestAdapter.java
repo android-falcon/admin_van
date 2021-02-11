@@ -232,7 +232,15 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
             if(requestList.get(row_index).getRequestType().equals("0"))
             {
                 requestType.setText(context.getResources().getString(R.string.itemDiscount));
-                typeDiscountItem=Integer.parseInt(requestList.get(row_index).getNote().substring(0,1));
+                try {
+                    typeDiscountItem=Integer.parseInt(requestList.get(row_index).getNote().substring(0,1));
+                }
+                catch (Exception e)
+                {
+                    typeDiscountItem=1;
+
+                }
+
                 if(typeDiscountItem==1)
                 {
                     textAmountNo.setText(requestList.get(row_index).getAmountValue()+"\t%");
