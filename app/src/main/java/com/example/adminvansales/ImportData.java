@@ -17,6 +17,7 @@ import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 
 import com.example.adminvansales.Model.Account__Statment_Model;
+import com.example.adminvansales.Model.AnalyzeAccountModel;
 import com.example.adminvansales.Model.CashReportModel;
 import com.example.adminvansales.Model.CustomerLogReportModel;
 import com.example.adminvansales.Model.ItemMaster;
@@ -25,10 +26,13 @@ import com.example.adminvansales.Model.LogHistoryModel;
 import com.example.adminvansales.Model.OfferListModel;
 import com.example.adminvansales.Model.PayMentReportModel;
 import com.example.adminvansales.Model.CustomerInfo;
+import com.example.adminvansales.Model.Payment;
 import com.example.adminvansales.Model.Request;
 import com.example.adminvansales.Model.SalesManInfo;
 import com.example.adminvansales.Model.SettingModel;
+import com.example.adminvansales.Model.UnCollect_Modell;
 import com.example.adminvansales.Model.customerInfoModel;
+import com.example.adminvansales.Report.AnalyzeAccounts;
 import com.example.adminvansales.Report.CashReport;
 import com.example.adminvansales.Report.CustomerLogReport;
 import com.example.adminvansales.Report.ListOfferReport;
@@ -37,11 +41,13 @@ import com.example.adminvansales.Report.PaymentDetailsReport;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.conn.HttpHostConnectException;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -52,6 +58,7 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -74,6 +81,7 @@ import static com.example.adminvansales.MainActivity.isListUpdated;
 import static com.example.adminvansales.OfferPriceList.ItemCardList;
 import static com.example.adminvansales.OfferPriceList.customerList;
 import static com.example.adminvansales.OfferPriceList.customerListFoundInOtherList;
+import static com.example.adminvansales.Report.AnalyzeAccounts.analyzeAccountModelArrayList;
 import static com.example.adminvansales.Report.CashReport.cashReportList;
 import static com.example.adminvansales.Report.CustomerLogReport.customerLogReportList;
 import static com.example.adminvansales.Report.ListOfferReport.control;
@@ -83,15 +91,17 @@ import static com.example.adminvansales.Report.ListOfferReport.selectItemIfUpdat
 import static com.example.adminvansales.Report.LogHistoryReport.logHistoryDetail;
 import static com.example.adminvansales.Report.LogHistoryReport.logHistoryList;
 import static com.example.adminvansales.Report.PaymentDetailsReport.payMentReportList;
+import static com.example.adminvansales.Report.UnCollectedData.resultData;
 import static com.example.adminvansales.ShowNotifications.showNotification;
 
 public class ImportData {
     private DataBaseHandler databaseHandler;
 
     private String URL_TO_HIT;
-    SweetAlertDialog pdValidation;
+    SweetAlertDialog pdValidation,pdPayments,pdAnalyze;
     SweetAlertDialog pdValidationCustomer, pdValidationSerial, pdValidationItem,getPdValidationItemCard,getPdValidationLogHistory;
-
+    public static ArrayList<UnCollect_Modell> unCollectlList=new ArrayList<>();
+    public static ArrayList<Payment> paymentChequesList=new ArrayList<>();
     Context main_context;
     public static ArrayList<Integer> listId;
 
@@ -106,6 +116,66 @@ public class ImportData {
         this.main_context = context;
         listId = new ArrayList<>();
 
+    }
+
+    public void getUnCollectedCheques(String customerId) {
+
+        try {
+
+            SettingModel settingModel =new SettingModel();
+            settingModel=databaseHandler.getAllSetting();
+            ipAddress=settingModel.getIpAddress();
+            if(ipAddress.contains(":"))
+            {
+                int ind=ipAddress.indexOf(":");
+                ipAddress=ipAddress.substring(0,ind);
+                Log.e("ipAddress",""+ipAddress);
+            }
+            portSettings=settingModel.getPort();
+
+        } catch (Exception e) {
+
+        }
+
+        if (!ipAddress.equals("")&&!portSettings.equals("")) {
+
+            Log.e("getUnCollectedCheques", "*****");
+            new JSONTask_UncollectedCheques(customerId).execute();
+
+        }
+        else {
+            Toast.makeText(main_context, "Check Ip Address", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    public void getAllcheques(String customerId) {
+        try {
+
+            SettingModel settingModel =new SettingModel();
+            settingModel=databaseHandler.getAllSetting();
+            ipAddress=settingModel.getIpAddress();
+            if(ipAddress.contains(":"))
+            {
+                int ind=ipAddress.indexOf(":");
+                ipAddress=ipAddress.substring(0,ind);
+                Log.e("ipAddress",""+ipAddress);
+            }
+            portSettings=settingModel.getPort();
+
+        } catch (Exception e) {
+
+        }
+
+        if (!ipAddress.equals("")&&!portSettings.equals("")) {
+
+            Log.e("getUnCollectedCheques", "*****");
+            new JSONTask_GetAllCheques(customerId).execute();
+            //  new SyncRemark().execute();
+        }
+        else {
+            Toast.makeText(main_context, "Check Ip Address", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void getListRequest() {
@@ -173,6 +243,32 @@ public class ImportData {
     public void getCashReport(Context context, String fromDate, String toDate) {
         new JSONTaskGetCashReport(context, fromDate, toDate).execute();
     }
+    public void getAnalyzeReport(Context context, String fromDate, String toDate) {
+        try {
+            Log.e("toda","fromDate="+fromDate+"\ttoDate"+toDate);
+            SettingModel settingModel =new SettingModel();
+            settingModel=databaseHandler.getAllSetting();
+            ipAddress=settingModel.getIpAddress();
+            if(ipAddress.contains(":"))
+            {
+                int ind=ipAddress.indexOf(":");
+                ipAddress=ipAddress.substring(0,ind);
+                Log.e("ipAddress",""+ipAddress);
+            }
+            portSettings=settingModel.getPort();
+
+        } catch (Exception e) {
+
+        }
+
+        if (!ipAddress.equals("")&&!portSettings.equals("")) {
+            new JSONTaskGetAnalyzeReport(context, fromDate, toDate).execute();
+        }
+        else {
+            Toast.makeText(main_context, "Check Ip Address", Toast.LENGTH_SHORT).show();
+        }
+
+    }
 
     public void getCustomerLogReport(Context context, String SalesNo, String fromDate, String
             toDate) {
@@ -200,6 +296,8 @@ public class ImportData {
                     URL_TO_HIT = "http://" + ipAddress + "/VANSALES_WEB_SERVICE/admin.php";
                 }
             } catch (Exception e) {
+                Log.e("JcheckStateRequest","Exception"+e.getMessage());
+                Toast.makeText(main_context, "check ip", Toast.LENGTH_SHORT).show();
 
             }
 
@@ -235,7 +333,7 @@ public class ImportData {
 
 
                 JsonResponse = sb.toString();
-                Log.e("tag_requestState", "JsonResponse\t" + JsonResponse);
+              //  Log.e("tag_requestState", "JsonResponse\t" + JsonResponse);
 
                 return JsonResponse;
 
@@ -387,7 +485,8 @@ public class ImportData {
                     URL_TO_HIT = "http://" + ipAddress + "/VANSALES_WEB_SERVICE/admin.php";
                 }
             } catch (Exception e) {
-
+                Log.e("JcheckSalesMan","Exception"+e.getMessage());
+                Toast.makeText(main_context, "check ip", Toast.LENGTH_SHORT).show();
             }
 
             try {
@@ -422,7 +521,7 @@ public class ImportData {
 
 
                 JsonResponse = sb.toString();
-                Log.e("tag_requestState", "JsonResponse\t" + JsonResponse);
+               // Log.e("tag_requestState", "JsonResponse\t" + JsonResponse);
 
                 return JsonResponse;
 
@@ -782,7 +881,137 @@ public class ImportData {
         }
 
     }
+    private class JSONTaskGetAnalyzeReport extends AsyncTask<String, String, String> {
+        Object context;
+        int flag;
+        String fromDate, toDate;
 
+        public JSONTaskGetAnalyzeReport(Object context, String fromDate, String toDate) {
+//            this.flag=flag;
+            this.context = (AnalyzeAccounts) context;
+            this.fromDate = fromDate;
+            this.toDate = toDate;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            Log.e("URL_TO_HIT","GetAccAnalyst+onPreExecute");
+            String do_ = "my";
+            pdAnalyze = new SweetAlertDialog(main_context, SweetAlertDialog.PROGRESS_TYPE);
+            pdAnalyze.getProgressHelper().setBarColor(Color.parseColor("#FDD835"));
+            pdAnalyze.setTitleText(main_context.getResources().getString(R.string.process));
+            pdAnalyze.setCancelable(false);
+            pdAnalyze.show();
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            String s = "";
+            Log.e("URL_TO_HIT","GetAccAnalyst+doInBackground");
+
+            try {
+
+                if (!ipAddress.equals("")) {
+
+                    // URL_TO_HIT = "http://"+ipAddress.trim()+":" + portSettings.trim() +"/Falcons/VAN.dll/GetACCOUNTSTATMENT?ACCNO="+custId;
+                  //  http://10.0.0.22:8082/GetAccAnalyst?ACCNO=1&CONO=295&USERNO=90000&STARTDATE=01/01/2015&UPTODATE=01/03/2021
+
+                    URL_TO_HIT = "http://"+ipAddress.trim()+":" + portSettings.trim() +"/Falcons/VAN.dll/GetAccAnalyst?ACCNO=1&CONO=295&USERNO=90000&STARTDATE="+fromDate+"&UPTODATE="+toDate;
+                   // URL_TO_HIT = "http://"+ipAddress.trim()+":" + portSettings.trim() +"/Falcons/VAN.dll/GetAccAnalyst?ACCNO=1&CONO=295&USERNO=90000&STARTDATE="+fromDate+"&UPTODATE="+toDate;
+               Log.e("URL_TO_HIT","GetAccAnalyst"+URL_TO_HIT);
+                }
+            } catch (Exception e) {
+                pdAnalyze.dismissWithAnimation();
+            }
+
+            try {
+
+                String JsonResponse = null;
+                HttpClient client = new DefaultHttpClient();
+                HttpGet request = new HttpGet();
+                request.setURI(new URI(URL_TO_HIT));
+                HttpResponse response = client.execute(request);
+                BufferedReader in = new BufferedReader(new
+                        InputStreamReader(response.getEntity().getContent()));
+
+                StringBuffer sb = new StringBuffer("");
+                String line = "";
+
+                while ((line = in.readLine()) != null) {
+                    sb.append(line);
+                }
+
+                in.close();
+
+
+                JsonResponse = sb.toString();
+                Log.e("tag_paymentAnalyze", "JsonResponse\t" + JsonResponse);
+
+                return JsonResponse;
+
+
+            }//org.apache.http.conn.HttpHostConnectException: Connection to http://10.0.0.115 refused
+            catch (HttpHostConnectException ex) {
+                ex.printStackTrace();
+//                progressDialog.dismiss();
+
+                Handler h = new Handler(Looper.getMainLooper());
+                h.post(new Runnable() {
+                    public void run() {
+                        pdAnalyze.dismissWithAnimation();
+                        Toast.makeText(main_context, "Ip Connection Failed ", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
+                return null;
+            } catch (Exception e) {
+                e.printStackTrace();
+//                progressDialog.dismiss();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            pdAnalyze.dismissWithAnimation();
+//{"AccCode":"1101030001","AccNameA":"صندوق المبيعات اليوميه","PREVD":"0","PREVC":"0","PREVDF":"0","PREVCF":"0","TDEB":"0","TCRE":"500","TDEBF":"0","TCREF":"0"}
+            if (s != null) {
+                if (s.contains("AccCode")) {
+
+                    Gson gson = new Gson();
+
+//                    AnalyzeAccountModel gsonObj = gson.fromJson(s, AnalyzeAccountModel.class);
+//                    analyzeAccountModelArrayList.clear();
+//                    analyzeAccountModelArrayList.addAll(gsonObj.getANALYZEPORT());
+//
+//                    AnalyzeAccounts analyzeAccounts = (AnalyzeAccounts) context;
+//                    analyzeAccounts.fillCashAdapter();
+//                    pdAnalyze.dismissWithAnimation();
+
+                    Type collectionType = new TypeToken<List<AnalyzeAccountModel>>(){}.getType();
+                    List<AnalyzeAccountModel> lcs = (List<AnalyzeAccountModel>) new Gson()
+                            .fromJson( s , collectionType);
+                    Log.e("fromJson",""+lcs.get(0).getAccNameA());
+                    analyzeAccountModelArrayList.clear();
+                    analyzeAccountModelArrayList.addAll(lcs);
+                    AnalyzeAccounts analyzeAccounts = (AnalyzeAccounts) context;
+                    analyzeAccounts.fillCashAdapter();
+                   // Log.e("analyzeAccountModelArr", "SalesManNo"+analyzeAccountModelArrayList.size());
+                    //Log.e("analyzeAccountModelArr", "SalesManNo"+analyzeAccountModelArrayList.get(0).getAccNameA());
+
+                }
+            } else {
+                Log.e("totalCashs", "SalesManNo3");
+                pdAnalyze.dismissWithAnimation();
+            }
+        }
+
+    }
 
     private class JSONTaskGetCustomerLogReport extends AsyncTask<String, String, String> {
         Object context;
@@ -1151,9 +1380,19 @@ public class ImportData {
                 SettingModel settingModel =new SettingModel();
                 settingModel=databaseHandler.getAllSetting();
                 ipAddress=settingModel.getIpAddress();
+                if(ipAddress.contains(":"))
+                {
+                    int ind=ipAddress.indexOf(":");
+                    ipAddress=ipAddress.substring(0,ind);
+                    Log.e("ipAddress",""+ipAddress);
+                }
                 portSettings=settingModel.getPort();
+                //                    URL_TO_HIT = "http://"+ipAddress.trim()+":" + ipWithPort.trim() +"/Falcons/VAN.dll/GetACCOUNTSTATMENT?ACCNO="+custId;
                 if (!ipAddress.equals("")) {
-                    URL_TO_HIT = "http://" + ipAddress.trim()+":"+portSettings.trim() + "/VANSALES_WEB_SERVICE/admin.php"+custId;
+                    URL_TO_HIT = "http://"+ipAddress.trim()+":" + portSettings.trim() +"/Falcons/VAN.dll/GetACCOUNTSTATMENT?ACCNO="+custId;
+                    //URL_TO_HIT = "http://" + ipAddress.trim()+":"+portSettings.trim() + "/Falcons/VAN.dll/GetACCOUNTSTATMENT?ACCNO="+custId.trim().toString();
+
+               Log.e("URL_TO_HIT","account="+URL_TO_HIT);
                 }
             } catch (Exception e) {
 
@@ -1163,7 +1402,7 @@ public class ImportData {
 
                 String JsonResponse = null;
                 HttpClient client = new DefaultHttpClient();
-                HttpPost request = new HttpPost();
+                HttpGet request = new HttpGet();
                 request.setURI(new URI(URL_TO_HIT));
 
 //                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
@@ -1225,6 +1464,7 @@ public class ImportData {
 
             JSONObject result = null;
             String impo = "";
+            Log.e("URL_TO_HIT","account"+s.toString());
             if (s != null) {
                 if (s.contains("VHFNo")) {
                     // Log.e("CUSTOMER_INFO","onPostExecute\t"+s.toString());
@@ -1289,11 +1529,14 @@ public class ImportData {
 
             try {
 
+              //  ipAddress="10.0.0.185";
 
                 if (!ipAddress.equals("")) {
-                    URL_TO_HIT = "http://" + ipAddress + "/VANSALES_WEB_SERVICE/admin_oracle.php";
+                    URL_TO_HIT = "http://" + ipAddress + "/VANSALES_WEB_SERVICE/admin.php";
+                    Log.e("importData","importData"+URL_TO_HIT);
                 }
             } catch (Exception e) {
+                Toast.makeText(main_context, "check Ip address", Toast.LENGTH_SHORT).show();
 
             }
 
@@ -1305,7 +1548,7 @@ public class ImportData {
                 request.setURI(new URI(URL_TO_HIT));
 
                 List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-                nameValuePairs.add(new BasicNameValuePair("FLAG", "7"));
+                nameValuePairs.add(new BasicNameValuePair("_ID", "1"));
 
                 request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
 
@@ -1327,7 +1570,7 @@ public class ImportData {
 
 
                 JsonResponse = sb.toString();
-                Log.e("tag_CustomerInfo", "JsonResponse\t" + JsonResponse);
+                Log.e("tag_salesManInfo", "JsonResponse\t" + JsonResponse);
 
                 return JsonResponse;
 
@@ -1360,6 +1603,7 @@ public class ImportData {
 
             JSONObject result = null;
             String impo = "";
+//            Log.e("importData","importData"+s.toString());
             if (s != null) {
                 if (s.contains("CUSTOMER_INFO")) {
                     // Log.e("CUSTOMER_INFO","onPostExecute\t"+s.toString());
@@ -1380,8 +1624,8 @@ public class ImportData {
                         for (int i = 0; i < requestArray.length(); i++) {
                             JSONObject infoDetail = requestArray.getJSONObject(i);
                             requestDetail = new CustomerInfo();
-                            requestDetail.setCustomerNumber(infoDetail.get("CUSTID").toString());
-                            requestDetail.setCustomerName(infoDetail.get("CUSTNAME").toString());
+                            requestDetail.setCustomerNumber(infoDetail.get("CustID").toString());
+                            requestDetail.setCustomerName(infoDetail.get("CustName").toString());
 
 
                             listCustomer.add(requestDetail);
@@ -2943,7 +3187,7 @@ public class ImportData {
                     LogHistoryModel gsonObj = gson.fromJson(s, LogHistoryModel.class);
                     logHistoryDetail.clear();
                     logHistoryDetail.addAll(gsonObj.getALL_LOG_FILE());
-                    Log.e("LOG_DETAIL", "LOG_DETAIL"+logHistoryDetail.size());
+                   // Log.e("LOG_DETAIL", "LOG_DETAIL"+logHistoryDetail.size());
                     LogHistoryReport logHistoryReport = (LogHistoryReport) context;
                     logHistoryReport.fillDialogLogDetail();
                     getPdValidationLogHistory.dismissWithAnimation();
@@ -2954,16 +3198,302 @@ public class ImportData {
 //                    OfferPriceList offerPriceList = (OfferPriceList) context;
 //                    offerPriceList.fillItemCard();
                     getPdValidationLogHistory.dismissWithAnimation();
-                    Log.e("item_customer", "SalesManNo2");
+                    //Log.e("item_customer", "SalesManNo2");
 
                 }
 //                progressDialog.dismiss();
             } else {
-                Log.e("item_customer", "SalesManNo3");
+               // Log.e("item_customer", "SalesManNo3");
                 getPdValidationLogHistory.dismissWithAnimation();
             }
         }
 
     }
+    private class JSONTask_UncollectedCheques extends AsyncTask<String, String, String> {
 
+        private String custId = "";
+
+        public JSONTask_UncollectedCheques(String customerId) {
+            this.custId = customerId;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pdValidation = new SweetAlertDialog(main_context, SweetAlertDialog.PROGRESS_TYPE);
+            pdValidation.getProgressHelper().setBarColor(Color.parseColor("#FDD835"));
+            pdValidation.setTitleText(main_context.getResources().getString(R.string.process));
+            pdValidation.setCancelable(false);
+            pdValidation.show();
+            String do_ = "my";
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            try {
+                if (!ipAddress.equals("")) {
+//                    URL_TO_HIT = "http://"+ipAddress.trim()+":" + ipWithPort.trim() +"/Falcons/VAN.dll/GetTheUnCollectedCheques?ACCNO=1224";
+
+                    URL_TO_HIT = "http://"+ipAddress.trim()+":" + portSettings.trim() +"/Falcons/VAN.dll/GetTheUnCollectedCheques?ACCNO="+custId;
+                }
+            } catch (Exception e) {
+                pdValidation.dismissWithAnimation();
+            }
+
+            try {
+
+                String JsonResponse = null;
+                HttpClient client = new DefaultHttpClient();
+                HttpGet request = new HttpGet();
+                request.setURI(new URI(URL_TO_HIT));
+
+//
+
+                HttpResponse response = client.execute(request);
+
+
+                BufferedReader in = new BufferedReader(new
+                        InputStreamReader(response.getEntity().getContent()));
+
+                StringBuffer sb = new StringBuffer("");
+                String line = "";
+
+                while ((line = in.readLine()) != null) {
+                    sb.append(line);
+                }
+
+                in.close();
+
+
+                JsonResponse = sb.toString();
+                Log.e("tag_CustomerAccount", "JsonResponse\t" + JsonResponse);
+
+                return JsonResponse;
+
+
+            }//org.apache.http.conn.HttpHostConnectException: Connection to http://10.0.0.115 refused
+            catch (HttpHostConnectException ex) {
+                ex.printStackTrace();
+//                progressDialog.dismiss();
+
+                Handler h = new Handler(Looper.getMainLooper());
+                h.post(new Runnable() {
+                    public void run() {
+                        pdValidation.dismissWithAnimation();
+                        Toast.makeText(main_context, "Ip Connection Failed AccountStatment", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
+                return null;
+            } catch (Exception e) {
+                e.printStackTrace();
+//                progressDialog.dismiss();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            JSONObject result = null;
+            String impo = "";
+            pdValidation.dismissWithAnimation();
+            if (s != null) {
+                if (s.contains("AccCode")) {
+                    // Log.e("CUSTOMER_INFO","onPostExecute\t"+s.toString());
+                    //{"CUSTOMER_INFO":[{"VHFNo":"0","TransName":"ÞíÏ ÇÝÊÊÇÍí","VHFDATE":"31-DEC-19","DEBIT":"0","Credit":"16194047.851"}
+
+                    try {
+                        //[{"AccCode":"1224","RECVD":"3528","PAIDAMT":"0"}]
+                        UnCollect_Modell requestDetail;
+
+
+                        JSONArray requestArray = null;
+                        listCustomerInfo = new ArrayList<>();
+
+                        requestArray =  new JSONArray(s);
+                        Log.e("requestArray", "" + requestArray.length());
+
+
+                        for (int i = 0; i < requestArray.length(); i++) {
+                            JSONObject infoDetail = requestArray.getJSONObject(i);
+                            requestDetail = new UnCollect_Modell();
+                            requestDetail.setAccCode(infoDetail.get("AccCode").toString());
+                            requestDetail.setRECVD(infoDetail.get("RECVD").toString());
+                            requestDetail.setPAIDAMT(infoDetail.get("PAIDAMT").toString());
+
+
+
+                            unCollectlList.add(requestDetail);
+                            Log.e("listRequest", "listCustomerInfo" + unCollectlList.size());
+
+
+                        }
+                        if(unCollectlList.size()!=0)
+                        {
+                            resultData.setText("yes");
+                        }
+
+
+                    } catch (JSONException e) {
+//                        progressDialog.dismiss();
+                        e.printStackTrace();
+                    }
+                } else Log.e("onPostExecute", "" + s.toString());
+//                progressDialog.dismiss();
+            }
+        }
+
+    }
+    private class JSONTask_GetAllCheques extends AsyncTask<String, String, String> {
+
+        private String custId = "";
+
+        public JSONTask_GetAllCheques(String customerId) {
+            this.custId = customerId;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pdPayments = new SweetAlertDialog(main_context, SweetAlertDialog.PROGRESS_TYPE);
+            pdPayments.getProgressHelper().setBarColor(Color.parseColor("#FDD835"));
+            pdPayments.setTitleText(main_context.getResources().getString(R.string.app_amount));
+            pdPayments.setCancelable(false);
+            pdPayments.show();
+            String do_ = "my";
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            try {
+
+                if (!ipAddress.equals("")) {
+
+                       // URL_TO_HIT = "http://"+ipAddress.trim()+":" + portSettings.trim() +"/Falcons/VAN.dll/GetACCOUNTSTATMENT?ACCNO="+custId;
+
+                        //Log.e("URL_TO_HIT","account="+URL_TO_HIT);
+
+
+                    URL_TO_HIT = "http://"+ipAddress.trim()+":" + portSettings.trim() +"/Falcons/VAN.dll/GetAllTheCheques?ACCNO="+custId;
+                }
+            } catch (Exception e) {
+                pdPayments.dismissWithAnimation();
+            }
+
+            try {
+
+                String JsonResponse = null;
+                HttpClient client = new DefaultHttpClient();
+                HttpGet request = new HttpGet();
+                request.setURI(new URI(URL_TO_HIT));
+
+//
+
+                HttpResponse response = client.execute(request);
+
+
+                BufferedReader in = new BufferedReader(new
+                        InputStreamReader(response.getEntity().getContent()));
+
+                StringBuffer sb = new StringBuffer("");
+                String line = "";
+
+                while ((line = in.readLine()) != null) {
+                    sb.append(line);
+                }
+
+                in.close();
+
+
+                JsonResponse = sb.toString();
+                Log.e("tag_allcheques", "JsonResponse\t" + JsonResponse);
+
+                return JsonResponse;
+
+
+            }//org.apache.http.conn.HttpHostConnectException: Connection to http://10.0.0.115 refused
+            catch (HttpHostConnectException ex) {
+                ex.printStackTrace();
+//                progressDialog.dismiss();
+
+                Handler h = new Handler(Looper.getMainLooper());
+                h.post(new Runnable() {
+                    public void run() {
+
+                        pdPayments.dismissWithAnimation();
+                        Toast.makeText(main_context, "Ip Connection Failed AccountStatment", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
+                return null;
+            } catch (Exception e) {
+                e.printStackTrace();
+//                progressDialog.dismiss();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            JSONObject result = null;
+            String impo = "";
+            pdPayments.dismissWithAnimation();
+            if (s != null) {
+                if (s.contains("VHFNo")) {
+                    try {
+                        Payment requestDetail;
+                        JSONArray requestArray = null;
+                        paymentChequesList = new ArrayList<>();
+
+                        requestArray =  new JSONArray(s);
+                        //Log.e("requestArray", "" + requestArray.length());
+
+
+                        for (int i = 0; i < requestArray.length(); i++) {
+                            JSONObject infoDetail = requestArray.getJSONObject(i);
+                            requestDetail = new Payment();
+                            try {
+                                requestDetail.setCheckNumber(Integer.parseInt(infoDetail.get("ChequeNo").toString()));
+                            }
+                            catch (Exception e){ requestDetail.setCheckNumber(111);}
+                            //
+
+                            requestDetail.setDueDate(infoDetail.get("DueDate").toString());
+                            requestDetail.setBank("Jordan Bank");
+                            try {
+                                requestDetail.setAmount(Double.parseDouble(infoDetail.get("CAmount").toString()));
+
+                            }catch (Exception e){requestDetail.setAmount(0);}
+
+
+
+                            paymentChequesList.add(requestDetail);
+                            //Log.e("listRequest", "listCustomerInfo" + unCollectlList.size());
+
+
+                        }
+                        if(paymentChequesList.size()!=0)
+                        {
+                            resultData.setText("payment");
+                        }
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else Log.e("onPostExecute", "" + s.toString());
+            }
+        }
+
+    }
 }

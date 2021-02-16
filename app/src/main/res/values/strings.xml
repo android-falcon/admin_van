@@ -56,13 +56,13 @@
         <item>price by customer</item>
         <item>price only</item>
         <item>offer</item>
-<!--        <item>replacement</item>-->
+        <!--        <item>replacement</item>-->
     </string-array>
     <string-array name="ListType">
         <item>price by customer</item>
         <item>price only</item>
         <item>offer</item>
-<!--        <item>replacement</item>-->
+        <!--        <item>replacement</item>-->
     </string-array>
 
     <string name="company_number">Company Number</string>
@@ -94,7 +94,6 @@
     <string name="credit_sales">Credit Sale</string>
     <string name="total_sales">Total Sales</string>
     <string name="cash">Cash</string>
-    <string name="app_cheque">Cheque</string>
     <string name="netpayment">Net Payment</string>
     <string name="credit_value">Credit Value</string>
     <string name="total_cash">Total Cash</string>
@@ -123,4 +122,27 @@
     <string name="returnSerial">Return Serial</string>
     <string name="StockSerial">Stock Serial</string>
     <string name="paymentSerial">Payment Serial</string>
+    <string name="unCollectedCheques_report">Un Collected cheques Report</string>
+    <string name="unCollectedCheques">Un Collected Cheques</string>
+    <string name="chaequeDate">Date</string>
+    <string name="recivedAmount">Recived Amount</string>
+    <string name="validation">Validation</string>
+    <string name="PAIDAMT">Paid Amount</string>
+    <string name="app_cheque">Cheque</string>
+    <string name="app_cheque_no">Cheque No</string>
+    <string name="app_cheque_date">Cheque Date</string>
+    <string name="app_bank_name">Bank Name</string>
+    <string name="app_cheq_no">Cheque No</string>
+    <string name="app_cheq_date">Cheque Date</string>
+    <string name="app_cheq_val">Cheque Value</string>
+    <string name="app_amount">Amount</string>
+    <string name="AnalyzeCustomersAccount">Analyze Customer\'s Account</string>
+    <string name="customerNo">Customer No</string>
+    <string name="df">DF</string>
+    <string name="cf">CF</string>
+    <string name="totalDebit">TDebit</string>
+    <string name="totalCredit">TCredit</string>
+    <string name="TotalDebitF">TDebit F</string>
+    <string name="TotalCreditF">TCredit F</string>
+    <string name="search">Search</string>
 </resources>

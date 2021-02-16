@@ -14,10 +14,12 @@ import android.widget.Toast;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 
+import com.example.adminvansales.Model.AnalyzeAccountModel;
 import com.example.adminvansales.Model.CashReportModel;
 import com.example.adminvansales.Model.CustomerLogReportModel;
 import com.example.adminvansales.Model.ListPriceOffer;
 import com.example.adminvansales.Model.PayMentReportModel;
+import com.example.adminvansales.Model.Payment;
 import com.example.adminvansales.Report.CustomerLogReport;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
@@ -130,9 +132,16 @@ public class PdfConverter {
             case 4:
                 tableContent=createListOfferPrice((List<ListPriceOffer>) list);
                 break;
+            case 5:
+                tableContent=createunCollectedReport((List<Payment>) list);
+                break;
+            case 6:
+                tableContent=createAnalyzeAcountReport((List<AnalyzeAccountModel>) list);
+                break;
         }
         return  tableContent;
     }
+
 
     private PdfPTable creatTableCustomerLog(List<CustomerLogReportModel> list) {
         createPDF("CustomerLog_Report" + ".pdf");
@@ -289,6 +298,75 @@ public class PdfConverter {
 
     }
 
+    private PdfPTable createAnalyzeAcountReport(List<AnalyzeAccountModel> list)
+    {
+        createPDF("AnalyzeAcount" + ".pdf");
+        PdfPTable pdfPTable = new PdfPTable(10);
+        pdfPTable.setWidthPercentage(100f);
+        pdfPTable.setRunDirection(PdfWriter.RUN_DIRECTION_LTR);
+        insertCell(pdfPTable,context.getString(               R.string.customerNo        )                    , ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+        insertCell(pdfPTable,context.getString(               R.string.customerName      )                        , ALIGN_CENTER   , 1, arabicFont, BaseColor.BLACK);
+        insertCell(pdfPTable,context.getString(               R.string.debit           )                        , ALIGN_CENTER   , 1, arabicFont, BaseColor.BLACK);
+        insertCell(pdfPTable,context.getResources().getString(R.string.credit       )   , ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+        insertCell(pdfPTable,context.getResources().getString(R.string.df            )  , ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+        insertCell(pdfPTable,context.getResources().getString(R.string.cf              )  , ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+
+        insertCell(pdfPTable,context.getResources().getString(R.string.totalDebit      )  , ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+
+        insertCell(pdfPTable,context.getResources().getString(R.string.totalCredit    )  , ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+
+        insertCell(pdfPTable,context.getResources().getString(R.string.TotalDebitF    )  , ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+
+        insertCell(pdfPTable,context.getResources().getString(R.string.TotalCreditF    )  , ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+
+        pdfPTable.setHeaderRows(1);
+        for (int i = 0; i < list.size(); i++) {
+            insertCell(pdfPTable, String.valueOf(list.get(i).getAccCode() ) , ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+            insertCell(pdfPTable, String.valueOf(list.get(i).getAccNameA()) , ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+
+            insertCell(pdfPTable, String.valueOf(list.get(i).getPREVD()) , ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+            insertCell(pdfPTable, String.valueOf(list.get(i).getPREVC()) , ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+
+            insertCell(pdfPTable, String.valueOf(list.get(i).getPREVDF()) , ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+
+            insertCell(pdfPTable, String.valueOf(list.get(i).getPREVCF()) , ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+
+            insertCell(pdfPTable, String.valueOf(list.get(i).getTDEB()) , ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+
+            insertCell(pdfPTable, String.valueOf(list.get(i).getTCRE()) , ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+            insertCell(pdfPTable, String.valueOf(list.get(i).getTDEBF()) , ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+
+            insertCell(pdfPTable, String.valueOf(list.get(i).getTCREF()) , ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+
+        }
+        return pdfPTable;
+
+    }
+    private PdfPTable createunCollectedReport(List<Payment> list)
+    {
+        createPDF("UnCollectedCheques_Report" + ".pdf");
+        PdfPTable pdfPTable = new PdfPTable(4);
+        pdfPTable.setWidthPercentage(100f);
+        pdfPTable.setRunDirection(PdfWriter.RUN_DIRECTION_LTR);
+        insertCell(pdfPTable,context.getString(R.string.app_bank_name)                    , ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+        insertCell(pdfPTable,context.getString(R.string.check_number      )                        , ALIGN_CENTER   , 1, arabicFont, BaseColor.BLACK);
+        insertCell(pdfPTable,context.getString(R.string.chaequeDate      )                        , ALIGN_CENTER   , 1, arabicFont, BaseColor.BLACK);
+        insertCell(pdfPTable,context.getResources().getString(R.string.app_amount   )   , ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+
+        pdfPTable.setHeaderRows(1);
+        for (int i = 0; i < list.size(); i++) {
+            insertCell(pdfPTable, String.valueOf(list.get(i).getBank() ) , ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+            insertCell(pdfPTable, String.valueOf(list.get(i).getCheckNumber())       , ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+            insertCell(pdfPTable, String.valueOf(list.get(i).getDueDate()       ) , ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+            insertCell(pdfPTable, String.valueOf(list.get(i).getAmount()         ) , ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+
+
+
+
+        }
+        return pdfPTable;
+
+    }
 
     private PdfPTable getHeaderTable(List<?> list, int reportType , String headerDate, String date) {
         PdfPTable pdfPTableHeader = new PdfPTable(7);

@@ -1,6 +1,7 @@
 package com.example.adminvansales;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -77,6 +78,8 @@ public class LogIn extends AppCompatActivity {
         password_edit=findViewById(R.id.password_edit);
         userName_edit=findViewById(R.id.userName_edit);
         importData=new ImportData(LogIn.this);
+        Log.e("importData","importData");
+        importData.getCustomerInfo();
         globelFunction=new GlobelFunction(LogIn.this);
         timer = new Timer();
 
@@ -108,7 +111,7 @@ public class LogIn extends AppCompatActivity {
 
 
         Log.e("importData","11111");
-        importData.getCustomerInfo();
+
 
         button_logIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,9 +153,24 @@ public class LogIn extends AppCompatActivity {
     private void goToMain() {
         adminName=userName_edit.getText().toString();
         adminId=password_edit.getText().toString();
+        startservice();
         finish();
         Intent i = new Intent(LogIn.this, HomeActivity.class);
         startActivity(i);
+    }
+
+    private void startservice() {
+        Log.e("startservice","onCreate");
+        Intent i = new Intent(LogIn.this, LocationService.class);
+        i.putExtra("extraService","adminName");
+        startService(i);
+//        ContextCompat.startForegroundService(this,i);
+
+    }
+    void stopSer(){
+        Intent i = new Intent(LogIn.this, LocationService.class);
+
+        stopService(i);
     }
 
     @Override
