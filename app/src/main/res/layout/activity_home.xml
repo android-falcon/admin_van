@@ -289,7 +289,7 @@
                     android:drawableLeft="@drawable/ic_equalizer_black_24dp"
                     android:drawableTint="@color/white"
                     android:padding="10dp"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:text="Log History Report"
                     android:textColor="@color/white" />
 

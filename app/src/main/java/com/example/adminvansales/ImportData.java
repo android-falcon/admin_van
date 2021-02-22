@@ -15,6 +15,7 @@ import com.example.adminvansales.Model.CashReportModel;
 import com.example.adminvansales.Model.CustomerLogReportModel;
 import com.example.adminvansales.Model.ItemMaster;
 import com.example.adminvansales.Model.ListPriceOffer;
+import com.example.adminvansales.Model.LogHistoryDetail;
 import com.example.adminvansales.Model.LogHistoryModel;
 import com.example.adminvansales.Model.OfferListModel;
 import com.example.adminvansales.Model.PayMentReportModel;
@@ -2900,9 +2901,9 @@ public class ImportData {
 
                     Gson gson = new Gson();
 
-                    LogHistoryModel gsonObj = gson.fromJson(s, LogHistoryModel.class);
+                    LogHistoryDetail gsonObj = gson.fromJson(s, LogHistoryDetail.class);
                     logHistoryDetail.clear();
-                    logHistoryDetail.addAll(gsonObj.getALL_LOG_FILE());
+                    logHistoryDetail.addAll(gsonObj.getLOG_DETAIL());
                     Log.e("LOG_DETAIL", "LOG_DETAIL"+logHistoryDetail.size());
                     LogHistoryReport logHistoryReport = (LogHistoryReport) context;
                     logHistoryReport.fillDialogLogDetail();
