@@ -233,27 +233,34 @@
         android:layout_height="match_parent"
         android:layout_margin="5dp"
 
-        android:layout_weight="1">
+        android:layout_weight="1"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            >
 
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorblue_dark"
-                android:padding="5dp">
+                android:padding="5dp"
+
+                >
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.9"
                     android:gravity="center"
-                    android:text="@string/SALES_MAN_ID"
+
                     android:textColor="@color/white"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:text="@string/SALES_MAN_ID"
+
+                    />
 
                 <TextView
                     android:layout_width="1dp"

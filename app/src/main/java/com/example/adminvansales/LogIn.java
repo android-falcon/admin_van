@@ -1,9 +1,13 @@
 package com.example.adminvansales;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,10 +25,15 @@ import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderLayout;
 import com.smarteist.autoimageslider.SliderView;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
+
 import java.util.List;
 
 import static com.example.adminvansales.GlobelFunction.adminId;
 import static com.example.adminvansales.GlobelFunction.adminName;
+import static com.example.adminvansales.ImportData.listId;
 
 public class LogIn extends AppCompatActivity {
     SliderLayout sliderLayout;
@@ -35,6 +44,8 @@ public class LogIn extends AppCompatActivity {
     private DataBaseHandler databaseHandler;
     EditText userName_edit,password_edit;
     GlobelFunction globelFunction;
+    Timer timer;
+    ImportData importData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,12 +77,41 @@ public class LogIn extends AppCompatActivity {
         button_logIn=findViewById(R.id.button_logIn);
         password_edit=findViewById(R.id.password_edit);
         userName_edit=findViewById(R.id.userName_edit);
-
-        globelFunction=new GlobelFunction(LogIn.this);
-        ImportData importData=new ImportData(LogIn.this);
-        importData.getListRequest();
-        Log.e("importData","11111");
+        importData=new ImportData(LogIn.this);
+        Log.e("importData","importData");
         importData.getCustomerInfo();
+        globelFunction=new GlobelFunction(LogIn.this);
+        timer = new Timer();
+
+
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+
+                runOnUiThread(new Runnable(){
+
+                    @Override
+                    public void run(){
+                        // update ui here
+                        if (isNetworkAvailable()) {
+                            getData();
+//                            if(listId.size()!=0)
+//                            {
+//
+//                                fillData();
+////                                updateSeenOfRow();
+//                            }
+                        }
+
+                    }
+                });
+            }
+
+        }, 0, 3000);
+
+
+        Log.e("importData","11111");
+
 
         button_logIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,12 +139,38 @@ public class LogIn extends AppCompatActivity {
 
 
     }
+
+    private void getData() {
+        importData=new ImportData(LogIn.this);
+        importData.getListRequest();
+    }
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
     private void goToMain() {
         adminName=userName_edit.getText().toString();
         adminId=password_edit.getText().toString();
+        startservice();
         finish();
         Intent i = new Intent(LogIn.this, HomeActivity.class);
         startActivity(i);
+    }
+
+    private void startservice() {
+        Log.e("startservice","onCreate");
+        Intent i = new Intent(LogIn.this, LocationService.class);
+        i.putExtra("extraService","adminName");
+        startService(i);
+//        ContextCompat.startForegroundService(this,i);
+
+    }
+    void stopSer(){
+        Intent i = new Intent(LogIn.this, LocationService.class);
+
+        stopService(i);
     }
 
     @Override

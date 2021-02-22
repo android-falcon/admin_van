@@ -16,6 +16,8 @@ import com.example.adminvansales.Model.Account__Statment_Model;
 import java.text.DecimalFormat;
 import java.util.List;
 
+import static com.example.adminvansales.AccountStatment.total_qty_text;
+
 public class AccountStatmentAdapter extends RecyclerView.Adapter<AccountStatmentAdapter.ViewHolder>
 {
     static List<Account__Statment_Model> inventorylist;
@@ -68,6 +70,7 @@ public class AccountStatmentAdapter extends RecyclerView.Adapter<AccountStatment
         holder.linearLayout.setBackgroundColor(Color.parseColor(mColors[position % 2]));
         holder.linearLayout.setPadding(5 , 10, 5, 10);
         Log.e("onBindViewHolder","=="+totalBalance);
+        total_qty_text.setText(totalBalance+"");
 
     }
 

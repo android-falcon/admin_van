@@ -39,6 +39,7 @@ public class AccountStatment extends AppCompatActivity {
     Button preview_button_account;
      Spinner customerSpinner;
      String customerId="";
+     public  static  TextView total_qty_text;
     @SuppressLint("WrongConstant")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,16 +81,16 @@ public class AccountStatment extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                Log.e("customername",""+s.toString()+"\t"+listCustomerInfo.size());
+
                 if(s.toString().equals("1"))
                 {
                     if(customername.size()!=0)
                     {
-                        Log.e("customername",""+customername.size());
+
                         fillCustomerSpenner();
                     }
                 }
-                Log.e("customername",""+s.toString());
+
                 if(s.toString().equals("2"))
                 {
                     if(listCustomerInfo.size()!=0)
@@ -127,6 +128,7 @@ public class AccountStatment extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(AccountStatment.this);
         layoutManager.setOrientation(VERTICAL);
         recyclerView_report.setLayoutManager(layoutManager);
+        total_qty_text=findViewById(R.id.total_qty_text);
     }
 
     private void fillCustomerSpenner() {

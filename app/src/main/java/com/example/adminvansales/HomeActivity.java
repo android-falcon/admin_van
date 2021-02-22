@@ -30,11 +30,13 @@ import com.azoft.carousellayoutmanager.CarouselLayoutManager;
 import com.azoft.carousellayoutmanager.CarouselZoomPostLayoutListener;
 import com.azoft.carousellayoutmanager.CenterScrollListener;
 import com.example.adminvansales.Model.SalesManInfo;
+import com.example.adminvansales.Report.AnalyzeAccounts;
 import com.example.adminvansales.Report.CashReport;
 import com.example.adminvansales.Report.CustomerLogReport;
 import com.example.adminvansales.Report.ListOfferReport;
 import com.example.adminvansales.Report.LogHistoryReport;
 import com.example.adminvansales.Report.PaymentDetailsReport;
+import com.example.adminvansales.Report.UnCollectedData;
 
 import org.json.JSONException;
 
@@ -55,7 +57,7 @@ public class HomeActivity extends AppCompatActivity {
     Button locationButton, ReportButton, offerButton;
     LinearLayout ReportLinear;
     public static EditText editPassword;
-    TextView customerLogReport, paymentReport, cashReport, offerReport,LogReport;
+    TextView customerLogReport, paymentReport, cashReport, offerReport,LogReport,unCollectedCheques,analyzeAcountsReport;
 
 
     @Override
@@ -93,6 +95,8 @@ public class HomeActivity extends AppCompatActivity {
         customerLogReport = findViewById(R.id.customerLogReport);
         paymentReport = findViewById(R.id.paymentReport);
         cashReport = findViewById(R.id.cashReport);
+        unCollectedCheques= findViewById(R.id.unCollectedChequesReport);
+        analyzeAcountsReport= findViewById(R.id.analyzeAcountsReport);
         offerReport = findViewById(R.id.offerReport);
         LogReport=findViewById(R.id.LogReport);
 
@@ -196,6 +200,25 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
+        unCollectedCheques.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ReportLinear.setVisibility(View.GONE);
+                Intent intent = new Intent(HomeActivity.this, UnCollectedData.class);
+                startActivity(intent);
+
+            }
+        });
+        analyzeAcountsReport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ReportLinear.setVisibility(View.GONE);
+                Intent intent = new Intent(HomeActivity.this, AnalyzeAccounts.class);
+                startActivity(intent);
+
+            }
+        });
+//        Analyze a customer's account
 
     }
 

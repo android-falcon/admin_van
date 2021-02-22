@@ -8,10 +8,12 @@ import android.widget.Toast;
 
 import androidx.core.content.FileProvider;
 
+import com.example.adminvansales.Model.AnalyzeAccountModel;
 import com.example.adminvansales.Model.CashReportModel;
 import com.example.adminvansales.Model.CustomerLogReportModel;
 import com.example.adminvansales.Model.ListPriceOffer;
 import com.example.adminvansales.Model.PayMentReportModel;
+import com.example.adminvansales.Model.Payment;
 import com.example.adminvansales.Report.CustomerLogReport;
 
 import java.io.File;
@@ -77,6 +79,12 @@ public class ExportToExcel {
                 break;
             case 4:
                 workbook = listReport(workbook , (List<ListPriceOffer>) list );
+                break;
+            case 5:
+                workbook = unCollectedReport(workbook , (List<Payment>) list );
+                break;
+            case 6:
+                workbook = analyzeAccountReport(workbook , (List<AnalyzeAccountModel>) list );
                 break;
         }
 
@@ -319,6 +327,106 @@ public class ExportToExcel {
 
 
                     sheet.mergeCells(0,i + 2, 1, i + 2);// col , row, to col , to row
+
+                }
+
+            } catch (RowsExceededException e) {
+                e.printStackTrace();
+            } catch (WriteException e) {
+                e.printStackTrace();
+            }
+            workbook.write();
+            try {
+                workbook.close();
+            } catch (WriteException e) {
+                e.printStackTrace();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return workbook;
+
+    }
+
+    WritableWorkbook unCollectedReport(WritableWorkbook workbook, List<Payment> list) {
+
+        try {
+            WritableSheet sheet = workbook.createSheet("Sheet1", 0);//Excel sheet name. 0 represents first sheet
+
+            try {
+                sheet.addCell(new Label(0, 0, context.getString(R.string.app_bank_name)            )); // column and row
+                sheet.addCell(new Label(1, 0, context.getString(R.string.check_number   )) );
+
+                sheet.addCell(new Label(2, 0, context.getString(R.string.chaequeDate   )) );
+                sheet.addCell(new Label(3, 0, context.getString(R.string.app_amount   )) );
+
+                sheet.mergeCells(0,1, 3, 1);// col , row, to col , to row
+
+                for (int i = 0; i < list.size(); i++) {
+                    sheet.addCell(new Label(0, i + 2, list.get(i).getBank()+""));
+                    sheet.addCell(new Label(1, i + 2,      list.get(i).getCheckNumber()+""));
+                    sheet.addCell(new Label(2, i + 2,  list.get(i).getDueDate()+""));
+                    sheet.addCell(new Label(3, i + 2,  list.get(i).getAmount()+""));
+
+
+                    //sheet.mergeCells(0,i + 2, 1, i + 2);// col , row, to col , to row
+
+                }
+
+            } catch (RowsExceededException e) {
+                e.printStackTrace();
+            } catch (WriteException e) {
+                e.printStackTrace();
+            }
+            workbook.write();
+            try {
+                workbook.close();
+            } catch (WriteException e) {
+                e.printStackTrace();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return workbook;
+
+    }
+    WritableWorkbook analyzeAccountReport(WritableWorkbook workbook, List<AnalyzeAccountModel> list) {
+
+        try {
+            WritableSheet sheet = workbook.createSheet("Sheet1", 0);//Excel sheet name. 0 represents first sheet
+
+            try {
+
+
+                sheet.addCell(new Label(0, 0, context.getString( R.string.customerNo   )            )); // column and row
+                sheet.addCell(new Label(1, 0, context.getString( R.string.customerName   )) );
+
+                sheet.addCell(new Label(2, 0, context.getString( R.string.debit        ) ));
+                sheet.addCell(new Label(3, 0, context.getString((R.string.credit       )) ));
+                sheet.addCell(new Label(4, 0, context.getString((R.string.df           )) ));
+                sheet.addCell(new Label(5, 0, context.getString((R.string.cf           )) ));
+                sheet.addCell(new Label(6, 0, context.getString((R.string.totalDebit   )) ));
+                sheet.addCell(new Label(7, 0, context.getString((R.string.totalCredit  )) ));
+                sheet.addCell(new Label(8, 0, context.getString((R.string.TotalDebitF  )) ));
+                sheet.addCell(new Label(9, 0, context.getString((R.string.TotalCreditF )) ));
+
+                sheet.mergeCells(0,1, 9, 1);// col , row, to col , to row
+
+                for (int i = 0; i < list.size(); i++) {
+                    sheet.addCell(new Label(0, i + 2, list.get(i).getAccCode()+""));
+                    sheet.addCell(new Label(1, i + 2,      list.get(i).getAccNameA()+""));
+                    sheet.addCell(new Label(2, i + 2,  list.get(i).getPREVD()+""));
+                    sheet.addCell(new Label(3, i + 2,  list.get(i).getPREVC()+""));
+                    sheet.addCell(new Label(4, i + 2,  list.get(i).getPREVDF()+""));
+                    sheet.addCell(new Label(5, i + 2,  list.get(i).getPREVCF()+""));
+                    sheet.addCell(new Label(6, i + 2,  list.get(i).getTDEB()+""));
+                    sheet.addCell(new Label(7, i + 2,  list.get(i).getTCRE()+""));
+                    sheet.addCell(new Label(8, i + 2,  list.get(i).getTDEBF()+""));
+                    sheet.addCell(new Label(9, i + 2,  list.get(i).getTCREF()+""));
+
+
+
+                    //sheet.mergeCells(0,i + 2, 1, i + 2);// col , row, to col , to row
 
                 }
 
