@@ -69,6 +69,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 import static android.content.Context.*;
 import static androidx.core.content.ContextCompat.getSystemService;
 import static com.example.adminvansales.AccountStatment.getAccountList_text;
+import static com.example.adminvansales.EditSalesMan.AdminInfoList;
 import static com.example.adminvansales.GlobelFunction.LatLngListMarker;
 import static com.example.adminvansales.GlobelFunction.salesManInfosList;
 import static com.example.adminvansales.GlobelFunction.salesManNameList;
@@ -189,6 +190,10 @@ public class ImportData {
 
     public void getSalesMan(Context context, int flag) {
         new JSONTaskGetSalesMan(context, flag).execute();
+    }
+
+    public void getAdmin(Context context, int flag) {
+        new JSONTaskGetAdmin(context, flag).execute();
     }
 
     public void getItemCard(Context context) {
@@ -589,7 +594,7 @@ public class ImportData {
 
                         if (flag == 0) {
                             EditSalesMan editSalesMan = (EditSalesMan) context;
-                            editSalesMan.searchSalesMan();
+                            editSalesMan.searchSalesMan(1);
                         } else if (flag == 1) {
                             HomeActivity homeActivity = (HomeActivity) context;
                             homeActivity.showAllSalesManData(salesManInfosList);
@@ -610,6 +615,149 @@ public class ImportData {
 
     }
 
+    private class JSONTaskGetAdmin extends AsyncTask<String, String, String> {
+        Object context;
+        int flag;
+
+        public JSONTaskGetAdmin(Object context, int flag) {
+            this.flag = flag;
+            if (flag == 0) {
+                this.context = (EditSalesMan) context;
+            }
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            String do_ = "my";
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            try {
+                if (!ipAddress.equals("")) {
+                    URL_TO_HIT = "http://" + ipAddress + "/VANSALES_WEB_SERVICE/admin.php";
+                }
+            } catch (Exception e) {
+                Log.e("JcheckSalesMan","Exception"+e.getMessage());
+                Toast.makeText(main_context, "check ip", Toast.LENGTH_SHORT).show();
+            }
+
+            try {
+
+                String JsonResponse = null;
+                HttpClient client = new DefaultHttpClient();
+                HttpPost request = new HttpPost();
+                request.setURI(new URI(URL_TO_HIT));
+
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+                nameValuePairs.add(new BasicNameValuePair("_ID", "31"));
+//                nameValuePairs.add(new BasicNameValuePair("SalesManNo",discountRequest.getSalesman_no()));
+
+
+                request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+
+
+                HttpResponse response = client.execute(request);
+
+
+                BufferedReader in = new BufferedReader(new
+                        InputStreamReader(response.getEntity().getContent()));
+
+                StringBuffer sb = new StringBuffer("");
+                String line = "";
+
+                while ((line = in.readLine()) != null) {
+                    sb.append(line);
+                }
+
+                in.close();
+
+
+                JsonResponse = sb.toString();
+                // Log.e("tag_requestState", "JsonResponse\t" + JsonResponse);
+
+                return JsonResponse;
+
+
+            }//org.apache.http.conn.HttpHostConnectException: Connection to http://10.0.0.115 refused
+            catch (HttpHostConnectException ex) {
+                ex.printStackTrace();
+//                progressDialog.dismiss();
+
+                Handler h = new Handler(Looper.getMainLooper());
+                h.post(new Runnable() {
+                    public void run() {
+
+                        Toast.makeText(main_context, "Ip Connection Failed ", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
+                return null;
+            } catch (Exception e) {
+                e.printStackTrace();
+//                progressDialog.dismiss();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            if (s != null) {
+                if (s.contains("AdminList")) {
+
+                    try {
+                        AdminInfoList.clear();
+
+                        JSONObject jsonObject = new JSONObject(s);
+                        JSONArray jsonArray = jsonObject.getJSONArray("AdminList");
+                        for (int i = 0; i < jsonArray.length(); i++) {
+
+                            JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+                            SalesManInfo salesManInfo = new SalesManInfo();
+
+                            salesManInfo.setSalesManNo(jsonObject1.getString("USER_NO"));
+                            salesManInfo.setSalesName(jsonObject1.getString("USER_NAME"));
+                            salesManInfo.setSalesPassword(jsonObject1.getString("PASSWORD"));
+                            salesManInfo.setActive(jsonObject1.getString("ACTIVATE"));
+
+                            salesManInfo.setAddSalesMen(jsonObject1.getInt("ADD_SALESMEN"));
+                            salesManInfo.setAddAdmin(jsonObject1.getInt("ADD_ADDMIN"));
+                            salesManInfo.setAccountReport(jsonObject1.getInt("ACCOUNT_REPORT"));
+                            salesManInfo.setPaymentReport(jsonObject1.getInt("PAYMENT_REPORT"));
+
+                            salesManInfo.setCashReport(jsonObject1.getInt("CASH_REPORT"));
+                            salesManInfo.setUnCollectChequeReport(jsonObject1.getInt("UN_COLLECTED_REPORT"));
+                            salesManInfo.setAnalyzeCustomer(jsonObject1.getInt("ANALYZE_REPORT"));
+                            salesManInfo.setLogHistoryReport(jsonObject1.getInt("LOG_HISTORY_REPORT"));
+                            salesManInfo.setOfferReport(jsonObject1.getInt("OFFER_REPORT"));
+                            salesManInfo.setSalesManLocation(jsonObject1.getInt("SALES_LOCATION"));
+                            salesManInfo.setMakeOffer(jsonObject1.getInt("MAKE_OFFER"));
+                            salesManInfo.setCustomerReport(jsonObject1.getInt("CUSTOMER_LOG_REPORT"));
+
+                            AdminInfoList.add(salesManInfo);
+                        }
+
+                            EditSalesMan editSalesMan = (EditSalesMan) context;
+                            editSalesMan.searchSalesMan(2);
+
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+//                progressDialog.dismiss();
+            }
+        }
+
+    }
 
     private class JSONTaskGetPaymentReport extends AsyncTask<String, String, String> {
         Object context;

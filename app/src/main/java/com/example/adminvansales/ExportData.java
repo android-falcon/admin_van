@@ -105,12 +105,20 @@ public class ExportData {
         new JSONTaskAddSales(context,jsonObject).execute();
     }
 
+    public void AddAdmins(Context context,JSONObject jsonObject){
+        new JSONTaskAddAdmin(context,jsonObject).execute();
+    }
+
     public void updateList(Context context,JSONObject jsonObject , JSONArray jsonArray){
         new JSONTaskUpdateList(context,jsonObject, jsonArray).execute();
     }
 
     public void UpdateSales(Context context,JSONObject jsonObject){
         new JSONTaskUpdateSales(context,jsonObject).execute();
+    }
+
+    public void UpdateAdmin(Context context,JSONObject jsonObject){
+        new JSONTaskUpdateAdmin(context,jsonObject).execute();
     }
 
     public void addToList(Context context, JSONArray jsonArray,JSONObject jsonObject){
@@ -353,6 +361,111 @@ public class ExportData {
         }
 
     }
+    private class JSONTaskAddAdmin extends AsyncTask<String, String, String> {
+        EditSalesMan  context;
+        JSONObject jsonObject;
+        public JSONTaskAddAdmin(Context context,JSONObject jsonObject) {
+            this.context= (EditSalesMan) context;
+            this.jsonObject=jsonObject;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            String do_ = "my";
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+//            ipAddress = "";
+            try {
+
+
+                if (!ipAddress.equals("")) {
+                    URL_TO_HIT = "http://" + ipAddress + "/VANSALES_WEB_SERVICE/admin.php";
+                }
+            } catch (Exception e) {
+
+            }
+
+            try {
+
+                String JsonResponse = null;
+                HttpClient client = new DefaultHttpClient();
+                HttpPost request = new HttpPost();
+                request.setURI(new URI(URL_TO_HIT));
+
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+                nameValuePairs.add(new BasicNameValuePair("_ID", "32"));
+                nameValuePairs.add(new BasicNameValuePair("ADD_ADMIN",jsonObject.toString()));
+
+
+                request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+
+
+                HttpResponse response = client.execute(request);
+
+
+                BufferedReader in = new BufferedReader(new
+                        InputStreamReader(response.getEntity().getContent()));
+
+                StringBuffer sb = new StringBuffer("");
+                String line = "";
+
+                while ((line = in.readLine()) != null) {
+                    sb.append(line);
+                }
+
+                in.close();
+
+
+                JsonResponse = sb.toString();
+                Log.e("tag_requestState", "JsonResponse\t" + JsonResponse);
+
+                return JsonResponse;
+
+
+            }//org.apache.http.conn.HttpHostConnectException: Connection to http://10.0.0.115 refused
+            catch (HttpHostConnectException ex) {
+                ex.printStackTrace();
+//                progressDialog.dismiss();
+
+                Handler h = new Handler(Looper.getMainLooper());
+                h.post(new Runnable() {
+                    public void run() {
+
+                        Toast.makeText(main_context, "Ip Connection Failed ", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
+                return null;
+            } catch (Exception e) {
+                e.printStackTrace();
+//                progressDialog.dismiss();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            if (s != null) {
+                if (s.contains("ADD_ADMIN_SUCCESS")) {
+                    Log.e("salesManInfo", "ADD_ADMIN_SUCCESS\t" + s.toString());
+                    Toast.makeText(context, "ADD ADMIN SUCCESS", Toast.LENGTH_SHORT).show();
+                    context.clearTextFun();
+                    globelFunction.getSalesManInfo(context,90);
+
+                }
+//                progressDialog.dismiss();
+            }
+        }
+
+    }
 
     private class JSONTaskUpdateSales extends AsyncTask<String, String, String> {
         EditSalesMan  context;
@@ -452,6 +565,111 @@ public class ExportData {
                     Toast.makeText(context, "UPDATE SALES MAN SUCCESS", Toast.LENGTH_SHORT).show();
                     context.clearTextFun();
                     globelFunction.getSalesManInfo(context,0);
+
+                }
+//                progressDialog.dismiss();
+            }
+        }
+
+    }
+    private class JSONTaskUpdateAdmin extends AsyncTask<String, String, String> {
+        EditSalesMan  context;
+        JSONObject jsonObject;
+        public JSONTaskUpdateAdmin(Context context,JSONObject jsonObject) {
+            this.context= (EditSalesMan) context;
+            this.jsonObject=jsonObject;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            String do_ = "my";
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+//            ipAddress = "";
+            try {
+
+
+                if (!ipAddress.equals("")) {
+                    URL_TO_HIT = "http://" + ipAddress + "/VANSALES_WEB_SERVICE/admin.php";
+                }
+            } catch (Exception e) {
+
+            }
+
+            try {
+
+                String JsonResponse = null;
+                HttpClient client = new DefaultHttpClient();
+                HttpPost request = new HttpPost();
+                request.setURI(new URI(URL_TO_HIT));
+
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+                nameValuePairs.add(new BasicNameValuePair("_ID", "33"));
+                nameValuePairs.add(new BasicNameValuePair("UPDATE_ADMIN",jsonObject.toString()));
+
+
+                request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+
+
+                HttpResponse response = client.execute(request);
+
+
+                BufferedReader in = new BufferedReader(new
+                        InputStreamReader(response.getEntity().getContent()));
+
+                StringBuffer sb = new StringBuffer("");
+                String line = "";
+
+                while ((line = in.readLine()) != null) {
+                    sb.append(line);
+                }
+
+                in.close();
+
+
+                JsonResponse = sb.toString();
+                Log.e("tag_requestState", "JsonResponse\t" + JsonResponse);
+
+                return JsonResponse;
+
+
+            }//org.apache.http.conn.HttpHostConnectException: Connection to http://10.0.0.115 refused
+            catch (HttpHostConnectException ex) {
+                ex.printStackTrace();
+//                progressDialog.dismiss();
+
+                Handler h = new Handler(Looper.getMainLooper());
+                h.post(new Runnable() {
+                    public void run() {
+
+                        Toast.makeText(main_context, "Ip Connection Failed ", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
+                return null;
+            } catch (Exception e) {
+                e.printStackTrace();
+//                progressDialog.dismiss();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            if (s != null) {
+                if (s.contains("UPDATE_ADMIN_SUCCESS")) {
+                    Log.e("salesManInfo", "UPDATE_ADMIN_SUCCESS\t" + s.toString());
+                    Toast.makeText(context, "UPDATE ADMIN SUCCESS", Toast.LENGTH_SHORT).show();
+                    context.clearTextFun();
+                    globelFunction.getSalesManInfo(context,90);
 
                 }
 //                progressDialog.dismiss();
