@@ -153,7 +153,7 @@ public class LogIn extends AppCompatActivity {
     private void goToMain() {
         adminName=userName_edit.getText().toString();
         adminId=password_edit.getText().toString();
-        startservice();
+      //  startservice();
         finish();
         Intent i = new Intent(LogIn.this, HomeActivity.class);
         startActivity(i);

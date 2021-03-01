@@ -296,8 +296,17 @@ public class ImportData {
                     URL_TO_HIT = "http://" + ipAddress + "/VANSALES_WEB_SERVICE/admin.php";
                 }
             } catch (Exception e) {
+
+
+                Handler h = new Handler(Looper.getMainLooper());
+                h.post(new Runnable() {
+                    public void run() {
+
+                        Toast.makeText(main_context, "check ip", Toast.LENGTH_SHORT).show();
+                    }
+                });
                 Log.e("JcheckStateRequest","Exception"+e.getMessage());
-                Toast.makeText(main_context, "check ip", Toast.LENGTH_SHORT).show();
+
 
             }
 
@@ -485,8 +494,13 @@ public class ImportData {
                     URL_TO_HIT = "http://" + ipAddress + "/VANSALES_WEB_SERVICE/admin.php";
                 }
             } catch (Exception e) {
-                Log.e("JcheckSalesMan","Exception"+e.getMessage());
-                Toast.makeText(main_context, "check ip", Toast.LENGTH_SHORT).show();
+                Handler h = new Handler(Looper.getMainLooper());
+                h.post(new Runnable() {
+                    public void run() {
+
+                        Toast.makeText(main_context, "check ip", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
 
             try {
@@ -1477,7 +1491,7 @@ public class ImportData {
 
                         JSONArray requestArray = null;
                         listCustomerInfo = new ArrayList<>();
-
+                        double totalBalance=0;
                         requestArray = new JSONArray(s);
                         Log.e("requestArray", "" + requestArray.length());
 
@@ -1497,6 +1511,20 @@ public class ImportData {
                                 requestDetail.setCredit(0);
                             }
 
+                            if(requestDetail.getDebit()!=0.0)
+                            {
+                                totalBalance+=requestDetail.getDebit();
+                            }
+
+                            if(requestDetail.getCredit()!=0.0)
+                            {
+
+                                totalBalance-=requestDetail.getCredit();
+
+                            }
+
+                            requestDetail.setBalance(totalBalance);
+                           // Log.e("onBindViewHolder","=total="+totalBalance);
 
                             listCustomerInfo.add(requestDetail);
                             Log.e("listRequest", "listCustomerInfo" + listCustomerInfo.size());
@@ -1509,7 +1537,12 @@ public class ImportData {
 //                        progressDialog.dismiss();
                         e.printStackTrace();
                     }
-                } else Log.e("onPostExecute", "" + s.toString());
+                } else if(s.contains("No Parameter Found")){
+                    getAccountList_text.setText("Nodata");
+
+                    Log.e("onPostExecute", "" + s.toString());
+                }
+
 //                progressDialog.dismiss();
             }
         }
@@ -1536,7 +1569,15 @@ public class ImportData {
                     Log.e("importData","importData"+URL_TO_HIT);
                 }
             } catch (Exception e) {
-                Toast.makeText(main_context, "check Ip address", Toast.LENGTH_SHORT).show();
+                Handler h = new Handler(Looper.getMainLooper());
+                h.post(new Runnable() {
+                    public void run() {
+
+                        Toast.makeText(main_context, "check ip", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                Log.e("JcheckStateRequest","Exception"+e.getMessage());
+
 
             }
 
@@ -1681,6 +1722,13 @@ public class ImportData {
                     URL_TO_HIT = "http://" + ipAddress + "/VANSALES_WEB_SERVICE/admin.php";
                 }
             } catch (Exception e) {
+                Handler h = new Handler(Looper.getMainLooper());
+                h.post(new Runnable() {
+                    public void run() {
+
+                        Toast.makeText(main_context, "check ip", Toast.LENGTH_SHORT).show();
+                    }
+                });
 
             }
 
@@ -1826,6 +1874,14 @@ public class ImportData {
                     URL_TO_HIT = "http://" + ipAddress + "/VANSALES_WEB_SERVICE/admin.php";
                 }
             } catch (Exception e) {
+                Handler h = new Handler(Looper.getMainLooper());
+                h.post(new Runnable() {
+                    public void run() {
+
+                        Toast.makeText(main_context, "check ip", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
 
             }
 
@@ -1986,6 +2042,13 @@ public class ImportData {
                     URL_TO_HIT = "http://" + ipAddress + "/VANSALES_WEB_SERVICE/admin.php";
                 }
             } catch (Exception e) {
+                Handler h = new Handler(Looper.getMainLooper());
+                h.post(new Runnable() {
+                    public void run() {
+
+                        Toast.makeText(main_context, "check ip", Toast.LENGTH_SHORT).show();
+                    }
+                });
 
             }
 

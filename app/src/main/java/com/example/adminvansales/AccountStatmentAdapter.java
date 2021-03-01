@@ -25,7 +25,6 @@ public class AccountStatmentAdapter extends RecyclerView.Adapter<AccountStatment
 
     Context context;
     private DecimalFormat decimalFormat;
-    static int  totalQty_inventory=0;
 
 
     public AccountStatmentAdapter(List<Account__Statment_Model> inventorylist, Context context) {
@@ -45,32 +44,24 @@ public class AccountStatmentAdapter extends RecyclerView.Adapter<AccountStatment
     @Override
     public void onBindViewHolder(ViewHolder holder, int position)
     {
-        Log.e("onBindViewHolder",""+totalBalance);
 
         holder.setIsRecyclable(false);
         holder.voucherNo.setText(inventorylist.get(holder.getAdapterPosition()).getVoucherNo());
         holder.transeName.setText(inventorylist.get(holder.getAdapterPosition()).getTranseNmae());
         holder.date_transe.setText(inventorylist.get(holder.getAdapterPosition()).getDate_voucher()+"");
-        if(inventorylist.get(holder.getAdapterPosition()).getDebit()!=0.0)
-        {
-            totalBalance+=inventorylist.get(holder.getAdapterPosition()).getDebit();
-        }
-
-        if(inventorylist.get(holder.getAdapterPosition()).getCredit()!=0.0)
-        {
-
-            totalBalance-=inventorylist.get(holder.getAdapterPosition()).getCredit();
-
-        }
 
         holder.debit.setText(inventorylist.get(holder.getAdapterPosition()).getDebit()+"");
         holder.credit.setText(inventorylist.get(holder.getAdapterPosition()).getCredit()+"");
-        holder.balance.setText(decimalFormat.format(totalBalance));
+        //holder.balance.setText(decimalFormat.format(totalBalance)));
 
         holder.linearLayout.setBackgroundColor(Color.parseColor(mColors[position % 2]));
         holder.linearLayout.setPadding(5 , 10, 5, 10);
-        Log.e("onBindViewHolder","=="+totalBalance);
-        total_qty_text.setText(totalBalance+"");
+
+        holder.balance.setText(convertToEnglish(decimalFormat.format(inventorylist.get(holder.getAdapterPosition()).getBalance())));
+        if(inventorylist.size()!=0)
+        {
+            total_qty_text.setText(convertToEnglish(decimalFormat.format(inventorylist.get(inventorylist.size()-1).getBalance())));
+        }
 
     }
 
@@ -78,18 +69,7 @@ public class AccountStatmentAdapter extends RecyclerView.Adapter<AccountStatment
     public int getItemCount() {
 
         return inventorylist.size();
-//
     }
-//    public  static int  TotalQtyInventoey()
-//    {
-//        for(int i=0;i<inventorylist.size();i++)
-//        {
-//            totalQty_inventory+=inventorylist.get(i).getQty();
-//
-//        }
-//        return totalQty_inventory;
-//
-//    }
 
     public  class  ViewHolder extends  RecyclerView.ViewHolder
     {
@@ -112,7 +92,10 @@ public class AccountStatmentAdapter extends RecyclerView.Adapter<AccountStatment
         }
     }
 
-
+    public String convertToEnglish(String value) {
+        String newValue = (((((((((((value + "").replaceAll("١", "1")).replaceAll("٢", "2")).replaceAll("٣", "3")).replaceAll("٤", "4")).replaceAll("٥", "5")).replaceAll("٦", "6")).replaceAll("٧", "7")).replaceAll("٨", "8")).replaceAll("٩", "9")).replaceAll("٠", "0").replaceAll("٫", "."));
+        return newValue;
+    }
 
 
 }
