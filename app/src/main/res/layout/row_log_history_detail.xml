@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="2dp">
+
+    <TableRow
+        android:id="@+id/table"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/itemNo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="ItemNo"
+
+            android:textColor="@color/colorblue_dark"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/itemName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/itemName"
+
+            android:textColor="@color/colorblue_dark"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/customerNo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="customer No"
+
+            android:textColor="@color/colorblue_dark"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/customerName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/customerName"
+
+            android:textColor="@color/colorblue_dark"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="price"
+
+            android:textColor="@color/colorblue_dark"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/priceB"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="price Before"
+
+            android:textColor="@color/colorblue_dark"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/discount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="discount "
+
+            android:textColor="@color/colorblue_dark"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/discountB"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="discount Before "
+
+            android:textColor="@color/colorblue_dark"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/otherDiscount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="other Discount "
+
+            android:textColor="@color/colorblue_dark"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/otherDiscountB"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="other Discount Before"
+
+            android:textColor="@color/colorblue_dark"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="status"
+
+            android:textColor="@color/colorblue_dark"
+            android:textSize="14sp" />
+
+    </TableRow>
+
+</LinearLayout>

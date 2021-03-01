@@ -41,7 +41,11 @@ public class GlobelFunction {
 
     public void getSalesManInfo(Context context,int flag){
 
-        importData.getSalesMan(context,flag);
+        if(flag!=90) {
+            importData.getSalesMan(context, flag);
+        }else {
+            importData.getAdmin(context, 0);
+        }
 
     }
 

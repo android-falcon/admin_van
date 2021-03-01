@@ -145,4 +145,9 @@
     <string name="TotalDebitF">TDebit F</string>
     <string name="TotalCreditF">TCredit F</string>
     <string name="search">Search</string>
+    <string name="addAdmin">Add Admin</string>
+    <string name="Validity">Validity</string>
+    <string name="user_no">User No</string>
+    <string name="userName">User Name</string>
+    <string name="log_history_report">Log History report</string>
 </resources>
