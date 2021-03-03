@@ -188,14 +188,7 @@ public class LogIn extends AppCompatActivity {
 
         adminName=userName_edit.getText().toString();
         adminId=password_edit.getText().toString();
-
-
-        try {
-            Log.e("goToMain1111", "onCreate = " + salesManInfoAdmin.getMakeOffer());
-        }catch (Exception e){
-
-        }
-        startservice();
+      //  startservice();
         finish();
         Intent i = new Intent(LogIn.this, HomeActivity.class);
         startActivity(i);

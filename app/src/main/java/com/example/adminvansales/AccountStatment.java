@@ -23,6 +23,8 @@ import com.example.adminvansales.Model.CustomerInfo;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 import static android.widget.LinearLayout.VERTICAL;
 import static com.example.adminvansales.ImportData.customername;
 import static com.example.adminvansales.ImportData.listCustomer;
@@ -98,16 +100,19 @@ public class AccountStatment extends AppCompatActivity {
                     fillAdapter();
                 }
                 }
+                if(s.toString().equals("Nodata"))
+                {
+                    showDialogNoData();
+
+                    fillAdapter();
+                }
             }
         });
 
         customerSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-
                 customerId= listCustomer.get(position).getCustomerNumber();
-                Log.e("onItemSelected",""+customerId);
             }
 
             @Override
@@ -116,6 +121,13 @@ public class AccountStatment extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void showDialogNoData() {
+        SweetAlertDialog sweet = new SweetAlertDialog(AccountStatment.this, SweetAlertDialog.NORMAL_TYPE);
+        sweet.setTitleText("No Data For This Customer");
+
+        sweet.show();
     }
 
     @SuppressLint("WrongConstant")
@@ -137,42 +149,6 @@ public class AccountStatment extends AppCompatActivity {
     }
 
     private void fillAdapter() {
-
-
-//        Account__Statment_Model accBalance=new Account__Statment_Model();
-//        accBalance.setVoucherNo("1002");
-//        accBalance.setTranseNmae("sale");
-//        accBalance.setDate_voucher("17/12");
-//        accBalance.setDebit(50);
-//        accBalance.setCredit(0);
-//        accBalance.setBalance(0);
-//        listAccountBalance.add(accBalance);
-//
-//        accBalance=new Account__Statment_Model();
-//        accBalance.setVoucherNo("1003");
-//        accBalance.setTranseNmae("sale");
-//        accBalance.setDate_voucher("17/12");
-//        accBalance.setDebit(100);
-//        accBalance.setCredit(0);
-//        accBalance.setBalance(0);
-//        listAccountBalance.add(accBalance);
-//
-//        accBalance=new Account__Statment_Model();
-//        accBalance.setVoucherNo("1003");
-//        accBalance.setTranseNmae("payment");
-//        accBalance.setDate_voucher("17/12");
-//        accBalance.setDebit(0);
-//        accBalance.setCredit(100);
-//        accBalance.setBalance(0);
-//        listAccountBalance.add(accBalance);
-//        accBalance=new Account__Statment_Model();
-//        accBalance.setVoucherNo("1003");
-//        accBalance.setTranseNmae("payment");
-//        accBalance.setDate_voucher("17/12");
-//        accBalance.setDebit(0);
-//        accBalance.setCredit(50);
-//        accBalance.setBalance(0);
-//        listAccountBalance.add(accBalance);
         AccountStatmentAdapter adapter = new AccountStatmentAdapter(listCustomerInfo, AccountStatment.this);
         recyclerView_report.setAdapter(adapter);
     }
