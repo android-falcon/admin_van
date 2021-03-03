@@ -96,6 +96,11 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden" />
 
+        <activity
+            android:name=".ItemReport"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden" />
+
         <service android:name=".LocationService"
             android:stopWithTask="false"
             />
