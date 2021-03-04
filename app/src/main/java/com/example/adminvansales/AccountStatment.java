@@ -102,9 +102,11 @@ public class AccountStatment extends AppCompatActivity {
                 }
                 if(s.toString().equals("Nodata"))
                 {
+                    Log.e("listCustomerInfo",""+listCustomerInfo.size());
+                    fillAdapter();
                     showDialogNoData();
 
-                    fillAdapter();
+
                 }
             }
         });
