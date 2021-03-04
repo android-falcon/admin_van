@@ -20,15 +20,19 @@ import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
+import static com.example.adminvansales.GlobelFunction.salesManInfoAdmin;
+
 public class SalesManAdapter extends RecyclerView.Adapter<SalesManAdapter.CViewHolderForbar> {
     Context context;
     List<SalesManInfo> list;
 //DatabaseHandler db;
+    GlobelFunction globelFunction;
 
     public SalesManAdapter(Context context, List<SalesManInfo> list) {
         this.context = context;
         this.list = list;
 //        db=new DatabaseHandler(this.context);
+        globelFunction=new GlobelFunction(context);
     }
 
     @NonNull
@@ -53,11 +57,14 @@ public class SalesManAdapter extends RecyclerView.Adapter<SalesManAdapter.CViewH
         cViewHolder.layBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent LogHistoryIntent = new Intent(context, EditSalesMan.class);
-                LogHistoryIntent.putExtra("FillData", "FillData");
-                LogHistoryIntent.putExtra("SalesManInfoL", list.get(i));
-                context.startActivity(LogHistoryIntent);
-
+                if(salesManInfoAdmin.getAddSalesMen()==1) {
+                    Intent LogHistoryIntent = new Intent(context, EditSalesMan.class);
+                    LogHistoryIntent.putExtra("FillData", "FillData");
+                    LogHistoryIntent.putExtra("SalesManInfoL", list.get(i));
+                    context.startActivity(LogHistoryIntent);
+                }else {
+                    globelFunction.AuthenticationMessage();
+                }
 
             }
         });

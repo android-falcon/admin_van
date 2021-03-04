@@ -45,6 +45,7 @@ import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
+import static com.example.adminvansales.GlobelFunction.salesManInfoAdmin;
 import static com.example.adminvansales.ImportData.listSalesMan;
 
 public class HomeActivity extends AppCompatActivity {
@@ -57,7 +58,7 @@ public class HomeActivity extends AppCompatActivity {
     Button locationButton, ReportButton, offerButton;
     LinearLayout ReportLinear;
     public static EditText editPassword;
-    TextView customerLogReport, paymentReport, cashReport, offerReport,LogReport,unCollectedCheques,analyzeAcountsReport;
+    TextView customerLogReport, paymentReport, cashReport, offerReport,LogReport,unCollectedCheques,analyzeAcountsReport,ItemReport;
 
 
     @Override
@@ -80,8 +81,13 @@ public class HomeActivity extends AppCompatActivity {
         addVanSales.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intentEditSales = new Intent(HomeActivity.this, EditSalesMan.class);
-                startActivity(intentEditSales);
+
+                if(salesManInfoAdmin.getAddAdmin()==1 || salesManInfoAdmin.getAddSalesMen()==1  ) {
+                    Intent intentEditSales = new Intent(HomeActivity.this, EditSalesMan.class);
+                    startActivity(intentEditSales);
+                }else {
+                   globelFunction. AuthenticationMessage();
+                }
             }
         });
 
@@ -99,6 +105,7 @@ public class HomeActivity extends AppCompatActivity {
         analyzeAcountsReport= findViewById(R.id.analyzeAcountsReport);
         offerReport = findViewById(R.id.offerReport);
         LogReport=findViewById(R.id.LogReport);
+        ItemReport=findViewById(R.id.ItemReport);
 
         waitList.addTextChangedListener(new TextWatcher() {
             @Override
@@ -126,9 +133,12 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent locationIntent = new Intent(HomeActivity.this, SalesmanMapsActivity.class);
-                startActivity(locationIntent);
-
+                if(salesManInfoAdmin.getSalesManLocation()==1) {
+                    Intent locationIntent = new Intent(HomeActivity.this, SalesmanMapsActivity.class);
+                    startActivity(locationIntent);
+                }else {
+                    globelFunction.AuthenticationMessage();
+                }
             }
         });
 
@@ -137,10 +147,17 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent offerIntent = new Intent(HomeActivity.this, OfferPriceList.class);
-                startActivity(offerIntent);
+                if(salesManInfoAdmin.getMakeOffer()==1) {
+                    Intent offerIntent = new Intent(HomeActivity.this, OfferPriceList.class);
+                    startActivity(offerIntent);
+                }else {
 
+
+                    globelFunction. AuthenticationMessage();
+
+                }
             }
+
         });
 
         ReportButton.setOnClickListener(new View.OnClickListener() {
@@ -157,9 +174,15 @@ public class HomeActivity extends AppCompatActivity {
         customerLogReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ReportLinear.setVisibility(View.GONE);
-                Intent locationIntent = new Intent(HomeActivity.this, CustomerLogReport.class);
-                startActivity(locationIntent);
+
+                if(salesManInfoAdmin.getCustomerReport()==1) {
+                    ReportLinear.setVisibility(View.GONE);
+                    Intent locationIntent = new Intent(HomeActivity.this, CustomerLogReport.class);
+                    startActivity(locationIntent);
+                }else {
+                    globelFunction. AuthenticationMessage();
+
+                }
 
             }
         });
@@ -167,60 +190,102 @@ public class HomeActivity extends AppCompatActivity {
         paymentReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ReportLinear.setVisibility(View.GONE);
-                Intent locationIntent = new Intent(HomeActivity.this, PaymentDetailsReport.class);
-                startActivity(locationIntent);
 
+                if(salesManInfoAdmin.getPaymentReport()==1) {
+                    ReportLinear.setVisibility(View.GONE);
+                    Intent locationIntent = new Intent(HomeActivity.this, PaymentDetailsReport.class);
+                    startActivity(locationIntent);
+                }else {
+                    globelFunction.AuthenticationMessage();
+
+                }
             }
         });
         cashReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ReportLinear.setVisibility(View.GONE);
-                Intent locationIntent = new Intent(HomeActivity.this, CashReport.class);
-                startActivity(locationIntent);
 
+                if(salesManInfoAdmin.getCashReport()==1) {
+                    ReportLinear.setVisibility(View.GONE);
+                    Intent locationIntent = new Intent(HomeActivity.this, CashReport.class);
+                    startActivity(locationIntent);
+
+                }else {
+                    globelFunction.  AuthenticationMessage();
+
+                }
             }
         });
         offerReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ReportLinear.setVisibility(View.GONE);
-                Intent listIntent = new Intent(HomeActivity.this, ListOfferReport.class);
-                startActivity(listIntent);
 
+                if(salesManInfoAdmin.getOfferReport()==1) {
+                    ReportLinear.setVisibility(View.GONE);
+                    Intent listIntent = new Intent(HomeActivity.this, ListOfferReport.class);
+                    startActivity(listIntent);
+                }else {
+                    globelFunction. AuthenticationMessage();
+
+                }
             }
         });
         LogReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ReportLinear.setVisibility(View.GONE);
-                Intent listIntent = new Intent(HomeActivity.this, LogHistoryReport.class);
-                startActivity(listIntent);
 
+                if(salesManInfoAdmin.getLogHistoryReport()==1) {
+                    ReportLinear.setVisibility(View.GONE);
+                    Intent listIntent = new Intent(HomeActivity.this, LogHistoryReport.class);
+                    startActivity(listIntent);
+                }else {
+                    globelFunction.AuthenticationMessage();
+
+                }
             }
         });
         unCollectedCheques.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ReportLinear.setVisibility(View.GONE);
-                Intent intent = new Intent(HomeActivity.this, UnCollectedData.class);
-                startActivity(intent);
 
+                if(salesManInfoAdmin.getUnCollectChequeReport()==1) {
+                    ReportLinear.setVisibility(View.GONE);
+                    Intent intent = new Intent(HomeActivity.this, UnCollectedData.class);
+                    startActivity(intent);
+                }else {
+                    globelFunction.   AuthenticationMessage();
+
+                }
             }
         });
         analyzeAcountsReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ReportLinear.setVisibility(View.GONE);
-                Intent intent = new Intent(HomeActivity.this, AnalyzeAccounts.class);
-                startActivity(intent);
 
+                if(salesManInfoAdmin.getAnalyzeCustomer()==1) {
+                    ReportLinear.setVisibility(View.GONE);
+                    Intent intent = new Intent(HomeActivity.this, AnalyzeAccounts.class);
+                    startActivity(intent);
+                }else {
+                    globelFunction. AuthenticationMessage();
+
+                }
             }
         });
 //        Analyze a customer's account
 
+        ItemReport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ReportLinear.setVisibility(View.GONE);
+                Intent intent = new Intent(HomeActivity.this, ItemReport.class);
+                startActivity(intent);
+
+            }
+        });
+
     }
+
 
     public void showAllSalesManData(List<SalesManInfo> listSalesMan) {
 //        picforbar = dbHandler.getAllAcCount();
@@ -260,9 +325,13 @@ public class HomeActivity extends AppCompatActivity {
             Intent i = new Intent(HomeActivity.this, MainActivity.class);
             startActivity(i);
         } else if (id == R.id.button_account) {
-            finish();
-            Intent i = new Intent(HomeActivity.this, AccountStatment.class);
-            startActivity(i);
+            if(salesManInfoAdmin.getAddSalesMen()==1) {
+                finish();
+                Intent i = new Intent(HomeActivity.this, AccountStatment.class);
+                startActivity(i);
+            }else {
+                globelFunction.AuthenticationMessage();
+            }
         }
         return super.
 
@@ -322,6 +391,8 @@ public class HomeActivity extends AppCompatActivity {
         ExportData exportData = new ExportData(HomeActivity.this);
         exportData.savePassowrdSetting(passowrd);
     }
+
+
 
 
 }
