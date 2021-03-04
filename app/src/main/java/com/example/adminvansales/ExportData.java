@@ -670,7 +670,7 @@ public class ExportData {
                     Toast.makeText(context, "UPDATE ADMIN SUCCESS", Toast.LENGTH_SHORT).show();
                     context.clearTextFun();
                     globelFunction.getSalesManInfo(context,90);
-
+                    globelFunction.updateAutho();
                 }
 //                progressDialog.dismiss();
             }

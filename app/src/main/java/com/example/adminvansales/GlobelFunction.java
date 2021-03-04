@@ -35,6 +35,7 @@ public class GlobelFunction {
     public static  SalesManInfo salesManInfoAdmin=new SalesManInfo();
 
     public static  List<LatLng> LatLngListMarker=new ArrayList<>();
+
     
     public static String adminId="",adminName="";
     public GlobelFunction(Context context) {
@@ -158,6 +159,12 @@ try {
                 })
                 .show();
 
+    }
+
+    void updateAutho(){
+
+        ImportData importData = new ImportData(context);
+        importData.GetAuthentication(context,adminName,adminId,1);
     }
 
 }

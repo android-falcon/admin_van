@@ -290,9 +290,9 @@ public class ImportData {
         new JSONTaskGetCustomerLogReport(context, SalesNo, fromDate, toDate).execute();
     }
 
-    public void GetAuthentication (Context context, String userName, String password){
+    public void GetAuthentication (Context context, String userName, String password,int flag){
 
-        new JSONTaskGetAuthentication(context, userName, password).execute();
+        new JSONTaskGetAuthentication(context, userName, password,flag).execute();
 
     }
 
@@ -3734,11 +3734,17 @@ public class ImportData {
     private class JSONTaskGetAuthentication extends AsyncTask<String, String, String> {
         Object context;
         String userName,password;
+        int flag;
 
 
-        public JSONTaskGetAuthentication(Object context,String userName , String password ) {
-//            this.flag=flag;
-            this.context = (LogIn) context;
+        public JSONTaskGetAuthentication(Object context,String userName , String password ,int flag) {
+          this.flag=flag;
+          if(flag==0) {
+              this.context = (LogIn) context;
+          }else if(flag==1){
+              this.context = (EditSalesMan) context;
+          }
+
             this.userName =userName;
             this.password = password;
 
@@ -3874,10 +3880,12 @@ public class ImportData {
                         salesManInfo.setCustomerReport(jsonObject1.getInt("CUSTOMER_LOG_REPORT"));
 
                         salesManInfoAdmin=salesManInfo;
-                        LogIn logIn= (LogIn) context;
-                        logIn.saveAuth(salesManInfo);
-                        logIn.goToMain();
 
+                        if(flag==0) {
+                            LogIn logIn = (LogIn) context;
+                            logIn.saveAuth(salesManInfo);
+                            logIn.goToMain();
+                        }
                     }
 
 
