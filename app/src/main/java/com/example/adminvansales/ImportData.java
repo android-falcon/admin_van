@@ -103,11 +103,10 @@ public class ImportData {
     private DataBaseHandler databaseHandler;
 
     private String URL_TO_HIT;
-    SweetAlertDialog pdValidation,pdPayments,pdAnalyze;
+    SweetAlertDialog pdValidation,pdPayments,pdAnalyze,pdAccountStatment;
     SweetAlertDialog pdValidationCustomer, pdValidationSerial, pdValidationItem,getPdValidationItemCard,getPdValidationLogHistory
             ,pdAuthentication,getPdValidationItemReport;
-    SweetAlertDialog pdValidation,pdPayments,pdAnalyze,pdAccountStatment;
-    SweetAlertDialog pdValidationCustomer, pdValidationSerial, pdValidationItem,getPdValidationItemCard,getPdValidationLogHistory;
+
     public static ArrayList<UnCollect_Modell> unCollectlList=new ArrayList<>();
     public static ArrayList<Payment> paymentChequesList=new ArrayList<>();
     Context main_context;
