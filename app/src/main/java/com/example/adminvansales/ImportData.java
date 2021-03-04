@@ -103,9 +103,9 @@ public class ImportData {
     private DataBaseHandler databaseHandler;
 
     private String URL_TO_HIT;
-    SweetAlertDialog pdValidation,pdPayments,pdAnalyze;
+    SweetAlertDialog pdValidation,pdPayments,pdAnalyze,pdAccountStatment;
     SweetAlertDialog pdValidationCustomer, pdValidationSerial, pdValidationItem,getPdValidationItemCard,getPdValidationLogHistory
-            ,pdAuthentication,getPdValidationItemReport,pdAccountStatment;
+            ,pdAuthentication,getPdValidationItemReport;
 
     public static ArrayList<UnCollect_Modell> unCollectlList=new ArrayList<>();
     public static ArrayList<Payment> paymentChequesList=new ArrayList<>();
