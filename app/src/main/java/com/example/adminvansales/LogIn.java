@@ -150,6 +150,24 @@ public class LogIn extends AppCompatActivity {
         if(!userName_edit.getText().toString().equals("")){
             if(!password_edit.getText().toString().equals("")){
                 if(userName_edit.getText().toString().equals("admin")&&password_edit.getText().toString().equals("100")) {
+
+                    SalesManInfo salesManInfo = new SalesManInfo();
+
+                    salesManInfo.setAddSalesMen(1);
+                    salesManInfo.setAddAdmin(1);
+                    salesManInfo.setAccountReport(1);
+                    salesManInfo.setPaymentReport(1);
+
+                    salesManInfo.setCashReport(1);
+                    salesManInfo.setUnCollectChequeReport(1);
+                    salesManInfo.setAnalyzeCustomer(1);
+                    salesManInfo.setLogHistoryReport(1);
+                    salesManInfo.setOfferReport(1);
+                    salesManInfo.setSalesManLocation(1);
+                    salesManInfo.setMakeOffer(1);
+                    salesManInfo.setCustomerReport(1);
+
+                    saveAuth(salesManInfo);
                         goToMain();
                 }else {
 
