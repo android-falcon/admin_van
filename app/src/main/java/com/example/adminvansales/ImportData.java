@@ -105,9 +105,8 @@ public class ImportData {
     private String URL_TO_HIT;
     SweetAlertDialog pdValidation,pdPayments,pdAnalyze;
     SweetAlertDialog pdValidationCustomer, pdValidationSerial, pdValidationItem,getPdValidationItemCard,getPdValidationLogHistory
-            ,pdAuthentication,getPdValidationItemReport;
-    SweetAlertDialog pdValidation,pdPayments,pdAnalyze,pdAccountStatment;
-    SweetAlertDialog pdValidationCustomer, pdValidationSerial, pdValidationItem,getPdValidationItemCard,getPdValidationLogHistory;
+            ,pdAuthentication,getPdValidationItemReport,pdAccountStatment;
+
     public static ArrayList<UnCollect_Modell> unCollectlList=new ArrayList<>();
     public static ArrayList<Payment> paymentChequesList=new ArrayList<>();
     Context main_context;
