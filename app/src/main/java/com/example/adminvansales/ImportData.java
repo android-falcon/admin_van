@@ -106,6 +106,8 @@ public class ImportData {
     SweetAlertDialog pdValidation,pdPayments,pdAnalyze;
     SweetAlertDialog pdValidationCustomer, pdValidationSerial, pdValidationItem,getPdValidationItemCard,getPdValidationLogHistory
             ,pdAuthentication,getPdValidationItemReport;
+    SweetAlertDialog pdValidation,pdPayments,pdAnalyze,pdAccountStatment;
+    SweetAlertDialog pdValidationCustomer, pdValidationSerial, pdValidationItem,getPdValidationItemCard,getPdValidationLogHistory;
     public static ArrayList<UnCollect_Modell> unCollectlList=new ArrayList<>();
     public static ArrayList<Payment> paymentChequesList=new ArrayList<>();
     Context main_context;
@@ -1544,6 +1546,11 @@ public class ImportData {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            pdAccountStatment = new SweetAlertDialog(main_context, SweetAlertDialog.PROGRESS_TYPE);
+            pdAccountStatment.getProgressHelper().setBarColor(Color.parseColor("#FDD835"));
+            pdAccountStatment.setTitleText(main_context.getResources().getString(R.string.process));
+            pdAccountStatment.setCancelable(false);
+            pdAccountStatment.show();
             String do_ = "my";
 
         }
@@ -1571,7 +1578,7 @@ public class ImportData {
                Log.e("URL_TO_HIT","account="+URL_TO_HIT);
                 }
             } catch (Exception e) {
-
+                pdAccountStatment.dismissWithAnimation();
             }
 
             try {
@@ -1620,7 +1627,7 @@ public class ImportData {
                 Handler h = new Handler(Looper.getMainLooper());
                 h.post(new Runnable() {
                     public void run() {
-
+                        pdAccountStatment.dismissWithAnimation();
                         Toast.makeText(main_context, "Ip Connection Failed ", Toast.LENGTH_LONG).show();
                     }
                 });
@@ -1629,6 +1636,7 @@ public class ImportData {
                 return null;
             } catch (Exception e) {
                 e.printStackTrace();
+                pdAccountStatment.dismissWithAnimation();
 //                progressDialog.dismiss();
                 return null;
             }
@@ -1637,9 +1645,10 @@ public class ImportData {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-
+            pdAccountStatment.dismissWithAnimation();
             JSONObject result = null;
             String impo = "";
+            listCustomerInfo = new ArrayList<>();
             Log.e("URL_TO_HIT","account"+s.toString());
             if (s != null) {
                 if (s.contains("VHFNo")) {
@@ -1652,7 +1661,7 @@ public class ImportData {
 
 
                         JSONArray requestArray = null;
-                        listCustomerInfo = new ArrayList<>();
+                       // listCustomerInfo = new ArrayList<>();
                         double totalBalance=0;
                         requestArray = new JSONArray(s);
                         Log.e("requestArray", "" + requestArray.length());
