@@ -173,7 +173,7 @@ public class LogIn extends AppCompatActivity {
 
 
                ImportData importData = new ImportData(LogIn.this);
-               importData.GetAuthentication(LogIn.this,userName_edit.getText().toString(),password_edit.getText().toString());
+               importData.GetAuthentication(LogIn.this,userName_edit.getText().toString(),password_edit.getText().toString(),0);
 
                 }
             }else {
@@ -201,8 +201,6 @@ public class LogIn extends AppCompatActivity {
     }
 
     public void goToMain() {
-
-
 
         adminName=userName_edit.getText().toString();
         adminId=password_edit.getText().toString();

@@ -22,6 +22,8 @@ import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
+import static com.example.adminvansales.GlobelFunction.adminId;
+import static com.example.adminvansales.GlobelFunction.adminName;
 import static com.example.adminvansales.GlobelFunction.salesManInfoAdmin;
 import static com.example.adminvansales.GlobelFunction.salesManInfosList;
 
@@ -618,6 +620,8 @@ public class EditSalesMan extends AppCompatActivity {
             salesName.setError("Required!");
         }
     }
+
+
 
     void clearTextFun() {
         isUpdate = 0;
