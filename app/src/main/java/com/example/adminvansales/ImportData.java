@@ -234,6 +234,7 @@ public class ImportData {
         new JSONTaskMaxSerial(context).execute();
     }
     public void getItemReport(Context context,String fromDate,String toDate,String salesNo) {
+        Log.e("getItemReport","fromDate="+fromDate+"toDate="+toDate+"salesNo="+salesNo);
         new JSONTaskGetItemReport(context,fromDate,toDate,salesNo).execute();
     }
 
@@ -3956,7 +3957,7 @@ public class ImportData {
                 nameValuePairs.add(new BasicNameValuePair("FROM_DATE", fromDate));
                 nameValuePairs.add(new BasicNameValuePair("TO_DATE", toDate));
                 nameValuePairs.add(new BasicNameValuePair("SALES_NO",salesNo));
-
+                Log.e("getItemReport","BasicNameValuePair\t fromDate="+fromDate+"toDate="+toDate+"salesNo="+salesNo);
 
                 request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
 

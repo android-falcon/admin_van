@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -21,6 +22,7 @@ import com.example.adminvansales.Model.Account__Statment_Model;
 import com.example.adminvansales.Model.CustomerInfo;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
@@ -42,6 +44,7 @@ public class AccountStatment extends AppCompatActivity {
      Spinner customerSpinner;
      String customerId="";
      public  static  TextView total_qty_text;
+    public   EditText listSearch;
     @SuppressLint("WrongConstant")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,9 +146,36 @@ public class AccountStatment extends AppCompatActivity {
         layoutManager.setOrientation(VERTICAL);
         recyclerView_report.setLayoutManager(layoutManager);
         total_qty_text=findViewById(R.id.total_qty_text);
+        listSearch=findViewById(R.id.listSearch);
+
+        listSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                if(!s.toString().equals(""))
+                {
+                    searchInSpinerCustomer();
+                }
+
+
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     private void fillCustomerSpenner() {
+//        customername.sort(String::compareToIgnoreCase);
+        Collections.sort(customername, String.CASE_INSENSITIVE_ORDER);
         final ArrayAdapter<String> ad = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, customername);
         customerSpinner.setAdapter(ad);
     }
@@ -153,6 +183,20 @@ public class AccountStatment extends AppCompatActivity {
     private void fillAdapter() {
         AccountStatmentAdapter adapter = new AccountStatmentAdapter(listCustomerInfo, AccountStatment.this);
         recyclerView_report.setAdapter(adapter);
+    }
+    private void searchInSpinerCustomer() {
+        String name="";
+        if (!listSearch.getText().toString().equals("")) {
+            name=listSearch.getText().toString();
+            for (int i=0;i<customername.size();i++)
+            {
+                if(customername.get(i).toUpperCase().contains(name)||customername.get(i).toLowerCase().contains(name))
+                {
+                    customerId= listCustomer.get(i).getCustomerNumber();
+                    customerSpinner.setSelection(i);
+                }
+            }
+        }
     }
 
     @Override
