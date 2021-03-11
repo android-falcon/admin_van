@@ -32,6 +32,7 @@ public class ItemReport extends AppCompatActivity {
     ImportData importData;
     GlobelFunction globelFunction;
     ArrayAdapter<String>salesNameSpinnerAdapter ;
+   static TextView total_item_qty;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +43,10 @@ public class ItemReport extends AppCompatActivity {
     }
 
     void initial() {
+
+
+        total_item_qty=findViewById(R.id.total_itemqty_text);
+
         globelFunction = new GlobelFunction(ItemReport.this);
         itemReportModelsList = new ArrayList<>();
         fromDate = findViewById(R.id.from_date_r);
@@ -65,16 +70,21 @@ public class ItemReport extends AppCompatActivity {
 
                 int positionSales = salesManSpinner.getSelectedItemPosition();
 //
+
                 String salesNo;
                 if (positionSales == 0 || positionSales == -1) {
                     salesNo = "-1";
                     Log.e("salesNo-1", "" + salesNo + "  ");
                     importData.getItemReport(ItemReport.this,fromDate.getText().toString(),toDate.getText().toString(),"-1");
+
                 } else {
                     salesNo = salesManInfosList.get(positionSales - 1).getSalesManNo();
                     Log.e("salesNo", "" + salesNo + "   name ===> " + salesManInfosList.get(positionSales - 1).getSalesName() + "    " + positionSales);
                     importData.getItemReport(ItemReport.this, fromDate.getText().toString(), toDate.getText().toString(), salesNo);
+
                 }
+
+
             }
         });
 
@@ -113,6 +123,22 @@ public class ItemReport extends AppCompatActivity {
             salesManSpinner.setAdapter(salesNameSpinnerAdapter);
 
         }
+
+        public static void totalqty(){
+            total_item_qty.setText("0");
+           int sum=0;
+            for (int i=0;i<itemReportModelsList.size();i++)
+                sum+=Integer.parseInt(itemReportModelsList.get(i).getQty());
+            total_item_qty.setText(sum+"");
+
+        }
+
+
+
+
+
+
+
 
     }
 

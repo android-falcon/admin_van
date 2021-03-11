@@ -4036,6 +4036,7 @@ public class ImportData {
                     //Log.e("LOG_DETAIL", "LOG_DETAIL"+itemReportModelsList.size());
                     ItemReport itemReport = (ItemReport) context;
                     itemReport.fillItemAdapter();
+                    itemReport.totalqty();
                     getPdValidationItemReport.dismissWithAnimation();
 
 
@@ -4045,6 +4046,7 @@ public class ImportData {
 //                    offerPriceList.fillItemCard();
                     ItemReport itemReport = (ItemReport) context;
                     itemReport.fillItemAdapter();
+                    itemReport.totalqty();
                     getPdValidationItemReport.dismissWithAnimation();
                     //Log.e("item_customer", "SalesManNo2");
 

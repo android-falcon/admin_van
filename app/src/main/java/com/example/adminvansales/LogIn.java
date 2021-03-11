@@ -147,9 +147,9 @@ public class LogIn extends AppCompatActivity {
 //        }
 
 
-        if(!userName_edit.getText().toString().equals("")){
-            if(!password_edit.getText().toString().equals("")){
-                if(userName_edit.getText().toString().equals("admin")&&password_edit.getText().toString().equals("100")) {
+        if(!userName_edit.getText().toString().trim().equals("")){
+            if(!password_edit.getText().toString().trim().equals("")){
+                if(userName_edit.getText().toString().trim().equals("admin")&&password_edit.getText().toString().trim().equals("100")) {
 
                     SalesManInfo salesManInfo = new SalesManInfo();
 
