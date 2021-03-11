@@ -790,7 +790,7 @@ public class ImportData {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            String do_ = "my";
+            String do_ ="my";
             pdValidation = new SweetAlertDialog(main_context, SweetAlertDialog.PROGRESS_TYPE);
             pdValidation.getProgressHelper().setBarColor(Color.parseColor("#FDD835"));
             pdValidation.setTitleText(main_context.getResources().getString(R.string.process));
