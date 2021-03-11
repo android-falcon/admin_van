@@ -22,33 +22,37 @@ import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
+import static com.example.adminvansales.GlobelFunction.adminId;
+import static com.example.adminvansales.GlobelFunction.adminName;
+import static com.example.adminvansales.GlobelFunction.salesManInfoAdmin;
 import static com.example.adminvansales.GlobelFunction.salesManInfosList;
 
 public class EditSalesMan extends AppCompatActivity {
-ListView salesManList;
-SalesMenListAdapter salesMenListAdapter;
-GlobelFunction globelFunction;
-TextView salesNo,clearText,sales,addAdmin;
-EditText salesName,password,searchSalesMan,fVSerial,tVSerial,tRSerial,fRSerial,fSSerial,tSSerial;
-Button addButton,updateButton;
-CheckBox activeCheck;
-int AdminSales=1;//1 sales 2 ADMIN
-    public  static  List<SalesManInfo> AdminInfoList;
+    ListView salesManList;
+    SalesMenListAdapter salesMenListAdapter;
+    GlobelFunction globelFunction;
+    TextView salesNo, clearText, sales, addAdmin;
+    EditText salesName, password, searchSalesMan, fVSerial, tVSerial, tRSerial, fRSerial, fSSerial, tSSerial;
+    Button addButton, updateButton;
+    CheckBox activeCheck;
+    int AdminSales = 1;//1 sales 2 ADMIN
+    public static List<SalesManInfo> AdminInfoList;
     LinearLayout validityLinear;
 
-    CheckBox AddSalesCheckBox,AddAdminCheckBox,makeOfferCheckBox,
-            offerReportCheckBox,accountRCheckBox,paymentRCheckBox,CustomerCheckBox,
-            CashRCheckBox,LocationCheckBox,UncollectedRCheckBox,analyzeRCheckBox,
-            LogHistoryRCheckBox,AllChecked;
-int isUpdate=0;
+    CheckBox AddSalesCheckBox, AddAdminCheckBox, makeOfferCheckBox,
+            offerReportCheckBox, accountRCheckBox, paymentRCheckBox, CustomerCheckBox,
+            CashRCheckBox, LocationCheckBox, UncollectedRCheckBox, analyzeRCheckBox,
+            LogHistoryRCheckBox, AllChecked;
+    int isUpdate = 0;
     String intentEdit;
     SalesManInfo SalesManInfoFill;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_sales_man);
         initial();
-        SalesManInfoFill=new SalesManInfo();
+        SalesManInfoFill = new SalesManInfo();
         intentEdit = getIntent().getStringExtra("FillData");
         SalesManInfoFill = (SalesManInfo) getIntent().getSerializableExtra("SalesManInfoL");
         if (intentEdit != null && intentEdit.equals("FillData")) {
@@ -56,17 +60,18 @@ int isUpdate=0;
         }
 
 
-        globelFunction=new GlobelFunction(EditSalesMan.this);
-        globelFunction.getSalesManInfo(EditSalesMan.this,0);
+        globelFunction = new GlobelFunction(EditSalesMan.this);
+        globelFunction.getSalesManInfo(EditSalesMan.this, 0);
 
     }
 
-    public void  fillList(List <SalesManInfo>adapterList){
-        salesMenListAdapter=new SalesMenListAdapter(EditSalesMan.this,adapterList);
+    public void fillList(List<SalesManInfo> adapterList) {
+        salesMenListAdapter = new SalesMenListAdapter(EditSalesMan.this, adapterList);
         salesManList.setAdapter(salesMenListAdapter);
     }
-    public void fillEditText(SalesManInfo salesManInfo){
-        isUpdate=1;
+
+    public void fillEditText(SalesManInfo salesManInfo) {
+        isUpdate = 1;
         ChangeBetweenAdminSales(AdminSales);
         addButton.setEnabled(false);
         salesName.setText(salesManInfo.getSalesName());
@@ -79,34 +84,103 @@ int isUpdate=0;
 //        fSSerial.setText(salesManInfo.getFstockSerial());
 //        tSSerial.setText(salesManInfo.gettStockSerial());
 
-        if(salesManInfo.getActive().equals("0")) {
+        if (AdminSales == 2) {
+            if (salesManInfo.getAddSalesMen() == 1) {
+                AddSalesCheckBox.setChecked(true);
+            } else {
+                AddSalesCheckBox.setChecked(false);
+            }
+
+            if (salesManInfo.getMakeOffer() == 1) {
+                makeOfferCheckBox.setChecked(true);
+            } else {
+                makeOfferCheckBox.setChecked(false);
+            }
+
+            if (salesManInfo.getOfferReport() == 1) {
+                offerReportCheckBox.setChecked(true);
+            } else {
+                offerReportCheckBox.setChecked(false);
+            }
+            if (salesManInfo.getAccountReport() == 1) {
+                accountRCheckBox.setChecked(true);
+            } else {
+                accountRCheckBox.setChecked(false);
+            }
+            if (salesManInfo.getPaymentReport() == 1) {
+                paymentRCheckBox.setChecked(true);
+            } else {
+                paymentRCheckBox.setChecked(false);
+            }
+            if (salesManInfo.getCustomerReport() == 1) {
+                CustomerCheckBox.setChecked(true);
+            } else {
+                CustomerCheckBox.setChecked(false);
+            }
+            if (salesManInfo.getCashReport() == 1) {
+                CashRCheckBox.setChecked(true);
+            } else {
+                CashRCheckBox.setChecked(false);
+            }
+            if (salesManInfo.getSalesManLocation() == 1) {
+                LocationCheckBox.setChecked(true);
+            } else {
+                LocationCheckBox.setChecked(false);
+            }
+            if (salesManInfo.getUnCollectChequeReport() == 1) {
+                UncollectedRCheckBox.setChecked(true);
+            } else {
+                UncollectedRCheckBox.setChecked(false);
+            }
+
+            if (salesManInfo.getAnalyzeCustomer() == 1) {
+                analyzeRCheckBox.setChecked(true);
+            } else {
+                analyzeRCheckBox.setChecked(false);
+            }
+
+            if (salesManInfo.getLogHistoryReport() == 1) {
+                LogHistoryRCheckBox.setChecked(true);
+            } else {
+                LogHistoryRCheckBox.setChecked(false);
+            }
+            if (salesManInfo.getAddAdmin() == 1) {
+                AddAdminCheckBox.setChecked(true);
+            } else {
+                AddAdminCheckBox.setChecked(false);
+            }
+
+
+        }
+
+        if (salesManInfo.getActive().equals("0")) {
             activeCheck.setChecked(false);
-        }else {
+        } else {
             activeCheck.setChecked(true);
         }
     }
 
     private void initial() {
-        salesManList=findViewById(R.id.salesManList);
-        salesMenListAdapter=new SalesMenListAdapter();
-        AdminInfoList=new ArrayList<>();
-        salesName=findViewById(R.id.salesName);
-        password=findViewById(R.id.password);
-        salesNo=findViewById(R.id.salesNo);
-        searchSalesMan=findViewById(R.id.searchSalesMan);
-        clearText=findViewById(R.id.clearText);
-        addButton=findViewById(R.id.addButton);
-        updateButton=findViewById(R.id.updateButton);
-        activeCheck=findViewById(R.id.ActiveCheck);
-        fVSerial=findViewById(R.id.FVserial);
-        tVSerial=findViewById(R.id.TVserial);
-        tRSerial=findViewById(R.id.FRserial);
-        fRSerial=findViewById(R.id.TRserial);
-        fSSerial=findViewById(R.id.FstockSerial);
-        tSSerial=findViewById(R.id.TstockSerial);
-        sales=findViewById(R.id.sales);
-        addAdmin=findViewById(R.id.addAdmin);
-        validityLinear=findViewById(R.id.validityLinear);
+        salesManList = findViewById(R.id.salesManList);
+        salesMenListAdapter = new SalesMenListAdapter();
+        AdminInfoList = new ArrayList<>();
+        salesName = findViewById(R.id.salesName);
+        password = findViewById(R.id.password);
+        salesNo = findViewById(R.id.salesNo);
+        searchSalesMan = findViewById(R.id.searchSalesMan);
+        clearText = findViewById(R.id.clearText);
+        addButton = findViewById(R.id.addButton);
+        updateButton = findViewById(R.id.updateButton);
+        activeCheck = findViewById(R.id.ActiveCheck);
+        fVSerial = findViewById(R.id.FVserial);
+        tVSerial = findViewById(R.id.TVserial);
+        tRSerial = findViewById(R.id.FRserial);
+        fRSerial = findViewById(R.id.TRserial);
+        fSSerial = findViewById(R.id.FstockSerial);
+        tSSerial = findViewById(R.id.TstockSerial);
+        sales = findViewById(R.id.sales);
+        addAdmin = findViewById(R.id.addAdmin);
+        validityLinear = findViewById(R.id.validityLinear);
 
         AddSalesCheckBox = findViewById(R.id.AddSalesCheckBox);
         AddAdminCheckBox = findViewById(R.id.AddAdminCheckBox);
@@ -120,7 +194,7 @@ int isUpdate=0;
         UncollectedRCheckBox = findViewById(R.id.UncollectedRCheckBox);
         analyzeRCheckBox = findViewById(R.id.analyzeRCheckBox);
         LogHistoryRCheckBox = findViewById(R.id.LogHistoryRCheckBox);
-        AllChecked=findViewById(R.id.AllChecked);
+        AllChecked = findViewById(R.id.AllChecked);
         AllChecked.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -137,7 +211,7 @@ int isUpdate=0;
     }
 
 
-    TextWatcher textWatcher=new TextWatcher() {
+    TextWatcher textWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -156,29 +230,29 @@ int isUpdate=0;
         }
     };
 
-    View.OnClickListener onClick=new View.OnClickListener() {
+    View.OnClickListener onClick = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
 
-            switch (view.getId()){
+            switch (view.getId()) {
 
                 case R.id.clearText:
                     clearTextFun();
                     break;
                 case R.id.addButton:
-                    String s="";
-                    if(AdminSales==1){
+                    String s = "";
+                    if (AdminSales == 1) {
                         addSalesMan();
 
-                    }else if (AdminSales==2){
+                    } else if (AdminSales == 2) {
                         addAdmin();
                     }
                     break;
                 case R.id.updateButton:
-                    if(AdminSales==1){
+                    if (AdminSales == 1) {
                         updateSaleMan();
 
-                    }else if (AdminSales==2){
+                    } else if (AdminSales == 2) {
                         updateAdmin();
                     }
                     break;
@@ -195,7 +269,7 @@ int isUpdate=0;
         }
     };
 
-    void alertMessage(final int adminSales){
+    void alertMessage(final int adminSales) {
         new SweetAlertDialog(EditSalesMan.this, SweetAlertDialog.WARNING_TYPE)
                 .setTitleText("This Change clear all text ")
                 .setContentText("")
@@ -216,42 +290,48 @@ int isUpdate=0;
                 .show();
 
 
+    }
+
+    void ChangeBetweenAdminSales(final int adminSales) {
+
+        clearTextFun();
+        if (adminSales == 1) {
+            if (salesManInfoAdmin.getAddSalesMen() == 1) {
+                AdminSales = 1;
+                fillList(salesManInfosList);
+                validityLinear.setVisibility(View.GONE);
+                sales.setBackground(EditSalesMan.this.getResources().getDrawable(R.drawable.activite_bac_button));
+                addAdmin.setBackground(null);
+            } else {
+                globelFunction.AuthenticationMessage();
+            }
+        } else if (adminSales == 2) {
+            if (salesManInfoAdmin.getAddAdmin() == 1) {
+                AdminSales = 2;
+                fillList(AdminInfoList);
+                ImportData importData = new ImportData(EditSalesMan.this);
+                importData.getAdmin(EditSalesMan.this, 0);
+                validityLinear.setVisibility(View.VISIBLE);
+                addAdmin.setBackground(EditSalesMan.this.getResources().getDrawable(R.drawable.activite_bac_button_ri));
+                sales.setBackground(null);
+            } else {
+                globelFunction.AuthenticationMessage();
+            }
+        }
 
     }
 
-    void ChangeBetweenAdminSales(final int adminSales){
 
-                        clearTextFun();
-                        if(adminSales==1){
-                            AdminSales=1;
-                            fillList(salesManInfosList);
-                            validityLinear.setVisibility(View.GONE);
-                            sales.setBackground(EditSalesMan.this.getResources().getDrawable(R.drawable.activite_bac_button));
-                            addAdmin.setBackground(null);
+    void addSalesMan() {
 
-                        }else if(adminSales==2){
-                            AdminSales=2;
-                            fillList(AdminInfoList);
-                            ImportData importData=new ImportData(EditSalesMan.this);
-                            importData.getAdmin(EditSalesMan.this,0);
-                            validityLinear.setVisibility(View.VISIBLE);
-                            addAdmin.setBackground(EditSalesMan.this.getResources().getDrawable(R.drawable.activite_bac_button_ri));
-                            sales.setBackground(null);
-
-                        }
-
-    }
-
-    void addSalesMan(){
-
-        if(!salesName.getText().toString().equals("")) {
-            if(!password.getText().toString().equals("")) {
-                if(!fVSerial.getText().toString().equals("")) {
-                    if(!tVSerial.getText().toString().equals("")) {
-                        if(!fRSerial.getText().toString().equals("")) {
-                            if(!tRSerial.getText().toString().equals("")) {
-                                if(!fSSerial.getText().toString().equals("")) {
-                                    if(!tSSerial.getText().toString().equals("")) {
+        if (!salesName.getText().toString().equals("")) {
+            if (!password.getText().toString().equals("")) {
+                if (!fVSerial.getText().toString().equals("")) {
+                    if (!tVSerial.getText().toString().equals("")) {
+                        if (!fRSerial.getText().toString().equals("")) {
+                            if (!tRSerial.getText().toString().equals("")) {
+                                if (!fSSerial.getText().toString().equals("")) {
+                                    if (!tSSerial.getText().toString().equals("")) {
 
                                         new SweetAlertDialog(EditSalesMan.this, SweetAlertDialog.WARNING_TYPE)
                                                 .setTitleText("Add Sales Men")
@@ -290,101 +370,41 @@ int isUpdate=0;
                                                     }
                                                 })
                                                 .show();
-                                    }else{
+                                    } else {
                                         tSSerial.setError("Required!");
-                                }   }else{
+                                    }
+                                } else {
                                     fSSerial.setError("Required!");
-                                }   }else{
+                                }
+                            } else {
                                 tRSerial.setError("Required!");
-                            }   }else{
+                            }
+                        } else {
                             fRSerial.setError("Required!");
-                        }   }else{
+                        }
+                    } else {
                         tVSerial.setError("Required!");
-                    }   }else{
+                    }
+                } else {
                     fVSerial.setError("Required!");
                 }
-            }else {
+            } else {
                 password.setError("Required!");
             }
-        }else {
+        } else {
             salesName.setError("Required!");
         }
 
     }
 
-    void addAdmin(){
+    void addAdmin() {
 
-        if(!salesName.getText().toString().equals("")) {
-            if(!password.getText().toString().equals("")) {
-
-
-                                        new SweetAlertDialog(EditSalesMan.this, SweetAlertDialog.WARNING_TYPE)
-                                                .setTitleText("Add Admin")
-                                                .setContentText("")
-                                                .setCancelButton("cancel", new SweetAlertDialog.OnSweetClickListener() {
-                                                    @Override
-                                                    public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                                        sweetAlertDialog.dismissWithAnimation();
-                                                    }
-                                                })
-                                                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                                    @Override
-                                                    public void onClick(SweetAlertDialog sweetAlertDialog) {
-
-                                                        SalesManInfo salesManInfo = new SalesManInfo();
-                                                        salesManInfo.setSalesPassword(password.getText().toString());
-                                                        salesManInfo.setSalesName(salesName.getText().toString());
-                                                        salesManInfo.setSalesManNo(salesNo.getText().toString());
+        if (!salesName.getText().toString().equals("")) {
+            if (!password.getText().toString().equals("")) {
 
 
-                                                        if (activeCheck.isChecked()) {
-                                                            salesManInfo.setActive("1");
-                                                        } else {
-                                                            salesManInfo.setActive("0");
-                                                        }
-
-                                                        if (AddAdminCheckBox.isChecked()) salesManInfo.setAddAdmin(1); else  salesManInfo.setAddAdmin(0);
-                                                        if (AddSalesCheckBox.isChecked()) salesManInfo.setAddSalesMen(1); else  salesManInfo.setAddSalesMen(0);
-                                                        if (makeOfferCheckBox.isChecked()) salesManInfo.setMakeOffer(1); else  salesManInfo.setMakeOffer(0);
-                                                        if (offerReportCheckBox.isChecked()) salesManInfo.setOfferReport(1); else  salesManInfo.setOfferReport(0);
-                                                        if (accountRCheckBox.isChecked()) salesManInfo.setAccountReport(1); else  salesManInfo.setAccountReport(0);
-                                                        if (paymentRCheckBox.isChecked()) salesManInfo.setPaymentReport(1); else  salesManInfo.setPaymentReport(0);
-                                                        if (CustomerCheckBox.isChecked()) salesManInfo.setCustomerReport(1); else  salesManInfo.setCustomerReport(0);
-                                                        if (CashRCheckBox.isChecked()) salesManInfo.setCashReport(1); else  salesManInfo.setCashReport(0);
-                                                        if (LocationCheckBox.isChecked()) salesManInfo.setSalesManLocation(1); else  salesManInfo.setSalesManLocation(0);
-                                                        if (UncollectedRCheckBox.isChecked()) salesManInfo.setUnCollectChequeReport(1); else  salesManInfo.setUnCollectChequeReport(0);
-                                                        if (analyzeRCheckBox.isChecked()) salesManInfo.setAnalyzeCustomer(1); else  salesManInfo.setAnalyzeCustomer(0);
-                                                        if (LogHistoryRCheckBox.isChecked()) salesManInfo.setLogHistoryReport(1); else  salesManInfo.setLogHistoryReport(0);
-
-
-                                                        ExportData exportData = new ExportData(EditSalesMan.this);
-                                                        exportData.AddAdmins(EditSalesMan.this, salesManInfo.getJsonObjectAdmin());
-                                                        sweetAlertDialog.dismissWithAnimation();
-
-
-                                                    }
-                                                })
-                                                .show();
-            }else {
-                password.setError("Required!");
-            }
-        }else {
-            salesName.setError("Required!");
-        }
-
-    }
-
-    void updateSaleMan(){
-        if(!salesName.getText().toString().equals("")) {
-            if(!password.getText().toString().equals("")) {
-                if(!fVSerial.getText().toString().equals("")) {
-                    if(!tVSerial.getText().toString().equals("")) {
-                        if(!fRSerial.getText().toString().equals("")) {
-                            if(!tRSerial.getText().toString().equals("")) {
-                                if(!fSSerial.getText().toString().equals("")) {
-                                    if(!tSSerial.getText().toString().equals("")) {
                 new SweetAlertDialog(EditSalesMan.this, SweetAlertDialog.WARNING_TYPE)
-                        .setTitleText("Update Sales Men")
+                        .setTitleText("Add Admin")
                         .setContentText("")
                         .setCancelButton("cancel", new SweetAlertDialog.OnSweetClickListener() {
                             @Override
@@ -400,54 +420,72 @@ int isUpdate=0;
                                 salesManInfo.setSalesPassword(password.getText().toString());
                                 salesManInfo.setSalesName(salesName.getText().toString());
                                 salesManInfo.setSalesManNo(salesNo.getText().toString());
-                                salesManInfo.setfVoucherSerial(fVSerial.getText().toString());
-                                salesManInfo.settVoucherSerial(tVSerial.getText().toString());
-                                salesManInfo.setfReturnSerial(fRSerial.getText().toString());
-                                salesManInfo.settReturnSerial(tRSerial.getText().toString());
-                                salesManInfo.setFstockSerial(fSSerial.getText().toString());
-                                salesManInfo.settStockSerial(tSSerial.getText().toString());
 
-                                if(activeCheck.isChecked()) {
+
+                                if (activeCheck.isChecked()) {
                                     salesManInfo.setActive("1");
-                                }else {
+                                } else {
                                     salesManInfo.setActive("0");
                                 }
+
+                                if (AddAdminCheckBox.isChecked()) salesManInfo.setAddAdmin(1);
+                                else salesManInfo.setAddAdmin(0);
+                                if (AddSalesCheckBox.isChecked()) salesManInfo.setAddSalesMen(1);
+                                else salesManInfo.setAddSalesMen(0);
+                                if (makeOfferCheckBox.isChecked()) salesManInfo.setMakeOffer(1);
+                                else salesManInfo.setMakeOffer(0);
+                                if (offerReportCheckBox.isChecked()) salesManInfo.setOfferReport(1);
+                                else salesManInfo.setOfferReport(0);
+                                if (accountRCheckBox.isChecked()) salesManInfo.setAccountReport(1);
+                                else salesManInfo.setAccountReport(0);
+                                if (paymentRCheckBox.isChecked()) salesManInfo.setPaymentReport(1);
+                                else salesManInfo.setPaymentReport(0);
+                                if (CustomerCheckBox.isChecked()) salesManInfo.setCustomerReport(1);
+                                else salesManInfo.setCustomerReport(0);
+                                if (CashRCheckBox.isChecked()) salesManInfo.setCashReport(1);
+                                else salesManInfo.setCashReport(0);
+                                if (LocationCheckBox.isChecked())
+                                    salesManInfo.setSalesManLocation(1);
+                                else salesManInfo.setSalesManLocation(0);
+                                if (UncollectedRCheckBox.isChecked())
+                                    salesManInfo.setUnCollectChequeReport(1);
+                                else salesManInfo.setUnCollectChequeReport(0);
+                                if (analyzeRCheckBox.isChecked())
+                                    salesManInfo.setAnalyzeCustomer(1);
+                                else salesManInfo.setAnalyzeCustomer(0);
+                                if (LogHistoryRCheckBox.isChecked())
+                                    salesManInfo.setLogHistoryReport(1);
+                                else salesManInfo.setLogHistoryReport(0);
+
+
                                 ExportData exportData = new ExportData(EditSalesMan.this);
-                                exportData.UpdateSales(EditSalesMan.this, salesManInfo.getJsonObject());
+                                exportData.AddAdmins(EditSalesMan.this, salesManInfo.getJsonObjectAdmin());
                                 sweetAlertDialog.dismissWithAnimation();
 
 
                             }
                         })
                         .show();
-
-                                    }else{
-                                        tSSerial.setError("Required!");
-                                    }   }else{
-                                    fSSerial.setError("Required!");
-                                }   }else{
-                                tRSerial.setError("Required!");
-                            }   }else{
-                            fRSerial.setError("Required!");
-                        }   }else{
-                        tVSerial.setError("Required!");
-                    }   }else{
-                    fVSerial.setError("Required!");
-                }
-            }else {
+            } else {
                 password.setError("Required!");
             }
-        }else {
+        } else {
             salesName.setError("Required!");
         }
+
     }
 
-    void updateAdmin(){
-        if(!salesName.getText().toString().equals("")) {
-            if(!password.getText().toString().equals("")) {
-
+    void updateSaleMan() {
+        if (!salesName.getText().toString().equals("")) {
+            if (!password.getText().toString().equals("")) {
+                if (!fVSerial.getText().toString().equals("")) {
+                    if (!tVSerial.getText().toString().equals("")) {
+                        if (!fRSerial.getText().toString().equals("")) {
+                            if (!tRSerial.getText().toString().equals("")) {
+                                if (!fSSerial.getText().toString().equals("")) {
+                                    if (!tSSerial.getText().toString().equals("")) {
                                         new SweetAlertDialog(EditSalesMan.this, SweetAlertDialog.WARNING_TYPE)
-                                                .setTitleText("Update Admin")
+                                                .setTitleText("Update Sales Men")
                                                 .setContentText("")
                                                 .setCancelButton("cancel", new SweetAlertDialog.OnSweetClickListener() {
                                                     @Override
@@ -463,43 +501,130 @@ int isUpdate=0;
                                                         salesManInfo.setSalesPassword(password.getText().toString());
                                                         salesManInfo.setSalesName(salesName.getText().toString());
                                                         salesManInfo.setSalesManNo(salesNo.getText().toString());
+                                                        salesManInfo.setfVoucherSerial(fVSerial.getText().toString());
+                                                        salesManInfo.settVoucherSerial(tVSerial.getText().toString());
+                                                        salesManInfo.setfReturnSerial(fRSerial.getText().toString());
+                                                        salesManInfo.settReturnSerial(tRSerial.getText().toString());
+                                                        salesManInfo.setFstockSerial(fSSerial.getText().toString());
+                                                        salesManInfo.settStockSerial(tSSerial.getText().toString());
 
-                                                        if (AddAdminCheckBox.isChecked()) salesManInfo.setAddAdmin(1); else  salesManInfo.setAddAdmin(0);
-                                                        if (AddSalesCheckBox.isChecked()) salesManInfo.setAddSalesMen(1); else  salesManInfo.setAddSalesMen(0);
-                                                        if (makeOfferCheckBox.isChecked()) salesManInfo.setMakeOffer(1); else  salesManInfo.setMakeOffer(0);
-                                                        if (offerReportCheckBox.isChecked()) salesManInfo.setOfferReport(1); else  salesManInfo.setOfferReport(0);
-                                                        if (accountRCheckBox.isChecked()) salesManInfo.setAccountReport(1); else  salesManInfo.setAccountReport(0);
-                                                        if (paymentRCheckBox.isChecked()) salesManInfo.setPaymentReport(1); else  salesManInfo.setPaymentReport(0);
-                                                        if (CustomerCheckBox.isChecked()) salesManInfo.setCustomerReport(1); else  salesManInfo.setCustomerReport(0);
-                                                        if (CashRCheckBox.isChecked()) salesManInfo.setCashReport(1); else  salesManInfo.setCashReport(0);
-                                                        if (LocationCheckBox.isChecked()) salesManInfo.setSalesManLocation(1); else  salesManInfo.setSalesManLocation(0);
-                                                        if (UncollectedRCheckBox.isChecked()) salesManInfo.setUnCollectChequeReport(1); else  salesManInfo.setUnCollectChequeReport(0);
-                                                        if (analyzeRCheckBox.isChecked()) salesManInfo.setAnalyzeCustomer(1); else  salesManInfo.setAnalyzeCustomer(0);
-                                                        if (LogHistoryRCheckBox.isChecked()) salesManInfo.setLogHistoryReport(1); else  salesManInfo.setLogHistoryReport(0);
-
-
-                                                        if(activeCheck.isChecked()) {
+                                                        if (activeCheck.isChecked()) {
                                                             salesManInfo.setActive("1");
-                                                        }else {
+                                                        } else {
                                                             salesManInfo.setActive("0");
                                                         }
                                                         ExportData exportData = new ExportData(EditSalesMan.this);
-                                                        exportData.UpdateAdmin(EditSalesMan.this, salesManInfo.getJsonObjectAdmin());
+                                                        exportData.UpdateSales(EditSalesMan.this, salesManInfo.getJsonObject());
                                                         sweetAlertDialog.dismissWithAnimation();
 
 
                                                     }
                                                 })
                                                 .show();
-            }else {
+
+                                    } else {
+                                        tSSerial.setError("Required!");
+                                    }
+                                } else {
+                                    fSSerial.setError("Required!");
+                                }
+                            } else {
+                                tRSerial.setError("Required!");
+                            }
+                        } else {
+                            fRSerial.setError("Required!");
+                        }
+                    } else {
+                        tVSerial.setError("Required!");
+                    }
+                } else {
+                    fVSerial.setError("Required!");
+                }
+            } else {
                 password.setError("Required!");
             }
-        }else {
+        } else {
             salesName.setError("Required!");
         }
     }
-    void clearTextFun(){
-        isUpdate=0;
+
+    void updateAdmin() {
+        if (!salesName.getText().toString().equals("")) {
+            if (!password.getText().toString().equals("")) {
+
+                new SweetAlertDialog(EditSalesMan.this, SweetAlertDialog.WARNING_TYPE)
+                        .setTitleText("Update Admin")
+                        .setContentText("")
+                        .setCancelButton("cancel", new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                sweetAlertDialog.dismissWithAnimation();
+                            }
+                        })
+                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sweetAlertDialog) {
+
+                                SalesManInfo salesManInfo = new SalesManInfo();
+                                salesManInfo.setSalesPassword(password.getText().toString());
+                                salesManInfo.setSalesName(salesName.getText().toString());
+                                salesManInfo.setSalesManNo(salesNo.getText().toString());
+
+                                if (AddAdminCheckBox.isChecked()) salesManInfo.setAddAdmin(1);
+                                else salesManInfo.setAddAdmin(0);
+                                if (AddSalesCheckBox.isChecked()) salesManInfo.setAddSalesMen(1);
+                                else salesManInfo.setAddSalesMen(0);
+                                if (makeOfferCheckBox.isChecked()) salesManInfo.setMakeOffer(1);
+                                else salesManInfo.setMakeOffer(0);
+                                if (offerReportCheckBox.isChecked()) salesManInfo.setOfferReport(1);
+                                else salesManInfo.setOfferReport(0);
+                                if (accountRCheckBox.isChecked()) salesManInfo.setAccountReport(1);
+                                else salesManInfo.setAccountReport(0);
+                                if (paymentRCheckBox.isChecked()) salesManInfo.setPaymentReport(1);
+                                else salesManInfo.setPaymentReport(0);
+                                if (CustomerCheckBox.isChecked()) salesManInfo.setCustomerReport(1);
+                                else salesManInfo.setCustomerReport(0);
+                                if (CashRCheckBox.isChecked()) salesManInfo.setCashReport(1);
+                                else salesManInfo.setCashReport(0);
+                                if (LocationCheckBox.isChecked())
+                                    salesManInfo.setSalesManLocation(1);
+                                else salesManInfo.setSalesManLocation(0);
+                                if (UncollectedRCheckBox.isChecked())
+                                    salesManInfo.setUnCollectChequeReport(1);
+                                else salesManInfo.setUnCollectChequeReport(0);
+                                if (analyzeRCheckBox.isChecked())
+                                    salesManInfo.setAnalyzeCustomer(1);
+                                else salesManInfo.setAnalyzeCustomer(0);
+                                if (LogHistoryRCheckBox.isChecked())
+                                    salesManInfo.setLogHistoryReport(1);
+                                else salesManInfo.setLogHistoryReport(0);
+
+
+                                if (activeCheck.isChecked()) {
+                                    salesManInfo.setActive("1");
+                                } else {
+                                    salesManInfo.setActive("0");
+                                }
+                                ExportData exportData = new ExportData(EditSalesMan.this);
+                                exportData.UpdateAdmin(EditSalesMan.this, salesManInfo.getJsonObjectAdmin());
+                                sweetAlertDialog.dismissWithAnimation();
+
+
+                            }
+                        })
+                        .show();
+            } else {
+                password.setError("Required!");
+            }
+        } else {
+            salesName.setError("Required!");
+        }
+    }
+
+
+
+    void clearTextFun() {
+        isUpdate = 0;
         addButton.setEnabled(true);
         salesName.setText("");
         password.setText("");
@@ -527,9 +652,9 @@ int isUpdate=0;
     }
 
 
-    void AllCheckedValidity(){
+    void AllCheckedValidity() {
 
-        if(AllChecked.isChecked()){
+        if (AllChecked.isChecked()) {
             AddSalesCheckBox.setChecked(true);
             AddAdminCheckBox.setChecked(true);
             makeOfferCheckBox.setChecked(true);
@@ -542,7 +667,7 @@ int isUpdate=0;
             UncollectedRCheckBox.setChecked(true);
             analyzeRCheckBox.setChecked(true);
             LogHistoryRCheckBox.setChecked(true);
-        }else {
+        } else {
             AddSalesCheckBox.setChecked(false);
             AddAdminCheckBox.setChecked(false);
             makeOfferCheckBox.setChecked(false);
@@ -580,7 +705,7 @@ int isUpdate=0;
             } else {
                 fillList(salesManInfosList);
             }
-        }else {
+        } else {
 
             if (!searchSalesMan.getText().toString().equals("")) {
                 for (int i = 0; i < AdminInfoList.size(); i++) {

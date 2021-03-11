@@ -38,6 +38,7 @@ import com.nightonke.boommenu.Piece.PiecePlaceEnum;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -255,6 +256,7 @@ public class UnCollectedData extends AppCompatActivity {
     }
 
     private void fillCustomerSpenner() {
+        Collections.sort(customername, String.CASE_INSENSITIVE_ORDER);
         final ArrayAdapter<String> ad = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, customername);
         customerSpinner.setAdapter(ad);
     }

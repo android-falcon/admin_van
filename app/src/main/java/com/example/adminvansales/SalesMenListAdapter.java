@@ -76,6 +76,7 @@ public class SalesMenListAdapter extends BaseAdapter {
             }
         });
 
+
         return view;
     }
 

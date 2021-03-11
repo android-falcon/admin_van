@@ -91,20 +91,63 @@
             android:textColor="@color/colorblue_dark" />
 
     </LinearLayout>
+    <LinearLayout
+        android:id="@+id/row2210205"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="8.8"
+        android:layout_marginBottom="1dp"
 
+        android:orientation="horizontal"
+        android:padding="2dp"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_margin="2dp"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:textColor="@color/text_color"
+            android:text="@string/search"
+            android:autoSizeTextType="uniform"
+            android:textSize="13sp"
+            android:autoSizeStepGranularity="2sp"
+            android:autoSizeMaxTextSize="13sp"
+            android:autoSizeMinTextSize="10sp"
+            android:textStyle="bold"
+
+            />
+        <EditText
+            android:id="@+id/listSearch"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="2dp"
+
+            android:layout_weight="1"
+            android:background="@drawable/hover_color"
+            android:drawableRight="@drawable/ic_search_black_24dp"
+            android:drawableTint="@color/colorblue_dark3"
+            android:elevation="2dp"
+            android:fontFamily="sans-serif-light"
+            android:inputType="text"
+            android:padding="1dp"
+            android:hint="type customer Name"
+            android:textColorHint="@color/lightWhite" />
+    </LinearLayout>
     <LinearLayout
         android:layout_height="match_parent"
         android:layout_weight="1.5"
         android:orientation="vertical"
         android:layout_width="match_parent">
-<!--        <HorizontalScrollView-->
-<!--            android:id="@+id/HorizontalScrollView01"-->
-<!--            android:layout_width="match_parent"-->
+        <HorizontalScrollView
+            android:id="@+id/HorizontalScrollView01"
+            android:layout_width="match_parent"
 
-<!--            android:scrollbars="horizontal"-->
-<!--            android:layout_height="match_parent"-->
+            android:scrollbars="horizontal"
+            android:layout_height="match_parent"
 
-<!--            >-->
+            >
 
     <LinearLayout
         android:layout_height="match_parent"
@@ -295,7 +338,7 @@
 <!--        </LinearLayout>-->
     </RelativeLayout>
     </LinearLayout>
-<!--        </HorizontalScrollView>-->
+        </HorizontalScrollView>
     </LinearLayout>
 
 

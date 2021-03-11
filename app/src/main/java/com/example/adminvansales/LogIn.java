@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.adminvansales.Model.SalesManInfo;
 import com.example.adminvansales.Model.SettingModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.smarteist.autoimageslider.DefaultSliderView;
@@ -33,6 +34,7 @@ import java.util.List;
 
 import static com.example.adminvansales.GlobelFunction.adminId;
 import static com.example.adminvansales.GlobelFunction.adminName;
+import static com.example.adminvansales.GlobelFunction.salesManInfoAdmin;
 import static com.example.adminvansales.ImportData.listId;
 
 public class LogIn extends AppCompatActivity {
@@ -51,6 +53,7 @@ public class LogIn extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
+        Log.e("importDataMasaterrrr","importData;;;");
         initView();
         sliderLayout.setIndicatorAnimation(IndicatorAnimations.SWAP); //set indicator animation by using SliderLayout.IndicatorAnimations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
         sliderLayout.setSliderTransformAnimation(SliderAnimations.FADETRANSFORMATION);
@@ -117,25 +120,68 @@ public class LogIn extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if(userName_edit.getText().toString().equals("admin"))
-                {
-                    if(password_edit.getText().toString().equals("100"))
-                    {
-                        goToMain();
-                    }
-                    else {
-                        password_edit.setError("Required");
-                    }
-                }
-                else {
-                    userName_edit.setError("Required");
-                }
+               Authentication();
 
 //
 
 //
             }
         });
+
+
+    }
+
+    void Authentication (){
+//        if(userName_edit.getText().toString().equals("admin"))
+//        {
+//            if(password_edit.getText().toString().equals("100"))
+//            {
+//                goToMain();
+//            }
+//            else {
+//                password_edit.setError("Required");
+//            }
+//        }
+//        else {
+//            userName_edit.setError("Required");
+//        }
+
+
+        if(!userName_edit.getText().toString().equals("")){
+            if(!password_edit.getText().toString().equals("")){
+                if(userName_edit.getText().toString().equals("admin")&&password_edit.getText().toString().equals("100")) {
+
+                    SalesManInfo salesManInfo = new SalesManInfo();
+
+                    salesManInfo.setAddSalesMen(1);
+                    salesManInfo.setAddAdmin(1);
+                    salesManInfo.setAccountReport(1);
+                    salesManInfo.setPaymentReport(1);
+
+                    salesManInfo.setCashReport(1);
+                    salesManInfo.setUnCollectChequeReport(1);
+                    salesManInfo.setAnalyzeCustomer(1);
+                    salesManInfo.setLogHistoryReport(1);
+                    salesManInfo.setOfferReport(1);
+                    salesManInfo.setSalesManLocation(1);
+                    salesManInfo.setMakeOffer(1);
+                    salesManInfo.setCustomerReport(1);
+
+                    saveAuth(salesManInfo);
+                        goToMain();
+                }else {
+
+
+               ImportData importData = new ImportData(LogIn.this);
+               importData.GetAuthentication(LogIn.this,userName_edit.getText().toString(),password_edit.getText().toString(),0);
+
+                }
+            }else {
+                password_edit.setError("Required");
+            }
+        } else {
+            userName_edit.setError("Required");
+        }
 
 
     }
@@ -150,7 +196,12 @@ public class LogIn extends AppCompatActivity {
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
-    private void goToMain() {
+    public void saveAuth(SalesManInfo salesManInfo){
+        globelFunction.saveValidition(salesManInfo);
+    }
+
+    public void goToMain() {
+
         adminName=userName_edit.getText().toString();
         adminId=password_edit.getText().toString();
       //  startservice();

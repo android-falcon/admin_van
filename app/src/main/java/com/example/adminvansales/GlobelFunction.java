@@ -23,6 +23,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 public class GlobelFunction {
     ImportData importData;
     Context context;
@@ -30,7 +32,10 @@ public class GlobelFunction {
     public static  List<SalesManInfo> salesManInfosList=new ArrayList<>();
     public static  List<String> salesManNameList=new ArrayList<>();
 
+    public static  SalesManInfo salesManInfoAdmin=new SalesManInfo();
+
     public static  List<LatLng> LatLngListMarker=new ArrayList<>();
+
     
     public static String adminId="",adminName="";
     public GlobelFunction(Context context) {
@@ -47,6 +52,25 @@ public class GlobelFunction {
             importData.getAdmin(context, 0);
         }
 
+    }
+
+    public void saveValidition(SalesManInfo salesManInfo) {
+        salesManInfoAdmin.setSalesManNo(salesManInfo.getSalesManNo());
+        salesManInfoAdmin.setSalesName(salesManInfo.getSalesName());
+        salesManInfoAdmin.setSalesPassword(salesManInfo.getSalesPassword());
+        salesManInfoAdmin.setActive(salesManInfo.getActive());
+        salesManInfoAdmin.setAddSalesMen(salesManInfo.getAddSalesMen());
+        salesManInfoAdmin.setAddAdmin(salesManInfo.getAddAdmin());
+        salesManInfoAdmin.setMakeOffer(salesManInfo.getMakeOffer());
+        salesManInfoAdmin.setOfferReport(salesManInfo.getOfferReport());
+        salesManInfoAdmin.setAccountReport(salesManInfo.getAccountReport());
+        salesManInfoAdmin.setPaymentReport(salesManInfo.getPaymentReport());
+        salesManInfoAdmin.setCustomerReport(salesManInfo.getCustomerReport());
+        salesManInfoAdmin.setCashReport(salesManInfo.getCashReport());
+        salesManInfoAdmin.setSalesManLocation(salesManInfo.getSalesManLocation());
+        salesManInfoAdmin.setUnCollectChequeReport(salesManInfo.getUnCollectChequeReport());
+        salesManInfoAdmin.setAnalyzeCustomer(salesManInfo.getAnalyzeCustomer());
+        salesManInfoAdmin.setLogHistoryReport(salesManInfo.getLogHistoryReport());
     }
 
 
@@ -113,6 +137,34 @@ try {
     Toast.makeText(context, "Storage Permission", Toast.LENGTH_SHORT).show();
 }
 
+    }
+
+    public  void AuthenticationMessage(){
+
+        new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE)
+                .setTitleText("You do not have Authority !!!")
+                .setContentText("")
+                .setCancelButton("cancel", new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                        sweetAlertDialog.dismissWithAnimation();
+                    }
+                })
+                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                        sweetAlertDialog.dismissWithAnimation();
+
+                    }
+                })
+                .show();
+
+    }
+
+    void updateAutho(){
+
+        ImportData importData = new ImportData(context);
+        importData.GetAuthentication(context,adminName,adminId,1);
     }
 
 }
