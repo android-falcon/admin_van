@@ -1137,7 +1137,7 @@ public class ExportData {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Log.e("tag", "onPostExecute"+s.toString());
+
             String impo = "";
             JSONObject result=null;
             pdValidation.dismissWithAnimation();
