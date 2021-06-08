@@ -66,6 +66,7 @@ public class AccountStatment extends AppCompatActivity {
 //
             }
         });
+
         if(customername.size()!=0)
         {
             Log.e("customername",""+customername.size());

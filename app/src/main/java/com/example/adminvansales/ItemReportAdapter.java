@@ -12,6 +12,7 @@ import com.example.adminvansales.Model.SalesManInfo;
 import java.util.List;
 
 
+
 public class ItemReportAdapter extends BaseAdapter {
     private ItemReport context;
     List<ItemReportModel> itemsList;
@@ -20,6 +21,7 @@ public class ItemReportAdapter extends BaseAdapter {
     ImportData importData;
     ExportData  exportData;
     static TextView controlText = null;
+    public  double totalBalance=0;
 
     public ItemReportAdapter(ItemReport context, List<ItemReportModel> itemsList) {
         this.context = context;
@@ -27,6 +29,7 @@ public class ItemReportAdapter extends BaseAdapter {
         globelFunction=new GlobelFunction(context);
         importData=new ImportData(context);
         exportData = new ExportData(context);
+
     }
 
     public ItemReportAdapter() {
@@ -84,6 +87,10 @@ public class ItemReportAdapter extends BaseAdapter {
         holder.total.setText(""+itemsList.get(i).getTotal());
 
         holder.itemNo.setText(""+itemsList.get(i).getItemNo());
+
+
+
+
 
         return view;
     }

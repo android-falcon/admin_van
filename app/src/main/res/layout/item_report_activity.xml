@@ -449,7 +449,42 @@
                 android:background="@color/layer6" />
 
         </LinearLayout>
+
     </HorizontalScrollView>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignBottom="@id/recyclerView_report"
+        android:layout_weight="4"
+        android:background="@color/colorblue_dark"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Total Item Qty"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/total_itemqty_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:text="0"
+            android:textColor="@color/white"
+
+            android:textSize="14sp"
+            android:textStyle="bold" />
+    </LinearLayout>
 
 </LinearLayout>
