@@ -2,6 +2,7 @@ package com.example.adminvansales;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -450,16 +451,31 @@ public class PdfConverter {
     void showPdf(File path) {
         Log.e("showPdf",""+path);
 
+//        try {
+//            Intent intent = new Intent(Intent.ACTION_VIEW);
+//            Uri uri = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".provider", path);
+//            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+//            //intent.setDataAndType(uri, "application/pdf");//intent.setDataAndType(Uri.fromFile(path), "application/pdf");
+//            intent.setDataAndType(Uri.fromFile(path), "application/pdf");
+//            context.startActivity(intent);
+//        }
+//        catch (Exception e)
+//        {
+//            Toast.makeText(context, "Not able to open flder", Toast.LENGTH_SHORT).show();
+//        }
+
+       // File file = new File("mnt/sdcard.test.pdf");
+//        Uri path = Uri.fromFile(file);
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.setData(Uri.fromFile(path));
+        intent.setType("application/pdf");
         try {
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            Uri uri = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".provider", path);
-            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            intent.setDataAndType(uri, "application/pdf");//intent.setDataAndType(Uri.fromFile(path), "application/pdf");
             context.startActivity(intent);
-        }
-        catch (Exception e)
-        {
-            Toast.makeText(context, "Not able to open flder", Toast.LENGTH_SHORT).show();
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(context, "No application found",
+                    Toast.LENGTH_SHORT).show();
         }
 
 
