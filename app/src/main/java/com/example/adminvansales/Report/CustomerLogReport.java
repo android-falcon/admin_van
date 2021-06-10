@@ -132,13 +132,14 @@ public class CustomerLogReport extends AppCompatActivity {
     }
 
     private void convertToExcel() {
-        try {
+      try {
             ExportToExcel exportToExcel = new ExportToExcel();
             exportToExcel.createExcelFile(CustomerLogReport.this, "CustomerLogReport.xls", 1, customerLogReportList);
-        } catch (Exception e) {
-            Toast.makeText(this, "Storage Permission", Toast.LENGTH_SHORT).show();
+     } catch (Exception e) {
+     Log.e(" convertToExcel",e.getMessage());
+           Toast.makeText(this, "Storage Permission", Toast.LENGTH_SHORT).show();
 
-        }
+  }
 
     }
 

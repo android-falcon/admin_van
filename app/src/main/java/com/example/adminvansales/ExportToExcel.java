@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.core.content.FileProvider;
@@ -32,6 +33,8 @@ public class ExportToExcel {
     private static ExportToExcel instance;
     Context context;
     File pathFile;
+    File file;
+    WritableWorkbook workbook;
 
     public static ExportToExcel getInstance() {
         if (instance == null)
@@ -47,20 +50,20 @@ public class ExportToExcel {
 
         //Saving file in external storage
         this.context=context;
-        File sdCard = Environment.getExternalStorageDirectory();
+       File sdCard = Environment.getExternalStorageDirectory();
+        //File sdCard = Environment.getStorageDirectory();
         File directory = new File(sdCard.getAbsolutePath() + "/VanSalesExcelReport");
-
-        if (!directory.isDirectory()) {//create directory if not exist
+          if (!directory.isDirectory()) {//create directory if not exist
             directory.mkdirs();
         }
 
-        File file = new File(directory, fileName);//file path
+       file = new File(directory, fileName);//file path
         pathFile=file;
 //        WorkbookSettings wbSettings = new WorkbookSettings();
 //        wbSettings.setLocale(new Locale("en", "EN"));
-        WritableWorkbook workbook = null;//, wbSettings);
+        workbook = null;//, wbSettings);
         try {
-            workbook = Workbook.createWorkbook(file);
+        workbook =Workbook.createWorkbook(file);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -88,25 +91,25 @@ public class ExportToExcel {
                 break;
         }
 
-//        Intent intent = new Intent(Intent.ACTION_VIEW);
-//        String directory_path = Environment.getExternalStorageDirectory().getPath() + "/blackseawood/";
-//        file = new File(directory_path);
-//        if (!file.exists()) {
-//            file.mkdirs();
-//        }
-//        String targetPdf = directory_path + fileName;
-//        File path = new File(targetPdf);
-//
-//        try {
-//            Uri uri = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".provider", path);
-//            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-//            intent.setDataAndType(uri, "application/vnd.ms-excel");//intent.setDataAndType(Uri.fromFile(path), "application/pdf");
-//        }catch (Exception e){}
-//        try{
-//            context.startActivity(intent);
-//        }catch (Exception e){
-//            Toast.makeText(context, "Excel program needed!", Toast.LENGTH_SHORT).show();
-//        }
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        String directory_path = Environment.getExternalStorageDirectory().getPath() + "/VanSalesExcelReport/";
+        file = new File(directory_path);
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+        String targetPdf = directory_path + fileName;
+        File path = new File(targetPdf);
+
+        try {
+            Uri uri = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".provider", path);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.setDataAndType(uri, "application/vnd.ms-excel");//intent.setDataAndType(Uri.fromFile(path), "application/pdf");
+        }catch (Exception e){}
+        try{
+            context.startActivity(intent);
+        }catch (Exception e){
+            Toast.makeText(context, "Excel program needed!", Toast.LENGTH_SHORT).show();
+        }
         return pathFile;
     }
 
