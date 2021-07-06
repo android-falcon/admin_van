@@ -1,12 +1,18 @@
 package com.example.adminvansales;
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 
 import com.example.adminvansales.Model.AnalyzeAccountModel;
@@ -49,16 +55,34 @@ public class ExportToExcel {
 //        final String fileName = "planned_packing_list_report.xls";
 
         //Saving file in external storage
-        this.context=context;
-       File sdCard = Environment.getExternalStorageDirectory();
-        //File sdCard = Environment.getStorageDirectory();
-        File directory = new File(sdCard.getAbsolutePath() + "/VanSalesExcelReport");
-          if (!directory.isDirectory()) {//create directory if not exist
-            directory.mkdirs();
+        try {
+            this.context=context;
+            File sdCard = Environment.getExternalStorageDirectory();
+            //File sdCard = Environment.getStorageDirectory();
+            File directory = new File(sdCard.getAbsolutePath() + "/VanSalesExcelReport");
+            if (!directory.isDirectory()) {//create directory if not exist
+                directory.mkdirs();
+            }
+
+            file = new File(directory, fileName);//file path
+            pathFile=file;
+        }catch (Exception e) {
+            if (Build.VERSION.SDK_INT >= 23) {
+                if (context.checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+                        && (context.checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)) {
+
+                    Log.v("", "Permission is granted");
+                } else {
+
+                    Log.v("", "Permission is revoked");
+                    ActivityCompat.requestPermissions(
+                            (Activity) context,
+                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE},
+                            1);
+                }
+            }
         }
 
-       file = new File(directory, fileName);//file path
-        pathFile=file;
 //        WorkbookSettings wbSettings = new WorkbookSettings();
 //        wbSettings.setLocale(new Locale("en", "EN"));
         workbook = null;//, wbSettings);
@@ -68,30 +92,51 @@ public class ExportToExcel {
             e.printStackTrace();
         }
 
-        switch (report) {
+        try{
+            switch (report) {
 
-            case 1:
-                workbook = customerLogReport(workbook, (List<CustomerLogReportModel>) list);
-                break;
-            case 2:
-                workbook = paymentReport(workbook, (List<PayMentReportModel>) list);
-                break;
+                case 1:
+                    workbook = customerLogReport(workbook, (List<CustomerLogReportModel>) list);
+                    break;
+                case 2:
+                    workbook = paymentReport(workbook, (List<PayMentReportModel>) list);
+                    break;
 
-            case 3:
-                workbook = cashReport(workbook , (List<CashReportModel>) list );
-                break;
-            case 4:
-                workbook = listReport(workbook , (List<ListPriceOffer>) list );
-                break;
-            case 5:
-                workbook = unCollectedReport(workbook , (List<Payment>) list );
-                break;
-            case 6:
-                workbook = analyzeAccountReport(workbook , (List<AnalyzeAccountModel>) list );
-                break;
+                case 3:
+                    workbook = cashReport(workbook , (List<CashReportModel>) list );
+                    break;
+                case 4:
+                    workbook = listReport(workbook , (List<ListPriceOffer>) list );
+                    break;
+                case 5:
+                    workbook = unCollectedReport(workbook , (List<Payment>) list );
+                    break;
+                case 6:
+                    workbook = analyzeAccountReport(workbook , (List<AnalyzeAccountModel>) list );
+                    break;
+            }
+
+
+        }catch (Exception e) {
+            if (Build.VERSION.SDK_INT >= 23) {
+                if (context.checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+                        && (context.checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)) {
+
+                    Log.v("", "Permission is granted");
+                } else {
+
+                    Log.v("", "Permission is revoked");
+                    ActivityCompat.requestPermissions(
+                            (Activity) context,
+                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE},
+                            1);
+                }
+            }
         }
 
-        Intent intent = new Intent(Intent.ACTION_VIEW);
+
+
+
         String directory_path = Environment.getExternalStorageDirectory().getPath() + "/VanSalesExcelReport/";
         file = new File(directory_path);
         if (!file.exists()) {
@@ -100,17 +145,44 @@ public class ExportToExcel {
         String targetPdf = directory_path + fileName;
         File path = new File(targetPdf);
 
+
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (context.checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+                    && (context.checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)) {
+                showExcel(path);
+                Log.v("", "Permission is granted");
+            } else {
+
+                Log.v("", "Permission is revoked");
+                ActivityCompat.requestPermissions(
+                        (Activity) context,
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE},
+                        1);
+            }
+        } else { // permission is automatically granted on sdk<23 upon
+            // installation
+            showExcel(path);
+            Log.v("", "Permission is granted");
+        }
+
+
+        return pathFile;
+    }
+
+    private void showExcel(File pathFile) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
         try {
-            Uri uri = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".provider", path);
-            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            Uri uri = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".provider", pathFile);
+//            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             intent.setDataAndType(uri, "application/vnd.ms-excel");//intent.setDataAndType(Uri.fromFile(path), "application/pdf");
         }catch (Exception e){}
         try{
             context.startActivity(intent);
-        }catch (Exception e){
+        }catch (ActivityNotFoundException e){
             Toast.makeText(context, "Excel program needed!", Toast.LENGTH_SHORT).show();
         }
-        return pathFile;
+
     }
 
 

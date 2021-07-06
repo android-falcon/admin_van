@@ -82,7 +82,7 @@ public class LogIn extends AppCompatActivity {
         userName_edit=findViewById(R.id.userName_edit);
         importData=new ImportData(LogIn.this);
         Log.e("importData","importData");
-        importData.getCustomerInfo();
+        importData.getCustomerInfo(0);
         globelFunction=new GlobelFunction(LogIn.this);
         timer = new Timer();
 

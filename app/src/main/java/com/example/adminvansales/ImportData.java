@@ -103,6 +103,7 @@ public class ImportData {
     private DataBaseHandler databaseHandler;
 
     private String URL_TO_HIT;
+    public  int typeCustomerList=0;
     SweetAlertDialog pdValidation,pdPayments,pdAnalyze,pdAccountStatment;
     SweetAlertDialog pdValidationCustomer, pdValidationSerial, pdValidationItem,getPdValidationItemCard,getPdValidationLogHistory
             ,pdAuthentication,getPdValidationItemReport;
@@ -246,7 +247,14 @@ public class ImportData {
         new JSONTask_AccountStatment(CustomerId).execute();
     }
 
-    public void getCustomerInfo() {
+    public void getCustomerInfo(int type) {
+        if(type==0)
+        {
+            typeCustomerList=0;// from login
+        }
+        else {
+            typeCustomerList=1;// from account statment
+        }
         Log.e("getCustomerInfo", "*****");
         new JSONTask_CustomerInfo().execute();
     }
@@ -1649,7 +1657,7 @@ public class ImportData {
             JSONObject result = null;
             String impo = "";
             listCustomerInfo = new ArrayList<>();
-            Log.e("URL_TO_HIT","account"+s.toString());
+           // Log.e("URL_TO_HIT","account"+s.toString());
             if (s != null) {
                 if (s.contains("VHFNo")) {
                     // Log.e("CUSTOMER_INFO","onPostExecute\t"+s.toString());
@@ -1846,7 +1854,8 @@ public class ImportData {
 
 
                         }
-//                        getAccountList_text.setText("1");
+                        if(typeCustomerList==1)
+                        getAccountList_text.setText("1");
 
                     } catch (JSONException e) {
 //                        progressDialog.dismiss();
