@@ -9,9 +9,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.InputType;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,17 +17,15 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.azoft.carousellayoutmanager.CarouselLayoutManager;
 import com.azoft.carousellayoutmanager.CarouselZoomPostLayoutListener;
 import com.azoft.carousellayoutmanager.CenterScrollListener;
-import com.example.adminvansales.Model.SalesManInfo;
+import com.example.adminvansales.model.SalesManInfo;
 import com.example.adminvansales.Report.AnalyzeAccounts;
 import com.example.adminvansales.Report.CashReport;
 import com.example.adminvansales.Report.CustomerLogReport;
@@ -38,12 +34,7 @@ import com.example.adminvansales.Report.LogHistoryReport;
 import com.example.adminvansales.Report.PaymentDetailsReport;
 import com.example.adminvansales.Report.UnCollectedData;
 
-import org.json.JSONException;
-
-import java.util.ArrayList;
 import java.util.List;
-
-import cn.pedant.SweetAlert.SweetAlertDialog;
 
 import static com.example.adminvansales.GlobelFunction.salesManInfoAdmin;
 import static com.example.adminvansales.ImportData.listSalesMan;
@@ -55,7 +46,7 @@ public class HomeActivity extends AppCompatActivity {
     public static TextView waitList, addVanSales;
     RelativeLayout notifyLayout, accountLayout;
     GlobelFunction globelFunction;
-    Button locationButton, ReportButton, offerButton;
+    Button locationButton, ReportButton, offerButton,group_offerButton;
     LinearLayout ReportLinear;
     public static EditText editPassword;
     TextView customerLogReport, paymentReport, cashReport, offerReport,LogReport,unCollectedCheques,analyzeAcountsReport,ItemReport;
@@ -92,6 +83,14 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         offerButton = findViewById(R.id.offerButton);
+        group_offerButton=findViewById(R.id.group_offerButton);
+        group_offerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent offerIntent = new Intent(HomeActivity.this, GroupOffer.class);
+                startActivity(offerIntent);
+            }
+        });
         locationButton = findViewById(R.id.LocationButton);
         ReportButton = findViewById(R.id.ReportButton);
         recyclerViews = findViewById(R.id.res);

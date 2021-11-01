@@ -277,6 +277,7 @@
                     android:drawableLeft="@drawable/ic_equalizer_black_24dp"
                     android:drawableTint="@color/white"
                     android:padding="10dp"
+                    android:visibility="gone"
                     android:text="@string/unCollectedCheques_report"
                     android:textColor="@color/white" />
                 <TextView
@@ -288,6 +289,7 @@
                     android:drawableLeft="@drawable/ic_equalizer_black_24dp"
                     android:drawableTint="@color/white"
                     android:padding="10dp"
+                    android:visibility="gone"
                     android:text="@string/AnalyzeCustomersAccount"
                     android:textColor="@color/white" />
 
@@ -309,11 +311,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
+
                     android:drawableStart="@drawable/ic_equalizer_black_24dp"
                     android:drawableLeft="@drawable/ic_equalizer_black_24dp"
                     android:drawableTint="@color/white"
                     android:padding="10dp"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     android:text="Log History Report"
                     android:textColor="@color/white" />
                 <TextView
@@ -345,6 +348,19 @@
             android:elevation="5dp"
             android:padding="5dp"
             android:text="Sales Man Location"
+            android:textColor="@color/colorblue_dark" />
+        <Button
+            android:id="@+id/group_offerButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="0"
+            android:background="@drawable/btn_login"
+            android:drawableStart="@drawable/ic_local_offer_black_24dp"
+            android:drawableLeft="@drawable/ic_location_on_black_24dp"
+            android:elevation="5dp"
+            android:padding="5dp"
+            android:text="Offer Group"
             android:textColor="@color/colorblue_dark" />
 
 

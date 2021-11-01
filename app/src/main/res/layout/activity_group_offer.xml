@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <import type="com.example.adminvansales.model.OfferGroupModel"/>
+        <variable
+            name="group_offer"
+            type="com.example.adminvansales.model.OfferGroupModel"
+            />
+        <variable
+            name="fromDate"
+            type="String"
+            />
+        <variable
+            name="toDate"
+            type="String"
+            />
+    </data>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".GroupOffer">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_weight="0"
+        android:background="@drawable/btn_sighn_up"
+        android:orientation="vertical"
+        android:elevation="5dp"
+        android:padding="5dp">
+
+
+        <TableRow
+            android:id="@+id/dateLinear"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="3dp"
+            android:padding="3dp">
+
+            <TextView
+                android:id="@+id/textView22"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/from_date"
+                android:textColor="@color/colorblue_dark3" />
+
+            <TextView
+                android:id="@+id/fromDate_textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@{fromDate}"
+                android:textColor="@color/darkGray" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/to_date"
+
+                android:textColor="@color/colorblue_dark3" />
+
+            <TextView
+                android:id="@+id/toDate_textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@{toDate}"
+                android:textColor="@color/darkGray" />
+
+        </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="3dp"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/textView17"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/discountType"
+                android:textColor="@color/colorblue_dark3" />
+            <RadioGroup
+                android:id="@+id/discountType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/percentRadio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Percent"
+                    android:checked="true"
+                    android:textColor="@color/colorblue_dark3" />
+
+                <RadioButton
+                    android:id="@+id/valueRadio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="Value"
+                    android:textColor="@color/colorblue_dark3" />
+            </RadioGroup>
+
+
+            <!--                <TextView-->
+            <!--                    android:id="@+id/textView18"-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_weight="1"-->
+            <!--                    android:gravity="center"-->
+            <!--                    android:textColor="@color/darkGray" />-->
+        </TableRow>
+
+
+        <TableRow
+            android:id="@+id/listDateType"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="3dp"
+            android:gravity="center"
+            android:padding="3dp">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/totalDiscount"
+                android:textColor="@color/colorblue_dark3" />
+            <EditText
+                android:id="@+id/totalDiscopuntValue"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:inputType="numberDecimal"
+                android:layout_weight="1"
+                android:text="@{group_offer.discount}"               android:background="@drawable/btn_sighn_up"
+
+                android:textColor="@color/colorblue_dark3" />
+
+
+        </TableRow>
+    </LinearLayout>
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+       android:layout_margin="5dp"
+        android:background="@color/colorblue_dark"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/white_and_blue"
+            android:gravity="center"
+
+            android:padding="5dp"
+            android:text="@string/itemNo"
+            android:textColor="@color/colorblue_dark"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.9"
+            android:gravity="center"
+            android:padding="5dp"
+
+            android:text="@string/itemName"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/white_and_blue"
+
+            android:gravity="center"
+            android:visibility="gone"
+            android:padding="5dp"
+            android:text="@string/price"
+            android:textColor="@color/colorblue_dark"
+            android:textSize="14sp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="@string/qty"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+
+    </TableRow>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/itemListV"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@color/layer6" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_weight="0"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/cancelList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/accept_btn"
+            android:gravity="center"
+            android:padding="5dp"
+            android:layout_margin="10dp"
+            android:text="@string/dialog_cancel"
+            android:textColor="@color/darkOrange2" />
+
+        <TextView
+            android:layout_width="5dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:background="@color/white"
+            android:gravity="center"
+            android:padding="10dp"
+            android:textColor="@color/colorblue_dark3" />
+
+        <TextView
+            android:id="@+id/addList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/btn_login"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="done"
+            android:textColor="@color/colorblue_dark3" />
+
+    </LinearLayout>
+
+</LinearLayout>
+</layout>

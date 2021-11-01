@@ -18,8 +18,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.adminvansales.Model.Account__Statment_Model;
-import com.example.adminvansales.Model.CustomerInfo;
+import com.example.adminvansales.model.Account__Statment_Model;
+import com.example.adminvansales.model.CustomerInfo;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,7 +31,6 @@ import static android.widget.LinearLayout.VERTICAL;
 import static com.example.adminvansales.ImportData.customername;
 import static com.example.adminvansales.ImportData.listCustomer;
 import static com.example.adminvansales.ImportData.listCustomerInfo;
-import static com.example.adminvansales.ImportData.listSalesMan;
 
 public class AccountStatment extends AppCompatActivity {
 

@@ -13,15 +13,13 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.FileProvider;
 
-import com.example.adminvansales.Model.AnalyzeAccountModel;
-import com.example.adminvansales.Model.CashReportModel;
-import com.example.adminvansales.Model.CustomerLogReportModel;
-import com.example.adminvansales.Model.ListPriceOffer;
-import com.example.adminvansales.Model.PayMentReportModel;
-import com.example.adminvansales.Model.Payment;
-import com.example.adminvansales.Report.CustomerLogReport;
+import com.example.adminvansales.model.AnalyzeAccountModel;
+import com.example.adminvansales.model.CashReportModel;
+import com.example.adminvansales.model.CustomerLogReportModel;
+import com.example.adminvansales.model.ListPriceOffer;
+import com.example.adminvansales.model.PayMentReportModel;
+import com.example.adminvansales.model.Payment;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -41,8 +39,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
-
-import jxl.write.Label;
 
 import static com.itextpdf.text.Element.ALIGN_CENTER;
 
@@ -453,7 +449,7 @@ public class PdfConverter {
 
 //        try {
 //            Intent intent = new Intent(Intent.ACTION_VIEW);
-//            Uri uri = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".provider", path);
+//           // Uri uri = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".provider", path);
 //            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 //            //intent.setDataAndType(uri, "application/pdf");//intent.setDataAndType(Uri.fromFile(path), "application/pdf");
 //            intent.setDataAndType(Uri.fromFile(path), "application/pdf");
@@ -466,11 +462,16 @@ public class PdfConverter {
 
        // File file = new File("mnt/sdcard.test.pdf");
 //        Uri path = Uri.fromFile(file);
+
+        ///*****************************************
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.setAction(Intent.ACTION_VIEW);
-        intent.setData(Uri.fromFile(path));
-        intent.setType("application/pdf");
+//        intent.setType("application/pdf");
+//        intent.setData(Uri.fromFile(path));
+
+        intent.setDataAndType(Uri.fromFile(path), "application/pdf");
+
         try {
             context.startActivity(intent);
         } catch (ActivityNotFoundException e) {

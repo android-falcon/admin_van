@@ -1,4 +1,4 @@
-package com.example.adminvansales.Model;
+package com.example.adminvansales.model;
 
 public class Account__Statment_Model {
     private  String voucherNo;

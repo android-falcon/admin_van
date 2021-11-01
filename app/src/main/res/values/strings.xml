@@ -152,4 +152,6 @@
     <string name="log_history_report">Log History report</string>
     <string name="itemReport">Item Report</string>
     <string name="getItemReport">Get Item Report</string>
+    <string name="discountType">Discount Type :</string>
+    <string name="qty">Qty</string>
 </resources>

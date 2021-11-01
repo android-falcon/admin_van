@@ -1,26 +1,15 @@
 package com.example.adminvansales;
 
-import android.annotation.SuppressLint;
-import android.app.Dialog;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.BaseAdapter;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.adminvansales.Model.ListPriceOffer;
-import com.example.adminvansales.Model.LogHistoryModel;
-import com.example.adminvansales.Report.ListOfferReport;
+import com.example.adminvansales.model.LogHistoryModel;
 import com.example.adminvansales.Report.LogHistoryReport;
 
 import java.util.List;
-
-import static com.example.adminvansales.Report.ListOfferReport.control;
 
 
 public class LogHistoryReportAdapter extends BaseAdapter {

@@ -11,13 +11,11 @@ import android.widget.CompoundButton;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.example.adminvansales.Model.ItemMaster;
-import com.example.adminvansales.Model.customerInfoModel;
+import com.example.adminvansales.model.customerInfoModel;
 
 import java.util.List;
 
 import static com.example.adminvansales.OfferPriceList.customerSelect;
-import static com.example.adminvansales.OfferPriceList.customerSelectTemp;
 
 
 public class ListAdapterSearchCustomer extends BaseAdapter {

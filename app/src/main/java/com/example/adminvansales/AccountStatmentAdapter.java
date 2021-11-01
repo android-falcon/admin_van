@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.adminvansales.Model.Account__Statment_Model;
+import com.example.adminvansales.model.Account__Statment_Model;
 
 import java.text.DecimalFormat;
 import java.util.List;

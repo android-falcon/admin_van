@@ -15,13 +15,12 @@ import android.widget.Toast;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 
-import com.example.adminvansales.Model.AnalyzeAccountModel;
-import com.example.adminvansales.Model.CashReportModel;
-import com.example.adminvansales.Model.CustomerLogReportModel;
-import com.example.adminvansales.Model.ListPriceOffer;
-import com.example.adminvansales.Model.PayMentReportModel;
-import com.example.adminvansales.Model.Payment;
-import com.example.adminvansales.Report.CustomerLogReport;
+import com.example.adminvansales.model.AnalyzeAccountModel;
+import com.example.adminvansales.model.CashReportModel;
+import com.example.adminvansales.model.CustomerLogReportModel;
+import com.example.adminvansales.model.ListPriceOffer;
+import com.example.adminvansales.model.PayMentReportModel;
+import com.example.adminvansales.model.Payment;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,6 +40,7 @@ public class ExportToExcel {
     File pathFile;
     File file;
     WritableWorkbook workbook;
+    Intent intent;
 
     public static ExportToExcel getInstance() {
         if (instance == null)
@@ -49,7 +49,7 @@ public class ExportToExcel {
         return instance;
     }
 
-    public File createExcelFile(Context context, String fileName, int report, List<?> list) {
+    public void createExcelFile(Context context, String fileName, int report, List<?> list) {
 //        public void createExcelFile(Context context, String fileName, int report, List<?> list, List<?> listDetail)
 //        this.context = context;
 //        final String fileName = "planned_packing_list_report.xls";
@@ -58,8 +58,9 @@ public class ExportToExcel {
         try {
             this.context=context;
             File sdCard = Environment.getExternalStorageDirectory();
-            //File sdCard = Environment.getStorageDirectory();
-            File directory = new File(sdCard.getAbsolutePath() + "/VanSalesExcelReport");
+//
+//           ? File sdCard = Environment.getStorageDirectory();
+            File directory = new File(sdCard.getAbsolutePath() + "/AdminExcelReport");
             if (!directory.isDirectory()) {//create directory if not exist
                 directory.mkdirs();
             }
@@ -134,22 +135,16 @@ public class ExportToExcel {
             }
         }
 
+//*****************************
 
 
 
-        String directory_path = Environment.getExternalStorageDirectory().getPath() + "/VanSalesExcelReport/";
-        file = new File(directory_path);
-        if (!file.exists()) {
-            file.mkdirs();
-        }
-        String targetPdf = directory_path + fileName;
-        File path = new File(targetPdf);
-
+//*************************************
 
         if (Build.VERSION.SDK_INT >= 23) {
             if (context.checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
                     && (context.checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)) {
-                showExcel(path);
+               // showExcel(path);
                 Log.v("", "Permission is granted");
             } else {
 
@@ -161,16 +156,43 @@ public class ExportToExcel {
             }
         } else { // permission is automatically granted on sdk<23 upon
             // installation
-            showExcel(path);
+           // showExcel(path);
             Log.v("", "Permission is granted");
         }
 
 
-        return pathFile;
+        try {
+            Log.e("startViewExcel", "Excel");
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            String directory_path = Environment.getExternalStorageDirectory().getPath() + "/AdminExcelReport/";
+            file = new File(directory_path);
+            if (!file.exists()) {
+                file.mkdirs();
+            }
+            String targetPdf = directory_path + fileName;
+            File path = new File(targetPdf);
+
+
+            Uri uri = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".provider", path);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.setDataAndType(uri, "application/vnd.ms-excel");//intent.setDataAndType(Uri.fromFile(path), "application/pdf");
+            try {
+                context.startActivity(intent);
+            } catch (Exception e) {
+                Toast.makeText(context, "Excel program needed!", Toast.LENGTH_SHORT).show();
+            }
+        }catch (Exception e){
+            Log.e("ExceptionExc",""+e.getMessage());
+        }
+
+
+
+
+        //return pathFile;
     }
 
     private void showExcel(File pathFile) {
-        Intent intent = new Intent(Intent.ACTION_VIEW);
+       // Intent intent = new Intent(Intent.ACTION_VIEW);
         try {
             Uri uri = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".provider", pathFile);
 //            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);

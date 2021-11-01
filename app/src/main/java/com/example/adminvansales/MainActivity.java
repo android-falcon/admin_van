@@ -10,25 +10,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
-import android.widget.Toast;
 
-import com.example.adminvansales.Model.Request;
+import com.example.adminvansales.model.Request;
 
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import static android.widget.LinearLayout.VERTICAL;
-import static com.example.adminvansales.ExportData.pdValidation;
 import static com.example.adminvansales.ImportData.listId;
 import static com.example.adminvansales.ImportData.listRequest;
-import static com.example.adminvansales.ShowNotifications.showNotification;
 
 public class MainActivity extends AppCompatActivity {
     LinearLayoutManager layoutManager;

@@ -6,8 +6,7 @@ import android.widget.BaseAdapter;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.example.adminvansales.Model.OfferListModel;
-import com.example.adminvansales.Model.customerInfoModel;
+import com.example.adminvansales.model.customerInfoModel;
 
 import java.util.List;
 

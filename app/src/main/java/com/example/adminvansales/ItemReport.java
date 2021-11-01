@@ -12,8 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.adminvansales.Model.ItemReportModel;
-import com.example.adminvansales.Report.CashReport;
+import com.example.adminvansales.model.ItemReportModel;
 
 import java.util.ArrayList;
 import java.util.List;

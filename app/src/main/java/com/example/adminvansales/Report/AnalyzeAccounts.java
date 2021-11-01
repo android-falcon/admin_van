@@ -1,9 +1,12 @@
 package com.example.adminvansales.Report;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -16,15 +19,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.adminvansales.AnalyzeAdapter;
-import com.example.adminvansales.CashReportAdapter;
 import com.example.adminvansales.ExportToExcel;
 import com.example.adminvansales.GlobelFunction;
 import com.example.adminvansales.ImportData;
-import com.example.adminvansales.ListAdapterPriceOnly;
-import com.example.adminvansales.Model.AnalyzeAccountModel;
-import com.example.adminvansales.Model.CashReportModel;
-import com.example.adminvansales.Model.ItemMaster;
-import com.example.adminvansales.OfferPriceList;
+import com.example.adminvansales.model.AnalyzeAccountModel;
 import com.example.adminvansales.PdfConverter;
 import com.example.adminvansales.R;
 
@@ -35,8 +33,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
-import static com.example.adminvansales.GlobelFunction.salesManInfosList;
 
 public class AnalyzeAccounts extends AppCompatActivity {
     TextView fromDate,toDate,excelConvert,pdfConvert,share;
@@ -58,8 +54,11 @@ public class AnalyzeAccounts extends AppCompatActivity {
         setContentView(R.layout.activity_analyze_accounts);
         initial();
     }
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
     private void initial() {
-
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
+        builder.detectFileUriExposure();
         fromDate=findViewById(R.id.from_date_r);
         toDate=findViewById(R.id.to_date_r);
         listAnalyzeReport=findViewById(R.id.listAnalyzeReport);
@@ -212,15 +211,15 @@ public class AnalyzeAccounts extends AppCompatActivity {
         return file;
     }
 
-    private File convertToExcel() {
+    private void convertToExcel() {
 
         ExportToExcel exportToExcel=new ExportToExcel();
-        File file= exportToExcel.createExcelFile(AnalyzeAccounts.this,"AnalyzeAccountReport.xls",6,TempReports);
+        exportToExcel.createExcelFile(AnalyzeAccounts.this,"AnalyzeAccountReport.xls",6,TempReports);
       //Log.e("convertToExcel",""+file);
-        if(file!=null){
+//        if(file!=null){
           Toast.makeText(this, "Exported To Excel ", Toast.LENGTH_SHORT).show();
-      }
-        return file;
+//      }
+        //return file;
     }
 
     public void shareWhatsApp(){

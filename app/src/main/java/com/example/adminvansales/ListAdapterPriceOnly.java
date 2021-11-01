@@ -1,24 +1,17 @@
 package com.example.adminvansales;
 
-import android.app.Dialog;
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.example.adminvansales.Model.ItemMaster;
-import com.example.adminvansales.Model.OfferListModel;
+import com.example.adminvansales.model.ItemMaster;
 
 import java.util.List;
-
-import static com.example.adminvansales.OfferPriceList.customerSelectTemp;
-import static com.example.adminvansales.OfferPriceList.priceOnly;
 
 
 public class ListAdapterPriceOnly extends BaseAdapter {

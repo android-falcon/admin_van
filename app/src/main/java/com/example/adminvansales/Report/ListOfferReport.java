@@ -2,11 +2,11 @@ package com.example.adminvansales.Report;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -15,15 +15,13 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.adminvansales.CashReportAdapter;
 import com.example.adminvansales.ExportToExcel;
 import com.example.adminvansales.GlobelFunction;
 import com.example.adminvansales.ImportData;
 import com.example.adminvansales.ListOfferReportAdapter;
-import com.example.adminvansales.Model.CashReportModel;
-import com.example.adminvansales.Model.ListPriceOffer;
-import com.example.adminvansales.Model.OfferListModel;
-import com.example.adminvansales.Model.customerInfoModel;
+import com.example.adminvansales.model.ListPriceOffer;
+import com.example.adminvansales.model.OfferListModel;
+import com.example.adminvansales.model.customerInfoModel;
 import com.example.adminvansales.OfferPriceList;
 import com.example.adminvansales.PdfConverter;
 import com.example.adminvansales.R;
@@ -31,8 +29,6 @@ import com.example.adminvansales.R;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.example.adminvansales.GlobelFunction.salesManNameList;
 
 public class ListOfferReport extends AppCompatActivity {
 
@@ -100,7 +96,9 @@ public class ListOfferReport extends AppCompatActivity {
 
 
     private void initial() {
-
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
+        builder.detectFileUriExposure();
         fromDate=findViewById(R.id.from_date_r);
         control=findViewById(R.id.control);
         toDate=findViewById(R.id.to_date_r);
@@ -172,12 +170,18 @@ public class ListOfferReport extends AppCompatActivity {
         return file;
     }
 
-    private File convertToExcel() {
+    private void convertToExcel() {
 
         ExportToExcel exportToExcel=new ExportToExcel();
-        File file= exportToExcel.createExcelFile(ListOfferReport.this,"ListOffer.xls",4,TempReports);
-        return file;
+       exportToExcel.createExcelFile(ListOfferReport.this,"ListOffer.xls",4,TempReports);
+
     }
+//    private File convertToExcel() {
+//
+//        ExportToExcel exportToExcel=new ExportToExcel();
+//        File file= exportToExcel.createExcelFile(ListOfferReport.this,"ListOffer.xls",4,TempReports);
+//        return file;
+//    }
 
     public void shareWhatsApp(){
        globelFunction.shareWhatsAppA(convertToPdf(),1);
