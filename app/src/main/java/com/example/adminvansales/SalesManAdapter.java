@@ -3,22 +3,18 @@ package com.example.adminvansales;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.adminvansales.Model.SalesManInfo;
+import com.example.adminvansales.model.SalesManInfo;
 
 import java.util.List;
-
-import cn.pedant.SweetAlert.SweetAlertDialog;
 
 import static com.example.adminvansales.GlobelFunction.salesManInfoAdmin;
 

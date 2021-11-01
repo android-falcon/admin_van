@@ -4,15 +4,11 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.util.Log;
 import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.core.content.FileProvider;
-
-import com.example.adminvansales.Model.SalesManInfo;
-import com.example.adminvansales.Report.PaymentDetailsReport;
+import com.example.adminvansales.model.SalesManInfo;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.io.File;

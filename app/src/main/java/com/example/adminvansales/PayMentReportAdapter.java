@@ -7,8 +7,7 @@ import android.widget.BaseAdapter;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.example.adminvansales.Model.PayMentReportModel;
-import com.example.adminvansales.Model.SalesManInfo;
+import com.example.adminvansales.model.PayMentReportModel;
 
 import java.util.List;
 

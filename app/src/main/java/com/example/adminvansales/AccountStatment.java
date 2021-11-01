@@ -18,8 +18,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.adminvansales.Model.Account__Statment_Model;
-import com.example.adminvansales.Model.CustomerInfo;
+import com.example.adminvansales.model.Account__Statment_Model;
+import com.example.adminvansales.model.CustomerInfo;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,7 +31,6 @@ import static android.widget.LinearLayout.VERTICAL;
 import static com.example.adminvansales.ImportData.customername;
 import static com.example.adminvansales.ImportData.listCustomer;
 import static com.example.adminvansales.ImportData.listCustomerInfo;
-import static com.example.adminvansales.ImportData.listSalesMan;
 
 public class AccountStatment extends AppCompatActivity {
 
@@ -45,6 +44,7 @@ public class AccountStatment extends AppCompatActivity {
      String customerId="";
      public  static  TextView total_qty_text;
     public   EditText listSearch;
+    ImportData importData;
     @SuppressLint("WrongConstant")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +60,7 @@ public class AccountStatment extends AppCompatActivity {
             public void onClick(View v) {
                 if(!customerId.equals(""))
                 {
-                    ImportData importData= new ImportData(AccountStatment.this);
+                     importData= new ImportData(AccountStatment.this);
                     importData.getCustomerAccountStatment(customerId);
                 }
 //
@@ -71,6 +71,8 @@ public class AccountStatment extends AppCompatActivity {
         {
             Log.e("customername",""+customername.size());
             fillCustomerSpenner();
+        }else {
+            importData.getCustomerInfo(1);
         }
 
 
@@ -142,7 +144,9 @@ public class AccountStatment extends AppCompatActivity {
         getAccountList_text=findViewById(R.id.getAccountList_text);
         preview_button_account=findViewById(R.id.preview_button_account);
         customerSpinner = (Spinner) findViewById(R.id.cat);
+        importData= new ImportData(AccountStatment.this);
         listAccountBalance=new ArrayList<>();
+
         layoutManager = new LinearLayoutManager(AccountStatment.this);
         layoutManager.setOrientation(VERTICAL);
         recyclerView_report.setLayoutManager(layoutManager);

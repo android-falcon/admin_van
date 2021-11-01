@@ -18,7 +18,13 @@ android {
         }
     }
     useLibrary 'org.apache.http.legacy'
-}
+
+        dataBinding{
+            enabled=true
+
+    }
+    }
+
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')

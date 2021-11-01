@@ -1,4 +1,4 @@
-package com.example.adminvansales.Model;
+package com.example.adminvansales.model;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -23,10 +23,10 @@ public class ItemMaster {
     private  String   ComapnyNo;
 
     @SerializedName("ItemNo")
-    private  String   ItemNo;
+    public   String   ItemNo;
 
     @SerializedName("Name")
-    private  String   Name;
+    public   String   Name;
 
 //    @SerializedName("CateogryID")
     private  String   CateogryID;
@@ -40,7 +40,7 @@ public class ItemMaster {
 //    @SerializedName("MINPRICE")
     private  String   MINPRICE;
     @SerializedName("F_D")
-    private  String   F_D;
+    public   String   F_D;
 //    @SerializedName("ItemK")
     private  String   ItemK;
 //    @SerializedName("ITEMHASSERIAL")

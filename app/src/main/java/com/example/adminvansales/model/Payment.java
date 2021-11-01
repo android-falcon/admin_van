@@ -1,4 +1,4 @@
-package com.example.adminvansales.Model;
+package com.example.adminvansales.model;
 
 import android.util.Log;
 

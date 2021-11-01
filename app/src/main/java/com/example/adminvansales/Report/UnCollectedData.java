@@ -2,6 +2,7 @@ package com.example.adminvansales.Report;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -22,11 +23,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 
-import com.example.adminvansales.AccountStatment;
 import com.example.adminvansales.ExportToExcel;
 import com.example.adminvansales.GlobelFunction;
 import com.example.adminvansales.ImportData;
-import com.example.adminvansales.Model.Payment;
+import com.example.adminvansales.model.Payment;
 import com.example.adminvansales.PdfConverter;
 import com.example.adminvansales.R;
 import com.nightonke.boommenu.BoomButtons.ButtonPlaceEnum;
@@ -159,18 +159,21 @@ public class UnCollectedData extends AppCompatActivity {
     private void convertToExcel() {
 
         ExportToExcel exportToExcel=new ExportToExcel();
-        exportToExcel.createExcelFile(UnCollectedData.this,"UncollectedChequesReport.xls",5,paymentArrayList);
-       /* if(file!=null)
-        {
+       exportToExcel.createExcelFile(UnCollectedData.this,"UncollectedChequesReport.xls",5,paymentArrayList);
+//        if(file!=null)
+//        {
             Toast.makeText(this, "Exported To Excel ", Toast.LENGTH_SHORT).show();
-        }
-        return file;*/
+//        }
+//        return file;
     }
 
     public void shareWhatsApp(){
         globelFunction.shareWhatsAppA(convertToPdf(),1);
     }
     private void initialView() {
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
+        builder.detectFileUriExposure();
         paymentArrayList = new ArrayList<>();
 
         tableCheckData = (TableLayout) findViewById(R.id.TableCheckData);

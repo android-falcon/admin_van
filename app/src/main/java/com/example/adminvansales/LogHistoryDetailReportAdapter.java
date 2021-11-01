@@ -7,7 +7,7 @@ import android.widget.BaseAdapter;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.example.adminvansales.Model.LogHistoryDetail;
+import com.example.adminvansales.model.LogHistoryDetail;
 
 import java.util.List;
 

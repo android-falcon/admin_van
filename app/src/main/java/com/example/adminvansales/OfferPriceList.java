@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
@@ -22,28 +21,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.adminvansales.Model.CashReportModel;
-import com.example.adminvansales.Model.ItemMaster;
-import com.example.adminvansales.Model.ListPriceOffer;
-import com.example.adminvansales.Model.OfferListModel;
-import com.example.adminvansales.Model.customerInfoModel;
-import com.example.adminvansales.Report.CashReport;
-import com.google.gson.JsonArray;
+import com.example.adminvansales.model.ItemMaster;
+import com.example.adminvansales.model.ListPriceOffer;
+import com.example.adminvansales.model.OfferListModel;
+import com.example.adminvansales.model.customerInfoModel;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import static com.example.adminvansales.GlobelFunction.adminId;
 import static com.example.adminvansales.GlobelFunction.adminName;
-import static com.example.adminvansales.GlobelFunction.salesManInfosList;
 
 import static com.example.adminvansales.Report.ListOfferReport.selectCustomerIfClose;
 import static com.example.adminvansales.Report.ListOfferReport.selectItemIfUpdate;
@@ -758,7 +750,7 @@ public class OfferPriceList extends AppCompatActivity {
                     listNo.setText(listSelectForClose.getPO_LIST_NO());
                     fromDate.setText(listSelectForClose.getFROM_DATE());
                     toDate.setText(listSelectForClose.getTO_DATE());
-                    importData.getItemCard(OfferPriceList.this);
+                    importData.getItemCard(OfferPriceList.this,1);
                 }else {
                     customerSelect.clear();
                     itemSelectList.clear();
@@ -784,7 +776,7 @@ public class OfferPriceList extends AppCompatActivity {
             listName.setText("");
         }else {
             listName.setText("End User Price List 0");
-            importData.getItemCard(OfferPriceList.this);
+            importData.getItemCard(OfferPriceList.this,1);
         }
         otherDiscount.setText("0.0");
         cashDiscount.setText("0.0");
@@ -833,7 +825,7 @@ public class OfferPriceList extends AppCompatActivity {
         fromDate.setText(globelFunction.DateInToday());
         toDate.setText(globelFunction.DateInToday());
         importData=new ImportData(OfferPriceList.this);
-        importData.getItemCard(OfferPriceList.this);
+        importData.getItemCard(OfferPriceList.this,1);
         importData.getCustomer(OfferPriceList.this);
      if(intentReSend != null && intentReSend.equals("UpdateList")) {
          Log.e("listType","uuuuuu");

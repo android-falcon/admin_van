@@ -1,9 +1,8 @@
 package com.example.adminvansales.Report;
 
-import android.content.Intent;
-import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -13,17 +12,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.FileProvider;
 
-import com.example.adminvansales.BuildConfig;
 import com.example.adminvansales.CashReportAdapter;
 import com.example.adminvansales.ExportToExcel;
 import com.example.adminvansales.GlobelFunction;
 import com.example.adminvansales.ImportData;
-import com.example.adminvansales.Model.CashReportModel;
-import com.example.adminvansales.Model.PayMentReportModel;
-import com.example.adminvansales.PayMentReportAdapter;
+import com.example.adminvansales.model.CashReportModel;
 import com.example.adminvansales.PdfConverter;
 import com.example.adminvansales.R;
 
@@ -55,8 +51,11 @@ public class CashReport extends AppCompatActivity {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
     private void initial() {
-
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
+        builder.detectFileUriExposure();
         fromDate=findViewById(R.id.from_date_r);
         toDate=findViewById(R.id.to_date_r);
         listCashReport=findViewById(R.id.listCashReport);
@@ -128,7 +127,8 @@ public class CashReport extends AppCompatActivity {
     private void convertToExcel() {
 
         ExportToExcel exportToExcel=new ExportToExcel();
-         exportToExcel.createExcelFile(CashReport.this,"CashReport.xls",3,TempReports);
+     exportToExcel.createExcelFile(CashReport.this,"CashReport.xls",3,TempReports);
+       // return file;
     }
 
     public void shareWhatsApp(){

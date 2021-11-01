@@ -1,17 +1,13 @@
 package com.example.adminvansales;
 
 import android.content.Context;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.example.adminvansales.Model.AnalyzeAccountModel;
-import com.example.adminvansales.Model.CashReportModel;
-import com.example.adminvansales.Report.AnalyzeAccounts;
+import com.example.adminvansales.model.AnalyzeAccountModel;
 
 import java.util.List;
 

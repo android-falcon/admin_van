@@ -1,6 +1,5 @@
-package com.example.adminvansales.Model;
+package com.example.adminvansales.model;
 
-import com.example.adminvansales.Report.CustomerLogReport;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;

@@ -1,7 +1,8 @@
 package com.example.adminvansales.Report;
 
-import android.app.DatePickerDialog;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -12,19 +13,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.adminvansales.ExportToExcel;
 import com.example.adminvansales.GlobelFunction;
 import com.example.adminvansales.ImportData;
-import com.example.adminvansales.Model.PayMentReportModel;
+import com.example.adminvansales.model.PayMentReportModel;
 import com.example.adminvansales.PayMentReportAdapter;
 import com.example.adminvansales.PdfConverter;
 import com.example.adminvansales.R;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import static com.example.adminvansales.GlobelFunction.salesManInfosList;
@@ -49,8 +50,11 @@ public class PaymentDetailsReport extends AppCompatActivity {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
     private void initial() {
-
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
+        builder.detectFileUriExposure();
         fromDate=findViewById(R.id.from_date_r);
         toDate=findViewById(R.id.to_date_r);
         listPaymentReport=findViewById(R.id.listPaymentReport);

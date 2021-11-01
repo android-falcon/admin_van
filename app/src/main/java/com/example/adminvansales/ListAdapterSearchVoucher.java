@@ -2,31 +2,22 @@ package com.example.adminvansales;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.adminvansales.Model.ItemMaster;
-import com.example.adminvansales.Model.OfferListModel;
-import com.example.adminvansales.Model.customerInfoModel;
+import com.example.adminvansales.model.ItemMaster;
+import com.example.adminvansales.model.OfferListModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.adminvansales.OfferPriceList.cashDiscount;
-import static com.example.adminvansales.OfferPriceList.customerSelectTemp;
 import static com.example.adminvansales.OfferPriceList.itemSelectList;
 import static com.example.adminvansales.OfferPriceList.otherDiscount;
 import static com.example.adminvansales.OfferPriceList.price;

@@ -1,7 +1,6 @@
 package com.example.adminvansales;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -17,8 +16,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.adminvansales.Model.SalesManInfo;
-import com.example.adminvansales.Model.SettingModel;
+import com.example.adminvansales.model.SalesManInfo;
+import com.example.adminvansales.model.SettingModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.smarteist.autoimageslider.DefaultSliderView;
 import com.smarteist.autoimageslider.IndicatorAnimations;
@@ -30,12 +29,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
-import java.util.List;
-
 import static com.example.adminvansales.GlobelFunction.adminId;
 import static com.example.adminvansales.GlobelFunction.adminName;
-import static com.example.adminvansales.GlobelFunction.salesManInfoAdmin;
-import static com.example.adminvansales.ImportData.listId;
 
 public class LogIn extends AppCompatActivity {
     SliderLayout sliderLayout;
@@ -82,7 +77,7 @@ public class LogIn extends AppCompatActivity {
         userName_edit=findViewById(R.id.userName_edit);
         importData=new ImportData(LogIn.this);
         Log.e("importData","importData");
-        importData.getCustomerInfo();
+       importData.getCustomerInfo(0);
         globelFunction=new GlobelFunction(LogIn.this);
         timer = new Timer();
 

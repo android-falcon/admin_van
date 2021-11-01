@@ -2,8 +2,6 @@ package com.example.adminvansales;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.content.Context;
-import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -15,11 +13,8 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.adminvansales.Model.ListPriceOffer;
+import com.example.adminvansales.model.ListPriceOffer;
 import com.example.adminvansales.Report.ListOfferReport;
-import com.google.gson.internal.$Gson$Preconditions;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 

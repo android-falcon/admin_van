@@ -9,8 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.example.adminvansales.Model.CashReportModel;
-import com.example.adminvansales.Model.PayMentReportModel;
+import com.example.adminvansales.model.CashReportModel;
 
 import java.util.List;
 

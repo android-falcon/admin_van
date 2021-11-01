@@ -1,6 +1,5 @@
 package com.example.adminvansales;
 
-import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -8,16 +7,11 @@ import android.widget.EditText;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.example.adminvansales.Model.CustomerLogReportModel;
-import com.example.adminvansales.Model.ItemMaster;
-import com.example.adminvansales.Model.OfferListModel;
-import com.example.adminvansales.Model.SalesManInfo;
+import com.example.adminvansales.model.OfferListModel;
 
 import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
-
-import static com.example.adminvansales.OfferPriceList.mainListOffer;
 
 
 public class ItemCardAdapter extends BaseAdapter {

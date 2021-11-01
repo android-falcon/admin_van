@@ -13,14 +13,12 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.adminvansales.CustomerLogReportAdapter;
 import com.example.adminvansales.GlobelFunction;
 import com.example.adminvansales.ImportData;
 import com.example.adminvansales.LogHistoryDetailReportAdapter;
 import com.example.adminvansales.LogHistoryReportAdapter;
-import com.example.adminvansales.Model.ListPriceOffer;
-import com.example.adminvansales.Model.LogHistoryDetail;
-import com.example.adminvansales.Model.LogHistoryModel;
+import com.example.adminvansales.model.LogHistoryDetail;
+import com.example.adminvansales.model.LogHistoryModel;
 import com.example.adminvansales.R;
 
 import java.util.ArrayList;

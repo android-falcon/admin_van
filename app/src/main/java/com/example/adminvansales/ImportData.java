@@ -16,24 +16,25 @@ import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 
-import com.example.adminvansales.Model.Account__Statment_Model;
-import com.example.adminvansales.Model.AnalyzeAccountModel;
-import com.example.adminvansales.Model.CashReportModel;
-import com.example.adminvansales.Model.CustomerLogReportModel;
-import com.example.adminvansales.Model.ItemMaster;
-import com.example.adminvansales.Model.ItemReportModel;
-import com.example.adminvansales.Model.ListPriceOffer;
-import com.example.adminvansales.Model.LogHistoryDetail;
-import com.example.adminvansales.Model.LogHistoryModel;
-import com.example.adminvansales.Model.OfferListModel;
-import com.example.adminvansales.Model.PayMentReportModel;
-import com.example.adminvansales.Model.CustomerInfo;
-import com.example.adminvansales.Model.Payment;
-import com.example.adminvansales.Model.Request;
-import com.example.adminvansales.Model.SalesManInfo;
-import com.example.adminvansales.Model.SettingModel;
-import com.example.adminvansales.Model.UnCollect_Modell;
-import com.example.adminvansales.Model.customerInfoModel;
+import com.example.adminvansales.model.Account__Statment_Model;
+import com.example.adminvansales.model.AnalyzeAccountModel;
+import com.example.adminvansales.model.CashReportModel;
+import com.example.adminvansales.model.CustomerLogReportModel;
+import com.example.adminvansales.model.ItemMaster;
+import com.example.adminvansales.model.ItemReportModel;
+import com.example.adminvansales.model.ListPriceOffer;
+import com.example.adminvansales.model.LogHistoryDetail;
+import com.example.adminvansales.model.LogHistoryModel;
+import com.example.adminvansales.model.OfferGroupModel;
+import com.example.adminvansales.model.OfferListModel;
+import com.example.adminvansales.model.PayMentReportModel;
+import com.example.adminvansales.model.CustomerInfo;
+import com.example.adminvansales.model.Payment;
+import com.example.adminvansales.model.Request;
+import com.example.adminvansales.model.SalesManInfo;
+import com.example.adminvansales.model.SettingModel;
+import com.example.adminvansales.model.UnCollect_Modell;
+import com.example.adminvansales.model.customerInfoModel;
 import com.example.adminvansales.Report.AnalyzeAccounts;
 import com.example.adminvansales.Report.CashReport;
 import com.example.adminvansales.Report.CustomerLogReport;
@@ -42,7 +43,6 @@ import com.example.adminvansales.Report.LogHistoryReport;
 import com.example.adminvansales.Report.PaymentDetailsReport;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import org.apache.http.HttpResponse;
@@ -67,14 +67,13 @@ import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
-import static android.content.Context.*;
-import static androidx.core.content.ContextCompat.getSystemService;
 import static com.example.adminvansales.AccountStatment.getAccountList_text;
 import static com.example.adminvansales.EditSalesMan.AdminInfoList;
 import static com.example.adminvansales.GlobelFunction.LatLngListMarker;
 import static com.example.adminvansales.GlobelFunction.salesManInfoAdmin;
 import static com.example.adminvansales.GlobelFunction.salesManInfosList;
 import static com.example.adminvansales.GlobelFunction.salesManNameList;
+import static com.example.adminvansales.GroupOffer.listOfferItem;
 import static com.example.adminvansales.HomeActivity.waitList;
 import static com.example.adminvansales.ItemReport.itemReportModelsList;
 import static com.example.adminvansales.ListOfferReportAdapter.controlText;
@@ -103,6 +102,7 @@ public class ImportData {
     private DataBaseHandler databaseHandler;
 
     private String URL_TO_HIT;
+    public  int typeCustomerList=0;
     SweetAlertDialog pdValidation,pdPayments,pdAnalyze,pdAccountStatment;
     SweetAlertDialog pdValidationCustomer, pdValidationSerial, pdValidationItem,getPdValidationItemCard,getPdValidationLogHistory
             ,pdAuthentication,getPdValidationItemReport;
@@ -203,8 +203,9 @@ public class ImportData {
         new JSONTaskGetAdmin(context, flag).execute();
     }
 
-    public void getItemCard(Context context) {
-        new JSONTaskGetItem(context).execute();
+    public void getItemCard(Context context,int flag) {
+        Log.e("getItemCard","flag="+flag);
+        new JSONTaskGetItem(context,flag).execute();
     }
     public void getItemCustomerByListNo(Context context,String listNo ,String UpClose) {
         new JSONTaskGetItemCustomerByListNo(context,listNo,UpClose).execute();
@@ -246,7 +247,14 @@ public class ImportData {
         new JSONTask_AccountStatment(CustomerId).execute();
     }
 
-    public void getCustomerInfo() {
+    public void getCustomerInfo(int type) {
+        if(type==0)
+        {
+            typeCustomerList=0;// from login
+        }
+        else {
+            typeCustomerList=1;// from account statment
+        }
         Log.e("getCustomerInfo", "*****");
         new JSONTask_CustomerInfo().execute();
     }
@@ -419,8 +427,8 @@ public class ImportData {
                             //                        "voucher_no, total_voucher, status, key_validation ,date, time , note , seen_row
                             requestDetail.setStatuse(infoDetail.get("status").toString());
                             if (requestDetail.getStatuse().equals("0")) {
-                                Log.e("infoDetail", "" + infoDetail.get("status").toString());
-                                Log.e("key_validation", "" + infoDetail.get("key_validation").toString());
+                                //Log.e("infoDetail", "" + infoDetail.get("status").toString());
+                              //  Log.e("key_validation", "" + infoDetail.get("key_validation").toString());
                                 requestDetail.setSalesmanName(infoDetail.get("salesman_name").toString());
                                 requestDetail.setSalesmanNo(infoDetail.get("salesman_no").toString());
                                 requestDetail.setCustomerName(infoDetail.get("customer_name").toString());
@@ -429,7 +437,7 @@ public class ImportData {
                                 requestDetail.setAmountValue(infoDetail.get("amount_value").toString());
                                 requestDetail.setVoucherNo(infoDetail.get("voucher_no").toString());
                                 requestDetail.setTotalVoucher(infoDetail.get("total_voucher").toString());
-                                Log.e("requestDetail", "" + requestDetail.getTotalVoucher());
+                               // Log.e("requestDetail", "" + requestDetail.getTotalVoucher());
                                 requestDetail.setStatuse(infoDetail.get("status").toString());
                                 requestDetail.setKeyValidation(infoDetail.get("key_validation").toString());
                                 requestDetail.setDate(infoDetail.get("date").toString());
@@ -456,7 +464,7 @@ public class ImportData {
 //                                    }
                                 } catch (Exception e) {
                                 }
-                                Log.e("listId", "" + listId.size());
+                               // Log.e("listId", "" + listId.size());
 
                                 listRequest.add(requestDetail);
                             }
@@ -469,7 +477,7 @@ public class ImportData {
                         }
 
 
-                        Log.e("listRequest", "" + listRequest.size());
+                        //Log.e("listRequest", "" + listRequest.size());
 
 
                     } catch (JSONException e) {
@@ -1514,11 +1522,11 @@ public class ImportData {
                             requestDetail.setSalesManNo(infoDetail.get("SalesManNo").toString());
                             requestDetail.setSalesName(infoDetail.get("SalesManName").toString());
                             requestDetail.setActive(infoDetail.get("IsSuspended").toString());
-                            Log.e("SalesManName", "" + infoDetail.get("SalesManName").toString());
-                            Log.e("SalesManNo", "" + infoDetail.get("SalesManNo").toString());
+                           // Log.e("SalesManName", "" + infoDetail.get("SalesManName").toString());
+                          //  Log.e("SalesManNo", "" + infoDetail.get("SalesManNo").toString());
 
                             listSalesMan.add(requestDetail);
-                            Log.e("listRequest", "" + listSalesMan.size());
+                           // Log.e("listRequest", "" + listSalesMan.size());
 
 
                         }
@@ -1649,7 +1657,7 @@ public class ImportData {
             JSONObject result = null;
             String impo = "";
             listCustomerInfo = new ArrayList<>();
-            Log.e("URL_TO_HIT","account"+s.toString());
+           // Log.e("URL_TO_HIT","account"+s.toString());
             if (s != null) {
                 if (s.contains("VHFNo")) {
                     // Log.e("CUSTOMER_INFO","onPostExecute\t"+s.toString());
@@ -1664,7 +1672,7 @@ public class ImportData {
                        // listCustomerInfo = new ArrayList<>();
                         double totalBalance=0;
                         requestArray = new JSONArray(s);
-                        Log.e("requestArray", "" + requestArray.length());
+                       // Log.e("requestArray", "" + requestArray.length());
 
 
                         for (int i = 0; i < requestArray.length(); i++) {
@@ -1698,7 +1706,7 @@ public class ImportData {
                            // Log.e("onBindViewHolder","=total="+totalBalance);
 
                             listCustomerInfo.add(requestDetail);
-                            Log.e("listRequest", "listCustomerInfo" + listCustomerInfo.size());
+                           // Log.e("listRequest", "listCustomerInfo" + listCustomerInfo.size());
 
 
                         }
@@ -1842,11 +1850,12 @@ public class ImportData {
 
                             listCustomer.add(requestDetail);
                             customername.add(requestDetail.getCustomerName());
-                            Log.e("listRequest", "CUSTOMER_INFO" + listCustomer.get(i).getCustomerName());
+                          //  Log.e("listRequest", "CUSTOMER_INFO" + listCustomer.get(i).getCustomerName());
 
 
                         }
-//                        getAccountList_text.setText("1");
+                        if(typeCustomerList==1)
+                        getAccountList_text.setText("1");
 
                     } catch (JSONException e) {
 //                        progressDialog.dismiss();
@@ -1864,9 +1873,11 @@ public class ImportData {
         int flag;
 
 
-        public JSONTaskGetItem(Object context) {
-//            this.flag=flag;
+        public JSONTaskGetItem(Object context,int flag) {
+            this.flag=flag;
+            if(flag==1)
             this.context = (OfferPriceList) context;
+            else  this.context = (GroupOffer) context;
 
         }
 
@@ -1978,28 +1989,48 @@ public class ImportData {
 
             if (s != null) {
                 if (s.contains("ItemNo")) {
-
+                    Log.e("getItemCard","flag2="+flag);
                     Gson gson = new Gson();
 
 //                    Gson gson = new GsonBuilder()
 //                            .setLenient()
 //                            .create();
-
-                    ItemMaster gsonObj = gson.fromJson(s, ItemMaster.class);
-                    ItemCardList.clear();
-                    ItemCardList.addAll(gsonObj.getALL_ITEMS());
-                    Log.e("itemCard", "SalesManNo");
-                    OfferPriceList offerPriceList = (OfferPriceList) context;
+                   // ItemMaster gsonObj = gson.fromJson(s, ItemMaster.class);
+                    if(flag==1)
+                    {
+                        ItemMaster gsonObj = gson.fromJson(s, ItemMaster.class);
+                        ItemCardList.clear();
+                        ItemCardList.addAll(gsonObj.getALL_ITEMS());
+                        Log.e("itemCard", "SalesManNo");
+                        OfferPriceList offerPriceList = (OfferPriceList) context;
 //                    offerPriceList.fillItemCard();
-                    getPdValidationItemCard.dismissWithAnimation();
-                    offerPriceList.fillItemListPrice();
+                        getPdValidationItemCard.dismissWithAnimation();
+                        offerPriceList.fillItemListPrice();
+                    }else if(flag==2)
+                    {
+                        OfferGroupModel gsonObjOffer = gson.fromJson(s, OfferGroupModel.class);
+                        listOfferItem.clear();
+                        listOfferItem.addAll(gsonObjOffer.getALL_ITEMS());
+                        Log.e("itemCard", "listOfferItem"+listOfferItem.size());
+                        GroupOffer offerPriceList = (GroupOffer) context;
+//                    offerPriceList.fillItemCard();
+                        getPdValidationItemCard.dismissWithAnimation();
+                        offerPriceList.filList();
+
+
+                    }
+
+
 
                 } else {
-                    ItemCardList.clear();
-                    OfferPriceList offerPriceList = (OfferPriceList) context;
+                    if(flag==1) {
+                        ItemCardList.clear();
+                        OfferPriceList offerPriceList = (OfferPriceList) context;
 //                    offerPriceList.fillItemCard();
+
+                        Log.e("itemCard", "SalesManNo2");
+                    }
                     getPdValidationItemCard.dismissWithAnimation();
-                    Log.e("itemCard", "SalesManNo2");
 
                 }
 //                progressDialog.dismiss();
@@ -3563,7 +3594,7 @@ public class ImportData {
 
 
                             unCollectlList.add(requestDetail);
-                            Log.e("listRequest", "listCustomerInfo" + unCollectlList.size());
+                         //   Log.e("listRequest", "listCustomerInfo" + unCollectlList.size());
 
 
                         }

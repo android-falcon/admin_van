@@ -9,11 +9,8 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
-import com.example.adminvansales.Model.Account__Statment_Model;
-import com.example.adminvansales.Model.SettingModel;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.example.adminvansales.model.Account__Statment_Model;
+import com.example.adminvansales.model.SettingModel;
 
 public class DataBaseHandler extends SQLiteOpenHelper {
 
@@ -235,7 +232,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 
                 row=cursor.getString(0);
 
-                Log.e("getRowId",""+row);
+               // Log.e("getRowId",""+row);
             } while (cursor.moveToNext());
         }
         if(row.equals(""))

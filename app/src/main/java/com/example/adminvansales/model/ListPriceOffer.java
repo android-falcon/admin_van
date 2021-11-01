@@ -1,6 +1,4 @@
-package com.example.adminvansales.Model;
-
-import android.widget.TextView;
+package com.example.adminvansales.model;
 
 import com.google.gson.annotations.SerializedName;
 

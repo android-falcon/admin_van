@@ -1,13 +1,8 @@
-package com.example.adminvansales.Model;
-
-import android.widget.ListView;
-
-import androidx.annotation.StyleableRes;
+package com.example.adminvansales.model;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
-import java.util.PriorityQueue;
 
 public class LogHistoryDetail {
 //{"LOG_DETAIL":[{"ItemNo":"10100001","CUSTOMER_NO":"1110010047","price":"3.33148e24","price_before":"8.4444446e19",
