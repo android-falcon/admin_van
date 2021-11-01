@@ -125,11 +125,10 @@ public class CashReport extends AppCompatActivity {
         return file;
     }
 
-    private File convertToExcel() {
+    private void convertToExcel() {
 
         ExportToExcel exportToExcel=new ExportToExcel();
-        File file= exportToExcel.createExcelFile(CashReport.this,"CashReport.xls",3,TempReports);
-        return file;
+         exportToExcel.createExcelFile(CashReport.this,"CashReport.xls",3,TempReports);
     }
 
     public void shareWhatsApp(){

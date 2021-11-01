@@ -212,15 +212,12 @@ public class AnalyzeAccounts extends AppCompatActivity {
         return file;
     }
 
-    private File convertToExcel() {
+    private void convertToExcel() {
 
         ExportToExcel exportToExcel=new ExportToExcel();
-        File file= exportToExcel.createExcelFile(AnalyzeAccounts.this,"AnalyzeAccountReport.xls",6,TempReports);
+        exportToExcel.createExcelFile(AnalyzeAccounts.this,"AnalyzeAccountReport.xls",6,TempReports);
       //Log.e("convertToExcel",""+file);
-        if(file!=null){
-          Toast.makeText(this, "Exported To Excel ", Toast.LENGTH_SHORT).show();
-      }
-        return file;
+
     }
 
     public void shareWhatsApp(){

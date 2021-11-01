@@ -1,12 +1,17 @@
 package com.example.adminvansales;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 
 import com.example.adminvansales.Model.AnalyzeAccountModel;
@@ -43,32 +48,32 @@ public class ExportToExcel {
         return instance;
     }
 
-    public File createExcelFile(Context context, String fileName, int report, List<?> list) {
+    public void createExcelFile(Context context, String fileName, int report, List<?> list) {
 //        public void createExcelFile(Context context, String fileName, int report, List<?> list, List<?> listDetail)
 //        this.context = context;
 //        final String fileName = "planned_packing_list_report.xls";
 
         //Saving file in external storage
-        this.context=context;
-       File sdCard = Environment.getExternalStorageDirectory();
-        //File sdCard = Environment.getStorageDirectory();
+        this.context = context;
+        File sdCard = Environment.getExternalStorageDirectory();
         File directory = new File(sdCard.getAbsolutePath() + "/VanSalesExcelReport");
-          if (!directory.isDirectory()) {//create directory if not exist
+Log.e("directory",sdCard.getAbsolutePath()+"");
+        if (!directory.isDirectory()) {//create directory if not exist
             directory.mkdirs();
         }
 
-       file = new File(directory, fileName);//file path
-        pathFile=file;
+        File file = new File(directory, fileName);//file path
+
 //        WorkbookSettings wbSettings = new WorkbookSettings();
 //        wbSettings.setLocale(new Locale("en", "EN"));
-        workbook = null;//, wbSettings);
+        WritableWorkbook workbook = null;//, wbSettings);
         try {
-        workbook =Workbook.createWorkbook(file);
+            workbook = Workbook.createWorkbook(file);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        switch (report) {
+        try {  switch (report) {
 
             case 1:
                 workbook = customerLogReport(workbook, (List<CustomerLogReportModel>) list);
@@ -78,39 +83,60 @@ public class ExportToExcel {
                 break;
 
             case 3:
-                workbook = cashReport(workbook , (List<CashReportModel>) list );
+                workbook = cashReport(workbook, (List<CashReportModel>) list);
                 break;
             case 4:
-                workbook = listReport(workbook , (List<ListPriceOffer>) list );
+                workbook = listReport(workbook, (List<ListPriceOffer>) list);
                 break;
             case 5:
-                workbook = unCollectedReport(workbook , (List<Payment>) list );
+                workbook = unCollectedReport(workbook, (List<Payment>) list);
                 break;
             case 6:
-                workbook = analyzeAccountReport(workbook , (List<AnalyzeAccountModel>) list );
+                workbook = analyzeAccountReport(workbook, (List<AnalyzeAccountModel>) list);
                 break;
         }
 
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        String directory_path = Environment.getExternalStorageDirectory().getPath() + "/VanSalesExcelReport/";
-        file = new File(directory_path);
-        if (!file.exists()) {
-            file.mkdirs();
         }
-        String targetPdf = directory_path + fileName;
-        File path = new File(targetPdf);
+    catch (Exception e ) {
+            if (Build.VERSION.SDK_INT >= 23) {
+                if (context.checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+                        && (context.checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)) {
 
-        try {
-            Uri uri = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".provider", path);
-            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            intent.setDataAndType(uri, "application/vnd.ms-excel");//intent.setDataAndType(Uri.fromFile(path), "application/pdf");
-        }catch (Exception e){}
-        try{
-            context.startActivity(intent);
-        }catch (Exception e){
-            Toast.makeText(context, "Excel program needed!", Toast.LENGTH_SHORT).show();
+                    Log.v("", "Permission is granted");
+                } else {
+
+                    Log.v("", "Permission is revoked");
+                    ActivityCompat.requestPermissions(
+                            (Activity) context,
+                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE},
+                            1);
+                }
+            }
         }
-        return pathFile;
+
+
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            String directory_path = Environment.getExternalStorageDirectory().getPath() + "/VanSalesExcelReport/";
+            file = new File(directory_path);
+            if (!file.exists()) {
+                file.mkdirs();
+            }
+            String targetPdf = directory_path + fileName;
+            File path = new File(targetPdf);
+            Uri uri = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".provider", path);
+          intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.setDataAndType(uri, "application/vnd.ms-excel");//intent.setDataAndType(Uri.fromFile(path), "application/pdf");
+            Log.e("mmm", intent.getType());
+
+
+                context.startActivity(intent);
+
+                Toast.makeText(context, "Excel program needed!", Toast.LENGTH_SHORT).show();
+
+
+
+
+
     }
 
 

@@ -172,11 +172,11 @@ public class ListOfferReport extends AppCompatActivity {
         return file;
     }
 
-    private File convertToExcel() {
+    private void convertToExcel() {
 
         ExportToExcel exportToExcel=new ExportToExcel();
-        File file= exportToExcel.createExcelFile(ListOfferReport.this,"ListOffer.xls",4,TempReports);
-        return file;
+       exportToExcel.createExcelFile(ListOfferReport.this,"ListOffer.xls",4,TempReports);
+
     }
 
     public void shareWhatsApp(){

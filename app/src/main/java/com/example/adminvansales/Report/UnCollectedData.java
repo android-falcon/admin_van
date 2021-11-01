@@ -156,15 +156,15 @@ public class UnCollectedData extends AppCompatActivity {
         return file;
     }
 
-    private File convertToExcel() {
+    private void convertToExcel() {
 
         ExportToExcel exportToExcel=new ExportToExcel();
-        File file= exportToExcel.createExcelFile(UnCollectedData.this,"UncollectedChequesReport.xls",5,paymentArrayList);
-        if(file!=null)
+        exportToExcel.createExcelFile(UnCollectedData.this,"UncollectedChequesReport.xls",5,paymentArrayList);
+       /* if(file!=null)
         {
             Toast.makeText(this, "Exported To Excel ", Toast.LENGTH_SHORT).show();
         }
-        return file;
+        return file;*/
     }
 
     public void shareWhatsApp(){
