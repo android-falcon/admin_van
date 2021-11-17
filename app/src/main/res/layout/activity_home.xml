@@ -331,6 +331,18 @@
                     android:visibility="visible"
                     android:text="Item Report"
                     android:textColor="@color/white" />
+                <TextView
+                    android:id="@+id/offersReport"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:drawableStart="@drawable/ic_equalizer_black_24dp"
+                    android:drawableLeft="@drawable/ic_equalizer_black_24dp"
+                    android:drawableTint="@color/white"
+                    android:padding="10dp"
+                    android:visibility="visible"
+                    android:text="offersReport"
+                    android:textColor="@color/white" />
 
             </LinearLayout>
 

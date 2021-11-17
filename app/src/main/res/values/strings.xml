@@ -32,7 +32,8 @@
     <string name="Active">DeActive User</string>
     <string name="title_activity_salesman_maps">Map</string>
     <string name="customer_log_report">Customer Log Report</string>
-
+    <string name="delete">Are you sure you want to
+            \n delete this entry?</string>
     <string name="SALES_MAN_ID">Sales Man ID</string>
     <string name="CUS_CODE">Customer Code</string>
     <string name="CUS_NAME">Customer Name</string>
@@ -46,28 +47,10 @@
     <string name="to_date">To Date</string>
     <string name="app_paymentType">Payment Type</string>
 
-    <string-array name="app_paymentTypeList">
-        <item>All</item>
-        <item>Cash</item>
-        <item>Cheque</item>
-    </string-array>
-    <string-array name="ListTypeAll">
-        <item>ALL</item>
-        <item>price by customer</item>
-        <item>price only</item>
-        <item>offer</item>
-        <!--        <item>replacement</item>-->
-    </string-array>
-    <string-array name="ListType">
-        <item>price by customer</item>
-        <item>price only</item>
-        <item>offer</item>
-        <!--        <item>replacement</item>-->
-    </string-array>
-
     <string name="company_number">Company Number</string>
     <string name="voucher_number">Voucher Number</string>
     <string name="payment_term">Payment term</string>
+
     <string name="payment_number">Payment Number</string>
     <string name="voucher_type">Voucher Type</string>
     <string name="voucher_date">Voucher Date</string>
@@ -140,6 +123,8 @@
     <string name="customerNo">Customer No</string>
     <string name="df">DF</string>
     <string name="cf">CF</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
     <string name="totalDebit">TDebit</string>
     <string name="totalCredit">TCredit</string>
     <string name="TotalDebitF">TDebit F</string>
@@ -154,4 +139,28 @@
     <string name="getItemReport">Get Item Report</string>
     <string name="discountType">Discount Type :</string>
     <string name="qty">Qty</string>
+    <string name="groupno">Group No</string>
+    <string name="Totaldec">Total Discount</string>
+    <string name="Activedes">Active State</string>
+    <string name="yes">yes</string>
+    <string name="no">No</string>
+<string-array name="app_paymentTypeList">
+
+        <item>All</item>
+        <item>Cash</item>
+        <item>Cheque</item>
+    </string-array>
+    <string-array name="ListTypeAll">
+        <item>ALL</item>
+        <item>price by customer</item>
+        <item>price only</item>
+        <item>offer</item>
+        <!--        <item>replacement</item>-->
+    </string-array>
+    <string-array name="ListType">
+        <item>price by customer</item>
+        <item>price only</item>
+        <item>offer</item>
+        <!--        <item>replacement</item>-->
+    </string-array>
 </resources>

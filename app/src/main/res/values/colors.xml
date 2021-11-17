@@ -31,6 +31,7 @@
     <color name="colorblue_dark">#04578A</color>
     <color name="green">#C399F09D</color>
     <color name="colorblue1">#3F86B5</color>
-
+    <color name="colorblue2">#B0C4DE</color>
+    <color name="babyblue" >#89CFF0</color>
 
 </resources>

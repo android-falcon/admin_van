@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/activity_analyze_accounts.xml" value="0.13551165146909827" />
+        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/activity_offerse_report.xml" value="0.18795289855072464" />
+        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/cash_report.xml" value="0.21" />
+        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/list_price_offer.xml" value="0.18795289855072464" />
+        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/offersdetailrecycler.xml" value="0.15045592705167174" />
+        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/offersgroupsrecycler.xml" value="0.14463019250253292" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

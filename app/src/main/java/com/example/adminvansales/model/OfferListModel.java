@@ -57,6 +57,10 @@ public class OfferListModel {
     @SerializedName("ALL_LIST")
     private List<OfferListModel> ALL_LIST;
 
+    @SerializedName("ActiveOffers")
+    public String ActiveOffers;
+
+
     private String adminId;
     private String adminName;
 
@@ -64,7 +68,13 @@ public class OfferListModel {
 
     public OfferListModel() {
     }
+    public String getActiveOffers() {
+        return ActiveOffers;
+    }
 
+    public void setActiveOffers(String activeOffers) {
+        ActiveOffers = activeOffers;
+    }
     public OfferListModel(String listNo, String listName, String listType, String fromDate, String toDate
             , String price, String cashOffer, String otherOffer, String itemNo, String itemName,
                           String customerNo, String customerName) {

@@ -94,6 +94,7 @@ import static com.example.adminvansales.Report.ListOfferReport.selectCustomerIfC
 import static com.example.adminvansales.Report.ListOfferReport.selectItemIfUpdate;
 import static com.example.adminvansales.Report.LogHistoryReport.logHistoryDetail;
 import static com.example.adminvansales.Report.LogHistoryReport.logHistoryList;
+import static com.example.adminvansales.Report.OfferseReport.offersrespon;
 import static com.example.adminvansales.Report.PaymentDetailsReport.payMentReportList;
 import static com.example.adminvansales.Report.UnCollectedData.resultData;
 import static com.example.adminvansales.ShowNotifications.showNotification;
@@ -102,13 +103,12 @@ public class ImportData {
     private DataBaseHandler databaseHandler;
 
     private String URL_TO_HIT;
-    public  int typeCustomerList=0;
-    SweetAlertDialog pdValidation,pdPayments,pdAnalyze,pdAccountStatment;
-    SweetAlertDialog pdValidationCustomer, pdValidationSerial, pdValidationItem,getPdValidationItemCard,getPdValidationLogHistory
-            ,pdAuthentication,getPdValidationItemReport;
+    public int typeCustomerList = 0;
+    SweetAlertDialog pdValidation, pdPayments, pdAnalyze, pdAccountStatment;
+    SweetAlertDialog pdValidationCustomer, pdValidationSerial, pdValidationItem, getPdValidationItemCard, getPdValidationLogHistory, pdAuthentication, getPdValidationItemReport;
 
-    public static ArrayList<UnCollect_Modell> unCollectlList=new ArrayList<>();
-    public static ArrayList<Payment> paymentChequesList=new ArrayList<>();
+    public static ArrayList<UnCollect_Modell> unCollectlList = new ArrayList<>();
+    public static ArrayList<Payment> paymentChequesList = new ArrayList<>();
     Context main_context;
     public static ArrayList<Integer> listId;
 
@@ -117,12 +117,14 @@ public class ImportData {
     public static ArrayList<Account__Statment_Model> listCustomerInfo = new ArrayList<Account__Statment_Model>();
     public static ArrayList<CustomerInfo> listCustomer = new ArrayList<CustomerInfo>();
     public static List<String> customername = new ArrayList<>();
+
+    public static List<OfferGroupModel> offerGroupModels = new ArrayList<>();
     GlobelFunction globelFunction;
 
     public ImportData(Context context) {
         databaseHandler = new DataBaseHandler(context);
         this.main_context = context;
-       // globelFunction=new GlobelFunction(context);
+        // globelFunction=new GlobelFunction(context);
         listId = new ArrayList<>();
 
     }
@@ -131,29 +133,38 @@ public class ImportData {
 
         try {
 
-            SettingModel settingModel =new SettingModel();
-            settingModel=databaseHandler.getAllSetting();
-            ipAddress=settingModel.getIpAddress();
-            if(ipAddress.contains(":"))
-            {
-                int ind=ipAddress.indexOf(":");
-                ipAddress=ipAddress.substring(0,ind);
-                Log.e("ipAddress",""+ipAddress);
+            SettingModel settingModel = new SettingModel();
+            settingModel = databaseHandler.getAllSetting();
+            ipAddress = settingModel.getIpAddress();
+            if (ipAddress.contains(":")) {
+                int ind = ipAddress.indexOf(":");
+                ipAddress = ipAddress.substring(0, ind);
+                Log.e("ipAddress", "" + ipAddress);
             }
-            portSettings=settingModel.getPort();
+            portSettings = settingModel.getPort();
 
         } catch (Exception e) {
 
         }
 
-        if (!ipAddress.equals("")&&!portSettings.equals("")) {
+        if (!ipAddress.equals("") && !portSettings.equals("")) {
 
             Log.e("getUnCollectedCheques", "*****");
             new JSONTask_UncollectedCheques(customerId).execute();
 
-        }
-        else {
+        } else {
             Toast.makeText(main_context, "Check Ip Address", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    public void getAllOffers() {
+
+        offerGroupModels.clear();
+        if (!ipAddress.equals("")) {
+            new JSONTask_getAllOffers().execute();
+        } else {
+            Toast.makeText(main_context, "Fill Ip", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -161,28 +172,26 @@ public class ImportData {
     public void getAllcheques(String customerId) {
         try {
 
-            SettingModel settingModel =new SettingModel();
-            settingModel=databaseHandler.getAllSetting();
-            ipAddress=settingModel.getIpAddress();
-            if(ipAddress.contains(":"))
-            {
-                int ind=ipAddress.indexOf(":");
-                ipAddress=ipAddress.substring(0,ind);
-                Log.e("ipAddress",""+ipAddress);
+            SettingModel settingModel = new SettingModel();
+            settingModel = databaseHandler.getAllSetting();
+            ipAddress = settingModel.getIpAddress();
+            if (ipAddress.contains(":")) {
+                int ind = ipAddress.indexOf(":");
+                ipAddress = ipAddress.substring(0, ind);
+                Log.e("ipAddress", "" + ipAddress);
             }
-            portSettings=settingModel.getPort();
+            portSettings = settingModel.getPort();
 
         } catch (Exception e) {
 
         }
 
-        if (!ipAddress.equals("")&&!portSettings.equals("")) {
+        if (!ipAddress.equals("") && !portSettings.equals("")) {
 
             Log.e("getUnCollectedCheques", "*****");
             new JSONTask_GetAllCheques(customerId).execute();
             //  new SyncRemark().execute();
-        }
-        else {
+        } else {
             Toast.makeText(main_context, "Check Ip Address", Toast.LENGTH_SHORT).show();
         }
     }
@@ -203,28 +212,29 @@ public class ImportData {
         new JSONTaskGetAdmin(context, flag).execute();
     }
 
-    public void getItemCard(Context context,int flag) {
-        Log.e("getItemCard","flag="+flag);
-        new JSONTaskGetItem(context,flag).execute();
-    }
-    public void getItemCustomerByListNo(Context context,String listNo ,String UpClose) {
-        new JSONTaskGetItemCustomerByListNo(context,listNo,UpClose).execute();
+    public void getItemCard(Context context, int flag) {
+        Log.e("getItemCard", "flag=" + flag);
+        new JSONTaskGetItem(context, flag).execute();
     }
 
-    public void getItemUpdateClosOpenList(Context context,String listNo,String closeSwitch,String listType) {
-        new JSONTaskGetUpdateCloseOpenList(context,listNo,closeSwitch,listType).execute();
+    public void getItemCustomerByListNo(Context context, String listNo, String UpClose) {
+        new JSONTaskGetItemCustomerByListNo(context, listNo, UpClose).execute();
     }
 
-    public void getItemUpdateActivateList(Context context,String listNo) {
-        new JSONTaskGetUpdateActivateList(context,listNo).execute();
+    public void getItemUpdateClosOpenList(Context context, String listNo, String closeSwitch, String listType) {
+        new JSONTaskGetUpdateCloseOpenList(context, listNo, closeSwitch, listType).execute();
     }
 
-    public void getItemUpdateActivateList(Context context,String serialNo,String listNo , String listType ) {
-        new JSONTaskGetLogHistoryDetail(context,serialNo,listNo ,listType).execute();
+    public void getItemUpdateActivateList(Context context, String listNo) {
+        new JSONTaskGetUpdateActivateList(context, listNo).execute();
     }
 
-    public void getLogHistory(Context context){
-       new  JSONTaskGetLogHistory(context).execute();
+    public void getItemUpdateActivateList(Context context, String serialNo, String listNo, String listType) {
+        new JSONTaskGetLogHistoryDetail(context, serialNo, listNo, listType).execute();
+    }
+
+    public void getLogHistory(Context context) {
+        new JSONTaskGetLogHistory(context).execute();
     }
 
     public void getCustomer(Context context) {
@@ -234,13 +244,14 @@ public class ImportData {
     public void getMaxNo(Context context) {
         new JSONTaskMaxSerial(context).execute();
     }
-    public void getItemReport(Context context,String fromDate,String toDate,String salesNo) {
-        Log.e("getItemReport","fromDate="+fromDate+"toDate="+toDate+"salesNo="+salesNo);
-        new JSONTaskGetItemReport(context,fromDate,toDate,salesNo).execute();
+
+    public void getItemReport(Context context, String fromDate, String toDate, String salesNo) {
+        Log.e("getItemReport", "fromDate=" + fromDate + "toDate=" + toDate + "salesNo=" + salesNo);
+        new JSONTaskGetItemReport(context, fromDate, toDate, salesNo).execute();
     }
 
-    public void ifBetweenDate(Context context, String fromDate, String toDate, String postion, String upAdd, String listNo,JSONArray listOfCustomer) {
-        new JSONTaskIfDateBetween(context, fromDate, toDate, postion, upAdd, listNo,listOfCustomer).execute();
+    public void ifBetweenDate(Context context, String fromDate, String toDate, String postion, String upAdd, String listNo, JSONArray listOfCustomer) {
+        new JSONTaskIfDateBetween(context, fromDate, toDate, postion, upAdd, listNo, listOfCustomer).execute();
     }
 
     public void getCustomerAccountStatment(String CustomerId) {
@@ -248,12 +259,10 @@ public class ImportData {
     }
 
     public void getCustomerInfo(int type) {
-        if(type==0)
-        {
-            typeCustomerList=0;// from login
-        }
-        else {
-            typeCustomerList=1;// from account statment
+        if (type == 0) {
+            typeCustomerList = 0;// from login
+        } else {
+            typeCustomerList = 1;// from account statment
         }
         Log.e("getCustomerInfo", "*****");
         new JSONTask_CustomerInfo().execute();
@@ -267,28 +276,27 @@ public class ImportData {
     public void getCashReport(Context context, String fromDate, String toDate) {
         new JSONTaskGetCashReport(context, fromDate, toDate).execute();
     }
+
     public void getAnalyzeReport(Context context, String fromDate, String toDate) {
         try {
-            Log.e("toda","fromDate="+fromDate+"\ttoDate"+toDate);
-            SettingModel settingModel =new SettingModel();
-            settingModel=databaseHandler.getAllSetting();
-            ipAddress=settingModel.getIpAddress();
-            if(ipAddress.contains(":"))
-            {
-                int ind=ipAddress.indexOf(":");
-                ipAddress=ipAddress.substring(0,ind);
-                Log.e("ipAddress",""+ipAddress);
+            Log.e("toda", "fromDate=" + fromDate + "\ttoDate" + toDate);
+            SettingModel settingModel = new SettingModel();
+            settingModel = databaseHandler.getAllSetting();
+            ipAddress = settingModel.getIpAddress();
+            if (ipAddress.contains(":")) {
+                int ind = ipAddress.indexOf(":");
+                ipAddress = ipAddress.substring(0, ind);
+                Log.e("ipAddress", "" + ipAddress);
             }
-            portSettings=settingModel.getPort();
+            portSettings = settingModel.getPort();
 
         } catch (Exception e) {
 
         }
 
-        if (!ipAddress.equals("")&&!portSettings.equals("")) {
+        if (!ipAddress.equals("") && !portSettings.equals("")) {
             new JSONTaskGetAnalyzeReport(context, fromDate, toDate).execute();
-        }
-        else {
+        } else {
             Toast.makeText(main_context, "Check Ip Address", Toast.LENGTH_SHORT).show();
         }
 
@@ -299,9 +307,9 @@ public class ImportData {
         new JSONTaskGetCustomerLogReport(context, SalesNo, fromDate, toDate).execute();
     }
 
-    public void GetAuthentication (Context context, String userName, String password,int flag){
+    public void GetAuthentication(Context context, String userName, String password, int flag) {
 
-        new JSONTaskGetAuthentication(context, userName, password,flag).execute();
+        new JSONTaskGetAuthentication(context, userName, password, flag).execute();
 
     }
 
@@ -334,7 +342,7 @@ public class ImportData {
                         Toast.makeText(main_context, "check ip", Toast.LENGTH_SHORT).show();
                     }
                 });
-                Log.e("JcheckStateRequest","Exception"+e.getMessage());
+                Log.e("JcheckStateRequest", "Exception" + e.getMessage());
 
 
             }
@@ -371,7 +379,7 @@ public class ImportData {
 
 
                 JsonResponse = sb.toString();
-              //  Log.e("tag_requestState", "JsonResponse\t" + JsonResponse);
+                //  Log.e("tag_requestState", "JsonResponse\t" + JsonResponse);
 
                 return JsonResponse;
 
@@ -428,7 +436,7 @@ public class ImportData {
                             requestDetail.setStatuse(infoDetail.get("status").toString());
                             if (requestDetail.getStatuse().equals("0")) {
                                 //Log.e("infoDetail", "" + infoDetail.get("status").toString());
-                              //  Log.e("key_validation", "" + infoDetail.get("key_validation").toString());
+                                //  Log.e("key_validation", "" + infoDetail.get("key_validation").toString());
                                 requestDetail.setSalesmanName(infoDetail.get("salesman_name").toString());
                                 requestDetail.setSalesmanNo(infoDetail.get("salesman_no").toString());
                                 requestDetail.setCustomerName(infoDetail.get("customer_name").toString());
@@ -437,7 +445,7 @@ public class ImportData {
                                 requestDetail.setAmountValue(infoDetail.get("amount_value").toString());
                                 requestDetail.setVoucherNo(infoDetail.get("voucher_no").toString());
                                 requestDetail.setTotalVoucher(infoDetail.get("total_voucher").toString());
-                               // Log.e("requestDetail", "" + requestDetail.getTotalVoucher());
+                                // Log.e("requestDetail", "" + requestDetail.getTotalVoucher());
                                 requestDetail.setStatuse(infoDetail.get("status").toString());
                                 requestDetail.setKeyValidation(infoDetail.get("key_validation").toString());
                                 requestDetail.setDate(infoDetail.get("date").toString());
@@ -464,7 +472,7 @@ public class ImportData {
 //                                    }
                                 } catch (Exception e) {
                                 }
-                               // Log.e("listId", "" + listId.size());
+                                // Log.e("listId", "" + listId.size());
 
                                 listRequest.add(requestDetail);
                             }
@@ -678,7 +686,7 @@ public class ImportData {
                     URL_TO_HIT = "http://" + ipAddress + "/VANSALES_WEB_SERVICE/admin.php";
                 }
             } catch (Exception e) {
-                Log.e("JcheckSalesMan","Exception"+e.getMessage());
+                Log.e("JcheckSalesMan", "Exception" + e.getMessage());
                 Toast.makeText(main_context, "check ip", Toast.LENGTH_SHORT).show();
             }
 
@@ -780,9 +788,8 @@ public class ImportData {
                             AdminInfoList.add(salesManInfo);
                         }
 
-                            EditSalesMan editSalesMan = (EditSalesMan) context;
-                            editSalesMan.searchSalesMan(2);
-
+                        EditSalesMan editSalesMan = (EditSalesMan) context;
+                        editSalesMan.searchSalesMan(2);
 
 
                     } catch (JSONException e) {
@@ -813,7 +820,7 @@ public class ImportData {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            String do_ ="my";
+            String do_ = "my";
             pdValidation = new SweetAlertDialog(main_context, SweetAlertDialog.PROGRESS_TYPE);
             pdValidation.getProgressHelper().setBarColor(Color.parseColor("#FDD835"));
             pdValidation.setTitleText(main_context.getResources().getString(R.string.process));
@@ -1067,6 +1074,7 @@ public class ImportData {
         }
 
     }
+
     private class JSONTaskGetAnalyzeReport extends AsyncTask<String, String, String> {
         Object context;
         int flag;
@@ -1082,7 +1090,7 @@ public class ImportData {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            Log.e("URL_TO_HIT","GetAccAnalyst+onPreExecute");
+            Log.e("URL_TO_HIT", "GetAccAnalyst+onPreExecute");
             String do_ = "my";
             pdAnalyze = new SweetAlertDialog(main_context, SweetAlertDialog.PROGRESS_TYPE);
             pdAnalyze.getProgressHelper().setBarColor(Color.parseColor("#FDD835"));
@@ -1096,18 +1104,18 @@ public class ImportData {
         protected String doInBackground(String... params) {
 
             String s = "";
-            Log.e("URL_TO_HIT","GetAccAnalyst+doInBackground");
+            Log.e("URL_TO_HIT", "GetAccAnalyst+doInBackground");
 
             try {
 
                 if (!ipAddress.equals("")) {
 
                     // URL_TO_HIT = "http://"+ipAddress.trim()+":" + portSettings.trim() +"/Falcons/VAN.dll/GetACCOUNTSTATMENT?ACCNO="+custId;
-                  //  http://10.0.0.22:8082/GetAccAnalyst?ACCNO=1&CONO=295&USERNO=90000&STARTDATE=01/01/2015&UPTODATE=01/03/2021
+                    //  http://10.0.0.22:8082/GetAccAnalyst?ACCNO=1&CONO=295&USERNO=90000&STARTDATE=01/01/2015&UPTODATE=01/03/2021
 
-                    URL_TO_HIT = "http://"+ipAddress.trim()+":" + portSettings.trim() +"/Falcons/VAN.dll/GetAccAnalyst?ACCNO=1&CONO=295&USERNO=90000&STARTDATE="+fromDate+"&UPTODATE="+toDate;
-                   // URL_TO_HIT = "http://"+ipAddress.trim()+":" + portSettings.trim() +"/Falcons/VAN.dll/GetAccAnalyst?ACCNO=1&CONO=295&USERNO=90000&STARTDATE="+fromDate+"&UPTODATE="+toDate;
-               Log.e("URL_TO_HIT","GetAccAnalyst"+URL_TO_HIT);
+                    URL_TO_HIT = "http://" + ipAddress.trim() + ":" + portSettings.trim() + "/Falcons/VAN.dll/GetAccAnalyst?ACCNO=1&CONO=295&USERNO=90000&STARTDATE=" + fromDate + "&UPTODATE=" + toDate;
+                    // URL_TO_HIT = "http://"+ipAddress.trim()+":" + portSettings.trim() +"/Falcons/VAN.dll/GetAccAnalyst?ACCNO=1&CONO=295&USERNO=90000&STARTDATE="+fromDate+"&UPTODATE="+toDate;
+                    Log.e("URL_TO_HIT", "GetAccAnalyst" + URL_TO_HIT);
                 }
             } catch (Exception e) {
                 pdAnalyze.dismissWithAnimation();
@@ -1179,15 +1187,16 @@ public class ImportData {
 //                    analyzeAccounts.fillCashAdapter();
 //                    pdAnalyze.dismissWithAnimation();
 
-                    Type collectionType = new TypeToken<List<AnalyzeAccountModel>>(){}.getType();
+                    Type collectionType = new TypeToken<List<AnalyzeAccountModel>>() {
+                    }.getType();
                     List<AnalyzeAccountModel> lcs = (List<AnalyzeAccountModel>) new Gson()
-                            .fromJson( s , collectionType);
-                    Log.e("fromJson",""+lcs.get(0).getAccNameA());
+                            .fromJson(s, collectionType);
+                    Log.e("fromJson", "" + lcs.get(0).getAccNameA());
                     analyzeAccountModelArrayList.clear();
                     analyzeAccountModelArrayList.addAll(lcs);
                     AnalyzeAccounts analyzeAccounts = (AnalyzeAccounts) context;
                     analyzeAccounts.fillCashAdapter();
-                   // Log.e("analyzeAccountModelArr", "SalesManNo"+analyzeAccountModelArrayList.size());
+                    // Log.e("analyzeAccountModelArr", "SalesManNo"+analyzeAccountModelArrayList.size());
                     //Log.e("analyzeAccountModelArr", "SalesManNo"+analyzeAccountModelArrayList.get(0).getAccNameA());
 
                 }
@@ -1366,7 +1375,6 @@ public class ImportData {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
 
-
 //                show_Notification(title);
             showNotification(main_context, title, messgaeBody);
 
@@ -1379,6 +1387,7 @@ public class ImportData {
 
 
     }
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void show_Notification(String detail) {
 
@@ -1404,7 +1413,7 @@ public class ImportData {
                 .build();
 
 
-        NotificationManager notificationManager = (NotificationManager)main_context.getSystemService(Context.NOTIFICATION_SERVICE) ;
+        NotificationManager notificationManager = (NotificationManager) main_context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.createNotificationChannel(notificationChannel);
         notificationManager.notify(1, notification);
 
@@ -1522,11 +1531,11 @@ public class ImportData {
                             requestDetail.setSalesManNo(infoDetail.get("SalesManNo").toString());
                             requestDetail.setSalesName(infoDetail.get("SalesManName").toString());
                             requestDetail.setActive(infoDetail.get("IsSuspended").toString());
-                           // Log.e("SalesManName", "" + infoDetail.get("SalesManName").toString());
-                          //  Log.e("SalesManNo", "" + infoDetail.get("SalesManNo").toString());
+                            // Log.e("SalesManName", "" + infoDetail.get("SalesManName").toString());
+                            //  Log.e("SalesManNo", "" + infoDetail.get("SalesManNo").toString());
 
                             listSalesMan.add(requestDetail);
-                           // Log.e("listRequest", "" + listSalesMan.size());
+                            // Log.e("listRequest", "" + listSalesMan.size());
 
 
                         }
@@ -1568,22 +1577,21 @@ public class ImportData {
 
             try {
 
-                SettingModel settingModel =new SettingModel();
-                settingModel=databaseHandler.getAllSetting();
-                ipAddress=settingModel.getIpAddress();
-                if(ipAddress.contains(":"))
-                {
-                    int ind=ipAddress.indexOf(":");
-                    ipAddress=ipAddress.substring(0,ind);
-                    Log.e("ipAddress",""+ipAddress);
+                SettingModel settingModel = new SettingModel();
+                settingModel = databaseHandler.getAllSetting();
+                ipAddress = settingModel.getIpAddress();
+                if (ipAddress.contains(":")) {
+                    int ind = ipAddress.indexOf(":");
+                    ipAddress = ipAddress.substring(0, ind);
+                    Log.e("ipAddress", "" + ipAddress);
                 }
-                portSettings=settingModel.getPort();
+                portSettings = settingModel.getPort();
                 //                    URL_TO_HIT = "http://"+ipAddress.trim()+":" + ipWithPort.trim() +"/Falcons/VAN.dll/GetACCOUNTSTATMENT?ACCNO="+custId;
                 if (!ipAddress.equals("")) {
-                    URL_TO_HIT = "http://"+ipAddress.trim()+":" + portSettings.trim() +"/Falcons/VAN.dll/GetACCOUNTSTATMENT?ACCNO="+custId;
+                    URL_TO_HIT = "http://" + ipAddress.trim() + ":" + portSettings.trim() + "/Falcons/VAN.dll/GetACCOUNTSTATMENT?ACCNO=" + custId;
                     //URL_TO_HIT = "http://" + ipAddress.trim()+":"+portSettings.trim() + "/Falcons/VAN.dll/GetACCOUNTSTATMENT?ACCNO="+custId.trim().toString();
 
-               Log.e("URL_TO_HIT","account="+URL_TO_HIT);
+                    Log.e("URL_TO_HIT", "account=" + URL_TO_HIT);
                 }
             } catch (Exception e) {
                 pdAccountStatment.dismissWithAnimation();
@@ -1657,7 +1665,7 @@ public class ImportData {
             JSONObject result = null;
             String impo = "";
             listCustomerInfo = new ArrayList<>();
-           // Log.e("URL_TO_HIT","account"+s.toString());
+            // Log.e("URL_TO_HIT","account"+s.toString());
             if (s != null) {
                 if (s.contains("VHFNo")) {
                     // Log.e("CUSTOMER_INFO","onPostExecute\t"+s.toString());
@@ -1669,10 +1677,10 @@ public class ImportData {
 
 
                         JSONArray requestArray = null;
-                       // listCustomerInfo = new ArrayList<>();
-                        double totalBalance=0;
+                        // listCustomerInfo = new ArrayList<>();
+                        double totalBalance = 0;
                         requestArray = new JSONArray(s);
-                       // Log.e("requestArray", "" + requestArray.length());
+                        // Log.e("requestArray", "" + requestArray.length());
 
 
                         for (int i = 0; i < requestArray.length(); i++) {
@@ -1690,23 +1698,21 @@ public class ImportData {
                                 requestDetail.setCredit(0);
                             }
 
-                            if(requestDetail.getDebit()!=0.0)
-                            {
-                                totalBalance+=requestDetail.getDebit();
+                            if (requestDetail.getDebit() != 0.0) {
+                                totalBalance += requestDetail.getDebit();
                             }
 
-                            if(requestDetail.getCredit()!=0.0)
-                            {
+                            if (requestDetail.getCredit() != 0.0) {
 
-                                totalBalance-=requestDetail.getCredit();
+                                totalBalance -= requestDetail.getCredit();
 
                             }
 
                             requestDetail.setBalance(totalBalance);
-                           // Log.e("onBindViewHolder","=total="+totalBalance);
+                            // Log.e("onBindViewHolder","=total="+totalBalance);
 
                             listCustomerInfo.add(requestDetail);
-                           // Log.e("listRequest", "listCustomerInfo" + listCustomerInfo.size());
+                            // Log.e("listRequest", "listCustomerInfo" + listCustomerInfo.size());
 
 
                         }
@@ -1716,7 +1722,7 @@ public class ImportData {
 //                        progressDialog.dismiss();
                         e.printStackTrace();
                     }
-                } else if(s.contains("No Parameter Found")){
+                } else if (s.contains("No Parameter Found")) {
                     getAccountList_text.setText("Nodata");
 
                     Log.e("onPostExecute", "" + s.toString());
@@ -1741,11 +1747,11 @@ public class ImportData {
 
             try {
 
-              //  ipAddress="10.0.0.185";
+                //  ipAddress="10.0.0.185";
 
                 if (!ipAddress.equals("")) {
                     URL_TO_HIT = "http://" + ipAddress + "/VANSALES_WEB_SERVICE/admin.php";
-                    Log.e("importData","importData"+URL_TO_HIT);
+                    Log.e("importData", "importData" + URL_TO_HIT);
                 }
             } catch (Exception e) {
                 Handler h = new Handler(Looper.getMainLooper());
@@ -1755,7 +1761,7 @@ public class ImportData {
                         Toast.makeText(main_context, "check ip", Toast.LENGTH_SHORT).show();
                     }
                 });
-                Log.e("JcheckStateRequest","Exception"+e.getMessage());
+                Log.e("JcheckStateRequest", "Exception" + e.getMessage());
 
 
             }
@@ -1850,12 +1856,12 @@ public class ImportData {
 
                             listCustomer.add(requestDetail);
                             customername.add(requestDetail.getCustomerName());
-                          //  Log.e("listRequest", "CUSTOMER_INFO" + listCustomer.get(i).getCustomerName());
+                            //  Log.e("listRequest", "CUSTOMER_INFO" + listCustomer.get(i).getCustomerName());
 
 
                         }
-                        if(typeCustomerList==1)
-                        getAccountList_text.setText("1");
+                        if (typeCustomerList == 1)
+                            getAccountList_text.setText("1");
 
                     } catch (JSONException e) {
 //                        progressDialog.dismiss();
@@ -1873,11 +1879,11 @@ public class ImportData {
         int flag;
 
 
-        public JSONTaskGetItem(Object context,int flag) {
-            this.flag=flag;
-            if(flag==1)
-            this.context = (OfferPriceList) context;
-            else  this.context = (GroupOffer) context;
+        public JSONTaskGetItem(Object context, int flag) {
+            this.flag = flag;
+            if (flag == 1)
+                this.context = (OfferPriceList) context;
+            else this.context = (GroupOffer) context;
 
         }
 
@@ -1989,15 +1995,14 @@ public class ImportData {
 
             if (s != null) {
                 if (s.contains("ItemNo")) {
-                    Log.e("getItemCard","flag2="+flag);
+                    Log.e("getItemCard", "flag2=" + flag);
                     Gson gson = new Gson();
 
 //                    Gson gson = new GsonBuilder()
 //                            .setLenient()
 //                            .create();
-                   // ItemMaster gsonObj = gson.fromJson(s, ItemMaster.class);
-                    if(flag==1)
-                    {
+                    // ItemMaster gsonObj = gson.fromJson(s, ItemMaster.class);
+                    if (flag == 1) {
                         ItemMaster gsonObj = gson.fromJson(s, ItemMaster.class);
                         ItemCardList.clear();
                         ItemCardList.addAll(gsonObj.getALL_ITEMS());
@@ -2006,12 +2011,11 @@ public class ImportData {
 //                    offerPriceList.fillItemCard();
                         getPdValidationItemCard.dismissWithAnimation();
                         offerPriceList.fillItemListPrice();
-                    }else if(flag==2)
-                    {
+                    } else if (flag == 2) {
                         OfferGroupModel gsonObjOffer = gson.fromJson(s, OfferGroupModel.class);
                         listOfferItem.clear();
                         listOfferItem.addAll(gsonObjOffer.getALL_ITEMS());
-                        Log.e("itemCard", "listOfferItem"+listOfferItem.size());
+                        Log.e("itemCard", "listOfferItem" + listOfferItem.size());
                         GroupOffer offerPriceList = (GroupOffer) context;
 //                    offerPriceList.fillItemCard();
                         getPdValidationItemCard.dismissWithAnimation();
@@ -2021,9 +2025,8 @@ public class ImportData {
                     }
 
 
-
                 } else {
-                    if(flag==1) {
+                    if (flag == 1) {
                         ItemCardList.clear();
                         OfferPriceList offerPriceList = (OfferPriceList) context;
 //                    offerPriceList.fillItemCard();
@@ -2204,9 +2207,9 @@ public class ImportData {
         JSONArray listOfCustomer;
 
 
-        public JSONTaskIfDateBetween(Object context, String fromDate, String toDate, String listType, String upAddFlag, String listNO,JSONArray listOfCustomer ) {
+        public JSONTaskIfDateBetween(Object context, String fromDate, String toDate, String listType, String upAddFlag, String listNO, JSONArray listOfCustomer) {
 //            this.flag=flag;
-            if (upAddFlag.equals("0")||upAddFlag.equals("2")) {
+            if (upAddFlag.equals("0") || upAddFlag.equals("2")) {
                 this.context = (OfferPriceList) context;
                 this.contextMaster = (OfferPriceList) context;
             } else {
@@ -2218,7 +2221,7 @@ public class ImportData {
             this.listType = listType;
             this.UpAddFlag = upAddFlag;
             this.listNO = listNO;
-            this.listOfCustomer=listOfCustomer;
+            this.listOfCustomer = listOfCustomer;
         }
 
         @Override
@@ -2267,7 +2270,7 @@ public class ImportData {
                 nameValuePairs.add(new BasicNameValuePair("ToDate", toDate));
                 nameValuePairs.add(new BasicNameValuePair("PO_LIST_TYPE", listType));
 //                if(UpAddFlag.equals("0")) {
-                    nameValuePairs.add(new BasicNameValuePair("UPDATE_ADD_FLAG", UpAddFlag));
+                nameValuePairs.add(new BasicNameValuePair("UPDATE_ADD_FLAG", UpAddFlag));
 //                }else{
 //                    nameValuePairs.add(new BasicNameValuePair("UPDATE_ADD_FLAG", "1"));
 //
@@ -2350,9 +2353,9 @@ public class ImportData {
                         });
                         sweet.show();
 
-                        Log.e("sttttb",""+s.toString());
-                        s=s.replace("},]","}]");
-                        Log.e("stttta",""+s.toString());
+                        Log.e("sttttb", "" + s.toString());
+                        s = s.replace("},]", "}]");
+                        Log.e("stttta", "" + s.toString());
 
                         Gson gson = new Gson();
 
@@ -2370,8 +2373,7 @@ public class ImportData {
                         offerPriceList.selectItemFoundInOtherList();
 
 
-
-                    }else {
+                    } else {
                         SweetAlertDialog sweet = new SweetAlertDialog(contextMaster, SweetAlertDialog.WARNING_TYPE);
                         sweet.setTitleText("price only list");
                         sweet.setContentText(" ( the system found other price regular only list  )");
@@ -2392,13 +2394,13 @@ public class ImportData {
 
                 } else {
 //                    ItemCardList.clear();
-                    if (UpAddFlag.equals("0")||UpAddFlag.equals("2")) {
+                    if (UpAddFlag.equals("0") || UpAddFlag.equals("2")) {
                         OfferPriceList offerPriceList = (OfferPriceList) context;
                         offerPriceList.saveInDB();
 //                        if(UpAddFlag.equals("2")){
 //                            offerPriceList.finishLayout();
 //                        }
-                    } else  if (UpAddFlag.equals("1")) {
+                    } else if (UpAddFlag.equals("1")) {
                         controlText.setText("1");
                     }
                     pdValidationCustomer.dismissWithAnimation();
@@ -2713,6 +2715,7 @@ public class ImportData {
         }
 
     }
+
     private class JSONTaskGetItemCustomerByListNo extends AsyncTask<String, String, String> {
         Object context;
         int flag;
@@ -2720,11 +2723,11 @@ public class ImportData {
         String upClose;
 
 
-        public JSONTaskGetItemCustomerByListNo(Object context,String listNo,String UpClose) {
+        public JSONTaskGetItemCustomerByListNo(Object context, String listNo, String UpClose) {
 //            this.flag=flag;
-            this.context =  (ListOfferReport)context;
-            this.listNo =listNo;
-            this.upClose=UpClose;
+            this.context = (ListOfferReport) context;
+            this.listNo = listNo;
+            this.upClose = UpClose;
 
         }
 
@@ -2787,7 +2790,7 @@ public class ImportData {
                 StringBuffer sb = new StringBuffer("");
                 String line = "";
 
-                while ((line = in.readLine()) != null)  {
+                while ((line = in.readLine()) != null) {
                     sb.append(line);
                 }
 
@@ -2796,7 +2799,7 @@ public class ImportData {
 
                 JsonResponse = sb.toString();
                 Log.e("tag_paymentReport", "JsonResponse\t" + JsonResponse);
-                Log.e("closeList","lll5");
+                Log.e("closeList", "lll5");
                 return JsonResponse;
 
 
@@ -2826,8 +2829,8 @@ public class ImportData {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
 
-            List<OfferListModel> itemsList=new ArrayList<>();
-            List<customerInfoModel> customerList=new ArrayList<>();
+            List<OfferListModel> itemsList = new ArrayList<>();
+            List<customerInfoModel> customerList = new ArrayList<>();
             if (s != null) {
                 if (s.contains("ALL_CUSTOMER")) {
 
@@ -2839,25 +2842,25 @@ public class ImportData {
 
 
                     OfferListModel gsonObj = gson.fromJson(s, OfferListModel.class);
-                    customerInfoModel customerInfoModel=gson.fromJson(s,customerInfoModel.class);
+                    customerInfoModel customerInfoModel = gson.fromJson(s, customerInfoModel.class);
                     itemsList.clear();
                     itemsList.addAll(gsonObj.getALL_LIST());
                     customerList.clear();
                     customerList.addAll(customerInfoModel.getALL_CUSTOMER());
-                    Log.e("closeList", "SalesManNo  "+ s.toString());
+                    Log.e("closeList", "SalesManNo  " + s.toString());
 //                    OfferPriceList offerPriceList = (OfferPriceList) context;
 //                    offerPriceList.fillItemCard();
 
-                    selectCustomerIfClose=customerList;
-                    selectItemIfUpdate=itemsList;
-                    Log.e("closeList","lll4   "+selectCustomerIfClose.size());
+                    selectCustomerIfClose = customerList;
+                    selectItemIfUpdate = itemsList;
+                    Log.e("closeList", "lll4   " + selectCustomerIfClose.size());
                     pdValidation.dismissWithAnimation();
 
-                    ListOfferReport listOfferReport=(ListOfferReport) context;
+                    ListOfferReport listOfferReport = (ListOfferReport) context;
 
-                    if(upClose.equals("0")) {
+                    if (upClose.equals("0")) {
                         listOfferReport.control.setText("close");
-                    }else {
+                    } else {
                         listOfferReport.control.setText("update");
                     }
 //                    offerPriceList.fillItemListPrice();
@@ -2882,16 +2885,16 @@ public class ImportData {
     private class JSONTaskGetUpdateCloseOpenList extends AsyncTask<String, String, String> {
         Context context;
         int flag;
-        String listNo,closeSwitch,listType;
+        String listNo, closeSwitch, listType;
 
 
-        public JSONTaskGetUpdateCloseOpenList(Context context,String listNo,String closeSwitch,String listType) {
+        public JSONTaskGetUpdateCloseOpenList(Context context, String listNo, String closeSwitch, String listType) {
 //            this.flag=flag;
-            this.context =  context;
-            this.listNo =listNo;
-            this.closeSwitch=closeSwitch;
+            this.context = context;
+            this.listNo = listNo;
+            this.closeSwitch = closeSwitch;
 
-            this.listType=listType;
+            this.listType = listType;
         }
 
         @Override
@@ -2931,9 +2934,9 @@ public class ImportData {
                 nameValuePairs.add(new BasicNameValuePair("_ID", "27"));
                 nameValuePairs.add(new BasicNameValuePair("LIST_NO", listNo));
                 nameValuePairs.add(new BasicNameValuePair("LIST_SWITCH", closeSwitch));
-                nameValuePairs.add(new BasicNameValuePair("ADMIN_ID",adminId));
-                nameValuePairs.add(new BasicNameValuePair("ADMIN_NAME",adminName));
-                nameValuePairs.add(new BasicNameValuePair("ListType",listType));
+                nameValuePairs.add(new BasicNameValuePair("ADMIN_ID", adminId));
+                nameValuePairs.add(new BasicNameValuePair("ADMIN_NAME", adminName));
+                nameValuePairs.add(new BasicNameValuePair("ListType", listType));
 
 
                 request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
@@ -3016,7 +3019,7 @@ public class ImportData {
                     control.setText("main");
                     //selectCustomerIfClose=customerList;
 
-                    Log.e("closeList","lll3");
+                    Log.e("closeList", "lll3");
 
                     pdValidation.dismissWithAnimation();
 //                    controlText.setText("close");
@@ -3037,16 +3040,17 @@ public class ImportData {
         }
 
     }
+
     private class JSONTaskGetUpdateActivateList extends AsyncTask<String, String, String> {
         Context context;
         int flag;
         String listNo;
 
 
-        public JSONTaskGetUpdateActivateList(Context context,String listNo) {
+        public JSONTaskGetUpdateActivateList(Context context, String listNo) {
 //            this.flag=flag;
-            this.context =  context;
-            this.listNo =listNo;
+            this.context = context;
+            this.listNo = listNo;
 
         }
 
@@ -3168,7 +3172,7 @@ public class ImportData {
                     control.setText("main");
                     //selectCustomerIfClose=customerList;
 
-                    Log.e("closeList","lll3");
+                    Log.e("closeList", "lll3");
 
                     pdValidation.dismissWithAnimation();
 //                    controlText.setText("close");
@@ -3308,7 +3312,7 @@ public class ImportData {
                     LogHistoryModel gsonObj = gson.fromJson(s, LogHistoryModel.class);
                     logHistoryList.clear();
                     logHistoryList.addAll(gsonObj.getALL_LOG_FILE());
-                    Log.e("getALL_LOG_FILE", "getALL_LOG_FILE"+logHistoryList.size());
+                    Log.e("getALL_LOG_FILE", "getALL_LOG_FILE" + logHistoryList.size());
                     LogHistoryReport logHistoryReport = (LogHistoryReport) context;
                     logHistoryReport.fillLogHistory();
                     pdValidationItem.dismissWithAnimation();
@@ -3334,15 +3338,15 @@ public class ImportData {
     private class JSONTaskGetLogHistoryDetail extends AsyncTask<String, String, String> {
         Object context;
         int flag;
-        String serialNo,listNo,listType;
+        String serialNo, listNo, listType;
 
 
-        public JSONTaskGetLogHistoryDetail(Object context,String serialNo , String listNo ,String listType) {
+        public JSONTaskGetLogHistoryDetail(Object context, String serialNo, String listNo, String listType) {
 //            this.flag=flag;
             this.context = (LogHistoryReport) context;
-            this.serialNo =serialNo;
+            this.serialNo = serialNo;
             this.listNo = listNo;
-            this .listType=listType;
+            this.listType = listType;
 
         }
 
@@ -3383,7 +3387,7 @@ public class ImportData {
                 nameValuePairs.add(new BasicNameValuePair("_ID", "30"));
                 nameValuePairs.add(new BasicNameValuePair("SERIAL_NO", serialNo));
                 nameValuePairs.add(new BasicNameValuePair("LIST_NO", listNo));
-                nameValuePairs.add(new BasicNameValuePair("LIST_TYPE",listType));
+                nameValuePairs.add(new BasicNameValuePair("LIST_TYPE", listType));
 
 
                 request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
@@ -3452,7 +3456,7 @@ public class ImportData {
                     LogHistoryDetail gsonObj = gson.fromJson(s, LogHistoryDetail.class);
                     logHistoryDetail.clear();
                     logHistoryDetail.addAll(gsonObj.getLOG_DETAIL());
-                    Log.e("LOG_DETAIL", "LOG_DETAIL"+logHistoryDetail.size());
+                    Log.e("LOG_DETAIL", "LOG_DETAIL" + logHistoryDetail.size());
                     LogHistoryReport logHistoryReport = (LogHistoryReport) context;
                     logHistoryReport.fillDialogLogDetail();
                     getPdValidationLogHistory.dismissWithAnimation();
@@ -3468,12 +3472,13 @@ public class ImportData {
                 }
 //                progressDialog.dismiss();
             } else {
-               // Log.e("item_customer", "SalesManNo3");
+                // Log.e("item_customer", "SalesManNo3");
                 getPdValidationLogHistory.dismissWithAnimation();
             }
         }
 
     }
+
     private class JSONTask_UncollectedCheques extends AsyncTask<String, String, String> {
 
         private String custId = "";
@@ -3501,7 +3506,7 @@ public class ImportData {
                 if (!ipAddress.equals("")) {
 //                    URL_TO_HIT = "http://"+ipAddress.trim()+":" + ipWithPort.trim() +"/Falcons/VAN.dll/GetTheUnCollectedCheques?ACCNO=1224";
 
-                    URL_TO_HIT = "http://"+ipAddress.trim()+":" + portSettings.trim() +"/Falcons/VAN.dll/GetTheUnCollectedCheques?ACCNO="+custId;
+                    URL_TO_HIT = "http://" + ipAddress.trim() + ":" + portSettings.trim() + "/Falcons/VAN.dll/GetTheUnCollectedCheques?ACCNO=" + custId;
                 }
             } catch (Exception e) {
                 pdValidation.dismissWithAnimation();
@@ -3580,7 +3585,7 @@ public class ImportData {
                         JSONArray requestArray = null;
                         listCustomerInfo = new ArrayList<>();
 
-                        requestArray =  new JSONArray(s);
+                        requestArray = new JSONArray(s);
                         Log.e("requestArray", "" + requestArray.length());
 
 
@@ -3592,14 +3597,12 @@ public class ImportData {
                             requestDetail.setPAIDAMT(infoDetail.get("PAIDAMT").toString());
 
 
-
                             unCollectlList.add(requestDetail);
-                         //   Log.e("listRequest", "listCustomerInfo" + unCollectlList.size());
+                            //   Log.e("listRequest", "listCustomerInfo" + unCollectlList.size());
 
 
                         }
-                        if(unCollectlList.size()!=0)
-                        {
+                        if (unCollectlList.size() != 0) {
                             resultData.setText("yes");
                         }
 
@@ -3614,6 +3617,7 @@ public class ImportData {
         }
 
     }
+
     private class JSONTask_GetAllCheques extends AsyncTask<String, String, String> {
 
         private String custId = "";
@@ -3641,12 +3645,12 @@ public class ImportData {
 
                 if (!ipAddress.equals("")) {
 
-                       // URL_TO_HIT = "http://"+ipAddress.trim()+":" + portSettings.trim() +"/Falcons/VAN.dll/GetACCOUNTSTATMENT?ACCNO="+custId;
+                    // URL_TO_HIT = "http://"+ipAddress.trim()+":" + portSettings.trim() +"/Falcons/VAN.dll/GetACCOUNTSTATMENT?ACCNO="+custId;
 
-                        //Log.e("URL_TO_HIT","account="+URL_TO_HIT);
+                    //Log.e("URL_TO_HIT","account="+URL_TO_HIT);
 
 
-                    URL_TO_HIT = "http://"+ipAddress.trim()+":" + portSettings.trim() +"/Falcons/VAN.dll/GetAllTheCheques?ACCNO="+custId;
+                    URL_TO_HIT = "http://" + ipAddress.trim() + ":" + portSettings.trim() + "/Falcons/VAN.dll/GetAllTheCheques?ACCNO=" + custId;
                 }
             } catch (Exception e) {
                 pdPayments.dismissWithAnimation();
@@ -3720,7 +3724,7 @@ public class ImportData {
                         JSONArray requestArray = null;
                         paymentChequesList = new ArrayList<>();
 
-                        requestArray =  new JSONArray(s);
+                        requestArray = new JSONArray(s);
                         //Log.e("requestArray", "" + requestArray.length());
 
 
@@ -3729,8 +3733,9 @@ public class ImportData {
                             requestDetail = new Payment();
                             try {
                                 requestDetail.setCheckNumber(Integer.parseInt(infoDetail.get("ChequeNo").toString()));
+                            } catch (Exception e) {
+                                requestDetail.setCheckNumber(111);
                             }
-                            catch (Exception e){ requestDetail.setCheckNumber(111);}
                             //
 
                             requestDetail.setDueDate(infoDetail.get("DueDate").toString());
@@ -3738,8 +3743,9 @@ public class ImportData {
                             try {
                                 requestDetail.setAmount(Double.parseDouble(infoDetail.get("CAmount").toString()));
 
-                            }catch (Exception e){requestDetail.setAmount(0);}
-
+                            } catch (Exception e) {
+                                requestDetail.setAmount(0);
+                            }
 
 
                             paymentChequesList.add(requestDetail);
@@ -3747,8 +3753,7 @@ public class ImportData {
 
 
                         }
-                        if(paymentChequesList.size()!=0)
-                        {
+                        if (paymentChequesList.size() != 0) {
                             resultData.setText("payment");
                         }
 
@@ -3765,19 +3770,19 @@ public class ImportData {
 
     private class JSONTaskGetAuthentication extends AsyncTask<String, String, String> {
         Object context;
-        String userName,password;
+        String userName, password;
         int flag;
 
 
-        public JSONTaskGetAuthentication(Object context,String userName , String password ,int flag) {
-          this.flag=flag;
-          if(flag==0) {
-              this.context = (LogIn) context;
-          }else if(flag==1){
-              this.context = (EditSalesMan) context;
-          }
+        public JSONTaskGetAuthentication(Object context, String userName, String password, int flag) {
+            this.flag = flag;
+            if (flag == 0) {
+                this.context = (LogIn) context;
+            } else if (flag == 1) {
+                this.context = (EditSalesMan) context;
+            }
 
-            this.userName =userName;
+            this.userName = userName;
             this.password = password;
 
         }
@@ -3886,42 +3891,42 @@ public class ImportData {
                     try {
                         jsonObject = new JSONObject(s);
 
-                    JSONArray jsonArray = jsonObject.getJSONArray("Authentication");
-                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONArray jsonArray = jsonObject.getJSONArray("Authentication");
+                        for (int i = 0; i < jsonArray.length(); i++) {
 
-                        JSONObject jsonObject1 = jsonArray.getJSONObject(i);
-                        SalesManInfo salesManInfo = new SalesManInfo();
+                            JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+                            SalesManInfo salesManInfo = new SalesManInfo();
 
-                        salesManInfo.setSalesManNo(jsonObject1.getString("USER_NO"));
-                        salesManInfo.setSalesName(jsonObject1.getString("USER_NAME"));
-                        salesManInfo.setSalesPassword(jsonObject1.getString("PASSWORD"));
-                        salesManInfo.setActive(jsonObject1.getString("ACTIVATE"));
+                            salesManInfo.setSalesManNo(jsonObject1.getString("USER_NO"));
+                            salesManInfo.setSalesName(jsonObject1.getString("USER_NAME"));
+                            salesManInfo.setSalesPassword(jsonObject1.getString("PASSWORD"));
+                            salesManInfo.setActive(jsonObject1.getString("ACTIVATE"));
 
-                        salesManInfo.setAddSalesMen(jsonObject1.getInt("ADD_SALESMEN"));
-                        salesManInfo.setAddAdmin(jsonObject1.getInt("ADD_ADDMIN"));
-                        salesManInfo.setAccountReport(jsonObject1.getInt("ACCOUNT_REPORT"));
-                        salesManInfo.setPaymentReport(jsonObject1.getInt("PAYMENT_REPORT"));
+                            salesManInfo.setAddSalesMen(jsonObject1.getInt("ADD_SALESMEN"));
+                            salesManInfo.setAddAdmin(jsonObject1.getInt("ADD_ADDMIN"));
+                            salesManInfo.setAccountReport(jsonObject1.getInt("ACCOUNT_REPORT"));
+                            salesManInfo.setPaymentReport(jsonObject1.getInt("PAYMENT_REPORT"));
 
-                        salesManInfo.setCashReport(jsonObject1.getInt("CASH_REPORT"));
-                        salesManInfo.setUnCollectChequeReport(jsonObject1.getInt("UN_COLLECTED_REPORT"));
-                        salesManInfo.setAnalyzeCustomer(jsonObject1.getInt("ANALYZE_REPORT"));
-                        salesManInfo.setLogHistoryReport(jsonObject1.getInt("LOG_HISTORY_REPORT"));
-                        salesManInfo.setOfferReport(jsonObject1.getInt("OFFER_REPORT"));
-                        salesManInfo.setSalesManLocation(jsonObject1.getInt("SALES_LOCATION"));
-                        salesManInfo.setMakeOffer(jsonObject1.getInt("MAKE_OFFER"));
-                        salesManInfo.setCustomerReport(jsonObject1.getInt("CUSTOMER_LOG_REPORT"));
+                            salesManInfo.setCashReport(jsonObject1.getInt("CASH_REPORT"));
+                            salesManInfo.setUnCollectChequeReport(jsonObject1.getInt("UN_COLLECTED_REPORT"));
+                            salesManInfo.setAnalyzeCustomer(jsonObject1.getInt("ANALYZE_REPORT"));
+                            salesManInfo.setLogHistoryReport(jsonObject1.getInt("LOG_HISTORY_REPORT"));
+                            salesManInfo.setOfferReport(jsonObject1.getInt("OFFER_REPORT"));
+                            salesManInfo.setSalesManLocation(jsonObject1.getInt("SALES_LOCATION"));
+                            salesManInfo.setMakeOffer(jsonObject1.getInt("MAKE_OFFER"));
+                            salesManInfo.setCustomerReport(jsonObject1.getInt("CUSTOMER_LOG_REPORT"));
 
-                        salesManInfoAdmin=salesManInfo;
+                            salesManInfoAdmin = salesManInfo;
 
-                        if(flag==0) {
-                            LogIn logIn = (LogIn) context;
-                            logIn.saveAuth(salesManInfo);
-                            logIn.goToMain();
+                            if (flag == 0) {
+                                LogIn logIn = (LogIn) context;
+                                logIn.saveAuth(salesManInfo);
+                                logIn.goToMain();
+                            }
                         }
-                    }
 
 
-                    pdAuthentication.dismissWithAnimation();
+                        pdAuthentication.dismissWithAnimation();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -3945,16 +3950,16 @@ public class ImportData {
     private class JSONTaskGetItemReport extends AsyncTask<String, String, String> {
         Object context;
         int flag;
-      //  String serialNo,listNo,listType;
+        //  String serialNo,listNo,listType;
 
-        String fromDate,toDate,salesNo;
+        String fromDate, toDate, salesNo;
 
-        public JSONTaskGetItemReport(Object context,String fromDate , String toDate ,String salesNo) {
+        public JSONTaskGetItemReport(Object context, String fromDate, String toDate, String salesNo) {
 //            this.flag=flag;
             this.context = (ItemReport) context;
-            this.fromDate =fromDate;
+            this.fromDate = fromDate;
             this.toDate = toDate;
-            this .salesNo=salesNo;
+            this.salesNo = salesNo;
 
         }
 
@@ -3964,7 +3969,7 @@ public class ImportData {
             String do_ = "my";
             getPdValidationItemReport = new SweetAlertDialog((Context) context, SweetAlertDialog.PROGRESS_TYPE);
             getPdValidationItemReport.getProgressHelper().setBarColor(Color.parseColor("#FDD835"));
-            getPdValidationItemReport.setTitleText(main_context.getResources().getString(R.string.getItemReport) );
+            getPdValidationItemReport.setTitleText(main_context.getResources().getString(R.string.getItemReport));
             getPdValidationItemReport.setCancelable(false);
             getPdValidationItemReport.show();
 
@@ -3995,8 +4000,8 @@ public class ImportData {
                 nameValuePairs.add(new BasicNameValuePair("_ID", "35"));
                 nameValuePairs.add(new BasicNameValuePair("FROM_DATE", fromDate));
                 nameValuePairs.add(new BasicNameValuePair("TO_DATE", toDate));
-                nameValuePairs.add(new BasicNameValuePair("SALES_NO",salesNo));
-                Log.e("getItemReport","BasicNameValuePair\t fromDate="+fromDate+"toDate="+toDate+"salesNo="+salesNo);
+                nameValuePairs.add(new BasicNameValuePair("SALES_NO", salesNo));
+                Log.e("getItemReport", "BasicNameValuePair\t fromDate=" + fromDate + "toDate=" + toDate + "salesNo=" + salesNo);
 
                 request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
 
@@ -4024,7 +4029,7 @@ public class ImportData {
 
 
                 JsonResponse = sb.toString();
-               // Log.e("tag_paymentReport", "JsonResponse\t" + JsonResponse);
+                // Log.e("tag_paymentReport", "JsonResponse\t" + JsonResponse);
 
                 return JsonResponse;
 
@@ -4091,4 +4096,199 @@ public class ImportData {
 
     }
 
+    private class JSONTask_getAllOffers extends AsyncTask<String, String, String> {
+
+        private String custId = "", JsonResponse;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            String do_ = "my";
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            try {
+                if (!ipAddress.equals("")) {
+                    URL_TO_HIT = "http://" + ipAddress.trim() + "/VANSALES_WEB_SERVICE/admin.php";
+
+
+                    Log.e("link", "" + URL_TO_HIT);
+                }
+            } catch (Exception e) {
+
+            }
+
+            try {
+
+                //*************************************
+
+                String JsonResponse = null;
+                HttpClient client = new DefaultHttpClient();
+                HttpPost request = new HttpPost();
+                request.setURI(new URI(URL_TO_HIT));
+
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+                nameValuePairs.add(new BasicNameValuePair("_ID", "37"));
+                request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+
+
+                HttpResponse response = client.execute(request);
+
+
+                BufferedReader in = new BufferedReader(new
+                        InputStreamReader(response.getEntity().getContent()));
+
+                StringBuffer sb = new StringBuffer("");
+                String line = "";
+                Log.e("finalJson***Import", sb.toString());
+
+                while ((line = in.readLine()) != null) {
+                    sb.append(line);
+                }
+
+                in.close();
+
+
+                // JsonResponse = sb.toString();
+
+                String finalJson = sb.toString();
+                Log.e("finalJson***Import", finalJson);
+
+
+                // JSONArray parentObject = new JSONArray(finalJson);
+
+                return finalJson;
+
+
+            }//org.apache.http.conn.HttpHostConnectException: Connection to http://10.0.0.115 refused
+            catch (HttpHostConnectException ex) {
+                ex.printStackTrace();
+//                progressDialog.dismiss();
+
+                Handler h = new Handler(Looper.getMainLooper());
+                h.post(new Runnable() {
+                    public void run() {
+
+                        Toast.makeText(main_context, "Ip Connection Failed", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
+                return null;
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e("Exception", "" + e.getMessage());
+//                progressDialog.dismiss();
+                return null;
+            }
+
+
+            //***************************
+
+        }
+
+
+
+        @Override
+        protected void onPostExecute(String array) {
+
+            super.onPostExecute(array);
+            Log.e("onPostExecute", "" + array);
+            try {
+                if (array != null) {
+                    if (array.contains("id_serial")) {
+
+                        Log.e("aaaaaaaaa3", "aaaaaa");
+                        JSONObject parentObject = new JSONObject(array);
+
+                        JSONArray parentArray = parentObject.getJSONArray("ListAllOfferGroup");
+
+                        for (int i = 0; i < parentArray.length(); i++) {
+
+                            Log.e("aaaaaaaaa4", "aaaaaa");
+                            JSONObject jsonObject1 = parentArray.getJSONObject(i);
+                            OfferGroupModel Model = new OfferGroupModel();
+                            Model.setItemNo(jsonObject1.getString("ItemNo"));
+                            Model.setName(jsonObject1.getString("ItemName"));
+                            Model.setFromDate(jsonObject1.getString("From_Date"));
+                            Model.setToDate(jsonObject1.getString("To_Date"));
+                            Model.setDiscount(jsonObject1.getString("Discount"));
+                            Model.setDiscountType(jsonObject1.getString("Discount_Type"));
+                            Model.setGroupid(jsonObject1.getString("GroupId"));
+                            Model.setQtyItem(jsonObject1.getString("qty_item"));
+                            Model.setActiveOffers(jsonObject1.getString("activeOffer"));
+
+
+                            offerGroupModels.add(Model);
+
+
+                        }
+                        offersrespon.setText("ItemNo");
+                    }
+
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e("e.printStackTrace()", e.getMessage()+"");
+            }
+
+
+        }
+    }
 }
+   /* @Override
+    protected void onPostExecute(String array) {
+        super.onPostExecute(array);
+        String d = "";
+        JSONObject jsonObject1 = null;
+
+        if (array != null) {
+            if (array.contains("id_serial")) {
+                Log.e("aaaaaaaaa1", "aaaaaa");
+                if (array.length() != 0) {
+
+                    Log.e("aaaaaaaaa2", "aaaaaa");
+                    try {
+                        Log.e("aaaaaaaaa3", "aaaaaa");
+                        JSONArray requestArray = null;
+                        requestArray = new JSONArray(array);
+                        Log.e("aaaaaaaaa4", "aaaaaa");
+                        for (int i = 0; i < requestArray.length(); i++) {
+
+                            OfferGroupModel Model = new OfferGroupModel();
+                            jsonObject1 = requestArray.getJSONObject(i);
+                            Model.setItemNo(jsonObject1.getString("ItemNo"));
+                            Model.setName(jsonObject1.getString("ItemName"));
+                            Model.setFromDate(jsonObject1.getString("From_Date"));
+                            Model.setToDate(jsonObject1.getString("To_Date"));
+                            Model.setDiscount(jsonObject1.getString("Discount"));
+                            Model.setDiscountType(jsonObject1.getString("Discount_Type"));
+                            Model.setGroupid(jsonObject1.getString("GroupId"));
+                            Model.setQtyItem(jsonObject1.getString("qty_item"));
+                            Model.setActiveOffers(jsonObject1.getString("activeOffer"));
+
+
+                            offerGroupModels.add(Model);
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    offersrespon.setText("ItemNo");
+
+                }
+
+
+            } else {
+
+
+            }
+
+        } else {
+
+
+        }
+    }*/

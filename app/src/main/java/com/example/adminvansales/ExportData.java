@@ -32,6 +32,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 
 import static com.example.adminvansales.GroupOffer.addList;
 import static com.example.adminvansales.HomeActivity.editPassword;
+import static com.example.adminvansales.ImportData.offerGroupModels;
 import static com.example.adminvansales.LogIn.ipAddress;
 import static com.example.adminvansales.Report.ListOfferReport.control;
 
@@ -42,7 +43,7 @@ public class ExportData {
     public static  SweetAlertDialog pd,pdValidation,pdValidationDialog;
     GlobelFunction globelFunction;
     SweetAlertDialog pdValidationAdd;
-
+    SweetAlertDialog pdValidationUpdate;
 
     Context main_context;
     int flag=0;
@@ -115,6 +116,9 @@ public class ExportData {
 
     public void addToList(Context context, JSONArray jsonArray,JSONObject jsonObject){
         new JSONTaskAddOffer(context,jsonArray,jsonObject).execute();
+    }
+    public void UpdateGrpupList(Context context, JSONArray jsonArray,JSONObject jsonObject){
+        new JSONTaskUpdateOffer(context,jsonArray,jsonObject).execute();
     }
     public void addOfferGroupItem(Context context, JSONArray jsonArray){
         new JSONTaskAddGroupItemOffer(context,jsonArray).execute();
@@ -793,6 +797,141 @@ public class ExportData {
             }else{
                 Log.e("positionSaveInnull","null");
                 pdValidationAdd.dismissWithAnimation();
+            }
+        }
+
+    }
+
+
+
+    private class JSONTaskUpdateOffer extends AsyncTask<String, String, String> {
+        Context  context;
+        JSONArray jsonObject;
+        JSONObject jsonObjectList;
+
+        public JSONTaskUpdateOffer(Context context,JSONArray jsonObject,JSONObject jsonObjectList) {
+            this.context=  context;
+            this.jsonObject=jsonObject;
+            this.jsonObjectList=jsonObjectList;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            String do_ = "my";
+            pdValidationUpdate = new SweetAlertDialog(main_context, SweetAlertDialog.PROGRESS_TYPE);
+            pdValidationUpdate.getProgressHelper().setBarColor(Color.parseColor("#FDD835"));
+            pdValidationUpdate.setTitleText(main_context.getResources().getString(R.string.process)+"1");
+            pdValidationUpdate.setCancelable(false);
+            pdValidationUpdate.show();
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+//            ipAddress = "";
+            try {
+
+
+                if (!ipAddress.equals("")) {
+                    URL_TO_HIT = "http://" + ipAddress + "/VANSALES_WEB_SERVICE/admin.php";
+                }
+            } catch (Exception e) {
+
+            }
+
+            try {
+
+                String JsonResponse = null;
+                HttpClient client = new DefaultHttpClient();
+                HttpPost request = new HttpPost();
+                request.setURI(new URI(URL_TO_HIT));
+
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(3);
+                nameValuePairs.add(new BasicNameValuePair("_ID", "38"));
+                nameValuePairs.add(new BasicNameValuePair("UPDATE_OFFER_GROUP",jsonObject.toString()));
+                nameValuePairs.add(new BasicNameValuePair("ADD_LIST",jsonObjectList.toString()));
+
+                request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+
+
+                HttpResponse response = client.execute(request);
+
+
+                BufferedReader in = new BufferedReader(new
+                        InputStreamReader(response.getEntity().getContent()));
+
+                StringBuffer sb = new StringBuffer("");
+                String line = "";
+                Log.e("positionSaveIn","1222");
+
+                while ((line = in.readLine()) != null) {
+                    sb.append(line);
+                }
+
+                in.close();
+
+
+                JsonResponse = sb.toString();
+                Log.e("positionSaveIn", "JsonResponse\t" + JsonResponse);
+
+                return JsonResponse;
+
+
+            }//org.apache.http.conn.HttpHostConnectException: Connection to http://10.0.0.115 refused
+            catch (HttpHostConnectException ex) {
+                ex.printStackTrace();
+//                progressDialog.dismiss();
+
+                Handler h = new Handler(Looper.getMainLooper());
+                h.post(new Runnable() {
+                    public void run() {
+
+                        Toast.makeText(main_context, "Ip Connection Failed ", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
+                return null;
+            } catch (Exception e) {
+                e.printStackTrace();
+//                progressDialog.dismiss();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            ImportData importData=new ImportData(context);
+            if (s != null) {
+                Log.e("positionSaveIn",""+s.toString());
+                if (s.contains("SUCCESS")) {
+
+                    Toast.makeText(context, "SUCCESS", Toast.LENGTH_SHORT).show();
+                    offerGroupModels.clear();
+
+                    importData.getAllOffers();
+                    //context.clearTextFun();
+                    // globelFunction.getSalesManInfo(context,0);
+
+                    pdValidationUpdate.dismissWithAnimation();
+                }
+                else {
+                    pdValidationUpdate.dismissWithAnimation();
+
+                    offerGroupModels.clear();
+                    importData.getAllOffers();
+                }
+
+//                progressDialog.dismiss();
+            }else{
+                Log.e("positionSaveInnull","null");
+                pdValidationUpdate.dismissWithAnimation();
+
+                offerGroupModels.clear();
+                importData.getAllOffers();
             }
         }
 

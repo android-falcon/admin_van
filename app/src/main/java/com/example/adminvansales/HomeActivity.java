@@ -25,6 +25,7 @@ import android.widget.TextView;
 import com.azoft.carousellayoutmanager.CarouselLayoutManager;
 import com.azoft.carousellayoutmanager.CarouselZoomPostLayoutListener;
 import com.azoft.carousellayoutmanager.CenterScrollListener;
+import com.example.adminvansales.Report.OfferseReport;
 import com.example.adminvansales.model.SalesManInfo;
 import com.example.adminvansales.Report.AnalyzeAccounts;
 import com.example.adminvansales.Report.CashReport;
@@ -49,7 +50,7 @@ public class HomeActivity extends AppCompatActivity {
     Button locationButton, ReportButton, offerButton,group_offerButton;
     LinearLayout ReportLinear;
     public static EditText editPassword;
-    TextView customerLogReport, paymentReport, cashReport, offerReport,LogReport,unCollectedCheques,analyzeAcountsReport,ItemReport;
+    TextView offersReport,customerLogReport, paymentReport, cashReport, offerReport,LogReport,unCollectedCheques,analyzeAcountsReport,ItemReport;
 
 
     @Override
@@ -64,6 +65,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void initalView() {
+        offersReport=findViewById(R.id.offersReport);
         notifyLayout = findViewById(R.id.notifyLayout);
         addVanSales = findViewById(R.id.addVanSales);
         accountLayout = findViewById(R.id.accountLayout);
@@ -185,6 +187,15 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
+
+        offersReport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent locationIntent = new Intent(HomeActivity.this, OfferseReport.class);
+                startActivity(locationIntent);
+            }
+        });
+
 
         paymentReport.setOnClickListener(new View.OnClickListener() {
             @Override
