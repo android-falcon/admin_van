@@ -73,7 +73,7 @@ public class ItemReport extends AppCompatActivity {
                 String salesNo;
                 if (positionSales == 0 || positionSales == -1) {
                     salesNo = "-1";
-                    Log.e("salesNo-1", "" + salesNo + "  ");
+//                    Log.e("salesNo-1", "" + salesNo + "  ");
                     importData.getItemReport(ItemReport.this,fromDate.getText().toString(),toDate.getText().toString(),"-1");
 
                 } else {
