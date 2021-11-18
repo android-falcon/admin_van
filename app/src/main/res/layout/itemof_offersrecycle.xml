@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="400dp"
+    android:orientation="vertical"
+    android:layout_height="400dp">
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorblue_dark"
+        android:gravity="top"
+        android:padding="3dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="2dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/itemName"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="2dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/itemNo"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="2dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/qty"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/remove"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:layout_weight="1"
+            android:visibility="invisible"
+            android:gravity="left"
+            android:padding="4dp"
+            android:textColor="@color/colorPrimary"
+            android:textSize="12sp"
+            android:drawableRight="@drawable/ic_baseline_clear_24" />
+
+
+    </TableRow>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_weight="3"
+        android:id="@+id/memeberRec"
+        android:layout_height="wrap_content"
+        android:padding="3dp"
+        android:orientation="horizontal">
+
+    </androidx.recyclerview.widget.RecyclerView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:visibility="invisible"
+            android:layout_height="wrap_content">
+
+        </TextView>
+        <Button
+            android:id="@+id/savechangs"
+            android:text="@string/save"
+            android:layout_weight="2"
+            android:layout_margin="2dp"
+            android:elevation="3dp"
+            android:layout_width="10dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="2dp"
+            android:textSize="15sp"
+            android:textColor="@color/colorblue_dark"
+            android:background="@drawable/yellow_button"
+
+            android:layout_marginLeft="10dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_weight=".5"
+            android:visibility="invisible"
+            android:layout_height="wrap_content">
+
+        </TextView>
+        <Button
+            android:id="@+id/cancelchangs"
+            android:text="@string/cancel"
+            android:elevation="3dp"
+            android:textColor="@color/dark_red"
+            android:textSize="14sp"
+            android:layout_weight="2"
+            android:layout_margin="2dp"
+            android:background="@drawable/cancel_button"
+            android:layout_width="10dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="5dp"
+android:visibility="gone"
+            android:layout_marginBottom="2dp"
+
+            android:layout_marginLeft="20dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:visibility="invisible"
+            android:layout_height="wrap_content">
+
+        </TextView>
+
+    </LinearLayout>
+</LinearLayout>

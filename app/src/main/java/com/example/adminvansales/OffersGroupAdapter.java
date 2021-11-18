@@ -1,18 +1,23 @@
 package com.example.adminvansales;
 
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -39,8 +44,9 @@ public  class OffersGroupAdapter extends RecyclerView.Adapter<OffersGroupAdapter
 
     private List<OfferGroupModel> list;
     Context context;
+    public  static Dialog dialog1;
     Calendar myCalendar;
-
+    private List<OfferGroupModel> AllItems=new ArrayList<>();
     int pos=0;
     final List<OfferGroupModel> offers = new ArrayList<>();
     public OffersGroupAdapter(List<OfferGroupModel> list, Context context) {
@@ -63,6 +69,68 @@ public  class OffersGroupAdapter extends RecyclerView.Adapter<OffersGroupAdapter
         holder.todate.setText(list.get(position).getToDate());
 
 
+        holder.dropdown.setVisibility(View.GONE);
+
+
+        offers.clear();
+        for (int i = 0; i < offerGroupModels.size(); i++) {
+            if (offerGroupModels.get(i).getGroupid().equals(list.get(position).getGroupid()))
+                offers.add(offerGroupModels.get(i));
+
+        }
+
+        OffersDetailAdapter offersDetailAdapter=new OffersDetailAdapter( offers,context);
+        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(context);
+
+        holder.memeber.setLayoutManager(linearLayoutManager);
+        holder.memeber.setAdapter(offersDetailAdapter);
+
+
+
+
+
+
+
+
+        holder .update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+          dialog1 = new Dialog(context);
+                dialog1.setCancelable(true);
+                dialog1.setContentView(R.layout.itemof_offersrecycle);
+                dialog1.setCancelable(false);
+                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                lp.copyFrom(dialog1.getWindow().getAttributes());
+                Button save= dialog1.findViewById(R.id.savechangs);
+                save.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                       fillAdapter(context);
+                        dialog1.dismiss();
+
+                    }
+                });
+                Button cancel= dialog1.findViewById(R.id.cancelchangs);
+                cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog1.dismiss();
+                    }
+                });
+                lp.gravity = Gravity.CENTER;
+                dialog1.show();
+                AllItems.clear();
+                Log.e("size", AllItems.size() + "");
+                final RecyclerView Recycl = dialog1.findViewById(R.id.memeberRec);
+                for (int i = 0; i < offerGroupModels.size(); i++) {
+                    if (offerGroupModels.get(i).getGroupid().equals(list.get(position).getGroupid()))
+                        AllItems.add(offerGroupModels.get(i));
+                    Recycl.setLayoutManager(new LinearLayoutManager(context));
+                    OffersDetailAdapter2 adapter1 = new OffersDetailAdapter2(AllItems, context);
+                    Recycl.setAdapter(adapter1);
+                }
+            }
+        });
         holder.totalDec.setText(list.get(position).getDiscount());
         if(list.get(position).ActiveOffers.equals("0"))
         {  holder.activestate.setChecked(false);
@@ -78,8 +146,6 @@ public  class OffersGroupAdapter extends RecyclerView.Adapter<OffersGroupAdapter
        // holder.activestate
 
     //child row
-
-
 
 
 
@@ -183,8 +249,7 @@ public  class OffersGroupAdapter extends RecyclerView.Adapter<OffersGroupAdapter
 
                         list.get(position).setDiscount(newtotal);
 
-                        for (int i = 0; i < offers.size(); i++)
-                            offers.get(i).setDiscount(newtotal);
+                        updatetotal(list.get(position).getGroupid(), list.get(position).getDiscount());
 
                     }
                     catch (Exception e){}
@@ -202,7 +267,7 @@ public  class OffersGroupAdapter extends RecyclerView.Adapter<OffersGroupAdapter
     }
 
     class OffersGroupViewHolder extends RecyclerView.ViewHolder{
-        TextView groupnum,fromdate,todate,dropdown;
+        TextView groupnum,fromdate,todate,dropdown,   update;
         ToggleButton activestate;
         EditText totalDec;
        RecyclerView memeber;
@@ -216,7 +281,7 @@ public  class OffersGroupAdapter extends RecyclerView.Adapter<OffersGroupAdapter
             totalDec = itemView.findViewById(R.id.totalDec);
             activestate=itemView.findViewById(R.id.activestate);
 
-
+            update=itemView.findViewById(R.id.   update);
 
 
 
@@ -322,6 +387,21 @@ if(offerGroupModels.get(i).getGroupid().equals(id))
         for(int i=0;i<offerGroupModels.size();i++){
             if(offerGroupModels.get(i).getGroupid().equals(id))
             {   offerGroupModels.get(i).setActiveOffers(state);
+
+
+            }
+        }
+
+    }
+    private void updatetotal(String id,String tot){
+
+        Log.e("updateactive","updateactive");
+        Log.e("id==",id);
+        Log.e("state==",tot);
+        for(int i=0;i<offerGroupModels.size();i++){
+            if(offerGroupModels.get(i).getGroupid().equals(id))
+            {
+                offerGroupModels.get(i).setDiscount(tot);
 
 
             }
