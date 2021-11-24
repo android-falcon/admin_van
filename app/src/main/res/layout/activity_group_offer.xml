@@ -21,6 +21,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:layoutDirection="rtl"
     tools:context=".GroupOffer">
     <LinearLayout
         android:layout_width="match_parent"
@@ -53,6 +54,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background=""
                 android:gravity="center"
                 android:text="@{fromDate}"
                 android:textColor="@color/darkGray" />
@@ -85,13 +87,15 @@
             <TextView
                 android:id="@+id/textView17"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:gravity="center"
                 android:text="@string/discountType"
                 android:textColor="@color/colorblue_dark3" />
             <RadioGroup
                 android:id="@+id/discountType"
                 android:layout_width="wrap_content"
+                android:layout_weight="2"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
@@ -99,8 +103,7 @@
                     android:id="@+id/percentRadio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Percent"
-                    android:checked="true"
+                    android:text="Percent % "
                     android:textColor="@color/colorblue_dark3" />
 
                 <RadioButton
@@ -136,6 +139,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="@string/totalDiscount"
                 android:textColor="@color/colorblue_dark3" />
             <EditText

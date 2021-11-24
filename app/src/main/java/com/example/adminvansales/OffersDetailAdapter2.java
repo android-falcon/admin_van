@@ -146,9 +146,9 @@ public class OffersDetailAdapter2 extends RecyclerView.Adapter<OffersDetailAdapt
                             // notifyItemRemoved(position);
 
                             int position=getAdapterPosition();
-                            Log.e("rItemno--",itemno.getTag()+"");
-                            Log.e("Itemname--",itemname.getTag()+"");
-                            Log.e("removeItemposition",position+"");
+                           // Log.e("rItemno--",itemno.getTag()+"");
+//                            Log.e("Itemname--",itemname.getTag()+"");
+//                            Log.e("removeItemposition",position+"");
                             removeItem(position,String.valueOf(itemname.getTag()),String.valueOf(itemno.getTag()));
                            list.remove(position);
                             notifyDataSetChanged();
