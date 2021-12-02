@@ -137,11 +137,11 @@
     <string name="log_history_report">Log History report</string>
     <string name="itemReport">Item Report</string>
     <string name="getItemReport">Get Item Report</string>
-    <string name="discountType">Discount Type :</string>
+    <string name="discountType">Discount Type</string>
     <string name="qty">Qty</string>
     <string name="groupno">Group No</string>
     <string name="Totaldec">Total Discount</string>
-    <string name="Activedes">Active State</string>
+    <string name="Activedes">Activate</string>
     <string name="yes">yes</string>
     <string name="no">No</string>
 <string-array name="app_paymentTypeList">

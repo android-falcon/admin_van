@@ -25,10 +25,15 @@
         <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/row_payment_report_adapter.xml" value="0.15450861195542046" />
         <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/setting_dialog.xml" value="0.22" />
         <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/menu/menu.xml" value="0.2953703703703704" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/activity_group_offer.xml" value="0.2609375" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/activity_home.xml" value="0.33" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/activity_offerse_report.xml" value="0.24183006535947713" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/offersdetailrecycler.xml" value="0.2609375" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/offersgroupsrecycler.xml" value="0.2609375" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
