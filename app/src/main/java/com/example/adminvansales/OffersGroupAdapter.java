@@ -98,7 +98,7 @@ public  class OffersGroupAdapter extends RecyclerView.Adapter<OffersGroupAdapter
           dialog1 = new Dialog(context);
                 dialog1.setCancelable(true);
                 dialog1.setContentView(R.layout.itemof_offersrecycle);
-                dialog1.setCancelable(false);
+                dialog1.setCancelable(true);
                 WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
                 lp.copyFrom(dialog1.getWindow().getAttributes());
                 Button save= dialog1.findViewById(R.id.savechangs);
@@ -108,6 +108,27 @@ public  class OffersGroupAdapter extends RecyclerView.Adapter<OffersGroupAdapter
                        fillAdapter(context);
                         dialog1.dismiss();
 
+                    }
+                });
+              EditText  tot=dialog1.findViewById(R.id.tot);
+                tot.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                          if(s.length()!=0){
+
+                              updatetotal(list.get(position).getGroupid(), tot.getText().toString().trim() );
+
+                          }
                     }
                 });
                 Button cancel= dialog1.findViewById(R.id.cancelchangs);
@@ -227,36 +248,37 @@ public  class OffersGroupAdapter extends RecyclerView.Adapter<OffersGroupAdapter
         });
 
 
-        holder. totalDec.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                if (editable.toString().length() != 0) {
-                    try {
-
-
-
-                        String newtotal = editable.toString();
-
-                        list.get(position).setDiscount(newtotal);
-
-                        updatetotal(list.get(position).getGroupid(), list.get(position).getDiscount());
-
-                    }
-                    catch (Exception e){}
-
-
-                }
-            }});
+//        holder. totalDec.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//                if (editable.toString().length() != 0) {
+//                    try {
+//
+//
+//                      //  ((InputMethodManager) getSystemService(this.INPUT_METHOD_SERVICE)).showSoftInput(editText, 0);
+//
+//                        String newtotal = editable.toString();
+//
+//                        list.get(position).setDiscount(newtotal);
+//
+//                        updatetotal(list.get(position).getGroupid(), list.get(position).getDiscount());
+//
+//                    }
+//                    catch (Exception e){}
+//
+//
+//                }
+//            }});
 
 
     }

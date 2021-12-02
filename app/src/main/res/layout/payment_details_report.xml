@@ -272,7 +272,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.9"
                     android:gravity="center"
-
+android:visibility="gone"
                     android:padding="5dp"
 
                     android:text="@string/customerName"
@@ -282,12 +282,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@drawable/white_and_blue"
-
+                    android:textColor="@color/white"
                     android:gravity="center"
                     android:padding="5dp"
                     android:text="@string/amount_word"
-                    android:textColor="@color/colorblue_dark"
+
                     android:textSize="14sp" />
 
                 <TextView
@@ -297,21 +296,21 @@
                     android:gravity="center"
 
                     android:padding="5dp"
-
+                    android:background="@drawable/white_and_blue"
+                    android:textColor="@color/colorblue_dark"
                     android:text="@string/remark"
-                    android:textColor="@color/white"
+
                     android:textSize="14sp" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@drawable/white_and_blue"
-
-                    android:gravity="center"
+                      android:gravity="center"
                     android:padding="5dp"
                     android:text="@string/sales_man_no"
-                    android:textColor="@color/colorblue_dark"
+                    android:textColor="@color/white"
+
                     android:textSize="14sp" />
 
                 <TextView
@@ -320,9 +319,11 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:padding="5dp"
+                    android:background="@drawable/white_and_blue"
+                    android:textColor="@color/colorblue_dark"
+
                     android:text="@string/pay_method"
-                    android:textColor="@color/white"
-                    android:textSize="14sp" />
+                          android:textSize="14sp" />
 
             </TableRow>
             <!--<TableRow-->

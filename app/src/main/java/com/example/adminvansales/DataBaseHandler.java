@@ -14,7 +14,7 @@ import com.example.adminvansales.model.SettingModel;
 
 public class DataBaseHandler extends SQLiteOpenHelper {
 
-    private static final int VERSION = 5;
+    private static final int VERSION =12;
     private static final String BD_NAME = "AdminVanSales_DB";
 
     // ********************************************************************
@@ -25,6 +25,8 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     // ********************************************************************
     private final String SETTING_TABLE = "SETTING_TABLE";
     private final String SETTING_IP = "SETTING_IP";
+    private final String IMPORT_WAY = "IMPORT_WAY";
+    private final String CONO = "COMPANYNUM";
     private final String SETTING_PORT = "SETTING_PORT";
     //*********************************************************************
     private final String ACCOUNT_STATMENT_TABLE="ACCOUNT_STATMENT_TABLE";
@@ -48,7 +50,9 @@ public class DataBaseHandler extends SQLiteOpenHelper {
             String createTableSetting = "CREATE TABLE " + SETTING_TABLE
                     + " ("
                     + SETTING_IP + " TEXT ,"
-                    + SETTING_PORT + " TEXT "
+                    + SETTING_PORT + " TEXT ,"
+                    +IMPORT_WAY+ " TEXT ,"
+                    +CONO+ " TEXT "
                     + ")";
             sqLiteDatabase.execSQL(createTableSetting);
         }
@@ -131,14 +135,27 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         }catch (Exception e){
 
         }
+        try{
+            db.execSQL("ALTER TABLE SETTING_TABLE ADD " + IMPORT_WAY + " TEXT");
+        }
+        catch (Exception e){
+
+        }
+        try{
+            db.execSQL("ALTER TABLE SETTING_TABLE ADD " + CONO + " TEXT");
+        }
+        catch (Exception e){
+
+        }
     }
-    public void addSetting(String settingIp,String port) {
+    public void addSetting(String settingIp,String port,String importway,String cono) {
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(SETTING_IP, settingIp);
         contentValues.put(SETTING_PORT, port);
 
-
+        contentValues.put(IMPORT_WAY, importway);
+        contentValues.put(CONO, cono);
         database.insert(SETTING_TABLE, null, contentValues);
         database.close();
 
@@ -164,7 +181,8 @@ public class DataBaseHandler extends SQLiteOpenHelper {
                 SettingModel settingModel=new SettingModel();
                 settingModel.setIpAddress(cursor.getString(0));
                 settingModel.setPort(cursor.getString(1));
-
+                settingModel.setCono(cursor.getString(3));
+                settingModel.setImport_way(cursor.getString(2));
                 ip=settingModel;
             } while (cursor.moveToNext());
 

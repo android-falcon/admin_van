@@ -126,6 +126,7 @@
         <!--android:textColor="@color/colorblue_dark" />-->
         <TextView
             android:id="@+id/addVanSales"
+            android:visibility="invisible"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/ic_person_add_black_24dp"
@@ -340,7 +341,7 @@
                     android:drawableLeft="@drawable/ic_equalizer_black_24dp"
                     android:drawableTint="@color/white"
                     android:padding="10dp"
-                    android:visibility="visible"
+             android:visibility="gone"
                     android:text="offersReport"
                     android:textColor="@color/white" />
 
@@ -371,6 +372,7 @@
             android:drawableStart="@drawable/ic_local_offer_black_24dp"
             android:drawableLeft="@drawable/ic_location_on_black_24dp"
             android:elevation="5dp"
+            android:visibility="gone"
             android:padding="5dp"
             android:text="Offer Group"
             android:textColor="@color/colorblue_dark" />

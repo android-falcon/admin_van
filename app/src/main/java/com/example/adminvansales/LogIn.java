@@ -14,6 +14,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.example.adminvansales.model.SalesManInfo;
@@ -36,7 +37,7 @@ public class LogIn extends AppCompatActivity {
     SliderLayout sliderLayout;
     FloatingActionButton setting_floatingBtn;
     Button button_logIn,button_sighnup;
-    public  static String ipAddress="",portSettings="";
+    public  static String ipAddress="",portSettings="",import_way="",Cono="";
     SettingModel settingModelList;
     private DataBaseHandler databaseHandler;
     EditText userName_edit,password_edit;
@@ -44,11 +45,15 @@ public class LogIn extends AppCompatActivity {
     Timer timer;
     ImportData importData;
 
+    com.example.adminvansales.model.SettingModel settingModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
         Log.e("importDataMasaterrrr","importData;;;");
+
+        settingModel=new com.example.adminvansales.model.SettingModel ();
+        databaseHandler=new DataBaseHandler(LogIn.this);
         initView();
         sliderLayout.setIndicatorAnimation(IndicatorAnimations.SWAP); //set indicator animation by using SliderLayout.IndicatorAnimations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
         sliderLayout.setSliderTransformAnimation(SliderAnimations.FADETRANSFORMATION);
@@ -183,7 +188,11 @@ public class LogIn extends AppCompatActivity {
 
     private void getData() {
         importData=new ImportData(LogIn.this);
+        settingModel=databaseHandler.getAllSetting();
+      //  if( settingModel.getImport_way().equals("0"))
         importData.getListRequest();
+    //    else if( settingModel.getImport_way().equals("1"))
+    //    importData.IIS_getListRequest();
     }
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
@@ -276,6 +285,10 @@ public class LogIn extends AppCompatActivity {
         Button saveSetting=dialog.findViewById(R.id.saveSetting);
         final EditText editTextIp=dialog.findViewById(R.id.setindEditText);
         final EditText  portSetting=dialog.findViewById(R.id.portSetting);
+RadioButton RB_mysql= dialog.findViewById(R.id.RB_mysql);
+        RB_mysql.setChecked(true);
+        RadioButton RB_iis= dialog.findViewById(R.id.RB_iis);
+        final EditText  CoNo=dialog.findViewById(R.id.cono);
         ipAddress="";
         portSettings="";
         SettingModel settingModels=new SettingModel();
@@ -286,8 +299,15 @@ public class LogIn extends AppCompatActivity {
             if(!ipAddress.equals(""))
             {
                 portSettings=settingModels.getPort();
+                import_way=settingModels.getImport_way();
+                Cono=settingModels.getCono();
+                if(import_way.equals("0"))
+                    RB_mysql.setChecked(true);
+                else
+                    RB_iis.setChecked(true);
                 editTextIp.setText(ipAddress);
                 portSetting.setText(portSettings);
+                CoNo.setText(Cono);
             }
         }
         catch (Exception e)
@@ -297,9 +317,17 @@ public class LogIn extends AppCompatActivity {
         saveSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+            //    databaseHandler.delete
                 ipAddress= editTextIp.getText().toString();
                 portSettings=portSetting.getText().toString();
-                databaseHandler.addSetting(ipAddress,portSettings);
+                Cono=CoNo.getText().toString();
+                databaseHandler.addSetting(ipAddress,portSettings,"1",Cono);
+               /* if(RB_mysql.isChecked()==true)
+                    //0 to mysql
+                databaseHandler.addSetting(ipAddress,portSettings,"0",Cono);
+                else
+                    //1 to IIs
+                    databaseHandler.addSetting(ipAddress,portSettings,"1",Cono);*/
                 dialog.dismiss();
 
             }

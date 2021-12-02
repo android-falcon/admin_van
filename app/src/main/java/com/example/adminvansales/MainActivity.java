@@ -29,12 +29,15 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     ArrayList<Request> requestList1;
     public  static  boolean isListUpdated=false;
-
+    DataBaseHandler databaseHandler;
+    com.example.adminvansales.model.SettingModel settingModel;
     private Timer timer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        settingModel=new com.example.adminvansales.model.SettingModel ();
+        databaseHandler=new DataBaseHandler(MainActivity.this);
         initialView();
 //        getData();
         fillData();
@@ -74,7 +77,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void getData() {
         ImportData importData=new ImportData(MainActivity.this);
-        importData.getListRequest();
+
+
+        settingModel=databaseHandler.getAllSetting();
+    //    if( settingModel.getImport_way().equals("0"))
+            importData.getListRequest();
+     //   else if( settingModel.getImport_way().equals("1"))
+      //      importData.IIS_getListRequest();
+
     }
 
     private boolean isNetworkAvailable() {

@@ -47,6 +47,7 @@ android:layout_weight="9"
 
         <TextView
             android:layout_width="1dp"
+            android:visibility="gone"
             android:layout_height="match_parent"
             android:layout_margin="3dp"
             android:background="@color/colorblue1"
@@ -55,6 +56,7 @@ android:layout_weight="9"
 
 
         <TextView
+            android:visibility="gone"
             android:id="@+id/salesManName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -64,6 +66,7 @@ android:layout_weight="9"
             android:textStyle="bold" />
 
         <TextView
+            android:visibility="gone"
             android:layout_width="1dp"
             android:layout_height="match_parent"
             android:layout_margin="3dp"

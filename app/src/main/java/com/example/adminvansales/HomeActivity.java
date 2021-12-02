@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -38,6 +39,8 @@ import com.example.adminvansales.Report.UnCollectedData;
 import java.util.List;
 
 import static com.example.adminvansales.GlobelFunction.salesManInfoAdmin;
+import static com.example.adminvansales.GlobelFunction.salesManInfosList;
+import static com.example.adminvansales.GlobelFunction.salesManNameList;
 import static com.example.adminvansales.ImportData.listSalesMan;
 
 public class HomeActivity extends AppCompatActivity {
@@ -51,7 +54,8 @@ public class HomeActivity extends AppCompatActivity {
     LinearLayout ReportLinear;
     public static EditText editPassword;
     TextView offersReport,customerLogReport, paymentReport, cashReport, offerReport,LogReport,unCollectedCheques,analyzeAcountsReport,ItemReport;
-
+    com.example.adminvansales.model.SettingModel settingModel;
+    DataBaseHandler databaseHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +63,20 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         initalView();
         globelFunction = new GlobelFunction(HomeActivity.this);
-        globelFunction.getSalesManInfo(HomeActivity.this, 1);
+        settingModel=new com.example.adminvansales.model.SettingModel ();
+        ImportData  importData=new ImportData(HomeActivity.this);
 
+        databaseHandler=new DataBaseHandler(HomeActivity.this);
+
+
+
+
+
+
+     //   if( settingModel.getImport_way().equals("0"))
+        globelFunction.getSalesManInfo(HomeActivity.this, 1);
+      //  else if( settingModel.getImport_way().equals("1"))
+      //      importData.  IIs_getSalesMan(HomeActivity.this, 1);
 
     }
 
@@ -122,9 +138,16 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.toString().equals("1")) {
-                    if (listSalesMan.size() != 0) {
-                        showAllSalesManData(listSalesMan);
+
+               Log.e(" salesManInfosList==", salesManInfosList.size()+"");
+
+                    if (  salesManInfosList.size() != 0) {
+                        Log.e(" salesManInfosList2==", salesManInfosList.size()+"");
+                        showAllSalesManData(salesManInfosList);
                     }
+                  /*  if (listSalesMan.size() != 0) {
+                        showAllSalesManData(listSalesMan);
+                    }*/
                 }
 
             }
@@ -306,6 +329,7 @@ public class HomeActivity extends AppCompatActivity {
         recyclerViews.setHasFixedSize(true);
         recyclerViews.addOnScrollListener(new CenterScrollListener());
         layoutManagerd.setPostLayoutListener(new CarouselZoomPostLayoutListener());
+
         recyclerViews.setAdapter(new SalesManAdapter(this, listSalesMan));
         recyclerViews.requestFocus();
         recyclerViews.scrollToPosition(2);

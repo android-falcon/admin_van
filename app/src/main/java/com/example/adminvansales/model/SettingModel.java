@@ -5,6 +5,16 @@ public class SettingModel {
     private String ipAddress;
     private String port;
 
+      String import_way;
+    String Cono;
+
+    public String getCono() {
+        return Cono;
+    }
+
+    public void setCono(String cono) {
+        Cono = cono;
+    }
 
     public SettingModel() {
 
@@ -13,6 +23,14 @@ public class SettingModel {
     public SettingModel(String ipAddress, String port) {
         this.ipAddress = ipAddress;
         this.port = port;
+    }
+
+    public String getImport_way() {
+        return import_way;
+    }
+
+    public void setImport_way(String import_way) {
+        this.import_way = import_way;
     }
 
     public String getIpAddress() {

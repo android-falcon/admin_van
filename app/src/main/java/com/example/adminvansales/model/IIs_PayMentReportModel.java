@@ -1,33 +1,33 @@
-package com.example.adminvansales.model;
+package com.example.adminvansales.Model;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class PayMentReportModel {
+class IIs_PayMentReportModel {
 
-    @SerializedName("ComapnyNo")
+    @SerializedName("COMAPNYNO")
     private String ComapnyNo;
 
-    @SerializedName("VouYear")
+    @SerializedName("VOUYEAR")
     private String VouYear;
 
-    @SerializedName("VouNo")
+    @SerializedName("VOUNO")
     private String VouNo;
 
-    @SerializedName("PaymentDate")
+    @SerializedName("PAYMENTDATE")
     private String PaymentDate;
 
-    @SerializedName("CustomerNo")
+    @SerializedName("CUSTOMERNO")
     private String CustomerNo;
 
-    @SerializedName("Amount")
+    @SerializedName("AMOUNT")
     private String Amount;
 
-    @SerializedName("Notes")
+    @SerializedName("NOTES")
     private String Notes;
 
-    @SerializedName("SalesmanNo")
+    @SerializedName("SALESMANNO")
     private String SalesmanNo;
 
     @SerializedName("ISPOSTED")
@@ -36,13 +36,13 @@ public class PayMentReportModel {
     @SerializedName("PAYKIND")
     private String PAYKIND;
 
-    @SerializedName("Salesmanname")
+    @SerializedName("SALESMANNAME")
     private String Salesmanname;
 
     @SerializedName("PaymentsTable")
-    private List<PayMentReportModel> PaymentsTable;
-    public PayMentReportModel(){}
-    public PayMentReportModel(String comapnyNo, String vouYear, String vouNo, String paymentDate, String customerNo, String amount,
+    private List<com.example.adminvansales.model.PayMentReportModel> PaymentsTable;
+
+    public IIs_PayMentReportModel(String comapnyNo, String vouYear, String vouNo, String paymentDate, String customerNo, String amount,
                               String notes, String salesmanNo, String ISPOSTED, String PAYKIND, String salesmanname) {
         ComapnyNo = comapnyNo;
         VouYear = vouYear;
@@ -145,11 +145,11 @@ public class PayMentReportModel {
         Salesmanname = salesmanname;
     }
 
-    public List<PayMentReportModel> getPaymentsTable() {
+    public List<com.example.adminvansales.model.PayMentReportModel> getPaymentsTable() {
         return PaymentsTable;
     }
 
-    public void setPaymentsTable(List<PayMentReportModel> paymentsTable) {
+    public void setPaymentsTable(List<com.example.adminvansales.model.PayMentReportModel> paymentsTable) {
         PaymentsTable = paymentsTable;
     }
 }

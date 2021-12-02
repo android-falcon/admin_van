@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.adminvansales.Report.CustomerLogReport;
 import com.example.adminvansales.model.ItemReportModel;
 
 import java.util.ArrayList;
@@ -32,10 +33,14 @@ public class ItemReport extends AppCompatActivity {
     GlobelFunction globelFunction;
     ArrayAdapter<String>salesNameSpinnerAdapter ;
    static TextView total_item_qty;
+    DataBaseHandler databaseHandler;
+    com.example.adminvansales.model.SettingModel settingModel;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.item_report_activity);
+        settingModel=new com.example.adminvansales.model.SettingModel ();
+        databaseHandler=new DataBaseHandler(ItemReport.this);
 
         initial();
 
@@ -54,15 +59,24 @@ public class ItemReport extends AppCompatActivity {
         previewButton = findViewById(R.id.previewButton);
         listItemReport = findViewById(R.id.listItemReport);
 
-        importData = new ImportData(ItemReport.this);
-        importData.getItemReport(ItemReport.this,fromDate.getText().toString(),toDate.getText().toString(),"-1");
-
-        fromDate.setText(globelFunction.DateInToday());
+          fromDate.setText(globelFunction.DateInToday());
         toDate.setText(globelFunction.DateInToday());
+        importData = new ImportData(ItemReport.this);
+        settingModel=databaseHandler.getAllSetting();
+        fillSalesManSpinner();
+       try {
+           String no= globelFunction.getsalesmanNum(salesManSpinner.getSelectedItem().toString());
+
+           if( settingModel.getImport_way().equals("0"))
+        importData.getItemReport(ItemReport.this,fromDate.getText().toString(),toDate.getText().toString(),"-1");
+    else if( settingModel.getImport_way().equals("1"))
+        importData. IIS_getItemReport(ItemReport.this,fromDate.getText().toString(),toDate.getText().toString(),no);
+
+}catch (Exception e){}
 
         fromDate.setOnClickListener(onClickListener);
         toDate.setOnClickListener(onClickListener);
-        fillSalesManSpinner();
+
         previewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,12 +88,29 @@ public class ItemReport extends AppCompatActivity {
                 if (positionSales == 0 || positionSales == -1) {
                     salesNo = "-1";
 //                    Log.e("salesNo-1", "" + salesNo + "  ");
-                    importData.getItemReport(ItemReport.this,fromDate.getText().toString(),toDate.getText().toString(),"-1");
+
+
+                      String no= globelFunction.getsalesmanNum(salesManSpinner.getSelectedItem().toString());
+
+                    if( settingModel.getImport_way().equals("0"))
+                        importData.getItemReport(ItemReport.this,fromDate.getText().toString(),toDate.getText().toString(),"-1");
+                    else if( settingModel.getImport_way().equals("1"))
+                        importData. IIS_getItemReport(ItemReport.this,fromDate.getText().toString(),toDate.getText().toString(),no);
+
 
                 } else {
                     salesNo = salesManInfosList.get(positionSales - 1).getSalesManNo();
                     Log.e("salesNo", "" + salesNo + "   name ===> " + salesManInfosList.get(positionSales - 1).getSalesName() + "    " + positionSales);
-                    importData.getItemReport(ItemReport.this, fromDate.getText().toString(), toDate.getText().toString(), salesNo);
+
+
+
+                    String no= globelFunction.getsalesmanNum(salesManSpinner.getSelectedItem().toString());
+
+                    if( settingModel.getImport_way().equals("0"))
+                        importData.getItemReport(ItemReport.this, fromDate.getText().toString(), toDate.getText().toString(), salesNo);
+                    else if( settingModel.getImport_way().equals("1"))
+                        importData. IIS_getItemReport(ItemReport.this,fromDate.getText().toString(),toDate.getText().toString(),no);
+
 
                 }
 

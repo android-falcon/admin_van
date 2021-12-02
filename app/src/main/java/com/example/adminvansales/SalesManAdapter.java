@@ -48,7 +48,7 @@ public class SalesManAdapter extends RecyclerView.Adapter<SalesManAdapter.CViewH
 
 //            cViewHolder.itemImage.setBackgroundResource(getImage(pic2.get(i)));
         cViewHolder.layBar.setTag("" + i);
-
+        cViewHolder.layBar.setEnabled(false);
         final boolean[] longIsOpen = {false};
         cViewHolder.layBar.setOnClickListener(new View.OnClickListener() {
             @Override

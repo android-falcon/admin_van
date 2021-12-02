@@ -290,13 +290,13 @@
                     />
 
 
-                <TextView
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:layout_margin="3dp"
-                    android:background="@color/colorblue1"
+<!--                <TextView-->
+<!--                    android:layout_width="1dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_margin="3dp"-->
+<!--                    android:background="@color/colorblue1"-->
 
-                    />
+<!--                    />-->
                 <TextView
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
@@ -305,14 +305,14 @@
                     android:visibility="gone"
 
                     />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.9"
-                    android:gravity="center"
-                    android:text="@string/sales_man_name"
-                    android:textColor="@color/white"
-                    android:textStyle="bold" />
+<!--                <TextView-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="0.9"-->
+<!--                    android:gravity="center"-->
+<!--                    android:text="@string/sales_man_name"-->
+<!--                    android:textColor="@color/white"-->
+<!--                    android:textStyle="bold" />-->
 
                 <TextView
                     android:layout_width="1dp"
@@ -398,13 +398,13 @@
                     android:textColor="@color/white"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:layout_margin="3dp"
-                    android:background="@color/colorblue1"
+<!--                <TextView-->
+<!--                    android:layout_width="1dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_margin="3dp"-->
+<!--                    android:background="@color/colorblue1"-->
 
-                    />
+<!--                    />-->
 
                 <!--<TextView-->
                 <!--android:layout_width="1dp"-->

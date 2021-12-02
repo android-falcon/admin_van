@@ -17,6 +17,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.adminvansales.CustomerLogReportAdapter;
+import com.example.adminvansales.DataBaseHandler;
 import com.example.adminvansales.ExportToExcel;
 import com.example.adminvansales.GlobelFunction;
 import com.example.adminvansales.ImportData;
@@ -43,11 +44,15 @@ public class CustomerLogReport extends AppCompatActivity {
     Button previewButton;
     Spinner salesNameSpinner;
     ArrayAdapter<String>salesNameSpinnerAdapter;
-
+    com.example.adminvansales.model.SettingModel settingModel;
+    DataBaseHandler databaseHandler;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.customer_log_report);
+        settingModel=new com.example.adminvansales.model.SettingModel ();
+        databaseHandler=new DataBaseHandler(CustomerLogReport.this);
+
         initial();
     }
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
@@ -69,16 +74,25 @@ public class CustomerLogReport extends AppCompatActivity {
         fromDate.setText(toDay);
         toDate.setText(toDay);
         customerLogReportList=new ArrayList<>();
+        fillSalesManSpinner();
         importData=new ImportData(CustomerLogReport.this);
-        importData.getCustomerLogReport(CustomerLogReport.this,"-1",toDay,toDay);
+        String no= globelFunction.getsalesmanNum(salesNameSpinner.getSelectedItem().toString());
+        try {
+            settingModel=databaseHandler.getAllSetting();
+            if( settingModel.getImport_way().equals("0"))
+                importData.getCustomerLogReport(CustomerLogReport.this,"-1",toDay,toDay);
+            else if( settingModel.getImport_way().equals("1"))
+                importData.  IIS_getCustomerLogReport(CustomerLogReport.this,no,toDay,toDay);
 
-        previewButton.setOnClickListener(onClick);
+        }catch (Exception e){}
+
+           previewButton.setOnClickListener(onClick);
         fromDate.setOnClickListener(onClick);
         toDate.setOnClickListener(onClick);
         excelConvert.setOnClickListener(onClick);
         pdfConvert.setOnClickListener(onClick);
         share.setOnClickListener(onClick);
-        fillSalesManSpinner();
+
 
     }
 
@@ -166,10 +180,11 @@ public class CustomerLogReport extends AppCompatActivity {
             salesNo = salesManInfosList.get(positionSales - 1).getSalesManNo();
             Log.e("salesNo", "" + salesNo + "   name ===> " + salesManInfosList.get(positionSales - 1).getSalesName() + "    " + positionSales);
         }
-
-
+        String no= globelFunction.getsalesmanNum(salesNameSpinner.getSelectedItem().toString());
+        if( settingModel.getImport_way().equals("0"))
         importData.getCustomerLogReport(CustomerLogReport.this,salesNo,fromDate.getText().toString(),toDate.getText().toString());
-
+        else   if( settingModel.getImport_way().equals("1"))
+            importData.IIS_getCustomerLogReport(CustomerLogReport.this,no,fromDate.getText().toString(),toDate.getText().toString());
     }
 
     public void fillSalesManSpinner(){

@@ -18,7 +18,7 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".Report.OfferseReport"
-
+            android:windowSoftInputMode="adjustPan|adjustResize"
             ></activity>
         <activity android:name=".GroupOffer" />
         <activity

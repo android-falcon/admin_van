@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,21 +32,31 @@ public class GlobelFunction {
     public static  SalesManInfo salesManInfoAdmin=new SalesManInfo();
 
     public static  List<LatLng> LatLngListMarker=new ArrayList<>();
-
+    DataBaseHandler databaseHandler;
+    com.example.adminvansales.model.SettingModel settingModel;
     
     public static String adminId="",adminName="";
     public GlobelFunction(Context context) {
         importData=new ImportData(context);
         this.context =context;
         myCalendar = Calendar.getInstance();
+
+
     }
 
     public void getSalesManInfo(Context context,int flag){
 
         if(flag!=90) {
+            settingModel=new com.example.adminvansales.model.SettingModel ();
+            databaseHandler=new DataBaseHandler(context);
+            settingModel=databaseHandler.getAllSetting();
+            if( settingModel.getImport_way().equals("0"))
             importData.getSalesMan(context, flag);
+            else if( settingModel.getImport_way().equals("1"))
+            importData.  IIs_getSalesMan(context, flag);
         }else {
             importData.getAdmin(context, 0);
+
         }
 
     }
@@ -162,5 +173,13 @@ try {
         ImportData importData = new ImportData(context);
         importData.GetAuthentication(context,adminName,adminId,1);
     }
+public String getsalesmanNum(String name){
+    Log.e("name==",name);
+        for(int i=0;i<salesManInfosList.size();i++){
+            if(salesManInfosList.get(i).getSalesName().equals(name)) {
+                Log.e("name===",salesManInfosList.get(i).getSalesName());
+             return salesManInfosList.get(i).getSalesManNo();
 
+        }}
+    return "" ;  }
 }

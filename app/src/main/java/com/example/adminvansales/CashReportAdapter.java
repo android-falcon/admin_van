@@ -146,7 +146,10 @@ public class CashReportAdapter extends BaseAdapter {
         holder.net  .setText(""+(Double.parseDouble(totalPCash)+Double.parseDouble(totalPCredit)));
         itemsList.get(i).setNetPay(""+(Double.parseDouble(totalPCash)+Double.parseDouble(totalPCredit)));
         holder.credit  .setText(totalPCreditCard);
-        double netTotalCash=Double.parseDouble(totalPCreditCard)+Double.parseDouble(totalCash)+Double.parseDouble(totalPCash);
+       // double netTotalCash=Double.parseDouble(totalPCreditCard)+Double.parseDouble(totalCash)+Double.parseDouble(totalPCash);
+
+        double netTotalCash=Double.parseDouble(totalCash)+Double.parseDouble(totalPCash);
+
         holder.netCash  .setText(""+netTotalCash);
         itemsList.get(i).setNetCash(""+netTotalCash);
 //        holder.tableRow.setOnClickListener(new View.OnClickListener() {

@@ -114,6 +114,43 @@
                     android:orientation="horizontal">
 
                     <TextView
+
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="1dp"
+                        android:layout_weight="2"
+                        android:gravity="center_vertical"
+
+                        android:text="CONO "
+                        android:textColor="@color/colorblue_dark"
+                        android:textSize="14sp"
+
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/cono"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="1dp"
+                        android:layout_weight="1"
+
+                        android:background="@drawable/btn_sighn_up"
+
+                        android:lines="1"
+                        android:text=""
+                        android:textColor="@color/colorblue_dark"
+
+                        android:textSize="14sp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_gravity="center_vertical"
@@ -144,9 +181,58 @@
 
                         android:textSize="14sp" />
                 </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:visibility="gone"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="1dp"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
 
+                        android:text="Import Data"
+                        android:textColor="@color/colorblue_dark"
+                        android:textSize="14sp"
+
+                        android:textStyle="bold" />
+                    <RadioGroup
+                        android:layout_width="wrap_content"
+                        android:id="@+id/RadioGroup"
+                        android:layout_weight="1"
+                        android:orientation="horizontal"
+                        android:layout_height="wrap_content">
+                        <RadioButton
+                            android:layout_width="wrap_content"
+
+                            android:text="mysql  "
+                            android:textColor="@drawable/blue_back"
+                            android:textSize="17dp"
+                            android:textStyle="bold"
+                            android:layout_weight="2"
+                            android:id="@+id/RB_mysql"
+                            android:layout_height="wrap_content"/>
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:text="IIs  "
+                            android:textColor="@drawable/blue_back"
+                            android:textStyle="bold"
+                            android:layout_weight="2"
+                            android:textSize="17dp"
+                            android:id="@+id/RB_iis"
+                            android:layout_height="wrap_content"/>
+
+                    </RadioGroup>
+                </LinearLayout>
 
             </LinearLayout>
+
 
         </RelativeLayout>
     </LinearLayout>
@@ -166,6 +252,7 @@
             android:text="Save"
             android:textColor="@color/colorblue_dark"
             android:textSize="14sp" />
+
     </LinearLayout>
 
 

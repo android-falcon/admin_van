@@ -34,7 +34,7 @@ public class CustomerLogReportModel {
 
     @SerializedName("CustomerLog")
     List<CustomerLogReportModel>CustomerLog;
-
+    public CustomerLogReportModel(){}
     public CustomerLogReportModel(String SALES_MAN_ID, String CUS_CODE,
                                   String CUS_NAME, String CHECK_IN_DATE, String CHECK_IN_TIME, String CHECK_OUT_DATE, String CHECK_OUT_TIME) {
         this.SALES_MAN_ID = SALES_MAN_ID;

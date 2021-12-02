@@ -16,6 +16,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.adminvansales.CashReportAdapter;
+import com.example.adminvansales.DataBaseHandler;
 import com.example.adminvansales.ExportToExcel;
 import com.example.adminvansales.GlobelFunction;
 import com.example.adminvansales.ImportData;
@@ -43,6 +44,9 @@ public class CashReport extends AppCompatActivity {
     Spinner salesNameSpinner;
     ArrayAdapter<String>salesNameSpinnerAdapter;
     List<CashReportModel> TempReports;
+    com.example.adminvansales.model.SettingModel SettingModel;
+    DataBaseHandler databaseHandler;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,8 +76,20 @@ public class CashReport extends AppCompatActivity {
         cashReportList=new ArrayList<>();
         TempReports=new ArrayList<>();
         importData=new ImportData(CashReport.this);
-        importData.getCashReport(CashReport.this,toDay,toDay);
+        databaseHandler=new DataBaseHandler(CashReport.this);
+        SettingModel=databaseHandler.getAllSetting();
+        fillSalesManSpinner();
+        try {
+            int positionSales=salesNameSpinner.getSelectedItemPosition();
+            String no= globelFunction.getsalesmanNum(salesNameSpinner.getSelectedItem().toString());
+            if( SettingModel.getImport_way().equals("0"))
+                importData.getCashReport(CashReport.this,toDay,toDay);
+            else   if( SettingModel.getImport_way().equals("1"))
+                importData.  IIS_getCashReport(CashReport.this,toDay,toDay,no);
+        }
+       catch (Exception e){
 
+       }
         previewButton.setOnClickListener(onClick);
         fromDate.setOnClickListener(onClick);
         toDate.setOnClickListener(onClick);
@@ -82,7 +98,7 @@ public class CashReport extends AppCompatActivity {
         share.setOnClickListener(onClick);
 
 
-        fillSalesManSpinner();
+
 
     }
 
@@ -156,10 +172,12 @@ public class CashReport extends AppCompatActivity {
 //            salesNo = salesManInfosList.get(positionSales - 1).getSalesManNo();
 //            Log.e("salesNo", "" + salesNo + "   name ===> " + salesManInfosList.get(positionSales - 1).getSalesName() + "    " + positionSales);
 //        }
-
-
+        int positionSales=salesNameSpinner.getSelectedItemPosition();
+        String no= globelFunction.getsalesmanNum(salesNameSpinner.getSelectedItem().toString());
+        if( SettingModel.getImport_way().equals("0"))
         importData.getCashReport(CashReport.this,fromDate.getText().toString(),toDate.getText().toString());
-
+        else   if( SettingModel.getImport_way().equals("1"))
+            importData.IIS_getCashReport(CashReport.this,fromDate.getText().toString(),toDate.getText().toString(),no);
     }
 
     public void fillSalesManSpinner(){

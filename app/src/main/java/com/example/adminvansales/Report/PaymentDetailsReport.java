@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.adminvansales.DataBaseHandler;
 import com.example.adminvansales.ExportToExcel;
 import com.example.adminvansales.GlobelFunction;
 import com.example.adminvansales.ImportData;
@@ -42,11 +43,16 @@ public class PaymentDetailsReport extends AppCompatActivity {
     Button previewButton;
     Spinner payKindSpinner,salesNameSpinner;
     ArrayAdapter<String>salesNameSpinnerAdapter;
+    com.example.adminvansales.model.SettingModel SettingModel;
+   DataBaseHandler databaseHandler;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.payment_details_report);
+        SettingModel=new com.example.adminvansales.model.SettingModel ();
+        databaseHandler=new DataBaseHandler(PaymentDetailsReport.this);
         initial();
+
 
     }
 
@@ -70,7 +76,15 @@ public class PaymentDetailsReport extends AppCompatActivity {
         toDate.setText(toDay);
         payMentReportList=new ArrayList<>();
         importData=new ImportData(PaymentDetailsReport.this);
-        importData.getPaymentsReport(PaymentDetailsReport.this,"-1",toDay,toDay,"-1");
+        fillSalesManSpinner();
+        SettingModel=databaseHandler.getAllSetting();
+        try {
+            String no = globelFunction.getsalesmanNum(salesNameSpinner.getSelectedItem().toString());
+            if (SettingModel.getImport_way().equals("0"))
+                importData.getPaymentsReport(PaymentDetailsReport.this, "-1", toDay, toDay, "-1");
+            else if (SettingModel.getImport_way().equals("1"))
+                importData.IIS_getPaymentsReport(PaymentDetailsReport.this, no, toDay, toDay, "1");
+        }catch (Exception e){}
 
         previewButton.setOnClickListener(onClick);
         fromDate.setOnClickListener(onClick);
@@ -79,7 +93,7 @@ public class PaymentDetailsReport extends AppCompatActivity {
         pdfConvert.setOnClickListener(onClick);
         share.setOnClickListener(onClick);
 
-        fillSalesManSpinner();
+
 
     }
 
@@ -151,14 +165,21 @@ public class PaymentDetailsReport extends AppCompatActivity {
         String salesNo="-1";
 
        int position=payKindSpinner.getSelectedItemPosition();
-        if(position==0||position==-1){
+      /*  if(position==0||position==-1){
             payKind="-1";
         }else if(position==1){
             payKind="1";
         }else if(position==2){
             payKind="0";
+        }*/
+        if(position==0||position==-1){
+            payKind="1";
+        }else if(position==1){
+            payKind="0";
         }
-
+        else if(position==2){
+            payKind="2";
+        }
 
         int positionSales=salesNameSpinner.getSelectedItemPosition();
 
@@ -171,8 +192,13 @@ public class PaymentDetailsReport extends AppCompatActivity {
                 Log.e("salesNo", "" + salesNo + "   name ===> " + salesManInfosList.get(positionSales - 1).getSalesName() + "    " + positionSales);
             }
 
+        String no= globelFunction.getsalesmanNum(salesNameSpinner.getSelectedItem().toString());
 
-        importData.getPaymentsReport(PaymentDetailsReport.this,salesNo,fromDate.getText().toString(),toDate.getText().toString(),payKind);
+        if( SettingModel.getImport_way().equals("0"))
+            importData.getPaymentsReport(PaymentDetailsReport.this,"-1",fromDate.getText().toString(),toDate.getText().toString(),payKind);
+        else   if( SettingModel.getImport_way().equals("1"))
+            importData.IIS_getPaymentsReport(PaymentDetailsReport.this,no,fromDate.getText().toString(),toDate.getText().toString(),payKind);
+
 
     }
 
@@ -188,4 +214,5 @@ public class PaymentDetailsReport extends AppCompatActivity {
         listPaymentReport.setAdapter(payMentReportAdapter);
 
     }
+
 }
