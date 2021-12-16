@@ -61,6 +61,7 @@ public class LogIn extends AppCompatActivity {
         setSliderViews();
     }
     private void initView() {
+        settingModel=databaseHandler.getAllSetting();
         sliderLayout = findViewById(R.id.imageSlider_2);
         setting_floatingBtn=findViewById(R.id.setting_floatingBtn);
         databaseHandler = new DataBaseHandler(LogIn.this);
@@ -82,35 +83,40 @@ public class LogIn extends AppCompatActivity {
         userName_edit=findViewById(R.id.userName_edit);
         importData=new ImportData(LogIn.this);
         Log.e("importData","importData");
-       importData.getCustomerInfo(0);
+        if (settingModel.getImport_way().equals("0"))
+            importData.getCustomerInfo(0);
+        else if (settingModel.getImport_way().equals("1"))
+            importData.IIs_getCustomerInfo(0);
+
+
         globelFunction=new GlobelFunction(LogIn.this);
         timer = new Timer();
 
 
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-
-                runOnUiThread(new Runnable(){
-
-                    @Override
-                    public void run(){
-                        // update ui here
-                        if (isNetworkAvailable()) {
-                            getData();
-//                            if(listId.size()!=0)
-//                            {
+//        timer.schedule(new TimerTask() {
+//            @Override
+//            public void run() {
 //
-//                                fillData();
-////                                updateSeenOfRow();
-//                            }
-                        }
-
-                    }
-                });
-            }
-
-        }, 0, 3000);
+//                runOnUiThread(new Runnable(){
+//
+//                    @Override
+//                    public void run(){
+//                        // update ui here
+//                        if (isNetworkAvailable()) {
+//                            getData();
+////                            if(listId.size()!=0)
+////                            {
+////
+////                                fillData();
+//////                                updateSeenOfRow();
+////                            }
+//                        }
+//
+//                    }
+//                });
+//            }
+//
+//        }, 0, 3000);
 
 
         Log.e("importData","11111");
@@ -188,7 +194,7 @@ public class LogIn extends AppCompatActivity {
 
     private void getData() {
         importData=new ImportData(LogIn.this);
-        settingModel=databaseHandler.getAllSetting();
+
       //  if( settingModel.getImport_way().equals("0"))
         importData.getListRequest();
     //    else if( settingModel.getImport_way().equals("1"))

@@ -85,22 +85,23 @@ public class ItemReport extends AppCompatActivity {
 //
 
                 String salesNo;
-                if (positionSales == 0 || positionSales == -1) {
-                    salesNo = "-1";
-//                    Log.e("salesNo-1", "" + salesNo + "  ");
-
-
-                      String no= globelFunction.getsalesmanNum(salesManSpinner.getSelectedItem().toString());
-
-                    if( settingModel.getImport_way().equals("0"))
-                        importData.getItemReport(ItemReport.this,fromDate.getText().toString(),toDate.getText().toString(),"-1");
-                    else if( settingModel.getImport_way().equals("1"))
-                        importData. IIS_getItemReport(ItemReport.this,fromDate.getText().toString(),toDate.getText().toString(),no);
-
-
-                } else {
-                    salesNo = salesManInfosList.get(positionSales - 1).getSalesManNo();
-                    Log.e("salesNo", "" + salesNo + "   name ===> " + salesManInfosList.get(positionSales - 1).getSalesName() + "    " + positionSales);
+//                if (positionSales == 0 || positionSales == -1) {
+//                    salesNo = "-1";
+////                    Log.e("salesNo-1", "" + salesNo + "  ");
+//
+//
+//                      String no= globelFunction.getsalesmanNum(salesManSpinner.getSelectedItem().toString());
+//
+//                    if( settingModel.getImport_way().equals("0"))
+//                        importData.getItemReport(ItemReport.this,fromDate.getText().toString(),toDate.getText().toString(),"-1");
+//                    else if( settingModel.getImport_way().equals("1"))
+//                        importData. IIS_getItemReport(ItemReport.this,fromDate.getText().toString(),toDate.getText().toString(),no);
+//
+//
+//                }
+//                else {
+                    salesNo = salesManInfosList.get(positionSales).getSalesManNo();
+                   // Log.e("salesNo", "" + salesNo + "   name ===> " + salesManInfosList.get(positionSales).getSalesName() + "    " + positionSales);
 
 
 
@@ -112,7 +113,7 @@ public class ItemReport extends AppCompatActivity {
                         importData. IIS_getItemReport(ItemReport.this,fromDate.getText().toString(),toDate.getText().toString(),no);
 
 
-                }
+//                }
 
 
             }

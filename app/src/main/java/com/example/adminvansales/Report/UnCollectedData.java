@@ -76,7 +76,10 @@ public class UnCollectedData extends AppCompatActivity {
             public void onClick(View v) {
                 if(!customerId.equals(""))
                 {
-
+                    paymentChequesList.clear();
+                    paymentArrayList.clear();
+                    Log.e(" paymentArrayList3===", paymentArrayList.size()+"");
+                    Log.e(" paymentChequesList===", paymentChequesList.size()+"");
                     importJason.getUnCollectedCheques(customerId);
                     importJason.getAllcheques(customerId);
                 }
@@ -98,8 +101,8 @@ public class UnCollectedData extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-
-                customerId= listCustomer.get(position).getCustomerNumber();
+              //    getCusromerNUM( customerSpinner.getSelectedItem().toString());
+                customerId=  getCusromerNUM( customerSpinner.getSelectedItem().toString());
                 Log.e("onItemSelected",""+customerId);
             }
 
@@ -109,6 +112,15 @@ public class UnCollectedData extends AppCompatActivity {
             }
         });
         inflateBoomMenu();
+    }
+
+    private String getCusromerNUM(String name) {
+        for(int i=0;i<listCustomer.size();i++)
+            if( name.trim().equals(listCustomer.get(i).getCustomerName()))
+            {
+                return listCustomer.get(i).getCustomerNumber();}
+
+            return "";
     }
 
     private void inflateBoomMenu() {
@@ -199,8 +211,17 @@ public class UnCollectedData extends AppCompatActivity {
                         paidAmountText.setText(unCollectlList.get(0).getPAIDAMT().toString());
                     }
                     if (s.toString().equals("payment")) {
-
-                       paymentArrayList= paymentChequesList;
+                    //    Log.e(" paymentArrayList5===", paymentArrayList.size()+"");
+                        paymentArrayList.clear();
+                       paymentArrayList.addAll(paymentChequesList);
+                        Log.e(" paymentArrayList5===", paymentArrayList.size()+"");
+                        fillTable();
+                    }
+                    else
+                    {
+                        Log.e(" paymentArrayList1===", paymentArrayList.size()+"");
+                        paymentArrayList.clear();
+                        Log.e(" paymentArrayList2===", paymentArrayList.size()+"");
                         fillTable();
                     }
                 }
@@ -254,6 +275,7 @@ public class UnCollectedData extends AppCompatActivity {
                    customerId= listCustomer.get(i).getCustomerNumber();
                    customerSpinner.setSelection(i);
                }
+
            }
        }
     }
@@ -283,8 +305,10 @@ public class UnCollectedData extends AppCompatActivity {
     }
 
     private void fillTable() {
+        Log.e(" fillTable", "fillTable");
         TableRow row = null;
-
+        tableCheckData.removeAllViews();
+   //     tableCheckData.removeAllViewsInLayout();
         for (int n = 0; n < paymentArrayList.size(); n++) {
             row = new TableRow(this);
             row.setPadding(5, 10, 5, 10);

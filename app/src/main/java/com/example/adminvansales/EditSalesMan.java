@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.adminvansales.Report.CashReport;
 import com.example.adminvansales.model.SalesManInfo;
 
 import java.util.ArrayList;
@@ -31,6 +32,8 @@ public class EditSalesMan extends AppCompatActivity {
     TextView salesNo, clearText, sales, addAdmin;
     EditText salesName, password, searchSalesMan, fVSerial, tVSerial, tRSerial, fRSerial, fSSerial, tSSerial;
     Button addButton, updateButton;
+    com.example.adminvansales.model.SettingModel SettingModel;
+    DataBaseHandler databaseHandler;
     CheckBox activeCheck;
     int AdminSales = 1;//1 sales 2 ADMIN
     public static List<SalesManInfo> AdminInfoList;
@@ -49,6 +52,9 @@ public class EditSalesMan extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_sales_man);
         initial();
+        databaseHandler=new DataBaseHandler(EditSalesMan.this);
+        SettingModel=databaseHandler.getAllSetting();
+
         SalesManInfoFill = new SalesManInfo();
         intentEdit = getIntent().getStringExtra("FillData");
         SalesManInfoFill = (SalesManInfo) getIntent().getSerializableExtra("SalesManInfoL");
@@ -239,6 +245,8 @@ public class EditSalesMan extends AppCompatActivity {
                 case R.id.addButton:
                     String s = "";
                     if (AdminSales == 1) {
+
+
                         addSalesMan();
 
                     } else if (AdminSales == 2) {
@@ -342,7 +350,7 @@ public class EditSalesMan extends AppCompatActivity {
                                                 .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                                                     @Override
                                                     public void onClick(SweetAlertDialog sweetAlertDialog) {
-
+                                                        ArrayList<SalesManInfo>salesManInfos=new ArrayList<>();
                                                         SalesManInfo salesManInfo = new SalesManInfo();
                                                         salesManInfo.setSalesPassword(password.getText().toString());
                                                         salesManInfo.setSalesName(salesName.getText().toString());
@@ -353,16 +361,19 @@ public class EditSalesMan extends AppCompatActivity {
                                                         salesManInfo.settReturnSerial(tRSerial.getText().toString());
                                                         salesManInfo.setFstockSerial(fSSerial.getText().toString());
                                                         salesManInfo.settStockSerial(tSSerial.getText().toString());
-
+                                                        salesManInfos.add(salesManInfo);
                                                         if (activeCheck.isChecked()) {
                                                             salesManInfo.setActive("1");
                                                         } else {
                                                             salesManInfo.setActive("0");
                                                         }
                                                         ExportData exportData = new ExportData(EditSalesMan.this);
+                                                        if( SettingModel.getImport_way().equals("0"))
                                                         exportData.AddSales(EditSalesMan.this, salesManInfo.getJsonObject());
-                                                        sweetAlertDialog.dismissWithAnimation();
+                                                        else   if( SettingModel.getImport_way().equals("1"))
+                                                            exportData.IIs_AddSales(salesManInfos,EditSalesMan.this);
 
+                                                        sweetAlertDialog.dismissWithAnimation();
 
                                                     }
                                                 })
@@ -620,32 +631,37 @@ public class EditSalesMan extends AppCompatActivity {
 
 
 
-    void clearTextFun() {
-        isUpdate = 0;
-        addButton.setEnabled(true);
-        salesName.setText("");
-        password.setText("");
-        salesNo.setText("00000");
-        activeCheck.setChecked(false);
-        fVSerial.setText("0");
-        tVSerial.setText("0");
-        tRSerial.setText("0");
-        fRSerial.setText("0");
-        fSSerial.setText("0");
-        tSSerial.setText("0");
+   public void clearTextFun() {
+        try {
+            isUpdate = 0;
+            addButton.setEnabled(true);
+            salesName.setText("");
+            password.setText("");
+            salesNo.setText("00000");
+            activeCheck.setChecked(false);
+            fVSerial.setText("0");
+            tVSerial.setText("0");
+            tRSerial.setText("0");
+            fRSerial.setText("0");
+            fSSerial.setText("0");
+            tSSerial.setText("0");
 
-        AddSalesCheckBox.setChecked(false);
-        AddAdminCheckBox.setChecked(false);
-        makeOfferCheckBox.setChecked(false);
-        offerReportCheckBox.setChecked(false);
-        accountRCheckBox.setChecked(false);
-        paymentRCheckBox.setChecked(false);
-        CustomerCheckBox.setChecked(false);
-        CashRCheckBox.setChecked(false);
-        LocationCheckBox.setChecked(false);
-        UncollectedRCheckBox.setChecked(false);
-        analyzeRCheckBox.setChecked(false);
-        LogHistoryRCheckBox.setChecked(false);
+            AddSalesCheckBox.setChecked(false);
+            AddAdminCheckBox.setChecked(false);
+            makeOfferCheckBox.setChecked(false);
+            offerReportCheckBox.setChecked(false);
+            accountRCheckBox.setChecked(false);
+            paymentRCheckBox.setChecked(false);
+            CustomerCheckBox.setChecked(false);
+            CashRCheckBox.setChecked(false);
+            LocationCheckBox.setChecked(false);
+            UncollectedRCheckBox.setChecked(false);
+            analyzeRCheckBox.setChecked(false);
+            LogHistoryRCheckBox.setChecked(false);
+        }
+catch (Exception e){
+
+}
     }
 
 

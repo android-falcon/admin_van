@@ -8,6 +8,7 @@ import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.adminvansales.model.SalesManInfo;
 import com.example.adminvansales.model.SettingModel;
 
 import org.apache.http.HttpResponse;
@@ -25,6 +26,7 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,9 +36,13 @@ import static com.example.adminvansales.GroupOffer.addList;
 import static com.example.adminvansales.HomeActivity.editPassword;
 import static com.example.adminvansales.ImportData.offerGroupModels;
 import static com.example.adminvansales.LogIn.ipAddress;
+import static com.example.adminvansales.LogIn.portSettings;
 import static com.example.adminvansales.Report.ListOfferReport.control;
 
 public class ExportData {
+    SweetAlertDialog pdRepRev;
+    private JSONArray jsonArraysalesman;
+    JSONObject addsalesmanobject;
     private DataBaseHandler databaseHandler;
     private JSONArray jsonArrayRequest;
     private String URL_TO_HIT ;
@@ -44,7 +50,8 @@ public class ExportData {
     GlobelFunction globelFunction;
     SweetAlertDialog pdValidationAdd;
     SweetAlertDialog pdValidationUpdate;
-
+public  String headerDll="/Falcons/VAN.dll";
+    public  String CONO="";
     Context main_context;
     int flag=0;
     ArrayList<Integer> listIdUpdate=new ArrayList();
@@ -73,6 +80,15 @@ public class ExportData {
         new JSONTask().execute();
 
     }
+    public void getCONO(){
+
+
+        SettingModel settingModel = new SettingModel();
+        settingModel = databaseHandler.getAllSetting();
+        portSettings=settingModel.getPort();
+        CONO = settingModel.getCono();
+
+    }
     public  void updateRowSeen(ArrayList list){
         this.listIdUpdate=list;
         Log.e("listIdUpdate" , ""+listIdUpdate.size());
@@ -97,7 +113,30 @@ public class ExportData {
     public void AddSales(Context context,JSONObject jsonObject){
         new JSONTaskAddSales(context,jsonObject).execute();
     }
+    private void  getAddSalesObject(List<SalesManInfo>salesManInfos) {
+   jsonArraysalesman = new JSONArray();
+        for (int i = 0; i < salesManInfos.size(); i++)
+        {
 
+            jsonArraysalesman.put(salesManInfos.get(i).getJsonObject2());
+
+        }
+        try {
+            addsalesmanobject =new JSONObject();
+            addsalesmanobject.put("JSN", jsonArraysalesman);
+            Log.e("Object",""+ addsalesmanobject.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void IIs_AddSales(List<SalesManInfo>salesManInfos,EditSalesMan context){
+        getCONO();
+
+        getAddSalesObject(salesManInfos);
+
+        new JSONTaskIIs_AddSales(context,salesManInfos).execute();
+    }
     public void AddAdmins(Context context,JSONObject jsonObject){
         new JSONTaskAddAdmin(context,jsonObject).execute();
     }
@@ -360,6 +399,133 @@ public class ExportData {
         }
 
     }
+
+    private class JSONTaskIIs_AddSales extends AsyncTask<String, String, String> {
+        EditSalesMan  context;
+        List<SalesManInfo>salesManInfos=new ArrayList<>();
+        JSONObject jsonObject;
+
+
+
+        public JSONTaskIIs_AddSales(   EditSalesMan context, List<SalesManInfo> salesManInfos) {
+            this.context = context;
+            this.salesManInfos = salesManInfos;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            String do_ = "my";
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+//            ipAddress = "";
+            try {
+
+
+                if (!ipAddress.equals("")) {
+                    http://localhost:8085/ADMAddSalesMan?CONO=295
+                    URL_TO_HIT = "http://" + ipAddress+":"+portSettings +  headerDll.trim() +"/ADMAddSalesMan";
+
+
+                Log.e("URL_TO_HI",URL_TO_HIT);
+
+
+                }
+
+
+            } catch (Exception e) {
+
+            }
+
+            try {
+
+                String JsonResponse = null;
+                HttpClient client = new DefaultHttpClient();
+                HttpPost request = new HttpPost();
+                try {
+                request.setURI(new URI(URL_TO_HIT));
+                } catch (URISyntaxException e) {
+                    e.printStackTrace();
+                }
+
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+               nameValuePairs.add(new BasicNameValuePair("CONO", CONO));
+                nameValuePairs.add(new BasicNameValuePair("JSONSTR",addsalesmanobject.toString().trim()));
+
+
+                request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+
+
+                HttpResponse response = client.execute(request);
+
+
+                BufferedReader in = new BufferedReader(new
+                        InputStreamReader(response.getEntity().getContent()));
+
+                StringBuffer sb = new StringBuffer("");
+                String line = "";
+
+                while ((line = in.readLine()) != null) {
+                    sb.append(line);
+                }
+
+                in.close();
+
+
+                JsonResponse = sb.toString();
+                Log.e("tag_requestState", "JsonResponse\t" + JsonResponse);
+
+                return JsonResponse;
+
+
+            }//org.apache.http.conn.HttpHostConnectException: Connection to http://10.0.0.115 refused
+            catch (HttpHostConnectException ex) {
+                ex.printStackTrace();
+//                progressDialog.dismiss();
+
+                Handler h = new Handler(Looper.getMainLooper());
+                h.post(new Runnable() {
+                    public void run() {
+
+                        Toast.makeText(main_context, "Ip Connection Failed ", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
+                return null;
+            } catch (Exception e) {
+                e.printStackTrace();
+//                progressDialog.dismiss();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            if (s != null) {
+                if (s.contains("Saved Successfully")) {
+                    Log.e("salesManInfo", "ADD_SALES_MAN_SUCCESS\t" + s.toString());
+                    Toast.makeText(context, "ADD SALES MAN SUCCESS", Toast.LENGTH_SHORT).show();
+
+                    context.clearTextFun();
+                    globelFunction.getSalesManInfo(context,0);
+
+                }else{
+                    Toast.makeText(context, "Sales Man not added", Toast.LENGTH_SHORT).show();
+
+                }
+//                progressDialog.dismiss();
+            }
+        }
+
+    }
+
     private class JSONTaskAddAdmin extends AsyncTask<String, String, String> {
         EditSalesMan  context;
         JSONObject jsonObject;

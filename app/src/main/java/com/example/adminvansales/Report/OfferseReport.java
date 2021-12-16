@@ -11,20 +11,15 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.Space;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.adminvansales.ExportData;
 import com.example.adminvansales.ImportData;
-import com.example.adminvansales.OfferPriceList;
-import com.example.adminvansales.OffersDetailAdapter;
 import com.example.adminvansales.OffersGroupAdapter;
 import com.example.adminvansales.R;
 import com.example.adminvansales.model.OfferGroupModel;
@@ -41,8 +36,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import static com.example.adminvansales.GlobelFunction.adminId;
-import static com.example.adminvansales.GlobelFunction.adminName;
 import static com.example.adminvansales.ImportData.offerGroupModels;
 
 public class OfferseReport extends AppCompatActivity {
