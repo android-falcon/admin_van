@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -19,7 +20,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="2dp"
             android:layout_weight="0"
-            android:src="@drawable/ic_location_on_black_24dp"
+            app:srcCompat="@drawable/ic_location_on_black_24dp"
             android:visibility="gone" />
 
         <LinearLayout
@@ -456,7 +457,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignBottom="@id/recyclerView_report"
-        android:layout_weight="4"
+        android:layout_weight="3.5"
         android:background="@color/colorblue_dark"
         android:orientation="horizontal">
 
@@ -464,8 +465,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-
-            android:layout_weight="1"
+android:padding="4dp"
+            android:layout_weight="2"
             android:gravity="center"
             android:text="Total Item Qty"
             android:textColor="@color/white"
@@ -478,7 +479,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:layout_weight="3"
+            android:layout_weight="2"
             android:gravity="center"
             android:text="0"
             android:textColor="@color/white"

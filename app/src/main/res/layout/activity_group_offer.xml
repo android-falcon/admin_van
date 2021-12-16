@@ -57,7 +57,7 @@
 
                 android:gravity="center"
                 android:text="@{fromDate}"
-                android:textColor="@color/darkGray" />
+                android:textColor="@color/darkGray"                 />
 
 
             <TextView

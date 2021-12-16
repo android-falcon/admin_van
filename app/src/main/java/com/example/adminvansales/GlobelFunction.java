@@ -13,6 +13,7 @@ import com.example.adminvansales.model.SalesManInfo;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.io.File;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -34,13 +35,13 @@ public class GlobelFunction {
     public static  List<LatLng> LatLngListMarker=new ArrayList<>();
     DataBaseHandler databaseHandler;
     com.example.adminvansales.model.SettingModel settingModel;
-    
+    private DecimalFormat decimalFormat;
     public static String adminId="",adminName="";
     public GlobelFunction(Context context) {
         importData=new ImportData(context);
         this.context =context;
         myCalendar = Calendar.getInstance();
-
+        decimalFormat = new DecimalFormat("00.0000");
 
     }
 
@@ -182,4 +183,12 @@ public String getsalesmanNum(String name){
 
         }}
     return "" ;  }
+    public  String getDecimal(String number){
+        double num=0;
+        try {
+             num=Double.parseDouble(number);
+        }catch (Exception e){num=0;}
+
+       return         decimalFormat.format(num);
+    }
 }

@@ -237,6 +237,30 @@ public class SalesManInfo implements Serializable {
         this.logHistoryReport = logHistoryReport;
     }
 
+    public JSONObject getJsonObject2(){
+
+        JSONObject jsonObject=new JSONObject();
+
+        try {
+            jsonObject.put("SALESNO", salesManNo);
+            jsonObject.put("ACCNAME", salesName);
+            jsonObject.put("USER_PASSWORD", salesPassword);
+            jsonObject.put("ACTIVE_USER", active);
+
+            jsonObject.put("FROM_VOUCHER_SERIAL", fVoucherSerial);
+            jsonObject.put("TO_VOUCHER_SERIAL", tVoucherSerial);
+            jsonObject.put("FROM_RETURN_SERIAL", fReturnSerial);
+            jsonObject.put("TO_RETURN_SERIAL", tReturnSerial);
+            jsonObject.put("FROM_STOCK_SERIAL", fstockSerial);
+            jsonObject.put("TO_STOCK_SERIAL", tStockSerial);
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return jsonObject;
+    }
     public JSONObject getJsonObject(){
 
         JSONObject jsonObject=new JSONObject();
@@ -261,7 +285,6 @@ public class SalesManInfo implements Serializable {
 
         return jsonObject;
     }
-
 
     public JSONObject getJsonObjectAdmin(){
 

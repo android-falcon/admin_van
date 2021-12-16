@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.example.adminvansales.databinding.ActivityGroupOfferBinding;
 import com.example.adminvansales.databinding.RowOfferListAdapterBinding;
 import com.example.adminvansales.model.ItemMaster;
-import com.example.adminvansales.model.OfferGroupModel;
+import com.example.adminvansales.model.*;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;

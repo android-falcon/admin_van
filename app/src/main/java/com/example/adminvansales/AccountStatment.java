@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.adminvansales.Report.CashReport;
 import com.example.adminvansales.model.Account__Statment_Model;
 import com.example.adminvansales.model.CustomerInfo;
 
@@ -45,12 +46,14 @@ public class AccountStatment extends AppCompatActivity {
      public  static  TextView total_qty_text;
     public   EditText listSearch;
     ImportData importData;
+    DataBaseHandler databaseHandler;
+    com.example.adminvansales.model.SettingModel SettingModel;
     @SuppressLint("WrongConstant")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_statment);
-
+        databaseHandler=new DataBaseHandler(AccountStatment.this);
 //        importData.getCustomerInfo();
         initialView();
         Log.e("customername",""+customername.size());
@@ -60,8 +63,13 @@ public class AccountStatment extends AppCompatActivity {
             public void onClick(View v) {
                 if(!customerId.equals(""))
                 {
-                     importData= new ImportData(AccountStatment.this);
-                    importData.getCustomerAccountStatment(customerId);
+                    importData= new ImportData(AccountStatment.this);
+
+                    customerId=     getCusromerNUM(customerSpinner.getSelectedItem().toString());
+                        importData.getCustomerAccountStatment(customerId);
+
+
+
                 }
 //
             }
@@ -72,7 +80,13 @@ public class AccountStatment extends AppCompatActivity {
             Log.e("customername",""+customername.size());
             fillCustomerSpenner();
         }else {
-            importData.getCustomerInfo(1);
+            SettingModel=databaseHandler.getAllSetting();
+            if (SettingModel.getImport_way().equals("0"))
+                importData.getCustomerInfo(1);
+            else if (SettingModel.getImport_way().equals("1"))
+                importData.IIs_getCustomerInfo(1);
+
+
         }
 
 
@@ -92,9 +106,10 @@ public class AccountStatment extends AppCompatActivity {
 
                 if(s.toString().equals("1"))
                 {
-                    if(customername.size()!=0)
+                    Log.e("customername====", customername.size()+"" );
+                   // if(customername.size()!=0)
                     {
-
+                        Log.e("getAccountList_text====", "getAccountList_text" );
                         fillCustomerSpenner();
                     }
                 }
@@ -180,6 +195,7 @@ public class AccountStatment extends AppCompatActivity {
 
     private void fillCustomerSpenner() {
 //        customername.sort(String::compareToIgnoreCase);
+        Log.e("fillCustomerSpenner","fillCustomerSpenner");
         Collections.sort(customername, String.CASE_INSENSITIVE_ORDER);
         final ArrayAdapter<String> ad = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, customername);
         customerSpinner.setAdapter(ad);
@@ -210,5 +226,13 @@ public class AccountStatment extends AppCompatActivity {
         finish();
         Intent i=new Intent(AccountStatment.this,HomeActivity.class);
         startActivity(i);
+    }
+    private String getCusromerNUM(String name) {
+        for(int i=0;i<listCustomer.size();i++)
+            if( name.trim().equals(listCustomer.get(i).getCustomerName()))
+            {
+                return listCustomer.get(i).getCustomerNumber();}
+
+        return "";
     }
 }

@@ -76,9 +76,10 @@ public class CustomerLogReport extends AppCompatActivity {
         customerLogReportList=new ArrayList<>();
         fillSalesManSpinner();
         importData=new ImportData(CustomerLogReport.this);
-        String no= globelFunction.getsalesmanNum(salesNameSpinner.getSelectedItem().toString());
-        try {
-            settingModel=databaseHandler.getAllSetting();
+            try {
+                String no= globelFunction.getsalesmanNum(salesNameSpinner.getSelectedItem().toString());
+
+                settingModel=databaseHandler.getAllSetting();
             if( settingModel.getImport_way().equals("0"))
                 importData.getCustomerLogReport(CustomerLogReport.this,"-1",toDay,toDay);
             else if( settingModel.getImport_way().equals("1"))

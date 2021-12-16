@@ -79,7 +79,6 @@ import static com.example.adminvansales.ItemReport.itemReportModelsList;
 import static com.example.adminvansales.ListOfferReportAdapter.controlText;
 import static com.example.adminvansales.GlobelFunction.adminId;
 import static com.example.adminvansales.GlobelFunction.adminName;
-import static com.example.adminvansales.LogIn.Cono;
 import static com.example.adminvansales.LogIn.ipAddress;
 import static com.example.adminvansales.LogIn.portSettings;
 import static com.example.adminvansales.MainActivity.isListUpdated;
@@ -103,7 +102,7 @@ import static com.example.adminvansales.ShowNotifications.showNotification;
 public class ImportData {
     private DataBaseHandler databaseHandler;
     private String  CONO="";
-    private String URL_TO_HIT;
+    private String URL_TO_HIT="";
     public int typeCustomerList = 0;
     SweetAlertDialog pdValidation, pdPayments, pdAnalyze, pdAccountStatment;
     SweetAlertDialog pdValidationCustomer, pdValidationSerial, pdValidationItem, getPdValidationItemCard, getPdValidationLogHistory, pdAuthentication, getPdValidationItemReport;
@@ -121,7 +120,8 @@ public class ImportData {
 
     public static List<OfferGroupModel> offerGroupModels = new ArrayList<>();
     GlobelFunction globelFunction;
-
+ public  String headerDll="/Falcons/VAN.dll";
+ //public  String headerDll="";
     public ImportData(Context context) {
         databaseHandler = new DataBaseHandler(context);
         this.main_context = context;
@@ -186,9 +186,9 @@ public class ImportData {
         } catch (Exception e) {
 
         }
-
+   getCONO();
         if (!ipAddress.equals("") && !portSettings.equals("")) {
-
+            paymentChequesList.clear();
             Log.e("getUnCollectedCheques", "*****");
             new JSONTask_GetAllCheques(customerId).execute();
             //  new SyncRemark().execute();
@@ -270,8 +270,11 @@ public class ImportData {
     }
 
     public void getCustomerAccountStatment(String CustomerId) {
+        getCONO();
         new JSONTask_AccountStatment(CustomerId).execute();
     }
+
+
 
     public void getCustomerInfo(int type) {
         if (type == 0) {
@@ -282,7 +285,16 @@ public class ImportData {
         Log.e("getCustomerInfo", "*****");
         new JSONTask_CustomerInfo().execute();
     }
-
+    public void IIs_getCustomerInfo(int type) {
+        getCONO();
+        if (type == 0) {
+            typeCustomerList = 0;// from login
+        } else {
+            typeCustomerList = 1;// from account statment
+        }
+        Log.e("getCustomerInfo", "*****");
+        new JSONTask_IIsCustomerInfo().execute();
+    }
     public void getPaymentsReport(Context context, String SalesNo, String fromDate, String
             toDate, String payKind) {
         new JSONTaskGetPaymentReport(context, SalesNo, fromDate, toDate, payKind).execute();
@@ -914,7 +926,7 @@ public class ImportData {
 
                 if (!ipAddress.equals("")) {
                     //  http://localhost:8085/ADMSALESMAN?CONO=295
-                   URL_TO_HIT = "http://" + ipAddress+":"+portSettings + "/ADMSALESMAN?CONO="+CONO;
+                   URL_TO_HIT = "http://" + ipAddress+":"+portSettings +  headerDll.trim() +"/ADMSALESMAN?CONO="+CONO;
                   //  URL_TO_HIT = "  http://10.0.0.22:8085/ADMSALESMAN?CONO=295";
                     Log.e("URL_TO_HIT", URL_TO_HIT + "");
                 } }catch (Exception e) {
@@ -1231,7 +1243,7 @@ Log.e("respon==",s+"");
 
                 if (!ipAddress.equals("")) {
                    // http://10.0.0.22:8085/ADMPaymentReport?CONO=295&SALESMANNO=00001&FROMDATE=01/01/2021&TODATE=01/10/2021&PAYKIND=0
-                    URL_TO_HIT= "http://" + ipAddress +":"+portSettings +"/ADMPaymentReport?CONO="+CONO+"&SALESMANNO="+ SalesNo+"&FROMDATE="+fromDate+"&TODATE="+toDate+"&PAYKIND="+payKind;
+                    URL_TO_HIT= "http://" + ipAddress +":"+portSettings +headerDll+"/ADMPaymentReport?CONO="+CONO+"&SALESMANNO="+ SalesNo+"&FROMDATE="+fromDate+"&TODATE="+toDate+"&PAYKIND="+payKind;
                        //     URL_TO_HIT = "http://" + ipAddress + "/VANSALES_WEB_SERVICE/admin.php";
 
                     Log.e("link", "" + URL_TO_HIT);
@@ -1679,7 +1691,7 @@ Log.e("respon==",s+"");
 
                  //   http://localhost:8085/ADMCashReport?CONO=295&SALESMANNO=00001&FROMDATE=01/01/2021&TODATE=31/12/2021
 
-                    URL_TO_HIT = "http://" + ipAddress +":" +portSettings +"/ADMCashReport?CONO="+CONO+"&SALESMANNO="+SalesNo+"&FROMDATE="+fromDate+"&TODATE="+toDate;;
+                    URL_TO_HIT = "http://" + ipAddress +":" +portSettings + headerDll.trim() +"/ADMCashReport?CONO="+CONO+"&SALESMANNO="+SalesNo+"&FROMDATE="+fromDate+"&TODATE="+toDate;;
              Log.e("URL_TO_HIT", URL_TO_HIT+"");
                 }
             } catch (Exception e) {
@@ -2107,7 +2119,7 @@ Log.e("respon==",s+"");
 
                 if (!ipAddress.equals("")) {
 //                    http://localhost:8085/ADMCustomerLog?CONO=295&SALESMANNO=00001&FROMDATE=01/01/2021&TODATE=01/10/2021
-                    URL_TO_HIT = "http://" + ipAddress+":" +portSettings +"/ADMCustomerLog?CONO="+CONO+"&SALESMANNO="+SalesNo+"&FROMDATE="+fromDate+"&TODATE="+toDate;
+                    URL_TO_HIT = "http://" + ipAddress+":" +portSettings.trim() + headerDll.trim()  +"/ADMCustomerLog?CONO="+CONO+"&SALESMANNO="+SalesNo+"&FROMDATE="+fromDate+"&TODATE="+toDate;
                     Log.e("URL_TO_HIT",URL_TO_HIT+"");
                 }
             } catch (Exception e) {
@@ -2204,6 +2216,9 @@ Log.e("respon==",s+"");
                             allItems.setCHECK_IN_TIME(jsonObject1.getString("CHECK_IN_TIME2"));
 
                             allItems.setCHECK_OUT_TIME (jsonObject1.getString("CHECK_OUT_TIME2"));
+                            if(jsonObject1.getString("CHECK_OUT_DATE2").contains("19999"))
+                                allItems.setCHECK_OUT_DATE("");
+                            else
                             allItems.setCHECK_OUT_DATE(jsonObject1.getString("CHECK_OUT_DATE2"));
                             allItems.setSalesmanname(jsonObject1.getString("SALESMANNAME"));
                           //  allItems.setCHECK_IN_DATE(jsonObject1.getString("CHECK_IN_DATE2"));
@@ -2483,7 +2498,7 @@ Log.e("respon==",s+"");
                 portSettings = settingModel.getPort();
                 //                    URL_TO_HIT = "http://"+ipAddress.trim()+":" + ipWithPort.trim() +"/Falcons/VAN.dll/GetACCOUNTSTATMENT?ACCNO="+custId;
                 if (!ipAddress.equals("")) {
-                    URL_TO_HIT = "http://" + ipAddress.trim() + ":" + portSettings.trim() + "/Falcons/VAN.dll/GetACCOUNTSTATMENT?ACCNO=" + custId;
+                    URL_TO_HIT = "http://" + ipAddress.trim() + ":" + portSettings.trim()+headerDll + "/GetACCOUNTSTATMENT?ACCNO=" + custId+"&CONO="+CONO;
                     //URL_TO_HIT = "http://" + ipAddress.trim()+":"+portSettings.trim() + "/Falcons/VAN.dll/GetACCOUNTSTATMENT?ACCNO="+custId.trim().toString();
 
                     Log.e("URL_TO_HIT", "account=" + URL_TO_HIT);
@@ -2629,6 +2644,8 @@ Log.e("respon==",s+"");
 
     }
 
+
+
     private class JSONTask_CustomerInfo extends AsyncTask<String, String, String> {
 
         @Override
@@ -2755,14 +2772,185 @@ Log.e("respon==",s+"");
 
 
                         }
-                        if (typeCustomerList == 1)
-                            getAccountList_text.setText("1");
 
                     } catch (JSONException e) {
 //                        progressDialog.dismiss();
                         e.printStackTrace();
                     }
+
+                    if (typeCustomerList == 1)
+                        getAccountList_text.setText("1");
+
+
+
                 } else Log.e("onPostExecute", "" + s.toString());
+//                progressDialog.dismiss();
+            }
+        }
+
+    }
+
+    private class JSONTask_IIsCustomerInfo extends AsyncTask<String, String, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            try {
+
+                //  ipAddress="10.0.0.185";
+
+                if (!ipAddress.equals("")) {
+                    //http://localhost:8085/ADMGetCustomer?CONO=295
+                    URL_TO_HIT= "http://" + ipAddress +":"+portSettings +headerDll+"/ADMGetCustomer?CONO="+  CONO;
+
+                    Log.e("  URL_TO_HIT==",  URL_TO_HIT );
+                }
+            } catch (Exception e) {
+                Handler h = new Handler(Looper.getMainLooper());
+                h.post(new Runnable() {
+                    public void run() {
+
+                        Toast.makeText(main_context, "check ip", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                Log.e("JcheckStateRequest", "Exception" + e.getMessage());
+
+
+            }
+
+            try {
+
+                String JsonResponse = null;
+                HttpClient client = new DefaultHttpClient();
+                HttpGet request = new HttpGet();
+                request.setURI(new URI(URL_TO_HIT));
+
+//                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+//                nameValuePairs.add(new BasicNameValuePair("_ID", "1"));
+
+//                request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+
+
+                HttpResponse response = client.execute(request);
+
+
+                BufferedReader in = new BufferedReader(new
+                        InputStreamReader(response.getEntity().getContent()));
+
+                StringBuffer sb = new StringBuffer("");
+                String line = "";
+
+                while ((line = in.readLine()) != null) {
+                    sb.append(line);
+                }
+
+                in.close();
+
+
+                JsonResponse = sb.toString();
+                Log.e("tag_salesManInfo", "JsonResponse\t" + JsonResponse);
+
+                return JsonResponse;
+
+
+            }//org.apache.http.conn.HttpHostConnectException: Connection to http://10.0.0.115 refused
+            catch (HttpHostConnectException ex) {
+                ex.printStackTrace();
+//                progressDialog.dismiss();
+
+                Handler h = new Handler(Looper.getMainLooper());
+                h.post(new Runnable() {
+                    public void run() {
+
+                        Toast.makeText(main_context, "Ip Connection Failed ", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
+                return null;
+            } catch (Exception e) {
+                e.printStackTrace();
+//                progressDialog.dismiss();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String array) {
+            super.onPostExecute( array);
+
+            JSONObject  jsonObject1 = null;
+            String impo = "";
+//            Log.e("importData","importData"+s.toString());
+            if ( array != null) {
+                if ( array.contains("CUSTID")) {
+                    // Log.e("CUSTOMER_INFO","onPostExecute\t"+s.toString());
+                    //{"CUSTOMER_INFO":[{"VHFNo":"0","TransName":"ÞíÏ ÇÝÊÊÇÍí","VHFDATE":"31-DEC-19","DEBIT":"0","Credit":"16194047.851"}
+
+
+
+                        try {
+                            JSONArray requestArray = null;
+                            requestArray = new JSONArray( array);
+                            listCustomerInfo = new ArrayList<>();
+
+                            for (int i = 0; i < requestArray.length(); i++) {
+                                Log.e("requestArray===", "requestArray" );
+                                CustomerInfo customerInfo=new CustomerInfo();
+                                jsonObject1 = requestArray.getJSONObject(i);
+                                customerInfo.setCustomerNumber( jsonObject1.get("CUSTID").toString());
+                                customerInfo.setCustomerName( jsonObject1.get("CUSTNAME").toString());
+                                listCustomer.add( customerInfo);
+                                customername.add( customerInfo.getCustomerName());
+
+                            }
+
+
+
+                   /*     result = new JSONObject(s);
+                        CustomerInfo requestDetail;
+
+
+                        JSONArray requestArray = null;
+                        listCustomerInfo = new ArrayList<>();
+
+                        requestArray = result.getJSONArray(s);
+                        Log.e("requestArray", "" + requestArray.length());
+
+
+                        for (int i = 0; i < requestArray.length(); i++) {
+                            JSONObject infoDetail = requestArray.getJSONObject(i);
+                            requestDetail = new CustomerInfo();
+                            requestDetail.setCustomerNumber(infoDetail.get("CustID").toString());
+                            requestDetail.setCustomerName(infoDetail.get("CustName").toString());
+
+
+                            listCustomer.add(requestDetail);
+                            customername.add(requestDetail.getCustomerName());
+                            //  Log.e("listRequest", "CUSTOMER_INFO" + listCustomer.get(i).getCustomerName());
+
+
+                        }*/
+
+
+                    } catch (JSONException e) {
+//                        progressDialog.dismiss();
+                        e.printStackTrace();
+                    }
+
+                    if (typeCustomerList == 1)
+                    {
+                        Log.e("getAccountList_text", "getAccountList_text" );
+                        getAccountList_text.setText("1");
+
+                    }
+                } else Log.e("onPostExecute", "" + array.toString());
 //                progressDialog.dismiss();
             }
         }
@@ -4545,7 +4733,8 @@ Log.e("respon==",s+"");
                     //Log.e("URL_TO_HIT","account="+URL_TO_HIT);
 
 
-                    URL_TO_HIT = "http://" + ipAddress.trim() + ":" + portSettings.trim() + "/Falcons/VAN.dll/GetAllTheCheques?ACCNO=" + custId;
+                    URL_TO_HIT = "http://" + ipAddress.trim() + ":" + portSettings.trim() + "/GetAllTheCheques?ACCNO=" + custId+"&CONO="+CONO.trim();
+             Log.e(  " URL_TO_HIT", URL_TO_HIT);
                 }
             } catch (Exception e) {
                 pdPayments.dismissWithAnimation();
@@ -4612,12 +4801,14 @@ Log.e("respon==",s+"");
             JSONObject result = null;
             String impo = "";
             pdPayments.dismissWithAnimation();
+
+            paymentChequesList.clear();
             if (s != null) {
                 if (s.contains("VHFNo")) {
                     try {
                         Payment requestDetail;
                         JSONArray requestArray = null;
-                        paymentChequesList = new ArrayList<>();
+
 
                         requestArray = new JSONArray(s);
                         //Log.e("requestArray", "" + requestArray.length());
@@ -4648,15 +4839,21 @@ Log.e("respon==",s+"");
 
 
                         }
-                        if (paymentChequesList.size() != 0) {
+                     if (paymentChequesList.size() != 0) {
                             resultData.setText("payment");
+
                         }
+                     else   resultData.setText("not");
 
 
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                } else Log.e("onPostExecute", "" + s.toString());
+                }
+                else
+
+                   resultData.setText("not");
+
             }
         }
 
@@ -5030,7 +5227,7 @@ Log.e("respon==",s+"");
 
                 //    http://localhost:8085/ADMItemReport?CONO=295&SALESMANNO=00001&FROMDATE=01/01/2021&TODATE=31/12/2021
 
-                    URL_TO_HIT= "http://" + ipAddress +":"+portSettings +"/ADMItemReport?CONO="+CONO+"&SALESMANNO="+ salesNo+"&FROMDATE="+fromDate+"&TODATE="+toDate;
+                    URL_TO_HIT= "http://" + ipAddress +":"+portSettings +headerDll+"/ADMItemReport?CONO="+CONO+"&SALESMANNO="+ salesNo+"&FROMDATE="+fromDate+"&TODATE="+toDate;
 
 
                     Log.e(" URL_TO_HIT", URL_TO_HIT+"");
