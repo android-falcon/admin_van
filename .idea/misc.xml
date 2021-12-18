@@ -3,59 +3,20 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/drawable-v24/cancel_button.xml" value="0.23703703703703705" />
-        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/drawable/ic_baseline_edit_24.xml" value="0.20833333333333334" />
-        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/drawable/logocorner.xml" value="0.23703703703703705" />
-        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/account_row.xml" value="0.1" />
-        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/activity_account_statment.xml" value="0.15450861195542046" />
-        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/activity_analyze_accounts.xml" value="0.13551165146909827" />
-        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/activity_edit_sales_man.xml" value="0.1" />
-        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/activity_group_offer.xml" value="0.1" />
-        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/activity_home.xml" value="0.1" />
-        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/activity_log_in.xml" value="0.11851851851851852" />
-        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/activity_main.xml" value="0.2513586956521739" />
-        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/activity_offerse_report.xml" value="0.18795289855072464" />
-        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/activity_salesman_maps.xml" value="0.11068895643363728" />
-        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/activity_un_collected_data.xml" value="0.14387031408308004" />
-        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/analyze_adapter_row.xml" value="0.11068895643363728" />
-        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/cash_report.xml" value="0.21" />
-        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/customer_log_report.xml" value="0.10536980749746708" />
-        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/delete_entry.xml" value="0.15450861195542046" />
-        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/item_report_activity.xml" value="0.22" />
-        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/itemof_offersrecycle.xml" value="0.13905775075987842" />
-        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/list_price_offer.xml" value="0.18795289855072464" />
-        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/log_history_report_activity.xml" value="0.11068895643363728" />
-        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/offer_price_list_activity.xml" value="0.11068895643363728" />
-        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/offersdetailrecycler.xml" value="0.15045592705167174" />
-        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/offersgroupsrecycler.xml" value="0.17134831460674158" />
-        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/password_setting.xml" value="0.1" />
-        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/payment_details_report.xml" value="0.25" />
-        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/raw_account_chooser.xml" value="0.11068895643363728" />
-        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/request_detail.xml" value="0.11068895643363728" />
-        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/row_cash_report_adapter.xml" value="0.15450861195542046" />
-        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/row_customer_log_report_adapter.xml" value="0.11068895643363728" />
-        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/row_customer_selecte_adapter.xml" value="0.11068895643363728" />
-        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/row_for_request.xml" value="0.11068895643363728" />
-        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/row_item_report.xml" value="0.14537037037037037" />
-        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/row_list_offer_price_adapter.xml" value="0.11068895643363728" />
-        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/row_log_history_adaptir.xml" value="0.11068895643363728" />
-        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/row_offer_list_adapter.xml" value="0.1" />
-        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/row_payment_report_adapter.xml" value="0.15450861195542046" />
-        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/row_price_only_adaptir.xml" value="0.11068895643363728" />
-        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/row_sales_man_adapter.xml" value="0.11068895643363728" />
-        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/row_search_adaptir.xml" value="0.11068895643363728" />
-        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/row_search_customer_adaptir.xml" value="0.11068895643363728" />
-        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/sales_man_row.xml" value="0.11068895643363728" />
-        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/search_dialog_show_.xml" value="0.10960144927536232" />
-        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/search_dialog_show_customer.xml" value="0.11068895643363728" />
-        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/setting_dialog.xml" value="0.22" />
-        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/spinner_layout.xml" value="0.11068895643363728" />
-        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/update_list_date_dialog.xml" value="0.11068895643363728" />
-        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/menu/menu.xml" value="0.2953703703703704" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/activity_group_offer.xml" value="0.2609375" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/activity_home.xml" value="0.33" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/activity_offerse_report.xml" value="0.24183006535947713" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/offersdetailrecycler.xml" value="0.2609375" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/offersgroupsrecycler.xml" value="0.2609375" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/search_dialog_show_.xml" value="0.1453125" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/search_dialog_show_customer.xml" value="0.1453125" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/setting_dialog.xml" value="0.1453125" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/spinner_layout.xml" value="0.1453125" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/update_list_date_dialog.xml" value="0.1453125" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
