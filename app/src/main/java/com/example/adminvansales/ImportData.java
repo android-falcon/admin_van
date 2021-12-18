@@ -120,8 +120,8 @@ public class ImportData {
 
     public static List<OfferGroupModel> offerGroupModels = new ArrayList<>();
     GlobelFunction globelFunction;
- public  String headerDll="/Falcons/VAN.dll";
- //public  String headerDll="";
+ //public  String headerDll="/Falcons/VAN.dll";
+public  String headerDll="";
     public ImportData(Context context) {
         databaseHandler = new DataBaseHandler(context);
         this.main_context = context;
@@ -550,6 +550,7 @@ public class ImportData {
 
     private class JSONTaskIIS_checkStateRequest extends AsyncTask<String, String, String> {
 
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -566,8 +567,8 @@ public class ImportData {
 
                 if (!ipAddress.equals("")) {
                   //  http://localhost:8085/ADMSALESMAN?CONO=295
-                  //  URL_TO_HIT = "http://" + ipAddress+":"+portSettings + "/ADMSALESMAN?CONO="+CONO;
-//Log.e("URL_TO_HIT",URL_TO_HIT+"");
+                   URL_TO_HIT = "http://" + ipAddress+":"+portSettings +headerDll +"/ADMAllAdmin_Request?CONO="+CONO;
+Log.e("URL_TO_HIT",URL_TO_HIT+"");
                 }
             } catch (Exception e) {
 
@@ -588,15 +589,15 @@ public class ImportData {
 
                 String JsonResponse = null;
                 HttpClient client = new DefaultHttpClient();
-                HttpPost request = new HttpPost();
+                HttpGet request = new HttpGet();
                 request.setURI(new URI(URL_TO_HIT));
 
-                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-                nameValuePairs.add(new BasicNameValuePair("_ID", "7"));
-//                nameValuePairs.add(new BasicNameValuePair("SalesManNo",discountRequest.getSalesman_no()));
-
-
-                request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+//                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+//                nameValuePairs.add(new BasicNameValuePair("_ID", "7"));
+////                nameValuePairs.add(new BasicNameValuePair("SalesManNo",discountRequest.getSalesman_no()));
+//
+//
+//                request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
 
 
                 HttpResponse response = client.execute(request);
@@ -645,56 +646,56 @@ public class ImportData {
 
         @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
+        protected void onPostExecute(String  respon) {
+            super.onPostExecute(respon);
 
-            JSONObject result = null;
+            JSONObject infoDetail = null;
+
             String impo = "";
-            if (s != null) {
-                if (s.contains("RequestAdminData")) {
+            if ( respon != null) {
+                Log.e("onPostExecute", respon );
+                if (respon.contains("SALESMAN_NAME")) {
 
                     try {
-                        result = new JSONObject(s);
-                        Request requestDetail;
-
-
                         JSONArray requestArray = null;
-                        listRequest = new ArrayList<>();
-                        listId.clear();
+                        requestArray = new JSONArray(respon);
 
-                        requestArray = result.getJSONArray("RequestAdminData");
+                        listId.clear();
+                        listRequest.clear();
+                        //     requestArray = result.getJSONArray("RequestAdminData");
 
 
                         for (int i = 0; i < requestArray.length(); i++) {
-                            JSONObject infoDetail = requestArray.getJSONObject(i);
-                            requestDetail = new Request();
-                            //salesman_name, salesman_no, customer_name, customer_no, request_type, amount_value, " .
-                            //                        "voucher_no, total_voucher, status, key_validation ,date, time , note , seen_row
-                            requestDetail.setStatuse(infoDetail.get("status").toString());
+
+                            infoDetail = requestArray.getJSONObject(i);
+                     Request       requestDetail=new Request();
+                          requestDetail.setStatuse(infoDetail.get("STATUS").toString());
                             if (requestDetail.getStatuse().equals("0")) {
-                                //Log.e("infoDetail", "" + infoDetail.get("status").toString());
+
+
+                          //    Log.e("infoDetail", "" + infoDetail.get("status").toString());
                                 //  Log.e("key_validation", "" + infoDetail.get("key_validation").toString());
-                                requestDetail.setSalesmanName(infoDetail.get("salesman_name").toString());
-                                requestDetail.setSalesmanNo(infoDetail.get("salesman_no").toString());
-                                requestDetail.setCustomerName(infoDetail.get("customer_name").toString());
-                                requestDetail.setCustomer_no(infoDetail.get("customer_no").toString());
-                                requestDetail.setRequestType(infoDetail.get("request_type").toString());
-                                requestDetail.setAmountValue(infoDetail.get("amount_value").toString());
-                                requestDetail.setVoucherNo(infoDetail.get("voucher_no").toString());
-                                requestDetail.setTotalVoucher(infoDetail.get("total_voucher").toString());
+                                requestDetail.setSalesmanName(infoDetail.get("SALESMAN_NAME").toString());
+                                requestDetail.setSalesmanNo(infoDetail.get("SALESMAN_NO").toString());
+                                requestDetail.setCustomerName(infoDetail.get("CUSTOMER_NAME").toString());
+                                requestDetail.setCustomer_no(infoDetail.get("CUSTOMER_NO").toString());
+                                requestDetail.setRequestType(infoDetail.get("REQUEST_TYPE").toString());
+                                requestDetail.setAmountValue(infoDetail.get("AMOUNT_VALUE").toString());
+                                requestDetail.setVoucherNo(infoDetail.get("VOUCHER_NO").toString());
+                                requestDetail.setTotalVoucher(infoDetail.get("TOTAL_VOUCHER").toString());
                                 // Log.e("requestDetail", "" + requestDetail.getTotalVoucher());
-                                requestDetail.setStatuse(infoDetail.get("status").toString());
-                                requestDetail.setKeyValidation(infoDetail.get("key_validation").toString());
-                                requestDetail.setDate(infoDetail.get("date").toString());
-                                requestDetail.setTime(infoDetail.get("time").toString());
-                                requestDetail.setNote(infoDetail.get("note").toString());
-                                requestDetail.setSeenRow(infoDetail.get("seen_row").toString());
-                                requestDetail.setRowId(infoDetail.get("row_id").toString());
+                                requestDetail.setStatuse(infoDetail.get("STATUS").toString());
+                                requestDetail.setKeyValidation(infoDetail.get("KEY_VALIDATION").toString());
+                                requestDetail.setDate(infoDetail.get("DDATE").toString());
+                                requestDetail.setTime(infoDetail.get("TIME").toString());
+                                requestDetail.setNote(infoDetail.get("NOTE").toString());
+                                requestDetail.setSeenRow(infoDetail.get("SEEN_ROW").toString());
+                                requestDetail.setRowId(infoDetail.get("ROW_ID").toString());
 
                                 int rowId = 0;
                                 try {
-                                    rowId = Integer.parseInt((infoDetail.get("row_id").toString()));
-                                    int seen = Integer.parseInt(infoDetail.get("seen_row").toString());
+                                    rowId = Integer.parseInt((infoDetail.get("SEEN_ROW").toString()));
+                                    int seen = Integer.parseInt(infoDetail.get("ROW_ID").toString());
 //                                    if (seen == 0) {
                                     int exist = databaseHandler.getRowId(requestDetail.getRowId());
                                     if (exist == 1)// dosent exist
@@ -724,7 +725,7 @@ public class ImportData {
 
                         //Log.e("listRequest", "" + listRequest.size());
 
-
+                        MainActivity.fillData(main_context);
                     } catch (JSONException e) {
 //                        progressDialog.dismiss();
                         e.printStackTrace();
@@ -1018,8 +1019,12 @@ Log.e("respon==",s+"");
 
                            if(jsonObject1.getString("LATITUDE").equals(""))
                             salesManInfo.setLatitudeLocation("0");
+                           else
+                               salesManInfo.setLatitudeLocation(jsonObject1.getString("LATITUDE"));
                            if(jsonObject1.getString("LONGITUDE").equals(""))
                             salesManInfo.setLongitudeLocation("0");
+                           else    salesManInfo.setLongitudeLocation(jsonObject1.getString("LONGITUDE"));
+
 
 //                            salesManInfo.setfVoucherSerial(jsonObject1.getString("FROM_VOUCHER_SERIAL"));
 //                            salesManInfo.settVoucherSerial(jsonObject1.getString("TO_VOUCHER_SERIAL"));
@@ -1033,8 +1038,9 @@ Log.e("respon==",s+"");
                             Log.e("salesManInfosList==",salesManInfosList.size()+"");
 
                             salesManNameList.add(salesManInfo.getSalesName());
-                        //  LatLngListMarker.add(new LatLng(Double.parseDouble(jsonObject1.getString("LATITUDE")), Double.parseDouble(jsonObject1.getString("LONGITUDE"))));
+                     LatLngListMarker.add(new LatLng(Double.parseDouble(salesManInfo.getLatitudeLocation()),Double.parseDouble(salesManInfo.getLongitudeLocation()) ));
 
+                        //  LatLngListMarker.add(new LatLng(Double.parseDouble("31.9695379"),Double.parseDouble("35.9139073") ));
 
                         }
 

@@ -315,5 +315,33 @@ public class SalesManInfo implements Serializable {
 
         return jsonObject;
     }
+    public JSONObject getJsonObjectAdmin2(){
 
+        JSONObject jsonObject=new JSONObject();
+
+        try {
+            jsonObject.put("USER_NO", salesManNo);
+            jsonObject.put("USER_NAME", salesName);
+            jsonObject.put("PASSWORD", salesPassword);
+            jsonObject.put("ACTIVATE", active);
+
+            jsonObject.put("ADD_SALESMEN", addSalesMen);
+            jsonObject.put("ADD_ADDMIN", addAdmin);
+            jsonObject.put("ACCOUNT_REPORT", accountReport);
+            jsonObject.put("PAYMENT_REPORT", paymentReport);
+            jsonObject.put("CASH_REPORT", cashReport);
+            jsonObject.put("UN_COLLECTED_REPORT", unCollectChequeReport);
+         //   jsonObject.put("OFFER_REPORT", offerReport);
+            jsonObject.put("ANALYZE_REPORT", analyzeCustomer);
+            jsonObject.put("LOG_HISTORY_REPORT", logHistoryReport);
+            jsonObject.put("SALES_LOCATION", salesManLocation);
+            jsonObject.put("MAKE_OFFER", makeOffer);
+            jsonObject.put("CUSTOMER_LOG_REPORT", customerReport);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return jsonObject;
+    }
 }

@@ -27,6 +27,7 @@ import com.azoft.carousellayoutmanager.CarouselLayoutManager;
 import com.azoft.carousellayoutmanager.CarouselZoomPostLayoutListener;
 import com.azoft.carousellayoutmanager.CenterScrollListener;
 import com.example.adminvansales.Report.OfferseReport;
+import com.example.adminvansales.model.Password;
 import com.example.adminvansales.model.SalesManInfo;
 import com.example.adminvansales.Report.AnalyzeAccounts;
 import com.example.adminvansales.Report.CashReport;
@@ -36,6 +37,7 @@ import com.example.adminvansales.Report.LogHistoryReport;
 import com.example.adminvansales.Report.PaymentDetailsReport;
 import com.example.adminvansales.Report.UnCollectedData;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.adminvansales.GlobelFunction.salesManInfoAdmin;
@@ -414,7 +416,14 @@ public class HomeActivity extends AppCompatActivity {
 
     private void getPassword() {
         ExportData exportData = new ExportData(HomeActivity.this);
-        exportData.getPassowrdSetting();
+
+
+
+        settingModel=databaseHandler.getAllSetting();
+        if(settingModel.getImport_way().equals("0"))
+            exportData.getPassowrdSetting();
+        else      if(settingModel.getImport_way().equals("1"))
+            exportData.   IIs_getPassowrdSetting();
     }
 
     private void getCurentPassowrd(EditText editPassword) {
@@ -422,8 +431,17 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void savePassowrdSetting(String passowrd) {
+        List <  Password>passwords=new ArrayList<>();
+        Password password=new Password();
+        password.setUSER_PASSWORD(passowrd);
+        password.setPASSWORDTYPE("1");
+        passwords.add(   password);
+        settingModel=databaseHandler.getAllSetting();
         ExportData exportData = new ExportData(HomeActivity.this);
+        if(settingModel.getImport_way().equals("0"))
         exportData.savePassowrdSetting(passowrd);
+        else      if(settingModel.getImport_way().equals("1"))
+            exportData. IIs_savePassowrdSetting( passwords);
     }
 
 

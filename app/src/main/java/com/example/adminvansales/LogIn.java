@@ -53,7 +53,7 @@ public class LogIn extends AppCompatActivity {
         Log.e("importDataMasaterrrr","importData;;;");
 
         settingModel=new com.example.adminvansales.model.SettingModel ();
-        databaseHandler=new DataBaseHandler(LogIn.this);
+
         initView();
         sliderLayout.setIndicatorAnimation(IndicatorAnimations.SWAP); //set indicator animation by using SliderLayout.IndicatorAnimations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
         sliderLayout.setSliderTransformAnimation(SliderAnimations.FADETRANSFORMATION);
@@ -61,6 +61,7 @@ public class LogIn extends AppCompatActivity {
         setSliderViews();
     }
     private void initView() {
+        databaseHandler=new DataBaseHandler(LogIn.this);
         settingModel=databaseHandler.getAllSetting();
         sliderLayout = findViewById(R.id.imageSlider_2);
         setting_floatingBtn=findViewById(R.id.setting_floatingBtn);
@@ -195,10 +196,11 @@ public class LogIn extends AppCompatActivity {
     private void getData() {
         importData=new ImportData(LogIn.this);
 
-      //  if( settingModel.getImport_way().equals("0"))
+      if( settingModel.getImport_way().equals("0"))
         importData.getListRequest();
-    //    else if( settingModel.getImport_way().equals("1"))
-    //    importData.IIS_getListRequest();
+
+    else if( settingModel.getImport_way().equals("1"))
+    importData.IIS_getListRequest();
     }
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager

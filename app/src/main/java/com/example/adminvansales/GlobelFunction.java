@@ -149,23 +149,23 @@ try {
 
     public  void AuthenticationMessage(){
 
-        new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE)
-                .setTitleText("You do not have Authority !!!")
-                .setContentText("")
-                .setCancelButton("cancel", new SweetAlertDialog.OnSweetClickListener() {
-                    @Override
-                    public void onClick(SweetAlertDialog sweetAlertDialog) {
-                        sweetAlertDialog.dismissWithAnimation();
-                    }
-                })
-                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                    @Override
-                    public void onClick(SweetAlertDialog sweetAlertDialog) {
-                        sweetAlertDialog.dismissWithAnimation();
-
-                    }
-                })
-                .show();
+//        new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE)
+//                .setTitleText("You do not have Authority !!!")
+//                .setContentText("")
+//                .setCancelButton("cancel", new SweetAlertDialog.OnSweetClickListener() {
+//                    @Override
+//                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+//                        sweetAlertDialog.dismissWithAnimation();
+//                    }
+//                })
+//                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+//                    @Override
+//                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+//                        sweetAlertDialog.dismissWithAnimation();
+//
+//                    }
+//                })
+//                .show();
 
     }
 

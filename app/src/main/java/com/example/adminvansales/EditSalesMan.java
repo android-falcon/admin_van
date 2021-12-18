@@ -423,7 +423,7 @@ public class EditSalesMan extends AppCompatActivity {
                         .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                             @Override
                             public void onClick(SweetAlertDialog sweetAlertDialog) {
-
+                                ArrayList<SalesManInfo>salesManInfos2=new ArrayList<>();
                                 SalesManInfo salesManInfo = new SalesManInfo();
                                 salesManInfo.setSalesPassword(password.getText().toString());
                                 salesManInfo.setSalesName(salesName.getText().toString());
@@ -465,10 +465,16 @@ public class EditSalesMan extends AppCompatActivity {
                                     salesManInfo.setLogHistoryReport(1);
                                 else salesManInfo.setLogHistoryReport(0);
 
-
+                                salesManInfos2.add(salesManInfo);
                                 ExportData exportData = new ExportData(EditSalesMan.this);
-                                exportData.AddAdmins(EditSalesMan.this, salesManInfo.getJsonObjectAdmin());
+                                if( SettingModel.getImport_way().equals("0"))
+                                    exportData.AddAdmins(EditSalesMan.this, salesManInfo.getJsonObjectAdmin());
+                                else   if( SettingModel.getImport_way().equals("1"))
+                                    exportData.IIs_AddAdmins( salesManInfos2,EditSalesMan.this);
+
                                 sweetAlertDialog.dismissWithAnimation();
+
+                                    sweetAlertDialog.dismissWithAnimation();
 
 
                             }
@@ -504,7 +510,7 @@ public class EditSalesMan extends AppCompatActivity {
                                                 .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                                                     @Override
                                                     public void onClick(SweetAlertDialog sweetAlertDialog) {
-
+                                                        ArrayList<SalesManInfo>salesManInfos3=new ArrayList<>();
                                                         SalesManInfo salesManInfo = new SalesManInfo();
                                                         salesManInfo.setSalesPassword(password.getText().toString());
                                                         salesManInfo.setSalesName(salesName.getText().toString());
@@ -521,8 +527,16 @@ public class EditSalesMan extends AppCompatActivity {
                                                         } else {
                                                             salesManInfo.setActive("0");
                                                         }
+                                                        salesManInfos3.add(salesManInfo);
                                                         ExportData exportData = new ExportData(EditSalesMan.this);
-                                                        exportData.UpdateSales(EditSalesMan.this, salesManInfo.getJsonObject());
+
+                                                        if( SettingModel.getImport_way().equals("0"))
+                                                            exportData.UpdateSales(EditSalesMan.this, salesManInfo.getJsonObject());
+                                                        else   if( SettingModel.getImport_way().equals("1"))
+
+                                                            exportData.IIs_UpdateSales( salesManInfos3,EditSalesMan.this);
+
+
                                                         sweetAlertDialog.dismissWithAnimation();
 
 
@@ -572,7 +586,7 @@ public class EditSalesMan extends AppCompatActivity {
                         .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                             @Override
                             public void onClick(SweetAlertDialog sweetAlertDialog) {
-
+                                ArrayList<SalesManInfo>salesManInfos4=new ArrayList<>();
                                 SalesManInfo salesManInfo = new SalesManInfo();
                                 salesManInfo.setSalesPassword(password.getText().toString());
                                 salesManInfo.setSalesName(salesName.getText().toString());
@@ -613,10 +627,16 @@ public class EditSalesMan extends AppCompatActivity {
                                 } else {
                                     salesManInfo.setActive("0");
                                 }
+                                salesManInfos4.add( salesManInfo);
                                 ExportData exportData = new ExportData(EditSalesMan.this);
-                                exportData.UpdateAdmin(EditSalesMan.this, salesManInfo.getJsonObjectAdmin());
-                                sweetAlertDialog.dismissWithAnimation();
+                                if( SettingModel.getImport_way().equals("0"))
 
+                                exportData.UpdateAdmin(EditSalesMan.this, salesManInfo.getJsonObjectAdmin());
+                                else   if( SettingModel.getImport_way().equals("1"))
+                                    exportData.IIs_UpdateAdmin(  salesManInfos4,EditSalesMan.this);
+
+
+                                sweetAlertDialog.dismissWithAnimation();
 
                             }
                         })

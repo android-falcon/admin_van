@@ -6,13 +6,13 @@
         android:orderInCategory="100"
 
         android:title="@string/passwordSetting"
-        android:visible="false"
+        android:visible="true"
         app:showAsAction="collapseActionView" />
     <item
         android:id="@+id/button_notif"
         android:orderInCategory="100"
 
-        android:visible="false"
+        android:visible="true"
         android:icon="@drawable/ic_notifications_black_24dp"
         app:showAsAction="always"
         android:title="@string/Notification" />
