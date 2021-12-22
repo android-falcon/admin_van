@@ -61,6 +61,25 @@ public class GlobelFunction {
         }
 
     }
+    public   void setValidation(){
+        SalesManInfo salesManInfo = new SalesManInfo();
+
+        salesManInfo.setAddSalesMen(1);
+        salesManInfo.setAddAdmin(1);
+        salesManInfo.setAccountReport(1);
+        salesManInfo.setPaymentReport(1);
+
+        salesManInfo.setCashReport(1);
+        salesManInfo.setUnCollectChequeReport(1);
+        salesManInfo.setAnalyzeCustomer(1);
+        salesManInfo.setLogHistoryReport(1);
+        salesManInfo.setOfferReport(1);
+        salesManInfo.setSalesManLocation(1);
+        salesManInfo.setMakeOffer(1);
+        salesManInfo.setCustomerReport(1);
+
+        saveValidition(salesManInfo);
+    }
 
     public void saveValidition(SalesManInfo salesManInfo) {
         salesManInfoAdmin.setSalesManNo(salesManInfo.getSalesManNo());
@@ -149,23 +168,23 @@ try {
 
     public  void AuthenticationMessage(){
 
-        new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE)
-                .setTitleText("You do not have Authority !!!")
-                .setContentText("")
-                .setCancelButton("cancel", new SweetAlertDialog.OnSweetClickListener() {
-                    @Override
-                    public void onClick(SweetAlertDialog sweetAlertDialog) {
-                        sweetAlertDialog.dismissWithAnimation();
-                    }
-                })
-                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                    @Override
-                    public void onClick(SweetAlertDialog sweetAlertDialog) {
-                        sweetAlertDialog.dismissWithAnimation();
-
-                    }
-                })
-                .show();
+//        new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE)
+//                .setTitleText("You do not have Authority !!!")
+//                .setContentText("")
+//                .setCancelButton("cancel", new SweetAlertDialog.OnSweetClickListener() {
+//                    @Override
+//                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+//                        sweetAlertDialog.dismissWithAnimation();
+//                    }
+//                })
+//                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+//                    @Override
+//                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+//                        sweetAlertDialog.dismissWithAnimation();
+//
+//                    }
+//                })
+//                .show();
 
     }
 

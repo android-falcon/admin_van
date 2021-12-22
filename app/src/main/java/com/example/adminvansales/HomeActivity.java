@@ -90,6 +90,7 @@ public class HomeActivity extends AppCompatActivity {
         addVanSales.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                globelFunction.setValidation();
 
                 if(salesManInfoAdmin.getAddAdmin()==1 || salesManInfoAdmin.getAddSalesMen()==1  ) {
                     Intent intentEditSales = new Intent(HomeActivity.this, EditSalesMan.class);
@@ -156,7 +157,7 @@ public class HomeActivity extends AppCompatActivity {
         locationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                globelFunction.setValidation();
                 if(salesManInfoAdmin.getSalesManLocation()==1) {
                     Intent locationIntent = new Intent(HomeActivity.this, SalesmanMapsActivity.class);
                     startActivity(locationIntent);
@@ -170,7 +171,7 @@ public class HomeActivity extends AppCompatActivity {
         offerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                globelFunction.setValidation();
                 if(salesManInfoAdmin.getMakeOffer()==1) {
                     Intent offerIntent = new Intent(HomeActivity.this, OfferPriceList.class);
                     startActivity(offerIntent);
@@ -198,7 +199,7 @@ public class HomeActivity extends AppCompatActivity {
         customerLogReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                globelFunction.setValidation();
                 if(salesManInfoAdmin.getCustomerReport()==1) {
                     ReportLinear.setVisibility(View.GONE);
                     Intent locationIntent = new Intent(HomeActivity.this, CustomerLogReport.class);
@@ -223,7 +224,7 @@ public class HomeActivity extends AppCompatActivity {
         paymentReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                globelFunction.setValidation();
                 if(salesManInfoAdmin.getPaymentReport()==1) {
                     ReportLinear.setVisibility(View.GONE);
                     Intent locationIntent = new Intent(HomeActivity.this, PaymentDetailsReport.class);
@@ -237,7 +238,7 @@ public class HomeActivity extends AppCompatActivity {
         cashReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                globelFunction.setValidation();
                 if(salesManInfoAdmin.getCashReport()==1) {
                     ReportLinear.setVisibility(View.GONE);
                     Intent locationIntent = new Intent(HomeActivity.this, CashReport.class);
@@ -252,7 +253,7 @@ public class HomeActivity extends AppCompatActivity {
         offerReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                globelFunction.setValidation();
                 if(salesManInfoAdmin.getOfferReport()==1) {
                     ReportLinear.setVisibility(View.GONE);
                     Intent listIntent = new Intent(HomeActivity.this, ListOfferReport.class);
@@ -266,7 +267,7 @@ public class HomeActivity extends AppCompatActivity {
         LogReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                globelFunction.setValidation();
                 if(salesManInfoAdmin.getLogHistoryReport()==1) {
                     ReportLinear.setVisibility(View.GONE);
                     Intent listIntent = new Intent(HomeActivity.this, LogHistoryReport.class);
@@ -280,7 +281,7 @@ public class HomeActivity extends AppCompatActivity {
         unCollectedCheques.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                globelFunction.setValidation();
                 if(salesManInfoAdmin.getUnCollectChequeReport()==1) {
                     ReportLinear.setVisibility(View.GONE);
                     Intent intent = new Intent(HomeActivity.this, UnCollectedData.class);
@@ -294,7 +295,7 @@ public class HomeActivity extends AppCompatActivity {
         analyzeAcountsReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                globelFunction.setValidation();
                 if(salesManInfoAdmin.getAnalyzeCustomer()==1) {
                     ReportLinear.setVisibility(View.GONE);
                     Intent intent = new Intent(HomeActivity.this, AnalyzeAccounts.class);
@@ -359,6 +360,7 @@ public class HomeActivity extends AppCompatActivity {
             Intent i = new Intent(HomeActivity.this, MainActivity.class);
             startActivity(i);
         } else if (id == R.id.button_account) {
+            globelFunction.setValidation();
             if(salesManInfoAdmin.getAddSalesMen()==1) {
                 finish();
                 Intent i = new Intent(HomeActivity.this, AccountStatment.class);

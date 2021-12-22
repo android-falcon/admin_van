@@ -44,6 +44,7 @@ public class LogIn extends AppCompatActivity {
     GlobelFunction globelFunction;
     Timer timer;
     ImportData importData;
+    String typeimport="0";
 
     com.example.adminvansales.model.SettingModel settingModel;
     @Override
@@ -52,8 +53,7 @@ public class LogIn extends AppCompatActivity {
         setContentView(R.layout.activity_log_in);
         Log.e("importDataMasaterrrr","importData;;;");
 
-        settingModel=new com.example.adminvansales.model.SettingModel ();
-        databaseHandler=new DataBaseHandler(LogIn.this);
+
         initView();
         sliderLayout.setIndicatorAnimation(IndicatorAnimations.SWAP); //set indicator animation by using SliderLayout.IndicatorAnimations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
         sliderLayout.setSliderTransformAnimation(SliderAnimations.FADETRANSFORMATION);
@@ -61,6 +61,8 @@ public class LogIn extends AppCompatActivity {
         setSliderViews();
     }
     private void initView() {
+        settingModel=new com.example.adminvansales.model.SettingModel ();
+        databaseHandler=new DataBaseHandler(LogIn.this);
         settingModel=databaseHandler.getAllSetting();
         sliderLayout = findViewById(R.id.imageSlider_2);
         setting_floatingBtn=findViewById(R.id.setting_floatingBtn);
@@ -83,9 +85,19 @@ public class LogIn extends AppCompatActivity {
         userName_edit=findViewById(R.id.userName_edit);
         importData=new ImportData(LogIn.this);
         Log.e("importData","importData");
-        if (settingModel.getImport_way().equals("0"))
+
+         try {
+             typeimport=settingModel.getImport_way();
+             if(typeimport==null){
+                 typeimport="1";
+             }
+         }catch (Exception e)
+         {
+             typeimport="1";
+         }
+        if (typeimport.equals("0"))
             importData.getCustomerInfo(0);
-        else if (settingModel.getImport_way().equals("1"))
+        else if (typeimport.equals("1"))
             importData.IIs_getCustomerInfo(0);
 
 

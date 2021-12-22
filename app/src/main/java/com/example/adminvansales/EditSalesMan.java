@@ -55,6 +55,7 @@ public class EditSalesMan extends AppCompatActivity {
         databaseHandler=new DataBaseHandler(EditSalesMan.this);
         SettingModel=databaseHandler.getAllSetting();
 
+
         SalesManInfoFill = new SalesManInfo();
         intentEdit = getIntent().getStringExtra("FillData");
         SalesManInfoFill = (SalesManInfo) getIntent().getSerializableExtra("SalesManInfoL");
@@ -63,8 +64,6 @@ public class EditSalesMan extends AppCompatActivity {
         }
 
 
-        globelFunction = new GlobelFunction(EditSalesMan.this);
-        globelFunction.getSalesManInfo(EditSalesMan.this, 0);
 
     }
 
@@ -167,6 +166,8 @@ public class EditSalesMan extends AppCompatActivity {
         salesManList = findViewById(R.id.salesManList);
         salesMenListAdapter = new SalesMenListAdapter();
         AdminInfoList = new ArrayList<>();
+        globelFunction = new GlobelFunction(EditSalesMan.this);
+        globelFunction.getSalesManInfo(EditSalesMan.this, 0);
         salesName = findViewById(R.id.salesName);
         password = findViewById(R.id.password);
         salesNo = findViewById(R.id.salesNo);
@@ -297,7 +298,9 @@ public class EditSalesMan extends AppCompatActivity {
 
     }
 
+
     void ChangeBetweenAdminSales(final int adminSales) {
+        globelFunction.setValidation();
 
         clearTextFun();
         if (adminSales == 1) {

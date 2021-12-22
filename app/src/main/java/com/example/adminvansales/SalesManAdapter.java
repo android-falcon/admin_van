@@ -53,6 +53,7 @@ public class SalesManAdapter extends RecyclerView.Adapter<SalesManAdapter.CViewH
         cViewHolder.layBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                globelFunction.setValidation();
                 if(salesManInfoAdmin.getAddSalesMen()==1) {
                     Intent LogHistoryIntent = new Intent(context, EditSalesMan.class);
                     LogHistoryIntent.putExtra("FillData", "FillData");
