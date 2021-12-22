@@ -51,6 +51,9 @@ GlobelFunction globelFunction;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_salesman_maps);
+        try {
+
+
         builder = new LatLngBounds.Builder();
         globelFunction=new GlobelFunction(SalesmanMapsActivity.this);
         timer = new Timer();
@@ -69,6 +72,11 @@ GlobelFunction globelFunction;
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+    }catch (Exception e){
+            Log.e("mapException",e.getMessage());
+        }
+
+
     }
 
 
@@ -102,7 +110,7 @@ GlobelFunction globelFunction;
         Log.e("salesManInfosList==",salesManInfosList.size()+"");
         Log.e("LatLngListMarker==",LatLngListMarker.size()+"");
         for (int i = 0; i < LatLngListMarker.size(); i++) {
-             if(LatLngListMarker.get(i)!=null)
+             if(LatLngListMarker.get(i)!=null&&salesManInfosList.get(i)!=null)
             if (!salesManInfosList.get(i).getLatitudeLocation().equals("0") && !salesManInfosList.get(i).getLongitudeLocation().equals("0")) {
                 sydney = LatLngListMarker.get(i);
 

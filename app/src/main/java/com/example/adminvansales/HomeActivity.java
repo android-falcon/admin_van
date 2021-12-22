@@ -325,17 +325,23 @@ public class HomeActivity extends AppCompatActivity {
     public void showAllSalesManData(List<SalesManInfo> listSalesMan) {
 //        picforbar = dbHandler.getAllAcCount();
 //        new GetAllAccount().execute();
-        layoutManagerd = new CarouselLayoutManager(CarouselLayoutManager.VERTICAL, true);
 
-        recyclerViews.setLayoutManager(layoutManagerd);
-        recyclerViews.setHasFixedSize(true);
-        recyclerViews.addOnScrollListener(new CenterScrollListener());
-        layoutManagerd.setPostLayoutListener(new CarouselZoomPostLayoutListener());
+        try {
+            layoutManagerd = new CarouselLayoutManager(CarouselLayoutManager.VERTICAL, true);
 
-        recyclerViews.setAdapter(new SalesManAdapter(this, listSalesMan));
-        recyclerViews.requestFocus();
-        recyclerViews.scrollToPosition(2);
-        recyclerViews.requestFocus();
+            recyclerViews.setLayoutManager(layoutManagerd);
+            recyclerViews.setHasFixedSize(true);
+            recyclerViews.addOnScrollListener(new CenterScrollListener());
+            layoutManagerd.setPostLayoutListener(new CarouselZoomPostLayoutListener());
+
+            recyclerViews.setAdapter(new SalesManAdapter(this, listSalesMan));
+            recyclerViews.requestFocus();
+            recyclerViews.scrollToPosition(2);
+            recyclerViews.requestFocus();
+
+        }catch (Exception e){
+            Log.e("mapException",e.getMessage());
+        }
 
 
     }

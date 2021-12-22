@@ -84,10 +84,15 @@ public class LogIn extends AppCompatActivity {
         userName_edit=findViewById(R.id.userName_edit);
         importData=new ImportData(LogIn.this);
         Log.e("importData","importData");
-        if (settingModel.getImport_way().equals("0"))
-            importData.getCustomerInfo(0);
-        else if (settingModel.getImport_way().equals("1"))
-            importData.IIs_getCustomerInfo(0);
+        try {
+            if (settingModel.getImport_way().equals("0"))
+                importData.getCustomerInfo(0);
+            else if (settingModel.getImport_way().equals("1"))
+                importData.IIs_getCustomerInfo(0);
+
+        }catch (Exception e){
+
+        }
 
 
         globelFunction=new GlobelFunction(LogIn.this);

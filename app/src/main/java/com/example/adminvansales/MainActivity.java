@@ -47,31 +47,32 @@ public class MainActivity extends AppCompatActivity {
         String s="";
         timer = new Timer();
 
-
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-
-                runOnUiThread(new Runnable(){
-
-                    @Override
-                    public void run(){
-                        // update ui here
-                        if (isNetworkAvailable()) {
-//                            getData();
-                            if(listId.size()!=0)
-                            {
-
-                                fillData(MainActivity.this);
-//                                updateSeenOfRow();
-                            }
-                        }
-
-                    }
-                });
-            }
-
-        }, 0, 3000);
+ //       fillData(MainActivity.this);
+  //   updateSeenOfRow();
+//        timer.schedule(new TimerTask() {
+//            @Override
+//            public void run() {
+//
+//                runOnUiThread(new Runnable(){
+//
+//                    @Override
+//                    public void run(){
+//                        // update ui here
+//                        if (isNetworkAvailable()) {
+////                            getData();
+//                            if(listId.size()!=0)
+//                            {
+//
+//                                fillData(MainActivity.this);
+////                                updateSeenOfRow();
+//                            }
+//                        }
+//
+//                    }
+//                });
+//            }
+//
+//        }, 0, 3000);
 
 
 

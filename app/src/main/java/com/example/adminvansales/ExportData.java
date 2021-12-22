@@ -132,6 +132,7 @@ public  String headerDll="";
     public  void   IIs_updateRowSeen(List<Request>requestList){
      getCONO();
         getRequstObject(requestList);
+        Log.e("requestList",requestList.size()+"  "+requestList.get(0).getRowId());
         new  JSONTask_IIsupdateRequst().execute();
 
     }
@@ -429,6 +430,7 @@ public  String headerDll="";
                     nameValuePairs.add(new BasicNameValuePair("CONO", CONO));
                     nameValuePairs.add(new BasicNameValuePair("JSONSTR",Requstobject.toString().trim()));
                     request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+                    Log.e("nameValuePairs",""+   nameValuePairs.get(1).getValue());
                 }
 //                else {
 //                    Log.e("rowId","BasicNameValuePair"+jsonArrayRequest.get(0).toString());

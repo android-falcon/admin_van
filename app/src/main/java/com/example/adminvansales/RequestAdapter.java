@@ -319,7 +319,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
         ExportData exportData=new ExportData(context);
 
         ArrayList  <Request> arrayList=new ArrayList();
-
+        request.setRowId(rowId);
         request.setStatuse(state);
         arrayList.add(request);
         databaseHandler=new DataBaseHandler(context);
