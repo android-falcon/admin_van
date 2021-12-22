@@ -54,6 +54,8 @@ public class LogIn extends AppCompatActivity {
         Log.e("importDataMasaterrrr","importData;;;");
 
 
+        settingModel=new com.example.adminvansales.model.SettingModel ();
+
         initView();
         sliderLayout.setIndicatorAnimation(IndicatorAnimations.SWAP); //set indicator animation by using SliderLayout.IndicatorAnimations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
         sliderLayout.setSliderTransformAnimation(SliderAnimations.FADETRANSFORMATION);
@@ -207,10 +209,11 @@ public class LogIn extends AppCompatActivity {
     private void getData() {
         importData=new ImportData(LogIn.this);
 
-      //  if( settingModel.getImport_way().equals("0"))
+      if( settingModel.getImport_way().equals("0"))
         importData.getListRequest();
-    //    else if( settingModel.getImport_way().equals("1"))
-    //    importData.IIS_getListRequest();
+
+    else if( settingModel.getImport_way().equals("1"))
+    importData.IIS_getListRequest();
     }
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager

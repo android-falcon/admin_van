@@ -14,7 +14,7 @@ import com.example.adminvansales.model.SettingModel;
 
 public class DataBaseHandler extends SQLiteOpenHelper {
 
-    private static final int VERSION =12;
+    private static final int VERSION =13;
     private static final String BD_NAME = "AdminVanSales_DB";
 
     // ********************************************************************

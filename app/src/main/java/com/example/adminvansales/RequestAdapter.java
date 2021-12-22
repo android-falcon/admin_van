@@ -19,11 +19,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.adminvansales.model.Request;
+import com.example.adminvansales.model.SettingModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static com.example.adminvansales.ImportData.listId;
 import static com.example.adminvansales.MainActivity.isListUpdated;
 
 public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHolder> {
@@ -35,7 +38,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
     CircleImageView circleImageView;
     Bitmap serverPicBitmap;
     public static int row_index = -1;
-
+    DataBaseHandler databaseHandler;
     String requestState = "0", amountArabic = "";
     //    LoginINFO infoUser;
 //    DatabaseHandler databaseHandler;
@@ -285,7 +288,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
                 @Override
                 public void onClick(View view) {
                     requestState = "1";
-                    updateRequestState(requestList.get(row_index).getRowId(),requestState);
+                    updateRequestState(requestList.get(row_index),requestList.get(row_index).getRowId(),requestState);
                     dialog.dismiss();
 
 
@@ -297,7 +300,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
                 @Override
                 public void onClick(View view) {
                     requestState = "2";
-                    updateRequestState(requestList.get(row_index).getRowId(),requestState);
+                    updateRequestState(requestList.get(row_index),requestList.get(row_index).getRowId(),requestState);
                     dialog.dismiss();
 
 
@@ -309,12 +312,28 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
         }
     }
 
-    private void updateRequestState(String rowId,String state) {
+    private void updateRequestState(Request request,String rowId,String state) {
         Log.e("updateRequestState",""+isListUpdated);
         requestList.remove(row_index);
         notifyDataSetChanged();
         ExportData exportData=new ExportData(context);
-        exportData.updateRowState(rowId,state);
+
+        ArrayList  <Request> arrayList=new ArrayList();
+        request.setRowId(rowId);
+        request.setStatuse(state);
+        arrayList.add(request);
+        databaseHandler=new DataBaseHandler(context);
+        Log.e("rowId",rowId);
+        Log.e("state",state);
+        Log.e("state", request.getStatuse()+"  "+ request.getRowId());
+     SettingModel settingModel=databaseHandler.getAllSetting();
+        if(    settingModel.getImport_way().equals("0"))
+            exportData.updateRowState(rowId,state);
+        else   if(    settingModel.getImport_way().equals("1"))
+            exportData.IIs_updateRowSeen( arrayList);
+
+
+
 
     }
 }

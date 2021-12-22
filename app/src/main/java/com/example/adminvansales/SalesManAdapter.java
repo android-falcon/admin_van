@@ -16,6 +16,8 @@ import com.example.adminvansales.model.SalesManInfo;
 
 import java.util.List;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 import static com.example.adminvansales.GlobelFunction.salesManInfoAdmin;
 
 public class SalesManAdapter extends RecyclerView.Adapter<SalesManAdapter.CViewHolderForbar> {
@@ -72,9 +74,9 @@ public class SalesManAdapter extends RecyclerView.Adapter<SalesManAdapter.CViewH
 //            @Override
 //            public boolean onLongClick(View view) {
 //                longIsOpen[0] = true;
-//                new SweetAlertDialog(MainActivity.this, SweetAlertDialog.WARNING_TYPE)
+//                new SweetAlertDialog(Context, SweetAlertDialog.WARNING_TYPE)
 //                        .setTitleText("WARNING")
-//                        .setContentText(MainActivity.this.getResources().getString(R.string.deleteAccount) + " ( " + list.get(i).getAccountNo() + " ) !")
+//                        .setContentText(Context.getResources().getString(R.string.deleteAccount) + " ( " + list.get(i).getAccountNo() + " ) !")
 //                        .setConfirmText("Ok")
 //                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
 //                            @Override

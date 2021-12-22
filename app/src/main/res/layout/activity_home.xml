@@ -355,7 +355,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_weight="0"
-            android:visibility="gone"
+            android:visibility="visible"
             android:background="@drawable/btn_login"
             android:drawableStart="@drawable/ic_location_on_black_24dp"
             android:drawableLeft="@drawable/ic_location_on_black_24dp"

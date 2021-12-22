@@ -1,5 +1,8 @@
 package com.example.adminvansales.model;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class Request {
     private  String salesmanName;
     private  String salesmanNo;
@@ -149,5 +152,22 @@ public class Request {
 
     public void setAmountValue(String amountValue) {
         this.amountValue = amountValue;
+    }
+
+
+    public JSONObject getJsonObject(){
+
+        JSONObject jsonObject=new JSONObject();
+
+        try {
+            jsonObject.put("STATUS", statuse);
+            jsonObject.put(" ROW_ID", rowId);
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return jsonObject;
     }
 }

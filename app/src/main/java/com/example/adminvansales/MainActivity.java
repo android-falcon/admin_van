@@ -17,6 +17,7 @@ import android.view.animation.LayoutAnimationController;
 import com.example.adminvansales.model.Request;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -25,8 +26,8 @@ import static com.example.adminvansales.ImportData.listId;
 import static com.example.adminvansales.ImportData.listRequest;
 
 public class MainActivity extends AppCompatActivity {
-    LinearLayoutManager layoutManager;
-    RecyclerView recyclerView;
+    public  static LinearLayoutManager layoutManager;
+    public  static RecyclerView recyclerView;
     ArrayList<Request> requestList1;
     public  static  boolean isListUpdated=false;
     DataBaseHandler databaseHandler;
@@ -40,35 +41,38 @@ public class MainActivity extends AppCompatActivity {
         databaseHandler=new DataBaseHandler(MainActivity.this);
         initialView();
 //        getData();
-        fillData();
+        fillData(MainActivity.this);
+        getData();
+
         String s="";
         timer = new Timer();
 
-
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-
-                runOnUiThread(new Runnable(){
-
-                    @Override
-                    public void run(){
-                        // update ui here
-                        if (isNetworkAvailable()) {
-//                            getData();
-                            if(listId.size()!=0)
-                            {
-
-                                fillData();
-//                                updateSeenOfRow();
-                            }
-                        }
-
-                    }
-                });
-            }
-
-        }, 0, 3000);
+ //       fillData(MainActivity.this);
+  //   updateSeenOfRow();
+//        timer.schedule(new TimerTask() {
+//            @Override
+//            public void run() {
+//
+//                runOnUiThread(new Runnable(){
+//
+//                    @Override
+//                    public void run(){
+//                        // update ui here
+//                        if (isNetworkAvailable()) {
+////                            getData();
+//                            if(listId.size()!=0)
+//                            {
+//
+//                                fillData(MainActivity.this);
+////                                updateSeenOfRow();
+//                            }
+//                        }
+//
+//                    }
+//                });
+//            }
+//
+//        }, 0, 3000);
 
 
 
@@ -80,10 +84,10 @@ public class MainActivity extends AppCompatActivity {
 
 
         settingModel=databaseHandler.getAllSetting();
-    //    if( settingModel.getImport_way().equals("0"))
+        if( settingModel.getImport_way().equals("0"))
             importData.getListRequest();
-     //   else if( settingModel.getImport_way().equals("1"))
-      //      importData.IIS_getListRequest();
+        else if( settingModel.getImport_way().equals("1"))
+           importData.IIS_getListRequest();
 
     }
 
@@ -96,12 +100,19 @@ public class MainActivity extends AppCompatActivity {
     private void updateSeenOfRow() {
 
         ExportData exportData=new ExportData(MainActivity.this);
-        exportData.updateRowSeen(listId);
+
+        settingModel=databaseHandler.getAllSetting();
+
+            exportData.updateRowSeen(listId);
+
+
+
+
     }
 
-    private void fillData() {
+    public static  void fillData(Context context) {
         isListUpdated=false;
-        fillListNotification(listRequest);
+        fillListNotification(context,listRequest);
     }
 
 
@@ -112,11 +123,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @SuppressLint("WrongConstant")
-    private void fillListNotification(ArrayList<Request> notifications) {
+    public static   void fillListNotification(Context context,ArrayList<Request> notifications) {
 //        notifiList1.clear();
 //        notifiList1 = notifications;
 //        Log.e("fillListNotification", "" + .size());
-        layoutManager = new LinearLayoutManager(MainActivity.this);
+        layoutManager = new LinearLayoutManager(context);
         layoutManager.setOrientation(VERTICAL);
         runAnimation(recyclerView, 0);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -124,12 +135,12 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-    private void runAnimation(RecyclerView recyclerView, int type) {
+    public  static void runAnimation(RecyclerView recyclerView, int type) {
         Context context = recyclerView.getContext();
         LayoutAnimationController controller = null;
         if (type == 0) {
             controller = AnimationUtils.loadLayoutAnimation(context, R.anim.layout_filldown);
-            RequestAdapter notificationAdapter = new RequestAdapter(MainActivity.this, listRequest);
+            RequestAdapter notificationAdapter = new RequestAdapter(context, listRequest);
             recyclerView.setAdapter(notificationAdapter);
             recyclerView.setLayoutAnimation(controller);
             recyclerView.getAdapter().notifyDataSetChanged();

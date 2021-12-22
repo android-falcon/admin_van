@@ -39,7 +39,7 @@
             android:drawableLeft="@drawable/ic_person_add_black_24dp"
             android:drawablePadding="5dp"
             android:padding="10dp"
-            android:visibility="invisible"
+            android:visibility="visible"
             android:text="@string/addAdmin"
             android:textColor="@color/colorblue_dark3"
             android:textSize="16sp" />
@@ -590,7 +590,7 @@
 
             <Button
                 android:id="@+id/updateButton"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="3dp"
