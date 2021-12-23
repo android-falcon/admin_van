@@ -133,7 +133,7 @@ public  String headerDll="";
      getCONO();
         getRequstObject(requestList);
         Log.e("requestList",requestList.size()+"  "+requestList.get(0).getRowId());
-        new  JSONTask_IIsupdateRequst().execute();
+        new  JSONTask_IIsupdateRequst(requestList).execute();
 
     }
     public void AddSales(Context context,JSONObject jsonObject){
@@ -384,6 +384,10 @@ public  String headerDll="";
 
     private class JSONTask_IIsupdateRequst extends AsyncTask<String, String, String> {
 
+        public  List<Request>requestList1;
+        public  JSONTask_IIsupdateRequst(List<Request>requestList){
+            this.requestList1=requestList;
+        }
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -407,7 +411,8 @@ public  String headerDll="";
                 {
 
 
-                    URL_TO_HIT = "http://" + ipAddress+":" +portSettings.trim() + headerDll.trim()  +"/ADMUpdateAdmin_Request";
+                    URL_TO_HIT = "http://" + ipAddress+":" +portSettings.trim() + headerDll.trim()  +"/ADMUpdateAdmin_Request?CONO="
+                            +CONO+"&STATUS="+requestList1.get(0).getStatuse()+"&ROW_ID="+requestList1.get(0).getRowId();
                     Log.e("URL_TO_HIT",URL_TO_HIT+"");
 
 
@@ -421,16 +426,20 @@ public  String headerDll="";
 
                 String JsonResponse = null;
                 HttpClient client = new DefaultHttpClient();
-                HttpPost request = new HttpPost();
+                HttpGet request = new HttpGet();
                 request.setURI(new URI(URL_TO_HIT));
 
                //    if( flag==1)
                 {
-                    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-                    nameValuePairs.add(new BasicNameValuePair("CONO", CONO));
-                    nameValuePairs.add(new BasicNameValuePair("JSONSTR",Requstobject.toString().trim()));
-                    request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
-                    Log.e("nameValuePairs",""+   nameValuePairs.get(1).getValue());
+                    Log.e("nameValuePairs",""+  requestList1.get(0));
+//                    Log.e("nameValuePairs",""+  jsonArrayRequest.get(1));
+//                    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(3);
+//                    nameValuePairs.add(new BasicNameValuePair("CONO", CONO));
+//                    nameValuePairs.add(new BasicNameValuePair("STATUS", requestList1.get(0).getStatuse()+""));
+//                    nameValuePairs.add(new BasicNameValuePair("ROW_ID", requestList1.get(1).getRowId()+""));
+
+//                    request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+
                 }
 //                else {
 //                    Log.e("rowId","BasicNameValuePair"+jsonArrayRequest.get(0).toString());
@@ -491,7 +500,7 @@ public  String headerDll="";
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Log.e("tag", "onPostExecute"+s.toString());
+//            Log.e("tag", "onPostExecute"+s.toString());
             String impo = "";
             pdValidation.dismissWithAnimation();
             if (s != null) {

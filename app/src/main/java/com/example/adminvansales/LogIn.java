@@ -32,6 +32,8 @@ import java.util.TimerTask;
 
 import static com.example.adminvansales.GlobelFunction.adminId;
 import static com.example.adminvansales.GlobelFunction.adminName;
+import static com.example.adminvansales.ImportData.listId;
+import static com.example.adminvansales.MainActivity.fillData;
 
 public class LogIn extends AppCompatActivity {
     SliderLayout sliderLayout;
@@ -107,30 +109,30 @@ public class LogIn extends AppCompatActivity {
         timer = new Timer();
 
 
-//        timer.schedule(new TimerTask() {
-//            @Override
-//            public void run() {
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+
+                runOnUiThread(new Runnable(){
+
+                    @Override
+                    public void run(){
+                        // update ui here
+                        if (isNetworkAvailable()) {
+                            getData();
+//                            if(listId.size()!=0)
+//                            {
 //
-//                runOnUiThread(new Runnable(){
-//
-//                    @Override
-//                    public void run(){
-//                        // update ui here
-//                        if (isNetworkAvailable()) {
-//                            getData();
-////                            if(listId.size()!=0)
-////                            {
-////
-////                                fillData();
-//////                                updateSeenOfRow();
-////                            }
-//                        }
-//
-//                    }
-//                });
-//            }
-//
-//        }, 0, 3000);
+//                                fillData(LogIn.this);
+////                                updateSeenOfRow();
+//                            }
+                        }
+
+                    }
+                });
+            }
+
+        }, 0, 3000);
 
 
         Log.e("importData","11111");

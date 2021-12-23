@@ -109,6 +109,9 @@ GlobelFunction globelFunction;
         LatLng sydney = null;
         Log.e("salesManInfosList==",salesManInfosList.size()+"");
         Log.e("LatLngListMarker==",LatLngListMarker.size()+"");
+        if(salesManInfosList.size()!=0)
+        {
+
         for (int i = 0; i < LatLngListMarker.size(); i++) {
              if(LatLngListMarker.get(i)!=null&&salesManInfosList.get(i)!=null)
             if (!salesManInfosList.get(i).getLatitudeLocation().equals("0") && !salesManInfosList.get(i).getLongitudeLocation().equals("0")) {
@@ -117,6 +120,9 @@ GlobelFunction globelFunction;
                 mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(iconSize())).position(sydney).title(salesManInfosList.get(i).getSalesName()+salesManInfosList.get(i).getLatitudeLocation()+salesManInfosList.get(i).getLongitudeLocation()));
                 builder.include(sydney);
             }
+        }
+        }else {
+            Log.e("salesManInfosList",""+salesManInfosList.size());
         }
 //        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
 //        mMap.animateCamera(CameraUpdateFactory.newLatLng(sydney));

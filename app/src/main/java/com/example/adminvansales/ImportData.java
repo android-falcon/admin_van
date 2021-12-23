@@ -704,7 +704,7 @@ Log.e("URL_TO_HIT",URL_TO_HIT+"");
                                         listId.add(rowId);
                                         isListUpdated = true;
 
-                                        ShowNotifi_detail("request", 0, infoDetail.get("salesman_name").toString());
+                                        ShowNotifi_detail("request", 0, infoDetail.get("SALESMAN_NAME").toString());
                                     }
 
 //                                    }

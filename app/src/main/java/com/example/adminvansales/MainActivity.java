@@ -40,39 +40,39 @@ public class MainActivity extends AppCompatActivity {
         settingModel=new com.example.adminvansales.model.SettingModel ();
         databaseHandler=new DataBaseHandler(MainActivity.this);
         initialView();
-//        getData();
-        fillData(MainActivity.this);
         getData();
+//        fillData(MainActivity.this);
+//        getData();
 
         String s="";
         timer = new Timer();
 
  //       fillData(MainActivity.this);
   //   updateSeenOfRow();
-//        timer.schedule(new TimerTask() {
-//            @Override
-//            public void run() {
-//
-//                runOnUiThread(new Runnable(){
-//
-//                    @Override
-//                    public void run(){
-//                        // update ui here
-//                        if (isNetworkAvailable()) {
-////                            getData();
-//                            if(listId.size()!=0)
-//                            {
-//
-//                                fillData(MainActivity.this);
-////                                updateSeenOfRow();
-//                            }
-//                        }
-//
-//                    }
-//                });
-//            }
-//
-//        }, 0, 3000);
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+
+                runOnUiThread(new Runnable(){
+
+                    @Override
+                    public void run(){
+                        // update ui here
+                        if (isNetworkAvailable()) {
+//                            getData();
+                            if(listId.size()!=0)
+                            {
+
+                                fillData(MainActivity.this);
+//                                updateSeenOfRow();
+                            }
+                        }
+
+                    }
+                });
+            }
+
+        }, 0, 3000);
 
 
 
