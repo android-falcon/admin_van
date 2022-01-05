@@ -3,6 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/drawable-v24/cancel_button.xml" value="0.15185185185185185" />
+        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/drawable/bg_more_settings.xml" value="0.2212962962962963" />
+        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/drawable/can_btn.xml" value="0.15185185185185185" />
+        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/drawable/cancel_button.xml" value="0.11296296296296296" />
+        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/drawable/done_button.xml" value="0.11296296296296296" />
+        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/drawable/ic_more.xml" value="0.12314814814814815" />
+        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/drawable/settings_header.xml" value="0.2212962962962963" />
+        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/activity_log_in.xml" value="0.1" />
+        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/activity_main.xml" value="0.14918946301925026" />
+        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/delete_entry.xml" value="0.1" />
+        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/more_settings_dialog.xml" value="0.18" />
+        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/setting_dialog.xml" value="0.15450861195542046" />
         <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/activity_group_offer.xml" value="0.2609375" />
         <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/activity_home.xml" value="0.33" />
         <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/activity_offerse_report.xml" value="0.24183006535947713" />

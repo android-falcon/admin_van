@@ -8,13 +8,16 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
-
+import com.example.adminvansales.model.Flag_Settingss;
 import com.example.adminvansales.model.Account__Statment_Model;
 import com.example.adminvansales.model.SettingModel;
+import com.example.adminvansales.model.Flag_Settingss;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DataBaseHandler extends SQLiteOpenHelper {
 
-    private static final int VERSION =13;
+    private static final int VERSION =14;
     private static final String BD_NAME = "AdminVanSales_DB";
 
     // ********************************************************************
@@ -23,6 +26,18 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 
 
     // ********************************************************************
+    private static final String Flag_Settings = "Flag_Settings";
+    private static final String Data_Type = "Data_Type";
+    private static final String Export_Stock = "Export_Stock";
+    private static final String Max_Voucher = "Max_Voucher";
+    private static final String Make_Order = "Make_Order";
+    private static final String Admin_Password = "Admin_Password";
+    private static final String Total_Balance = "Total_Balance";
+    private static final String Voucher_Return = "Voucher_Return";
+
+
+
+
     private final String SETTING_TABLE = "SETTING_TABLE";
     private final String SETTING_IP = "SETTING_IP";
     private final String IMPORT_WAY = "IMPORT_WAY";
@@ -91,7 +106,20 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         {
 
         }
+        try {   String CREATE_TABLE_FlAG_SETTINGS = "CREATE TABLE IF NOT EXISTS " + Flag_Settings + "("
+                + Data_Type + " TEXT,"
+                + Export_Stock + " INTEGER,"
+                + Max_Voucher + " INTEGER,"
+                + Make_Order + " INTEGER,"
+                + Admin_Password + " INTEGER,"
+                + Total_Balance + " INTEGER,"
+                + Voucher_Return + " INTEGER" + ")";
+            sqLiteDatabase.execSQL(CREATE_TABLE_FlAG_SETTINGS);
+        }
+        catch (Exception e)
+        {
 
+        }
     }
 
     @Override
@@ -147,6 +175,22 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         catch (Exception e){
 
         }
+        try {
+            String CREATE_TABLE_FlAG_SETTINGS = "CREATE TABLE IF NOT EXISTS " + Flag_Settings + "("
+                    + Data_Type + " TEXT,"
+                    + Export_Stock + " INTEGER,"
+                    + Max_Voucher + " INTEGER,"
+                    + Make_Order + " INTEGER,"
+                    + Admin_Password + " INTEGER,"
+                    + Total_Balance + " INTEGER,"
+                    + Voucher_Return + " INTEGER" + ")";
+            db.execSQL(CREATE_TABLE_FlAG_SETTINGS);
+
+
+        } catch (Exception e) {
+
+        }
+
     }
     public void addSetting(String settingIp,String port,String importway,String cono) {
         SQLiteDatabase database = this.getWritableDatabase();
@@ -262,6 +306,72 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         }
 
         return id;
+    }
+    public void insertFlagSettings(Flag_Settingss flag_settings) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db = this.getReadableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(Data_Type, flag_settings.getData_Type());
+        values.put(Export_Stock, flag_settings.getExport_Stock());
+        values.put(Max_Voucher, flag_settings.getMax_Voucher());
+        values.put(Make_Order, flag_settings.getMake_Order());
+        values.put(Admin_Password, flag_settings.getAdmin_Password());
+        values.put(Total_Balance, flag_settings.getTotal_Balance());
+        values.put(Voucher_Return, flag_settings.getVoucher_Return());
+
+        db.insert(Flag_Settings, null, values);
+        db.close();
+
+    }
+    public List<Flag_Settingss> getFlagSettings() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        List<Flag_Settingss> flagSettings = new ArrayList<>();
+        String selectQuery = "SELECT * FROM " + Flag_Settings;
+        db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Flag_Settingss mySettings = new Flag_Settingss(
+                        cursor.getString(0),
+                        cursor.getInt(1),
+                        cursor.getInt(2),
+                        cursor.getInt(3),
+                        cursor.getInt(4),
+                        cursor.getInt(5),
+                        cursor.getInt(6)
+                );
+
+                flagSettings.add(mySettings);
+
+            } while (cursor.moveToNext());
+            cursor.close();
+            Log.e("getFlagSettings", "" + flagSettings.size());
+        }
+        return flagSettings;
+
+    }
+
+    public void updateFlagSettings (String dataType, int export, int max, int order,
+                                    int password, int total, int vReturn) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(Data_Type, dataType);
+        values.put(Export_Stock, export);
+        values.put(Max_Voucher, max);
+        values.put(Make_Order, order);
+        values.put(Admin_Password, password);
+        values.put(Total_Balance, total);
+        values.put(Voucher_Return, vReturn);
+
+        db.update(Flag_Settings, values, null, null);
+
+        Log.e("Flag Settings", "UPDATE");
+        db.close();
+
     }
 
     // ********************************************************************

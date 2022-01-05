@@ -33,5 +33,6 @@
     <color name="colorblue1">#3F86B5</color>
     <color name="colorblue2">#B0C4DE</color>
     <color name="babyblue" >#89CFF0</color>
-
+    <color name="done_button">#3F86B5</color>
+    <color name="cancel_button">#E6CA221C</color>
 </resources>

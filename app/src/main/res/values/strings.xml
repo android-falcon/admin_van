@@ -17,6 +17,8 @@
     <string name="itemDiscount">Item Discount</string>
     <string name="itemBonus">Item Bonus</string>
     <string name="AccountStatment">Account Statment</string>
+    <string name="data_type">Data Type</string>
+    <string name="ok">OK</string>
     <string name="customerName">Customer Name</string>
     <string name="preview">Preview</string>
     <string name="transName">Trans Name</string>
@@ -144,6 +146,12 @@
     <string name="Activedes">Activate</string>
     <string name="yes">yes</string>
     <string name="no">No</string>
+    <string name="export_stock">Export Stock</string>
+    <string name="max_voucher">Get Max Voucher</string>
+    <string name="make_order">Make Order</string>
+    <string name="password_from_admin">Password From Admin</string>
+    <string name="voucher_return">Split Returned Vouchers</string>
+    <string name="more">more</string>
 <string-array name="app_paymentTypeList">
 
 <!--        <item>All</item>-->

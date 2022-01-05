@@ -11,8 +11,12 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
+import android.widget.TextView;
 
 import com.example.adminvansales.model.Request;
 
@@ -29,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     public  static LinearLayoutManager layoutManager;
     public  static RecyclerView recyclerView;
     ArrayList<Request> requestList1;
+    public  static  TextView Requstrespon;
     public  static  boolean isListUpdated=false;
     DataBaseHandler databaseHandler;
     com.example.adminvansales.model.SettingModel settingModel;
@@ -41,7 +46,8 @@ public class MainActivity extends AppCompatActivity {
         databaseHandler=new DataBaseHandler(MainActivity.this);
         initialView();
         getData();
-//        fillData(MainActivity.this);
+
+        fillData(MainActivity.this);
 //        getData();
 
         String s="";
@@ -58,12 +64,13 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run(){
                         // update ui here
+                        Log.e("listId==",listId.size()+"");
                         if (isNetworkAvailable()) {
-//                            getData();
+                          getData();
                             if(listId.size()!=0)
                             {
 
-                                fillData(MainActivity.this);
+                        fillData(MainActivity.this);
 //                                updateSeenOfRow();
                             }
                         }
@@ -119,7 +126,30 @@ public class MainActivity extends AppCompatActivity {
     private void initialView() {
 //        databaseHandler=new DatabaseHandler(RequestCheque.this);
         recyclerView = findViewById(R.id.recycler);
+        Requstrespon=findViewById(R.id.Requstrespon);
+        Requstrespon.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                if (s.toString().trim().length() != 0) {
+
+                    if (s.equals("respon")) {
+                        if (listId.size() != 0)
+                            fillData(MainActivity.this);
+                    }
+                }
+            }
+        });
     }
 
     @SuppressLint("WrongConstant")
