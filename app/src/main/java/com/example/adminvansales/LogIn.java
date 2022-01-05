@@ -1,7 +1,7 @@
 package com.example.adminvansales;
 
 import androidx.appcompat.app.AppCompatActivity;
-
+import com.example.adminvansales.model.Flag_Settingss;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -11,10 +11,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.adminvansales.model.SalesManInfo;
@@ -26,6 +30,7 @@ import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderLayout;
 import com.smarteist.autoimageslider.SliderView;
 
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -33,7 +38,7 @@ import java.util.TimerTask;
 import static com.example.adminvansales.GlobelFunction.adminId;
 import static com.example.adminvansales.GlobelFunction.adminName;
 import static com.example.adminvansales.ImportData.listId;
-import static com.example.adminvansales.MainActivity.fillData;
+
 
 public class LogIn extends AppCompatActivity {
     SliderLayout sliderLayout;
@@ -47,8 +52,19 @@ public class LogIn extends AppCompatActivity {
     Timer timer;
     ImportData importData;
     String typeimport="0";
-
+    List<Flag_Settingss> flag_settingsList;
     com.example.adminvansales.model.SettingModel settingModel;
+    public static int typaImport=1;//0---- mySql   1-----IIs
+
+    public  static int rawahneh=0;// 1= EXPORT STOCK TABLES
+    public  static    int getMaxVoucherServer=0;
+
+    public  static  int passwordSettingAdmin=0;//0 ---> static password   1 ----->password from admin
+    public  static  int makeOrders=0;// 1= just orders app
+    public  static    int getTotalBalanceInActivities=0;
+    public  static    int voucherReturn_spreat=1;
+    public  static   int  talaatLayoutAndPassowrd=0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,10 +83,10 @@ public class LogIn extends AppCompatActivity {
     private void initView() {
         settingModel=new com.example.adminvansales.model.SettingModel ();
         databaseHandler=new DataBaseHandler(LogIn.this);
-        settingModel=databaseHandler.getAllSetting();
+
         sliderLayout = findViewById(R.id.imageSlider_2);
         setting_floatingBtn=findViewById(R.id.setting_floatingBtn);
-        databaseHandler = new DataBaseHandler(LogIn.this);
+
         settingModelList=new SettingModel();
         try {
             settingModelList = databaseHandler.getAllSetting();
@@ -119,7 +135,7 @@ public class LogIn extends AppCompatActivity {
                     public void run(){
                         // update ui here
                         if (isNetworkAvailable()) {
-                            getData();
+//                            getData();
 //                            if(listId.size()!=0)
 //                            {
 //
@@ -211,11 +227,16 @@ public class LogIn extends AppCompatActivity {
     private void getData() {
         importData=new ImportData(LogIn.this);
 
-      if( settingModel.getImport_way().equals("0"))
-        importData.getListRequest();
+        try {
+            if( settingModel.getImport_way().equals("0"))
+                importData.getListRequest();
+        }catch (Exception e){
 
-    else if( settingModel.getImport_way().equals("1"))
-    importData.IIS_getListRequest();
+        }
+
+
+  //  else if( settingModel.getImport_way().equals("1"))
+    //importData.IIS_getListRequest();
     }
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
@@ -305,6 +326,7 @@ public class LogIn extends AppCompatActivity {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(true);
         dialog.setContentView(R.layout.setting_dialog);
+        TextView more=dialog.findViewById( R.id. more);
         Button saveSetting=dialog.findViewById(R.id.saveSetting);
         final EditText editTextIp=dialog.findViewById(R.id.setindEditText);
         final EditText  portSetting=dialog.findViewById(R.id.portSetting);
@@ -355,7 +377,100 @@ RadioButton RB_mysql= dialog.findViewById(R.id.RB_mysql);
 
             }
         });
+        more.setOnClickListener(v -> {
+            showMoreSettingDialog();
+
+
+
+        });
         dialog.show();
 
+    }
+    private void showMoreSettingDialog() {
+
+        final Dialog moreDialog = new Dialog(LogIn.this);
+        moreDialog.setCancelable(false);
+        moreDialog.setContentView(R.layout.more_settings_dialog);
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(moreDialog.getWindow().getAttributes());
+        lp.width = (int)(getResources().getDisplayMetrics().widthPixels/1.15);
+        moreDialog.getWindow().setAttributes(lp);
+        moreDialog.show();
+
+        Button okBtn = moreDialog.findViewById(R.id.okBtn);
+
+        Button cancelBtn = moreDialog.findViewById(R.id.cancelBtn);
+
+        RadioGroup radioGrpData = moreDialog.findViewById(R.id.radioGrpData);
+//            RadioButton radioBtnSQL = moreDialog.findViewById(R.id.radioBtnSQL);
+//            RadioButton radioBtnIIS = moreDialog.findViewById(R.id.radioBtnIIS);
+
+        Switch swExport, swMax, swOrder, swPassword, swTotal, swReturn;
+        swExport = moreDialog.findViewById(R.id.swExport);
+        swMax = moreDialog.findViewById(R.id.swMax);
+        swOrder = moreDialog.findViewById(R.id.swOrder);
+        swPassword = moreDialog.findViewById(R.id.swPassword);
+        swTotal = moreDialog.findViewById(R.id.swTotal);
+        swReturn = moreDialog.findViewById(R.id.swReturn);
+
+        flag_settingsList =databaseHandler.getFlagSettings();
+
+        if (flag_settingsList.size() != 0) {
+
+            if (flag_settingsList.get(0).getData_Type().equals("mysql")) {
+//                    radioBtnSQL.setChecked(true);
+//                    radioBtnIIS.setChecked(false);
+                radioGrpData.check(R.id.radioBtnSQL);
+            } else {
+//                    radioBtnSQL.setChecked(false);
+//                    radioBtnIIS.setChecked(true);
+                radioGrpData.check(R.id.radioBtnIIS);
+            }
+
+            swExport.setChecked((flag_settingsList.get(0).getExport_Stock() == 1));
+            swMax.setChecked((flag_settingsList.get(0).getMax_Voucher() == 1));
+            swOrder.setChecked((flag_settingsList.get(0).getMake_Order() == 1));
+            swPassword.setChecked((flag_settingsList.get(0).getAdmin_Password() == 1));
+            swTotal.setChecked((flag_settingsList.get(0).getTotal_Balance() == 1));
+            swReturn.setChecked((flag_settingsList.get(0).getVoucher_Return() == 1));
+
+        }
+
+        okBtn.setOnClickListener(v1 -> {
+
+            //update flag_settings
+            //update variables
+            String dataType1;
+            if (radioGrpData.getCheckedRadioButtonId() == R.id.radioBtnSQL) {
+                typaImport = 0;
+                dataType1 = "mysql";
+            } else {
+                typaImport = 1;
+                dataType1 = "iis";
+            }
+
+            rawahneh = swExport.isChecked() ? 1 : 0;
+            getMaxVoucherServer = swMax.isChecked() ? 1 : 0;
+            makeOrders = swOrder.isChecked() ? 1 : 0;
+            passwordSettingAdmin = swPassword.isChecked() ? 1 : 0;
+            getTotalBalanceInActivities = swTotal.isChecked() ? 1 : 0;
+            voucherReturn_spreat = swReturn.isChecked() ? 1 : 0;
+            if(flag_settingsList.size()==0)
+            {
+               databaseHandler.insertFlagSettings(new Flag_Settingss(dataType1, rawahneh, getMaxVoucherServer,
+                        makeOrders, passwordSettingAdmin, getTotalBalanceInActivities, voucherReturn_spreat));
+            }else {
+                databaseHandler.updateFlagSettings(dataType1, rawahneh, getMaxVoucherServer,
+                        makeOrders, passwordSettingAdmin, getTotalBalanceInActivities, voucherReturn_spreat);
+            }
+
+
+
+
+            moreDialog.dismiss();
+
+        });
+
+        cancelBtn.setOnClickListener(v12 -> moreDialog.dismiss());
     }
 }

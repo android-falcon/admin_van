@@ -81,6 +81,7 @@ import static com.example.adminvansales.GlobelFunction.adminId;
 import static com.example.adminvansales.GlobelFunction.adminName;
 import static com.example.adminvansales.LogIn.ipAddress;
 import static com.example.adminvansales.LogIn.portSettings;
+import static com.example.adminvansales.MainActivity.Requstrespon;
 import static com.example.adminvansales.MainActivity.isListUpdated;
 import static com.example.adminvansales.OfferPriceList.ItemCardList;
 import static com.example.adminvansales.OfferPriceList.customerList;
@@ -120,8 +121,8 @@ public class ImportData {
 
     public static List<OfferGroupModel> offerGroupModels = new ArrayList<>();
     GlobelFunction globelFunction;
- //public  String headerDll="/Falcons/VAN.dll";
-public  String headerDll="";
+ public  String headerDll="/Falcons/VAN.dll";
+//public  String headerDll="";
     public ImportData(Context context) {
         databaseHandler = new DataBaseHandler(context);
         this.main_context = context;
@@ -503,15 +504,16 @@ public  String headerDll="";
                                 requestDetail.setNote(infoDetail.get("note").toString());
                                 requestDetail.setSeenRow(infoDetail.get("seen_row").toString());
                                 requestDetail.setRowId(infoDetail.get("row_id").toString());
-
+                                Log.e("exist3==","----");
                                 int rowId = 0;
-                                try {
+                        //        try {
                                     rowId = Integer.parseInt((infoDetail.get("row_id").toString()));
                                     int seen = Integer.parseInt(infoDetail.get("seen_row").toString());
 //                                    if (seen == 0) {
                                     int exist = databaseHandler.getRowId(requestDetail.getRowId());
+                                    Log.e("exist==",exist+"");
                                     if (exist == 1)// dosent exist
-                                    {
+                                    {    Log.e("exist2==",exist+"");
                                         databaseHandler.addRoqId(requestDetail.getRowId());
                                         listId.add(rowId);
                                         isListUpdated = true;
@@ -520,8 +522,8 @@ public  String headerDll="";
                                     }
 
 //                                    }
-                                } catch (Exception e) {
-                                }
+                          //      } catch (Exception e) {
+                            //    }
                                 // Log.e("listId", "" + listId.size());
 
                                 listRequest.add(requestDetail);
@@ -691,25 +693,26 @@ Log.e("URL_TO_HIT",URL_TO_HIT+"");
                                 requestDetail.setNote(infoDetail.get("NOTE").toString());
                                 requestDetail.setSeenRow(infoDetail.get("SEEN_ROW").toString());
                                 requestDetail.setRowId(infoDetail.get("ROW_ID").toString());
-
+                                Log.e("exist3==","----");
                                 int rowId = 0;
-                                try {
+                         //       try {
                                     rowId = Integer.parseInt((infoDetail.get("SEEN_ROW").toString()));
                                     int seen = Integer.parseInt(infoDetail.get("ROW_ID").toString());
 //                                    if (seen == 0) {
                                     int exist = databaseHandler.getRowId(requestDetail.getRowId());
+                                    Log.e("exist1==",exist+"");
                                     if (exist == 1)// dosent exist
-                                    {
+                                    { Log.e("exist2==",exist+"");
                                         databaseHandler.addRoqId(requestDetail.getRowId());
                                         listId.add(rowId);
                                         isListUpdated = true;
-
+                                        MainActivity.fillData(main_context);
                                         ShowNotifi_detail("request", 0, infoDetail.get("SALESMAN_NAME").toString());
                                     }
 
 //                                    }
-                                } catch (Exception e) {
-                                }
+                            //    } catch (Exception e) {
+                            //    }
                                 // Log.e("listId", "" + listId.size());
 
                                 listRequest.add(requestDetail);
@@ -717,6 +720,7 @@ Log.e("URL_TO_HIT",URL_TO_HIT+"");
 
 
                         }
+
                         if (isListUpdated) {
 //                            Intent i = new Intent(main_context, MainActivity.class);
 //                            main_context.startActivity(i);
@@ -725,11 +729,12 @@ Log.e("URL_TO_HIT",URL_TO_HIT+"");
 
                         //Log.e("listRequest", "" + listRequest.size());
 
-                        MainActivity.fillData(main_context);
+
                     } catch (JSONException e) {
 //                        progressDialog.dismiss();
                         e.printStackTrace();
                     }
+        //          Requstrespon.setText("respon");
                 }
 //                progressDialog.dismiss();
             }
