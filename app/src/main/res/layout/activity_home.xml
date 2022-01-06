@@ -113,7 +113,7 @@
         android:layout_gravity="bottom"
         android:layout_weight="6"
         android:gravity="bottom|center"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
         <!--<TextView-->
         <!--android:layout_width="match_parent"-->
@@ -124,6 +124,20 @@
         <!--android:text="Welcome In Admin App"-->
         <!--android:textSize="18sp"-->
         <!--android:textColor="@color/colorblue_dark" />-->
+        <TextView
+            android:id="@+id/addPlan_Sales_man"
+            android:visibility="visible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_baseline_edit_24"
+            android:padding="5dp" />
+        <TextView
+            android:id="@+id/ad10"
+            android:visibility="invisible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_baseline_edit_24"
+            android:padding="5dp" />
         <TextView
             android:id="@+id/addVanSales"
             android:visibility="visible"

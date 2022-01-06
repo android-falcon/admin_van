@@ -8,7 +8,7 @@ public class Account__Statment_Model {
     private  double credit;
     private  double balance;
     private  String customerNo;
-    
+
 
     public Account__Statment_Model() {
     }

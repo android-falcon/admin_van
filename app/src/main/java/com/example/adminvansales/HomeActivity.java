@@ -55,7 +55,8 @@ public class HomeActivity extends AppCompatActivity {
     Button locationButton, ReportButton, offerButton,group_offerButton;
     LinearLayout ReportLinear;
     public static EditText editPassword;
-    TextView offersReport,customerLogReport, paymentReport, cashReport, offerReport,LogReport,unCollectedCheques,analyzeAcountsReport,ItemReport;
+    TextView offersReport,customerLogReport, paymentReport, cashReport, offerReport,LogReport,unCollectedCheques,
+            analyzeAcountsReport,ItemReport,addPlan_Sales_man;
     com.example.adminvansales.model.SettingModel settingModel;
     DataBaseHandler databaseHandler;
 
@@ -126,6 +127,14 @@ public class HomeActivity extends AppCompatActivity {
         offerReport = findViewById(R.id.offerReport);
         LogReport=findViewById(R.id.LogReport);
         ItemReport=findViewById(R.id.ItemReport);
+        addPlan_Sales_man=findViewById(R.id.addPlan_Sales_man);
+        addPlan_Sales_man.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =new Intent(HomeActivity.this,PlanSalesMan.class);
+                startActivity(intent);
+            }
+        });
 
         waitList.addTextChangedListener(new TextWatcher() {
             @Override

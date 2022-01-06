@@ -152,15 +152,16 @@
     <string name="password_from_admin">Password From Admin</string>
     <string name="voucher_return">Split Returned Vouchers</string>
     <string name="more">more</string>
-<string-array name="app_paymentTypeList">
+    <string name="plan_sales">Plan Sales Man</string>
+    <string-array name="app_paymentTypeList">
 
-<!--        <item>All</item>-->
+        <!--        <item>All</item>-->
         <item>Cash</item>
         <item>Cheque</item>
-    <item>Credit card</item>
+        <item>Credit card</item>
     </string-array>
     <string-array name="ListTypeAll">
-<!--        <item>ALL</item>-->
+        <!--        <item>ALL</item>-->
         <item>price by customer</item>
         <item>price only</item>
         <item>offer</item>

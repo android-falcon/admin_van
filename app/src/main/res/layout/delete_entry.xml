@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="150dp"
+    android:background="@color/layer7"
     android:orientation="vertical">
 
     <LinearLayout
@@ -80,7 +81,7 @@
             android:textSize="14sp"
             android:layout_weight="2"
             android:layout_margin="2dp"
-            android:background="@drawable/cancel_button1"
+            android:background="@drawable/background_container"
             android:layout_width="10dp"
             android:layout_height="35dp"
             android:layout_marginStart="20dp"
