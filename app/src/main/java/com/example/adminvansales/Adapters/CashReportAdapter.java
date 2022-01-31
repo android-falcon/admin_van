@@ -1,4 +1,4 @@
-package com.example.adminvansales;
+package com.example.adminvansales.Adapters;
 
 import android.content.Context;
 import android.text.TextUtils;
@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.example.adminvansales.R;
 import com.example.adminvansales.model.CashReportModel;
 
 import java.util.List;

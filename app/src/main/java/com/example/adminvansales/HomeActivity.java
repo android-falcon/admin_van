@@ -26,6 +26,7 @@ import android.widget.TextView;
 import com.azoft.carousellayoutmanager.CarouselLayoutManager;
 import com.azoft.carousellayoutmanager.CarouselZoomPostLayoutListener;
 import com.azoft.carousellayoutmanager.CenterScrollListener;
+import com.example.adminvansales.Adapters.SalesManAdapter;
 import com.example.adminvansales.Report.OfferseReport;
 import com.example.adminvansales.model.Password;
 import com.example.adminvansales.model.SalesManInfo;
@@ -42,8 +43,6 @@ import java.util.List;
 
 import static com.example.adminvansales.GlobelFunction.salesManInfoAdmin;
 import static com.example.adminvansales.GlobelFunction.salesManInfosList;
-import static com.example.adminvansales.GlobelFunction.salesManNameList;
-import static com.example.adminvansales.ImportData.listSalesMan;
 
 public class HomeActivity extends AppCompatActivity {
     public List<SalesManInfo> picforbar;
@@ -52,11 +51,11 @@ public class HomeActivity extends AppCompatActivity {
     public static TextView waitList, addVanSales;
     RelativeLayout notifyLayout, accountLayout;
     GlobelFunction globelFunction;
-    Button locationButton, ReportButton, offerButton,group_offerButton;
+    Button locationButton, ReportButton, offerButton,group_offerButton,addPlan_Sales_man;
     LinearLayout ReportLinear;
     public static EditText editPassword;
     TextView offersReport,customerLogReport, paymentReport, cashReport, offerReport,LogReport,unCollectedCheques,
-            analyzeAcountsReport,ItemReport,addPlan_Sales_man;
+            analyzeAcountsReport,ItemReport;
     com.example.adminvansales.model.SettingModel settingModel;
     DataBaseHandler databaseHandler;
 
@@ -385,6 +384,12 @@ public class HomeActivity extends AppCompatActivity {
             }else {
                 globelFunction.AuthenticationMessage();
             }
+        }
+        else  if (id == R.id.customerLocation)
+        {
+            finish();
+            Intent i = new Intent(HomeActivity.this, AddCustomerLocation.class);
+            startActivity(i);
         }
         return super.
 

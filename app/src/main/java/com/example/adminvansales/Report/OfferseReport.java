@@ -20,7 +20,7 @@ import android.widget.TextView;
 
 import com.example.adminvansales.ExportData;
 import com.example.adminvansales.ImportData;
-import com.example.adminvansales.OffersGroupAdapter;
+import com.example.adminvansales.Adapters.OffersGroupAdapter;
 import com.example.adminvansales.R;
 import com.example.adminvansales.model.OfferGroupModel;
 

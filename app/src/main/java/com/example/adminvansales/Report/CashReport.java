@@ -15,7 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.adminvansales.CashReportAdapter;
+import com.example.adminvansales.Adapters.CashReportAdapter;
 import com.example.adminvansales.DataBaseHandler;
 import com.example.adminvansales.ExportToExcel;
 import com.example.adminvansales.GlobelFunction;

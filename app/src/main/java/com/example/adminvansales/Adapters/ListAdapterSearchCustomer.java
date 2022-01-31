@@ -1,4 +1,4 @@
-package com.example.adminvansales;
+package com.example.adminvansales.Adapters;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -11,6 +11,8 @@ import android.widget.CompoundButton;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.example.adminvansales.OfferPriceList;
+import com.example.adminvansales.R;
 import com.example.adminvansales.model.customerInfoModel;
 
 import java.util.List;

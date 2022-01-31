@@ -1,4 +1,4 @@
-package com.example.adminvansales;
+package com.example.adminvansales.Adapters;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -6,6 +6,11 @@ import android.widget.BaseAdapter;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.example.adminvansales.ExportData;
+import com.example.adminvansales.GlobelFunction;
+import com.example.adminvansales.ImportData;
+import com.example.adminvansales.ItemReport;
+import com.example.adminvansales.R;
 import com.example.adminvansales.model.ItemReportModel;
 
 import java.util.List;
@@ -18,7 +23,7 @@ public class ItemReportAdapter extends BaseAdapter {
     GlobelFunction globelFunction;
 
     ImportData importData;
-    ExportData  exportData;
+    ExportData exportData;
     static TextView controlText = null;
     public  double totalBalance=0;
 

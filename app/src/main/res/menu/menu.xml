@@ -24,6 +24,13 @@
         android:icon="@drawable/ic_account_balance_black_24dp"
         app:showAsAction="always"
         android:title="@string/Notification" />
+    <item
+        android:id="@+id/customerLocation"
+        android:orderInCategory="100"
+
+        android:title="@string/addCustomerLocation"
+        android:visible="true"
+        app:showAsAction="collapseActionView" />
 
 
 

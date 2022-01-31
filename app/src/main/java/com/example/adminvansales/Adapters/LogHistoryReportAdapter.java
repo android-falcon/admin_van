@@ -1,4 +1,4 @@
-package com.example.adminvansales;
+package com.example.adminvansales.Adapters;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -6,6 +6,10 @@ import android.widget.BaseAdapter;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.example.adminvansales.ExportData;
+import com.example.adminvansales.GlobelFunction;
+import com.example.adminvansales.ImportData;
+import com.example.adminvansales.R;
 import com.example.adminvansales.model.LogHistoryModel;
 import com.example.adminvansales.Report.LogHistoryReport;
 
@@ -18,7 +22,7 @@ public class LogHistoryReportAdapter extends BaseAdapter {
     GlobelFunction globelFunction;
 
     ImportData importData;
-    ExportData  exportData;
+    ExportData exportData;
     static TextView controlText = null;
 
     public LogHistoryReportAdapter(LogHistoryReport context, List<LogHistoryModel> itemsList) {

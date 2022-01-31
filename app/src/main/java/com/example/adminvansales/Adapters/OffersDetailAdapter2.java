@@ -1,4 +1,4 @@
-package com.example.adminvansales;
+package com.example.adminvansales.Adapters;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -19,7 +19,8 @@ import java.util.List;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 import static com.example.adminvansales.ImportData.offerGroupModels;
-import static com.example.adminvansales.Report.OfferseReport.fillAdapter;
+
+import com.example.adminvansales.R;
 
 public class OffersDetailAdapter2 extends RecyclerView.Adapter<OffersDetailAdapter2.OffersDetailViewHolder2>{
     private List<com.example.adminvansales.model.OfferGroupModel> list;

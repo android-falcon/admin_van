@@ -1,4 +1,4 @@
-package com.example.adminvansales;
+package com.example.adminvansales.Adapters;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -16,8 +16,6 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -25,7 +23,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.adminvansales.Report.OfferseReport;
+import com.example.adminvansales.R;
 import com.example.adminvansales.model.OfferGroupModel;
 
 import java.text.SimpleDateFormat;
@@ -34,11 +32,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
-
 import static com.example.adminvansales.ImportData.offerGroupModels;
 import static com.example.adminvansales.Report.OfferseReport.fillAdapter;
-import static com.example.adminvansales.Report.OfferseReport.updateoffersGroupAdapter;
 
 public  class OffersGroupAdapter extends RecyclerView.Adapter<OffersGroupAdapter.OffersGroupViewHolder> {
 

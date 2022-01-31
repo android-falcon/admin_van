@@ -54,7 +54,7 @@ public class LogIn extends AppCompatActivity {
     String typeimport="0";
     List<Flag_Settingss> flag_settingsList;
     com.example.adminvansales.model.SettingModel settingModel;
-    public static int typaImport=1;//0---- mySql   1-----IIs
+    public static int typaImport=0;//0---- mySql   1-----IIs
 
     public  static int rawahneh=0;// 1= EXPORT STOCK TABLES
     public  static    int getMaxVoucherServer=0;
@@ -115,6 +115,8 @@ public class LogIn extends AppCompatActivity {
          {
              typeimport="1";
          }
+        typeimport="1";
+        Log.e("importData","importData="+typeimport);
         if (typeimport.equals("0"))
             importData.getCustomerInfo(0);
         else if (typeimport.equals("1"))

@@ -1,4 +1,4 @@
-package com.example.adminvansales;
+package com.example.adminvansales.Adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -12,11 +12,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.adminvansales.EditSalesMan;
+import com.example.adminvansales.GlobelFunction;
+import com.example.adminvansales.R;
 import com.example.adminvansales.model.SalesManInfo;
 
 import java.util.List;
-
-import cn.pedant.SweetAlert.SweetAlertDialog;
 
 import static com.example.adminvansales.GlobelFunction.salesManInfoAdmin;
 

@@ -1,4 +1,4 @@
-package com.example.adminvansales;
+package com.example.adminvansales.Adapters;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -12,6 +12,8 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.adminvansales.OfferPriceList;
+import com.example.adminvansales.R;
 import com.example.adminvansales.model.ItemMaster;
 import com.example.adminvansales.model.OfferListModel;
 

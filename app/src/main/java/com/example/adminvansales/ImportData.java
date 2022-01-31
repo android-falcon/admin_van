@@ -4,6 +4,7 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -12,6 +13,7 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
@@ -30,6 +32,7 @@ import com.example.adminvansales.model.OfferListModel;
 import com.example.adminvansales.model.PayMentReportModel;
 import com.example.adminvansales.model.CustomerInfo;
 import com.example.adminvansales.model.Payment;
+import com.example.adminvansales.model.Plan_SalesMan_model;
 import com.example.adminvansales.model.Request;
 import com.example.adminvansales.model.SalesManInfo;
 import com.example.adminvansales.model.SettingModel;
@@ -86,6 +89,8 @@ import static com.example.adminvansales.MainActivity.isListUpdated;
 import static com.example.adminvansales.OfferPriceList.ItemCardList;
 import static com.example.adminvansales.OfferPriceList.customerList;
 import static com.example.adminvansales.OfferPriceList.customerListFoundInOtherList;
+import static com.example.adminvansales.PlanSalesMan.fillPlan;
+import static com.example.adminvansales.PlanSalesMan.listPlan;
 import static com.example.adminvansales.Report.AnalyzeAccounts.analyzeAccountModelArrayList;
 import static com.example.adminvansales.Report.CashReport.cashReportList;
 import static com.example.adminvansales.Report.CustomerLogReport.customerLogReportList;
@@ -119,15 +124,18 @@ public class ImportData {
     public static ArrayList<CustomerInfo> listCustomer = new ArrayList<CustomerInfo>();
     public static List<String> customername = new ArrayList<>();
 
+
     public static List<OfferGroupModel> offerGroupModels = new ArrayList<>();
+    ProgressDialog progressDialog;
     GlobelFunction globelFunction;
- public  String headerDll="/Falcons/VAN.dll";
-//public  String headerDll="";
+// public  String headerDll="/Falcons/VAN.dll";
+public  String headerDll="";
     public ImportData(Context context) {
         databaseHandler = new DataBaseHandler(context);
         this.main_context = context;
         // globelFunction=new GlobelFunction(context);
         listId = new ArrayList<>();
+        getCONO();
 
     }
 
@@ -361,6 +369,178 @@ public class ImportData {
     public void GetAuthentication(Context context, String userName, String password, int flag) {
 
         new JSONTaskGetAuthentication(context, userName, password, flag).execute();
+
+    }
+
+    public void getPlan(String salesNum, String fromDate) {
+
+        new JSONTask_GetSalesmanPlan(salesNum,fromDate).execute();
+    }
+    private class JSONTask_GetSalesmanPlan extends AsyncTask<String, String, String> {
+        String  SalesmanNum;
+        String date;
+
+        public JSONTask_GetSalesmanPlan(String salesmanNum, String date) {
+            SalesmanNum = salesmanNum;
+            this.date = date;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(main_context);
+            progressDialog.setCancelable(false);
+            progressDialog.setMessage("Loading...");
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.setProgress(0);
+            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            try {
+                if (!ipAddress.equals("")) {
+
+                    // http://10.0.0.22:8085/ADMGetPlan?CONO=290&SALESNO=1&PDATE=17/01/2022
+                    URL_TO_HIT =
+                            "http://" + ipAddress + ":"+ portSettings.trim() + headerDll.trim() +"/ADMGetPlan?CONO="+CONO.trim()+"&SALESNO="+SalesmanNum+"&PDATE="+date;
+
+                    Log.e("link", "getplan" +  URL_TO_HIT );
+                }
+            } catch (Exception e) {
+                progressDialog.dismiss();
+            }
+
+            try {
+
+                //*************************************
+
+                String JsonResponse = null;
+                HttpClient client = new DefaultHttpClient();
+                HttpGet request = new HttpGet();
+                request.setURI(new URI(URL_TO_HIT));
+
+//
+
+                HttpResponse response = client.execute(request);
+
+
+                BufferedReader in = new BufferedReader(new
+                        InputStreamReader(response.getEntity().getContent()));
+
+                StringBuffer sb = new StringBuffer("");
+                String line = "";
+                Log.e("finalJson***Import", sb.toString());
+
+                while ((line = in.readLine()) != null) {
+                    sb.append(line);
+                }
+
+                in.close();
+
+
+                // JsonResponse = sb.toString();
+
+                String finalJson = sb.toString();
+                Log.e("finalJson***Import", finalJson);
+
+
+
+
+                return finalJson;
+
+
+            }//org.apache.http.conn.HttpHostConnectException: Connection to http://10.0.0.115 refused
+            catch (HttpHostConnectException ex)
+
+            {
+                ex.printStackTrace();
+//                progressDialog.dismiss();
+                progressDialog.dismiss();
+                Handler h = new Handler(Looper.getMainLooper());
+                h.post(new Runnable() {
+                    public void run() {
+
+                        Toast.makeText(main_context, "Ip Connection Failed", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
+                return null;
+            }
+            catch (Exception e)
+
+            {
+                e.printStackTrace();
+                Log.e("Exception", "" + e.getMessage());
+//                progressDialog.dismiss();
+                progressDialog.dismiss();
+                return null;
+            }
+
+
+            //***************************
+
+        }
+
+
+        @Override
+        protected void onPostExecute(String array) {
+            super.onPostExecute(array);
+            progressDialog.dismiss();
+            JSONObject jsonObject1 = null;
+            if (array != null) {
+                if (array.contains("CUSNAME")) {
+
+                    if (array.length() != 0) {
+                        try {
+                            JSONArray requestArray = null;
+                            requestArray = new JSONArray(array);
+                            listPlan.clear();
+                            Log.e("requestArray==",""+requestArray.length());
+                            for (int i = 0; i < requestArray.length(); i++) {
+                                Log.e("sss===","sssss");
+                                Plan_SalesMan_model plan = new      Plan_SalesMan_model();
+                                jsonObject1 = requestArray.getJSONObject(i);
+                                plan.setPlan_date(  jsonObject1.getString("TRDATE"));
+                                plan.setSalesNo( jsonObject1.getString("SALESNO"));
+                                plan.setLatit_customer( jsonObject1.getString("LA"));
+                                plan.setLong_customer(jsonObject1.getString("LO"));
+                                plan.setCustomerName(  jsonObject1.getString("CUSNAME"));
+                                plan.setCustomerNumber(  jsonObject1.getString("CUSTNO"));
+                                plan.setOrderd(Integer.parseInt(  jsonObject1.getString("ORDERD")));
+                                plan.setType_orderd(Integer.parseInt(  jsonObject1.getString("TYPEORDER")));
+                                listPlan.add( plan);
+                            }
+                            Log.e("salesManPlanList==",""+listPlan.size());
+                            fillPlan.setText("fill");
+
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+
+
+
+                }
+                else if(array.contains("No Data Found")){
+                    fillPlan.setText("No Data Found");
+                }
+                {}
+            } else {
+
+            }
+        }
 
     }
 
@@ -2775,6 +2955,7 @@ Log.e("respon==",s+"");
                             requestDetail = new CustomerInfo();
                             requestDetail.setCustomerNumber(infoDetail.get("CustID").toString());
                             requestDetail.setCustomerName(infoDetail.get("CustName").toString());
+                            requestDetail.setIsSelected(0);
 
 
                             listCustomer.add(requestDetail);
@@ -2911,12 +3092,27 @@ Log.e("respon==",s+"");
                             requestArray = new JSONArray( array);
                             listCustomerInfo = new ArrayList<>();
 
-                            for (int i = 0; i < requestArray.length(); i++) {
-                                Log.e("requestArray===", "requestArray" );
+//                            for (int i = 0; i < requestArray.length(); i++) {
+                                for (int i = 0; i < 20; i++) {
+
+                                    Log.e("requestArray===", "requestArray" );
                                 CustomerInfo customerInfo=new CustomerInfo();
                                 jsonObject1 = requestArray.getJSONObject(i);
                                 customerInfo.setCustomerNumber( jsonObject1.get("CUSTID").toString());
                                 customerInfo.setCustomerName( jsonObject1.get("CUSTNAME").toString());
+                                try {
+                                    customerInfo.setLatit_customer(jsonObject1.get("LATITUDE").toString());
+                                    customerInfo.setLong_customer(jsonObject1.get("LONGITUDE").toString());
+                                }catch (Exception e){
+                                    customerInfo.setLatit_customer("0");
+                                    customerInfo.setLong_customer("0");
+                                }
+
+                                customerInfo.setIsSelected(0);
+                                customerInfo.setOrder(i);
+                                if(i<10)
+                                customerInfo.setAreaName("جبل الحسين");
+                                else customerInfo.setAreaName("العبدلي");
                                 listCustomer.add( customerInfo);
                                 customername.add( customerInfo.getCustomerName());
 

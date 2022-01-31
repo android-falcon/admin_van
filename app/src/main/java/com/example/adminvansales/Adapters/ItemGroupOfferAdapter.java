@@ -1,19 +1,18 @@
-package com.example.adminvansales;
+package com.example.adminvansales.Adapters;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.adminvansales.R;
 import com.example.adminvansales.databinding.RowOfferListAdapterBinding;
 import com.example.adminvansales.model.OfferGroupModel;
 

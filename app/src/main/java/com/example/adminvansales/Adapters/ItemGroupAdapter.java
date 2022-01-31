@@ -1,4 +1,4 @@
-package com.example.adminvansales;
+package com.example.adminvansales.Adapters;
 
 import android.content.Context;
 import android.text.Editable;
@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import androidx.databinding.DataBindingUtil;
 
+import com.example.adminvansales.R;
 import com.example.adminvansales.databinding.RowOfferListAdapterBinding;
 import com.example.adminvansales.model.ItemMaster;
 import com.example.adminvansales.model.OfferGroupModel;

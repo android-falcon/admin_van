@@ -18,10 +18,10 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.TextView;
 
+import com.example.adminvansales.Adapters.RequestAdapter;
 import com.example.adminvansales.model.Request;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 

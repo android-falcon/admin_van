@@ -1,31 +1,18 @@
-package com.example.adminvansales;
+package com.example.adminvansales.Adapters;
 
-import android.app.Dialog;
 import android.content.Context;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.adminvansales.model.OfferListModel;
+import com.example.adminvansales.R;
 
 import java.util.List;
-
-import cn.pedant.SweetAlert.SweetAlertDialog;
-
-import static com.example.adminvansales.ImportData.offerGroupModels;
-import static com.example.adminvansales.Report.OfferseReport.fillAdapter;
-import static com.example.adminvansales.Report.OfferseReport.offersGroupAdapter;
-import static com.example.adminvansales.Report.OfferseReport.updateAdapter;
 
 public class OffersDetailAdapter extends RecyclerView.Adapter<OffersDetailAdapter.OffersDetailViewHolder>{
     private List<com.example.adminvansales.model.OfferGroupModel> list;

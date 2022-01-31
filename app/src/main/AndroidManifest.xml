@@ -29,8 +29,16 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".PlanSalesMan"
+            android:name=".CustomerLocationSelect"
             android:exported="false" />
+        <activity
+            android:name=".AddCustomerLocation"
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".PlanSalesMan"
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Report.OfferseReport"
             android:windowSoftInputMode="adjustPan|adjustResize" />

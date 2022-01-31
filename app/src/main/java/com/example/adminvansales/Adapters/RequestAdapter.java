@@ -1,4 +1,4 @@
-package com.example.adminvansales;
+package com.example.adminvansales.Adapters;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -18,6 +18,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.adminvansales.DataBaseHandler;
+import com.example.adminvansales.ExportData;
+import com.example.adminvansales.R;
 import com.example.adminvansales.model.Request;
 import com.example.adminvansales.model.SettingModel;
 
@@ -26,7 +29,6 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static com.example.adminvansales.ImportData.listId;
 import static com.example.adminvansales.MainActivity.isListUpdated;
 
 public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHolder> {

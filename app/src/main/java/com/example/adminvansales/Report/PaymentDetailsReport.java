@@ -21,7 +21,7 @@ import com.example.adminvansales.ExportToExcel;
 import com.example.adminvansales.GlobelFunction;
 import com.example.adminvansales.ImportData;
 import com.example.adminvansales.model.PayMentReportModel;
-import com.example.adminvansales.PayMentReportAdapter;
+import com.example.adminvansales.Adapters.PayMentReportAdapter;
 import com.example.adminvansales.PdfConverter;
 import com.example.adminvansales.R;
 

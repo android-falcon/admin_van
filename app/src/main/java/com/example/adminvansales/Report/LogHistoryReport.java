@@ -15,8 +15,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.adminvansales.GlobelFunction;
 import com.example.adminvansales.ImportData;
-import com.example.adminvansales.LogHistoryDetailReportAdapter;
-import com.example.adminvansales.LogHistoryReportAdapter;
+import com.example.adminvansales.Adapters.LogHistoryDetailReportAdapter;
+import com.example.adminvansales.Adapters.LogHistoryReportAdapter;
 import com.example.adminvansales.model.LogHistoryDetail;
 import com.example.adminvansales.model.LogHistoryModel;
 import com.example.adminvansales.R;
