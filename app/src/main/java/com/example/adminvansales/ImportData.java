@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 
+import com.example.adminvansales.Report.PlansReport;
 import com.example.adminvansales.model.Account__Statment_Model;
 import com.example.adminvansales.model.AnalyzeAccountModel;
 import com.example.adminvansales.model.CashReportModel;
@@ -104,6 +105,8 @@ import static com.example.adminvansales.Report.LogHistoryReport.logHistoryDetail
 import static com.example.adminvansales.Report.LogHistoryReport.logHistoryList;
 import static com.example.adminvansales.Report.OfferseReport.offersrespon;
 import static com.example.adminvansales.Report.PaymentDetailsReport.payMentReportList;
+import static com.example.adminvansales.Report.PlansReport.allPlans;
+import static com.example.adminvansales.Report.PlansReport.fillPlan2;
 import static com.example.adminvansales.Report.UnCollectedData.resultData;
 import static com.example.adminvansales.ShowNotifications.showNotification;
 
@@ -375,17 +378,19 @@ public class ImportData {
 
     }
 
-    public void getPlan(String salesNum, String fromDate) {
-
-        new JSONTask_GetSalesmanPlan(salesNum,fromDate).execute();
-    }
+    public void getPlan(String salesNum, String fromDate, int flag) {
+        // flag=0 ---> PlanSalesMan.this / flag=1 ---> PlansReport.this
+        new JSONTask_GetSalesmanPlan(salesNum,fromDate, flag).execute();
+    } //B
     private class JSONTask_GetSalesmanPlan extends AsyncTask<String, String, String> {
         String  SalesmanNum;
         String date;
+        int flag;
 
-        public JSONTask_GetSalesmanPlan(String salesmanNum, String date) {
+        public JSONTask_GetSalesmanPlan(String salesmanNum, String date, int flag) {
             SalesmanNum = salesmanNum;
             this.date = date;
+            this.flag = flag;
         }
 
         @Override
@@ -393,7 +398,7 @@ public class ImportData {
             super.onPreExecute();
             progressDialog = new ProgressDialog(main_context);
             progressDialog.setCancelable(false);
-            progressDialog.setMessage("Loading...");
+            progressDialog.setMessage("Loading ...");
             progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             progressDialog.setProgress(0);
             progressDialog.show();
@@ -409,7 +414,7 @@ public class ImportData {
                     URL_TO_HIT =
                             "http://" + ipAddress + ":"+ portSettings.trim() + headerDll.trim() +"/ADMGetPlan?CONO="+CONO.trim()+"&SALESNO="+SalesmanNum+"&PDATE="+date;
 
-                    Log.e("link", "getplan" +  URL_TO_HIT );
+                    Log.e("link", "getplan " +  URL_TO_HIT );
                 }
             } catch (Exception e) {
                 progressDialog.dismiss();
@@ -500,7 +505,11 @@ public class ImportData {
                         try {
                             JSONArray requestArray = null;
                             requestArray = new JSONArray(array);
-                            listPlan.clear();
+                            if (flag == 0)
+                                listPlan.clear();
+                            else if (flag == 1)
+                                allPlans.clear();
+
                             Log.e("requestArray==",""+requestArray.length());
                             for (int i = 0; i < requestArray.length(); i++) {
                                 Log.e("sss===","sssss");
@@ -514,10 +523,16 @@ public class ImportData {
                                 plan.setCustomerNumber(  jsonObject1.getString("CUSTNO"));
                                 plan.setOrderd(Integer.parseInt(  jsonObject1.getString("ORDERD"))-1);
                                 plan.setType_orderd(Integer.parseInt(  jsonObject1.getString("TYPEORDER")));
-                                listPlan.add( plan);
+                                if (flag == 0)
+                                    listPlan.add( plan);
+                                else
+                                    allPlans.add(plan);
                             }
-                            Log.e("salesManPlanList==",""+listPlan.size());
-                            fillPlan.setText("fill");
+//                            Log.e("salesManPlanList==",""+listPlan.size());
+                            if (flag == 0)
+                                fillPlan.setText("fill");
+                            else
+                                fillPlan2.setText("fill");
 
 
 
@@ -532,7 +547,14 @@ public class ImportData {
 
                 }
                 else if(array.contains("No Data Found")){
-                    fillPlan.setText("No Data Found");
+                    switch (flag) {
+                        case 0:
+                            fillPlan.setText("No Data Found");
+                            break;
+                        case 1:
+                            fillPlan2.setText("No Data Found");
+                            break;
+                    }
                 }
                 {}
             } else {
@@ -918,7 +940,7 @@ Log.e("URL_TO_HIT",URL_TO_HIT+"");
             }
         }
     }
-
+//B
     private class JSONTaskGetSalesMan extends AsyncTask<String, String, String> {
         Object context;
         int flag;
@@ -1092,6 +1114,8 @@ Log.e("URL_TO_HIT",URL_TO_HIT+"");
                 this.context = (HomeActivity) context;
             } else if (flag == 2) {
                 this.context = (SalesmanMapsActivity) context;
+            } else if (flag == 3) {
+                this.context = (PlansReport) context;
             }
             else if (flag == 4) {
                 this.context = (PlanSalesMan) context;
@@ -1178,7 +1202,7 @@ Log.e("URL_TO_HIT",URL_TO_HIT+"");
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-Log.e("respon==",s+"");
+            Log.e("respon==",s+"");
             if (s != null) {
                 if (s.contains("SALESNO")) {
 
@@ -1189,13 +1213,16 @@ Log.e("respon==",s+"");
                         salesManNameList.clear();
                         //salesManNameList.add("All");
                      //   JSONObject jsonObject = new JSONObject(s);
+                        s = s + "]"; /////B
+                        JSONArray jsonArray = new JSONArray(s);
 
-                        JSONArray jsonArray = new JSONArray(s);;
-
+                        Log.e("jsonArray", jsonArray.toString());
 
                         for (int i = 0; i < jsonArray.length(); i++) {
                             SalesManInfo salesManInfo = new SalesManInfo();
                             JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+
+                            Log.e("jsonObject1", jsonObject1.toString());
 
 
                             salesManInfo.setSalesManNo(jsonObject1.getString("SALESNO"));

@@ -340,6 +340,19 @@
                     android:visibility="visible"
                     android:text="Item Report"
                     android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/plansReport"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:padding="10dp"
+                    android:visibility="visible"
+                    android:text="@string/plans_report"
+                    android:textColor="@color/white"
+                    app:drawableStartCompat="@drawable/ic_equalizer_black_24dp"
+                    app:drawableTint="@color/white" />
+
                 <TextView
                     android:id="@+id/offersReport"
                     android:layout_width="wrap_content"

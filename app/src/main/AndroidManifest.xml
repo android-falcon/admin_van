@@ -30,6 +30,9 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
+            android:name=".Report.PlansReport"
+            android:exported="false" />
+        <activity
             android:name=".ItemVisibility"
             android:exported="false"
             android:theme="@style/AppTheme.NoActionBar"/>

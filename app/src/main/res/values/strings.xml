@@ -164,6 +164,8 @@
     <string name="changeItemVisible">Item Visible</string>
     <string name="hide">Hide</string>
     <string name="haveDuplicateOrder">You Have Duplicate Order !!</string>
+    <string name="order">Order</string>
+    <string name="plans_report">Plans Report</string>
     <string-array name="app_paymentTypeList">
 
         <!--        <item>All</item>-->
