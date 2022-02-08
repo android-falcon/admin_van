@@ -17,13 +17,17 @@ import android.widget.TextView;
 
 import com.example.adminvansales.Adapters.CustomerAdapter;
 import com.example.adminvansales.Adapters.CustomerLocationAdapter;
+import com.example.adminvansales.model.CustomerInfo;
+
+import java.util.ArrayList;
 
 public class AddCustomerLocation extends AppCompatActivity {
     RecyclerView customer_recycler;
 //    implements  CustomerLocationAdapter.onCustomerClickListener
     Button saveButton;
     GlobelFunction globelFunction;
-    public  static  TextView updateLocationPosi;
+    public ArrayList<CustomerInfo> listCustomer_filtered = new ArrayList<CustomerInfo>();
+    public  static  TextView updateLocationPosi,customerSearch;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +37,7 @@ public class AddCustomerLocation extends AppCompatActivity {
 
     private void initialView() {
         customer_recycler=findViewById(R.id.customer_recycler);
-        fillRecyclerCustomer();
+        fillRecyclerCustomer(listCustomer);
         saveButton=findViewById(R.id.saveButton);
         saveButton.setOnClickListener(v->{
 
@@ -63,21 +67,77 @@ public class AddCustomerLocation extends AppCompatActivity {
 
             }
         });
+        customerSearch=findViewById(R.id.customerSearch);
+        customerSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(s.toString().length()!=0){
+                    if(!s.toString().equals(""))
+                    {
+                        filterListcustomer(s.toString());
+                    }else {
+                        fillRecyclerCustomer(listCustomer);
+                    }
+                }
+
+            }
+        });
     }
 
+    private void filterListcustomer(String name) {
+        listCustomer_filtered.clear();
+        for (int i=0;i<listCustomer.size();i++){
+            if(listCustomer.get(i).getCustomerName().contains(name)){
+                listCustomer_filtered.add(listCustomer.get(i));
+            }
+
+        }
+        Log.e("listCustomer_filtered",""+listCustomer_filtered.size());
+        if(listCustomer_filtered.size()!=0){
+            fillRecyclerCustomer(listCustomer_filtered);
+
+        }else {
+            fillRecyclerCustomer(listCustomer);
+        }
+    }
     private void getPositionUpdated() {
 
         ExportData exportData=new ExportData(this);
 //        int selected=CustomerLocationAdapter
         int selected = ((CustomerLocationAdapter) customer_recycler.getAdapter()).selectedCustomerPosition;
-        Log.e("getPositionUpdated","selected"+selected);
+        String custNo= ((CustomerLocationAdapter) customer_recycler.getAdapter()).custNo_selected;
+        CustomerInfo customerInfo=getCustomer(custNo);
+        String latitSelected= customerInfo.getLatit_customer();
+        String longSelected= customerInfo.getLong_customer();
+        Log.e("getPositionUpdated","selected"+selected+"\t"+latitSelected+"\t"+longSelected);
         if(selected!=-1)
-        exportData.updateCustomerLocatio(listCustomer.get(selected).getCustomerNumber(),listCustomer.get(selected).getLatit_customer()
-                ,listCustomer.get(selected).getLong_customer());
+        exportData.updateCustomerLocatio(custNo,latitSelected
+                ,longSelected);
 
     }
+    public  CustomerInfo getCustomer(String cusNumber){
+        for(int i=0;i<listCustomer.size();i++){
+            if(listCustomer.get(i).getCustomerNumber().equals(cusNumber))
+            {
+                return  listCustomer.get(i);
 
-    private void fillRecyclerCustomer() {
+
+            }
+        }
+        return null;
+    }
+
+    private void fillRecyclerCustomer(ArrayList<CustomerInfo> listCustomer) {
         if (listCustomer.size() != 0)
         {
             Log.e("fillRecyclerCustomer", "" + listCustomer.size());
@@ -86,13 +146,6 @@ public class AddCustomerLocation extends AppCompatActivity {
             customer_recycler.setLayoutManager(layoutManager);
             CustomerLocationAdapter adapter = new CustomerLocationAdapter(listCustomer, AddCustomerLocation.this);
             customer_recycler.setAdapter(adapter);
-
-
-
-
-
-
-
 
         }
     }

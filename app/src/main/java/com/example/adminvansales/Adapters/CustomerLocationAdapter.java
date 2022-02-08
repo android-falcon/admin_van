@@ -38,6 +38,7 @@ public class CustomerLocationAdapter extends RecyclerView.Adapter<CustomerLocati
     static List<CustomerInfo> inventorylist;
     public double totalBalance = 0;
     public  int selectedCustomerPosition=-1;
+    public  String custNo_selected="",latit_selected="",longtude_selected="";
 
     Context context;
     private DecimalFormat decimalFormat;
@@ -105,17 +106,21 @@ public class CustomerLocationAdapter extends RecyclerView.Adapter<CustomerLocati
             select_customer_checkbox=itemView.findViewById(R.id.select_customer_checkbox);
             orderd_customer=itemView.findViewById(R.id.orderd_customer);
             customerLocat=itemView.findViewById(R.id.customerLocat);
+            customerLocat.setVisibility(View.VISIBLE);
 //            itemView.setOnClickListener(this);
             customerLocat.setOnClickListener(v -> {
                 ExportData exportData=new ExportData(context);
                 selectedCustomerPosition=getAdapterPosition();
+                longtude_selected=inventorylist.get(getAdapterPosition()).getLong_customer();
+                latit_selected=inventorylist.get(getAdapterPosition()).getLatit_customer();
+                custNo_selected=inventorylist.get(getAdapterPosition()).getCustomerNumber();
                 Intent intent =new Intent(context, CustomerLocationSelect.class);
-                intent.putExtra("latit",inventorylist.get(getAdapterPosition()).getLatit_customer());
-                intent.putExtra("longtude",inventorylist.get(getAdapterPosition()).getLong_customer());
+                intent.putExtra("latit",latit_selected);
+                intent.putExtra("longtude",longtude_selected);
 //                intent.putExtra("latit","31.9695985");
 //                intent.putExtra("longtude","35.9138707");
                 intent.putExtra("cusName",inventorylist.get(getAdapterPosition()).getCustomerName());
-                intent.putExtra("cusNumber",inventorylist.get(getAdapterPosition()).getCustomerNumber());
+                intent.putExtra("cusNumber",custNo_selected);
                 context.startActivity(intent);
 
 

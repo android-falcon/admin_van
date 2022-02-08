@@ -57,6 +57,23 @@
 
 
     </LinearLayout>
+    <EditText
+        android:id="@+id/customerSearch"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_margin="5dp"
+
+        android:layout_weight="1"
+        android:background="@drawable/hover_color"
+        android:drawableRight="@drawable/ic_search_black_24dp"
+        android:drawableTint="@color/colorblue_dark3"
+        android:elevation="2dp"
+        android:fontFamily="sans-serif-light"
+        android:inputType="text"
+        android:textColor="@color/darkGray"
+        android:padding="1dp"
+        android:hint="type customer Name"
+        android:textColorHint="@color/lightWhite" />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/customer_recycler"
 

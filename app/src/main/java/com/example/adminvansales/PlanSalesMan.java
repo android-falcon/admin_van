@@ -2,6 +2,7 @@ package com.example.adminvansales;
 
 import static com.example.adminvansales.GlobelFunction.salesManInfosList;
 import static com.example.adminvansales.GlobelFunction.salesManNameList;
+import static com.example.adminvansales.ImportData.listAllArea;
 import static com.example.adminvansales.ImportData.listCustomer;
 import static com.example.adminvansales.ImportData.listCustomerInfo;
 
@@ -44,70 +45,112 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class PlanSalesMan extends AppCompatActivity {
     Spinner salesNameSpinner;
-    ArrayAdapter<String>salesNameSpinnerAdapter;
-    TextView fromDate;
+    ArrayAdapter<String> salesNameSpinnerAdapter;
+    TextView fromDate, filterAsceding;
     List<String> listAreaName;
     Map<String, List<CustomerInfo>> map;
-    public  static TextView  fillPlan,customerSearch;
+    public static TextView fillPlan, customerSearch;
     GlobelFunction globelFunction;
-    List<String> listSelectedArea=new ArrayList<>();
+    List<String> listSelectedArea = new ArrayList<>();
     String toDay;
-    RecyclerView customer_recycler,selectedCustomer_recycler;
-    Button saveButton,updatButton,areaButton;
-    public  static  ArrayList<Plan_SalesMan_model> listPlan=new ArrayList<>();
+    RecyclerView customer_recycler, selectedCustomer_recycler;
+    Button saveButton, updatButton, areaButton;
+    public static ArrayList<Plan_SalesMan_model> listPlan = new ArrayList<>();
     RadioGroup orderd_typeGroup;
     ImportData importData;
-    public  ArrayList<CustomerInfo> listCustomer_filtered = new ArrayList<CustomerInfo>();
-    public  ArrayList<CustomerInfo> listSelectedCustomer = new ArrayList<CustomerInfo>();
+    public ArrayList<CustomerInfo> listCustomer_filtered = new ArrayList<CustomerInfo>();
+    public ArrayList<CustomerInfo> listSelectedCustomer = new ArrayList<CustomerInfo>();
 
-    public  ArrayList<AreaModel>listOfArea=new ArrayList<>();
+    public ArrayList<AreaModel> listOfArea = new ArrayList<>();
+    public static int orderType = 0;
+    public StringBuilder allAreaPlan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plan_sales_man);
         initialView();
-        fillSalesManSpinner();
+        if (salesManInfosList.size() != 0)
+            fillSalesManSpinner();
+        else {
+            globelFunction.getSalesManInfo(this, 4);
+        }
         fillArea();
         fillMainList();
+        orderType = getTypeOrder();
 
     }
 
     private void initialView() {
-        salesNameSpinner=findViewById(R.id.salesNameSpinner);
-        fromDate=findViewById(R.id.from_date_r);
-        globelFunction=new GlobelFunction(PlanSalesMan.this);
-        toDay=globelFunction.DateInToday();
+        importData = new ImportData(this);
+        allAreaPlan = new StringBuilder("");
+        salesNameSpinner = findViewById(R.id.salesNameSpinner);
+        fromDate = findViewById(R.id.from_date_r);
+        filterAsceding = findViewById(R.id.filterAsceding);
+        filterAsceding.setOnClickListener(v -> {
+            sortData(listSelectedCustomer);
+            fillSelectedRecycler();
+        });
+        globelFunction = new GlobelFunction(PlanSalesMan.this);
+        toDay = globelFunction.DateInToday();
         fromDate.setText(toDay);
         fromDate.setOnClickListener(onClick);
-        customer_recycler=findViewById(R.id.customer_recycler);
-        selectedCustomer_recycler=findViewById(R.id.customer_recycler_toOrderd);
-        fillRecyclerCustomer(listCustomer);
-        saveButton=findViewById(R.id.saveButton);
-        saveButton.setOnClickListener(v->{
+        fromDate.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            checkData();
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.toString().trim().length() != 0) {
+                    getData();
+                }
+
+            }
         });
-        updatButton=findViewById(R.id.updateButton);
-        updatButton.setOnClickListener(v->{
+        customer_recycler = findViewById(R.id.customer_recycler);
+        selectedCustomer_recycler = findViewById(R.id.customer_recycler_toOrderd);
+        if (listCustomer.size() != 0)
+            fillRecyclerCustomer(listCustomer);
+        else {
+
+            importData.IIs_getCustomerInfo(0);
+        }
+        saveButton = findViewById(R.id.saveButton);
+        saveButton.setOnClickListener(v -> {
+
+            chechOrder();
+//            checkData();
+        });
+        updatButton = findViewById(R.id.updateButton);
+        updatButton.setOnClickListener(v -> {
 
             getDataToSelectedRecycler();
         });
-        areaButton=findViewById(R.id.areaButton);
+        areaButton = findViewById(R.id.areaButton);
         areaButton.setOnClickListener(v -> {
             openSelectAreaDialog();
         });
-        orderd_typeGroup=findViewById(R.id.orderd_typeGroup);
-        importData=new ImportData(this);
-        fillPlan=findViewById(R.id.fillPlan);
+        orderd_typeGroup = findViewById(R.id.orderd_typeGroup);
+
+        fillPlan = findViewById(R.id.fillPlan);
         fillPlan.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -121,23 +164,21 @@ public class PlanSalesMan extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(s.toString().length()!=0)
-                {
-                    Log.e("afterTextChanged",""+s.toString());
-                    if(s.toString().equals("fill"))
-                    {
+                if (s.toString().length() != 0) {
+                    Log.e("afterTextChanged", "" + s.toString());
+                    if (s.toString().equals("fill")) {
                         setSelectedDefault();
 
                         fillCustomerList();
-                    }else if(s.toString().contains("No Data Found")){
-                    setSelectedDefault();
+                    } else if (s.toString().contains("No Data Found")) {
+                        setSelectedDefault();
 
                     }
                 }
 
             }
         });
-        customerSearch=findViewById(R.id.customerSearch);
+        customerSearch = findViewById(R.id.customerSearch);
         customerSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -151,76 +192,95 @@ public class PlanSalesMan extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(s.toString().length()!=0){
-                    if(!s.toString().equals(""))
-                    {
+                if (s.toString().length() != 0) {
+                    if (!s.toString().equals("")) {
                         filterListcustomer(s.toString());
-                    }else {
+                    } else {
                         fillRecyclerCustomer(listCustomer);
                     }
                 }
 
             }
         });
-
+        orderd_typeGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId == R.id.manual_RadioButton) {
+                    orderType = 0;
+                } else orderType = 1;
+                fillSelectedRecycler();
+            }
+        });
     }
+
+    private void chechOrder() {
+        Set<Integer> set = new HashSet<Integer>();
+        List<Integer> listNotValid = new ArrayList<>();
+        for (int i = 0; i < listSelectedCustomer.size(); i++) {
+            if (orderType == 0) {
+                if (!set.add(listSelectedCustomer.get(i).getOrder())) {
+                    listNotValid.add(listSelectedCustomer.get(i).getOrder());
+                    listSelectedCustomer.get(i).setDuplicat(1);
+                } else listSelectedCustomer.get(i).setDuplicat(0);
+            } else {
+                listSelectedCustomer.get(i).setOrder(i);
+                listSelectedCustomer.get(i).setDuplicat(0);
+            }
+
+        }
+        if (listNotValid.size() != 0 && orderType == 0) {
+            showMessage(this.getString(R.string.haveDuplicateOrder));
+            fillSelectedRecycler();
+        } else {
+            checkData();
+        }
+    }
+
+    private void showMessage(String message) {
+        new SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE)
+                .setTitleText(message)
+                .show();
+    }
+
 
     private void fillMainList() {
-
-       map = new HashMap<>();
-        for (int k=0;k<listAreaName.size();k++){
+        map = new HashMap<>();
+        for (int k = 0; k < listAreaName.size(); k++) {
             List<CustomerInfo> list = new ArrayList<>();
-            map.put(listAreaName.get(k),list);
+            map.put(listAreaName.get(k), list);
         }
-        Log.e("fillMainList","map="+map.size());
-        for(int i=0;i<listCustomer.size();i++){
+        if (map.size() != 0) {
+            for (int i = 0; i < listCustomer.size(); i++) {
+                String area = listCustomer.get(i).getAreaName();
+                List<CustomerInfo> listCustomerLoc = map.get(area);
+                try {
+                    listCustomerLoc.add(listCustomer.get(i));
+                } catch (Exception e) {
+                }
 
-            String area=listCustomer.get(i).getAreaName();
-            List<CustomerInfo> listCustomerLoc = map.get(area);
-            Log.e("area","1=="+area+"\t"+listCustomerLoc.size());
-            listCustomerLoc.add(listCustomer.get(i));
-            Log.e("area","2=="+area+"\t"+listCustomerLoc.size());
 
-
-
-        }
-        for (Map.Entry<String, List<CustomerInfo>> entry : map.entrySet()) {
-            List<CustomerInfo> listCustomerLoc22 = entry.getValue();
-            Log.e("finalmap=","getKey="+entry.getKey());
-            Log.e("finalmap=","listCustomerLoc="+listCustomerLoc22.size());
+            }
         }
     }
 
-    void fillArea(){
+
+    void fillArea() {
+        listAreaName = new ArrayList<>();
         listOfArea.clear();
-        listAreaName=new ArrayList<>();
-        AreaModel areaModel ;
-        areaModel =new AreaModel();
-        areaModel.setAreaId(1);
-        areaModel.setAreaName("العبدلي");
-        areaModel.setSelect(0);
-        listAreaName.add(areaModel.getAreaName());
+        listAreaName.addAll(listAllArea);
+        for (int i = 0; i < listAreaName.size(); i++) {
+            AreaModel areaModel;
+            areaModel = new AreaModel();
+            areaModel.setAreaId(i);
+            areaModel.setAreaName(listAreaName.get(i));
+            areaModel.setSelect(0);
+            listOfArea.add(areaModel);
+        }
 
-        listOfArea.add(areaModel);
-        areaModel =new AreaModel();
-        areaModel.setAreaId(2);
-        areaModel.setAreaName("جبل الحسين");
-        areaModel.setSelect(0);
-
-        listOfArea.add(areaModel);
-        listAreaName.add(areaModel.getAreaName());
-        areaModel =new AreaModel();
-        areaModel.setAreaId(3);
-        areaModel.setAreaName("ماركا");
-        areaModel.setSelect(0);
-
-        listOfArea.add(areaModel);
-        listAreaName.add(areaModel.getAreaName());
 
     }
+
     private void openSelectAreaDialog() {
-
-
         final Dialog dialog = new Dialog(this, R.style.Theme_Dialog);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(true);
@@ -228,24 +288,20 @@ public class PlanSalesMan extends AppCompatActivity {
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(dialog.getWindow().getAttributes());
 
-        ListView listview_area=dialog.findViewById(R.id.listview_area);
+        ListView listview_area = dialog.findViewById(R.id.listview_area);
         final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getBaseContext(),
-                android.R.layout.simple_list_item_multiple_choice,  listAreaName);
+                android.R.layout.simple_list_item_multiple_choice, listAreaName);
         listview_area.setAdapter(adapter);
         listview_area.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
-        for(int i=0;i<listOfArea.size();i++)
-        {
-            if(listOfArea.get(i).getSelect()==1)
-                listview_area.setItemChecked(i,true);
+        for (int i = 0; i < listOfArea.size(); i++) {
+            if (listOfArea.get(i).getSelect() == 1)
+                listview_area.setItemChecked(i, true);
         }
 
         listview_area.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                // TODO Auto-generated method stub
-
                 updateListSelectArea(position);
-Log.e("onItemClick",""+position);
 
             }
         });
@@ -255,7 +311,6 @@ Log.e("onItemClick",""+position);
         dialog.getWindow().setAttributes(lp);
         Button saveButton = (Button) dialog.findViewById(R.id.saveButton);
         TextView cancelButton = (TextView) dialog.findViewById(R.id.cancel);
-
 
 
         saveButton.setOnClickListener(new View.OnClickListener() {
@@ -284,40 +339,39 @@ Log.e("onItemClick",""+position);
     private void filterListLocation() {
         listSelectedArea.clear();
         listCustomer_filtered.clear();
+        allAreaPlan = new StringBuilder("");
 
-        for (int k=0;k<listOfArea.size();k++) {
+        for (int k = 0; k < listOfArea.size(); k++) {
             if (listOfArea.get(k).getSelect() == 1) {
+                listSelectedArea.add(listOfArea.get(k).getAreaName().trim());
+                allAreaPlan.append(listOfArea.get(k).getAreaName().trim());
+                if (k != listOfArea.size() - 1)
+                    allAreaPlan.append(",");
+            }
 
-
-            Log.e("listSelectedArea", "" + listOfArea.get(k).getAreaName());
-                listSelectedArea.add( listOfArea.get(k).getAreaName().trim() );
         }
 
-        }
-        for(int i=0;i<listSelectedArea.size();i++){
+        for (int i = 0; i < listSelectedArea.size(); i++) {
 //            map
-            String area=listSelectedArea.get(i);
+            String area = listSelectedArea.get(i);
             List<CustomerInfo> listCustomerLoc = map.get(area);
             listCustomer_filtered.addAll(listCustomerLoc);
         }
-        if(listCustomer_filtered.size()!=0)
-        fillRecyclerCustomer(listCustomer_filtered);
+        if (listCustomer_filtered.size() != 0)
+            fillRecyclerCustomer(listCustomer_filtered);
         else fillRecyclerCustomer(listCustomer);
-        Log.e("listOfArea","allArea="+listCustomer_filtered.size());
+
 //        fillArea();
     }
 
     private void updateListSelectArea(int position) {
 
-        if(listOfArea.get(position).getSelect()==0)
+        if (listOfArea.get(position).getSelect() == 0)
             listOfArea.get(position).setSelect(1);
-        else  listOfArea.get(position).setSelect(0);
-        Log.e("listOfArea",""+listOfArea.get(position).getSelect()+"\t"+listOfArea.get(position).getAreaName());
+        else listOfArea.get(position).setSelect(0);
     }
 
     private void getDataToSelectedRecycler() {
-        // ArrayList<CustomerInfo> listNewCustomerSelected=getDifference(listCustomer,listSelectedCustomer);
-//        listSelectedCustomer.clear();
         ArrayList<CustomerInfo> listNewCustomerSelected = new ArrayList<>();
         for (int i = 0; i < listCustomer.size(); i++) {
             if (listCustomer.get(i).getIsSelected() == 1) {
@@ -325,139 +379,128 @@ Log.e("onItemClick",""+position);
 
             }
         }
-       if( listSelectedCustomer.size()==0&&listPlan.size()==0){
-           for(int i=0;i<listNewCustomerSelected.size();i++){
-               listNewCustomerSelected.get(i).setOrder(i);
+        if (listSelectedCustomer.size() == 0 && listPlan.size() == 0) {
+            for (int i = 0; i < listNewCustomerSelected.size(); i++) {
+                listNewCustomerSelected.get(i).setOrder(i);
+            }
+        } else {
+            if (listNewCustomerSelected.size() >= listSelectedCustomer.size()) {
+
+                for (int i = 0; i < listNewCustomerSelected.size(); i++) {
+                    for (int j = 0; j < listSelectedCustomer.size(); j++) {
+                        if (listNewCustomerSelected.get(i).getCustomerNumber().equals(listSelectedCustomer.get(j).getCustomerNumber())) {
+
+                            listNewCustomerSelected.get(i).setOrder(listSelectedCustomer.get(j).getOrder());
+
+                        }
+                    }
+                }
+            } else {
+                for (int j = 0; j < listSelectedCustomer.size(); j++) {
+                    for (int i = 0; i < listNewCustomerSelected.size(); i++) {
+
+                        if (listNewCustomerSelected.get(i).getCustomerNumber().equals(listSelectedCustomer.get(j).getCustomerNumber())) {
+
+                            listNewCustomerSelected.get(i).setOrder(listSelectedCustomer.get(j).getOrder());
+                        }
+                    }
+                }
+
+
+            }
+
+
         }
-       }else {
-           if (listNewCustomerSelected.size() >= listSelectedCustomer.size()) {
-
-               for (int i = 0; i < listNewCustomerSelected.size(); i++) {
-                   for (int j = 0; j < listSelectedCustomer.size(); j++) {
-                       if (listNewCustomerSelected.get(i).getCustomerNumber().equals(listSelectedCustomer.get(j).getCustomerNumber())) {
-
-                           listNewCustomerSelected.get(i).setOrder(listSelectedCustomer.get(j).getOrder());
-                           Log.e("listNewCustomerSelected", "1=" + i + listNewCustomerSelected.get(i).getCustomerNumber());
-//                   if(j<listNewCustomerSelected.size())
-//                    Collections.swap(listNewCustomerSelected, i, j);
-                           Log.e("listNewCustomerSelected", "2=" + i + listNewCustomerSelected.get(i).getCustomerNumber());
-                       }
-                   }
-               }
-           }
-           else {
-               for (int j = 0; j < listSelectedCustomer.size(); j++) {
-                   for (int i = 0; i < listNewCustomerSelected.size(); i++) {
-
-                       if (listNewCustomerSelected.get(i).getCustomerNumber().equals(listSelectedCustomer.get(j).getCustomerNumber())) {
-
-                           listNewCustomerSelected.get(i).setOrder(listSelectedCustomer.get(j).getOrder());
-                           Log.e("listNewCustomerSelected", "1=" + i + listNewCustomerSelected.get(i).getCustomerNumber());
-//                        if(j<listNewCustomerSelected.size())
-//                            Collections.swap(listNewCustomerSelected, i, j);
-                           Log.e("listNewCustomerSelected", "2=" + i + listNewCustomerSelected.get(i).getCustomerNumber());
-                       }
-                   }
-               }
-
-
-           }
-
-
-       }
         listSelectedCustomer.clear();
         listSelectedCustomer.addAll(listNewCustomerSelected);
-
-
-
-//
         fillSelectedRecycler();
 
     }
 
 
     private void fillSelectedRecycler() {
+//        sortData(listSelectedCustomer);
+
         final LinearLayoutManager layoutManager;
         layoutManager = new LinearLayoutManager(PlanSalesMan.this);
         selectedCustomer_recycler.setLayoutManager(layoutManager);
         SelectedCustomerAdapterPlan adapter = new SelectedCustomerAdapterPlan(listSelectedCustomer, PlanSalesMan.this);
         selectedCustomer_recycler.setAdapter(adapter);
-//        ItemTouchHelper itemTouchHelper=new ItemTouchHelper(simpleCallback);
-//        itemTouchHelper.attachToRecyclerView(selectedCustomer_recycler);
     }
 
     private void filterListcustomer(String name) {
         listCustomer_filtered.clear();
-        for (int i=0;i<listCustomer.size();i++){
-            if(listCustomer.get(i).getCustomerName().contains(name)){
+        for (int i = 0; i < listCustomer.size(); i++) {
+            if (listCustomer.get(i).getCustomerName().contains(name)) {
                 listCustomer_filtered.add(listCustomer.get(i));
             }
 
         }
-        Log.e("listCustomer_filtered",""+listCustomer_filtered.size());
-        if(listCustomer_filtered.size()!=0){
+        if (listCustomer_filtered.size() != 0) {
             fillRecyclerCustomer(listCustomer_filtered);
 
-        }else {
+        } else {
             fillRecyclerCustomer(listCustomer);
         }
     }
 
     private void fillCustomerList() {
-        for(int i=0;i<listCustomer.size();i++)
-        {
+        for (int i = 0; i < listCustomer.size(); i++) {
 
-            for(int k=0;k<listPlan.size();k++){
-                if(listCustomer.get(i).getCustomerNumber().equals(listPlan.get(k).getCustomerNumber()))
-                {
+            for (int k = 0; k < listPlan.size(); k++) {
+                orderType = listPlan.get(0).getType_orderd();
+                if (listCustomer.get(i).getCustomerNumber().equals(listPlan.get(k).getCustomerNumber())) {
                     listCustomer.get(i).setIsSelected(1);
                     listCustomer.get(i).setOrder(listPlan.get(k).getOrderd());
                 }
             }
         }
         fillRecyclerCustomer(listCustomer);
+        refreshOrderType();
+
+
+    }
+
+    private void refreshOrderType() {
+        if (orderType == 0)
+            orderd_typeGroup.check(R.id.manual_RadioButton);
+        else orderd_typeGroup.check(R.id.byLocation_RadioButton);
     }
 
     private void checkData() {
         listPlan.clear();
-        int orderType=getTypeOrder();
-        String currentDate=fromDate.getText().toString();
-        Log.e("checkData","orderType"+orderType+"\tlistCustomer="+listSelectedCustomer.size()+"listPlan="+listPlan.size());
-
-
-        for (int i=0;i<listSelectedCustomer.size();i++){
-            if(listSelectedCustomer.get(i).getIsSelected()==1)
-            {
-                Plan_SalesMan_model plan=new Plan_SalesMan_model();
+        orderType = getTypeOrder();
+        String currentDate = fromDate.getText().toString();
+        for (int i = 0; i < listSelectedCustomer.size(); i++) {
+            if (listSelectedCustomer.get(i).getIsSelected() == 1) {
+                Plan_SalesMan_model plan = new Plan_SalesMan_model();
                 plan.setPlan_date(currentDate);
                 plan.setCustomerName(listSelectedCustomer.get(i).getCustomerName());
                 plan.setCustomerNumber(listSelectedCustomer.get(i).getCustomerNumber());
-                Log.e("salesNameSpinner",i+"\t"+plan.getCustomerName());
-                Log.e("salesNameSpinner","order1=="+listSelectedCustomer.get(i).getOrder());
-
-               String sales= salesManInfosList.get((int) salesNameSpinner.getSelectedItemId()).getSalesManNo();
+                Log.e("salesNameSpinner", i + "\t" + plan.getCustomerName());
+                String sales = salesManInfosList.get((int) salesNameSpinner.getSelectedItemId()).getSalesManNo();
                 plan.setSalesNo(sales);
-
-                plan.setOrderd(listSelectedCustomer.get(i).getOrder());
-                Log.e("salesNameSpinner","order2=="+plan.getOrderd());
-
+                plan.setOrderd(listSelectedCustomer.get(i).getOrder() + 1);
                 plan.setType_orderd(orderType);
                 plan.setLatit_customer(listSelectedCustomer.get(i).getLatit_customer());
                 plan.setLong_customer(listSelectedCustomer.get(i).getLong_customer());
-
+                plan.setAreaPlan(allAreaPlan.toString());
                 listPlan.add(plan);
 
             }
-            
+
         }
-        Log.e("checkData","listPlan"+listPlan.size());
-        if(listPlan.size()!=0)
-        {
+        if (listPlan.size() != 0) {
             savePlan();
-        }
-        else {
+        } else {
             showSelectCustomers();
         }
+    }
+
+    public void getData() {
+        String salesNum = salesManInfosList.get((int) salesNameSpinner.getSelectedItemId()).getSalesManNo();
+        importData.getPlan(salesNum, fromDate.getText().toString());
+
     }
 
     private void showSelectCustomers() {
@@ -467,10 +510,8 @@ Log.e("onItemClick",""+position);
     }
 
     private void savePlan() {
-        //ADMADDPLAN
-//       JSONObject= getJsonObjectPlan();
-        ExportData exportData =new ExportData(this);
-        exportData.IIs_AddPlan(listPlan,this);
+        ExportData exportData = new ExportData(this);
+        exportData.IIs_AddPlan(listPlan, this);
         clearData();
     }
 
@@ -486,21 +527,20 @@ Log.e("onItemClick",""+position);
     }
 
     private void setSelectedDefault() {
-        for(int i=0;i<listCustomer.size();i++){
+        for (int i = 0; i < listCustomer.size(); i++) {
             listCustomer.get(i).setIsSelected(0);
         }
         fillRecyclerCustomer(listCustomer);
     }
 
     private int getTypeOrder() {
-        if(orderd_typeGroup.getCheckedRadioButtonId()==R.id.manual_RadioButton)
+        if (orderd_typeGroup.getCheckedRadioButtonId() == R.id.manual_RadioButton)
             return 0;
         else return 1;
     }
 
     private void fillRecyclerCustomer(ArrayList<CustomerInfo> listCustomer) {
         if (listCustomer.size() != 0) {
-         //   Log.e("fillRecyclerCustomer", "" + listCustomer.size());
             final LinearLayoutManager layoutManager;
             layoutManager = new LinearLayoutManager(PlanSalesMan.this);
             customer_recycler.setLayoutManager(layoutManager);
@@ -509,47 +549,18 @@ Log.e("onItemClick",""+position);
 //            ItemTouchHelper itemTouchHelper=new ItemTouchHelper(simpleCallback);
 //            itemTouchHelper.attachToRecyclerView(customer_recycler);
 
-        } else {
-            fillCustomerLocalTest();
-
-        }
-    }
-    public  void fillCustomerLocalTest(){
-        listCustomer=new ArrayList<>();
-        CustomerInfo customerInfo=new CustomerInfo();
-        customerInfo.setCustomerName("Ahmed abdulaah");
-        customerInfo.setCustomerNumber("1100011122");
-        listCustomer.add(customerInfo);
-        customerInfo.setCustomerName("عبد الله ");
-        customerInfo.setCustomerNumber("1100011122");
-        listCustomer.add(customerInfo);
-        customerInfo.setCustomerName("mohemmed ali");
-        customerInfo.setCustomerNumber("1100011122");
-        listCustomer.add(customerInfo);
-        customerInfo.setCustomerName("omer ali");
-        customerInfo.setCustomerNumber("1100011122");
-        listCustomer.add(customerInfo);
-        customerInfo.setCustomerName("عبد الله عمر");
-        customerInfo.setCustomerNumber("1100011122");
-        listCustomer.add(customerInfo);
-        Log.e("fillCustomerLocalTest",""+listCustomer.size());
-
-    }
+        }}
 
 
-    private void fillSalesManSpinner() {
+    public void fillSalesManSpinner() {
         salesNameSpinnerAdapter = new ArrayAdapter<String>(this, R.layout.spinner_layout, salesManNameList);
         salesNameSpinnerAdapter.setDropDownViewResource(R.layout.spinner_layout);
         salesNameSpinner.setAdapter(salesNameSpinnerAdapter);
         salesNameSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-
-             String  salesNum = salesManInfosList.get(position).getSalesManNo();
-
-                Log.e("onItemSelected",""+salesNum);
-                importData.getPlan(salesNum,fromDate.getText().toString());
+                String salesNum = salesManInfosList.get(position).getSalesManNo();
+                importData.getPlan(salesNum, fromDate.getText().toString());
 
             }
 
@@ -561,14 +572,15 @@ Log.e("onItemClick",""+position);
 
 
     }
-    View.OnClickListener onClick=new View.OnClickListener() {
+
+    View.OnClickListener onClick = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
 
 
-            switch (view.getId()){
+            switch (view.getId()) {
 
-                case R.id.from_date_r :
+                case R.id.from_date_r:
                     globelFunction.DateClick(fromDate);
                     break;
 
@@ -577,16 +589,26 @@ Log.e("onItemClick",""+position);
 
         }
     };
-    ItemTouchHelper.SimpleCallback simpleCallback=new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP|ItemTouchHelper.DOWN|ItemTouchHelper.START|ItemTouchHelper.END,0) {
+
+    private void sortData(ArrayList<CustomerInfo> listCustomer) {
+        Collections.sort(listCustomer, new Comparator<CustomerInfo>() {
+            @Override
+            public int compare(CustomerInfo objec1, CustomerInfo objec2) {
+                return objec1.getOrder() - (objec2.getOrder());
+            }
+        });
+
+    }
+
+    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.START | ItemTouchHelper.END, 0) {
         @Override
         public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-            int fromPosition=viewHolder.getAdapterPosition();
-            int toPosition=target.getAdapterPosition();
-            Log.e("onMove","fromPosition="+fromPosition+"\t to="+toPosition);
-            Collections.swap(listSelectedCustomer,fromPosition,toPosition);
-            recyclerView.getAdapter().notifyItemMoved(fromPosition,toPosition);
+            int fromPosition = viewHolder.getAdapterPosition();
+            int toPosition = target.getAdapterPosition();
+            Collections.swap(listSelectedCustomer, fromPosition, toPosition);
+            recyclerView.getAdapter().notifyItemMoved(fromPosition, toPosition);
 
-           // recyclerView.getAdapter().notify();
+            // recyclerView.getAdapter().notify();
 
             return false;
         }
@@ -597,16 +619,3 @@ Log.e("onItemClick",""+position);
         }
     };
 }
-//            for (Map.Entry<String, List<Object>> entry : map.entrySet()) {
-//
-//                String key=entry.getKey();
-//                List<Object> listCustomerLoc = entry.getValue();
-//                if(key.contains(listCustomer.get(i).getAreaName()))
-//                {
-//                    listCustomerLoc.add(listCustomer.get(i));
-//                }
-//              //  Log.e("key","=="+key+"\t"+listCustomerLoc.size());
-//
-//
-//                // Do things with the list
-//            }

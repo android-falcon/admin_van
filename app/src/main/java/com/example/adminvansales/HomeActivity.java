@@ -387,10 +387,17 @@ public class HomeActivity extends AppCompatActivity {
         }
         else  if (id == R.id.customerLocation)
         {
-            finish();
+//            finish();
             Intent i = new Intent(HomeActivity.this, AddCustomerLocation.class);
             startActivity(i);
         }
+        else  if (id == R.id.itemVisiblity)
+        {
+//            finish();
+            Intent i = new Intent(HomeActivity.this, ItemVisibility.class);
+            startActivity(i);
+        }
+
         return super.
 
                 onOptionsItemSelected(item);
