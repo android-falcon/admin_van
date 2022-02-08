@@ -29,6 +29,9 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
+            android:name=".Report.PlansReport"
+            android:exported="false" />
+        <activity
             android:name=".CustomerLocationSelect"
             android:exported="false" />
         <activity

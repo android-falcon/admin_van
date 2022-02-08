@@ -28,6 +28,7 @@ import com.azoft.carousellayoutmanager.CarouselZoomPostLayoutListener;
 import com.azoft.carousellayoutmanager.CenterScrollListener;
 import com.example.adminvansales.Adapters.SalesManAdapter;
 import com.example.adminvansales.Report.OfferseReport;
+import com.example.adminvansales.Report.PlansReport;
 import com.example.adminvansales.model.Password;
 import com.example.adminvansales.model.SalesManInfo;
 import com.example.adminvansales.Report.AnalyzeAccounts;
@@ -55,7 +56,7 @@ public class HomeActivity extends AppCompatActivity {
     LinearLayout ReportLinear;
     public static EditText editPassword;
     TextView offersReport,customerLogReport, paymentReport, cashReport, offerReport,LogReport,unCollectedCheques,
-            analyzeAcountsReport,ItemReport;
+            analyzeAcountsReport,ItemReport, plansReport;
     com.example.adminvansales.model.SettingModel settingModel;
     DataBaseHandler databaseHandler;
 
@@ -126,6 +127,7 @@ public class HomeActivity extends AppCompatActivity {
         offerReport = findViewById(R.id.offerReport);
         LogReport=findViewById(R.id.LogReport);
         ItemReport=findViewById(R.id.ItemReport);
+        plansReport = findViewById(R.id.plansReport);
         addPlan_Sales_man=findViewById(R.id.addPlan_Sales_man);
         addPlan_Sales_man.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -323,6 +325,16 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View view) {
                 ReportLinear.setVisibility(View.GONE);
                 Intent intent = new Intent(HomeActivity.this, ItemReport.class);
+                startActivity(intent);
+
+            }
+        });
+
+        plansReport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ReportLinear.setVisibility(View.GONE);
+                Intent intent = new Intent(HomeActivity.this, PlansReport.class);
                 startActivity(intent);
 
             }
