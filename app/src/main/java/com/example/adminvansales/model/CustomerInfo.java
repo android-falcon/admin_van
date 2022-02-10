@@ -11,6 +11,15 @@ public class CustomerInfo {
     private  int isSelected;
     private  String areaName;
     private  int order;
+    private  int duplicat=0;
+
+    public int getDuplicat() {
+        return duplicat;
+    }
+
+    public void setDuplicat(int duplicat) {
+        this.duplicat = duplicat;
+    }
 
     public int getOrder() {
         return order;

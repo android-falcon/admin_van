@@ -57,8 +57,8 @@ public class ExportData {
     GlobelFunction globelFunction;
     SweetAlertDialog pdValidationAdd;
     SweetAlertDialog pdValidationUpdate;
-//public  String headerDll="/Falcons/VAN.dll";
-public  String headerDll="";
+    public  String headerDll="/Falcons/VAN.dll";
+   //public  String headerDll="";
     public  String CONO="";
     Context main_context;
     int flag=0;
@@ -217,10 +217,10 @@ public  String headerDll="";
     }
     public void IIs_AddPlan(List<Plan_SalesMan_model>salesManInfos, Context context){
         getCONO();
-
         getAddPlanObject(salesManInfos);
+        new JSONTaskIIs_DeletePlan(context,salesManInfos).execute();
 
-        new JSONTaskIIs_AddPlan(context,salesManInfos).execute();
+
     }
     public void IIs_UpdateSales(List<SalesManInfo>salesManInfos,EditSalesMan context){
         getCONO();
@@ -799,16 +799,152 @@ public  String headerDll="";
         }
 
     }
+    private class JSONTaskIIs_DeletePlan extends AsyncTask<String, String, String> {
+        Context  context;
+        List<Plan_SalesMan_model>salesManInfos=new ArrayList<>();
+        JSONObject jsonObject;
+        String datePlan="",salesNo="";
+
+
+
+        public JSONTaskIIs_DeletePlan(   Context context, List<Plan_SalesMan_model> salesManInfos) {
+            this.context = context;
+            this.salesManInfos = salesManInfos;
+            datePlan=salesManInfos.get(0).getPlan_date();
+            salesNo=salesManInfos.get(0).getSalesNo();
+
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            Log.e("salesManInfos","onPreExecute="+datePlan);
+            pd = new SweetAlertDialog(main_context, SweetAlertDialog.PROGRESS_TYPE);
+            pd.getProgressHelper().setBarColor(Color.parseColor("#FDD835"));
+            pd.setTitleText(main_context.getResources().getString(R.string.update));
+            pd.setCancelable(false);
+            pd.show();
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+
+
+                if (!ipAddress.equals("")) {
+                    http://localhost:8085/ADMAddSalesMan?CONO=295
+                    URL_TO_HIT = "http://" + ipAddress+":"+portSettings +  headerDll.trim() +"/ADMDeletePlan";
+
+
+                    Log.e("URL_TO_HI",URL_TO_HIT);
+
+
+                }
+
+
+            } catch (Exception e) {
+                pd.dismissWithAnimation();
+            }
+
+            try {
+
+                String JsonResponse = null;
+                HttpClient client = new DefaultHttpClient();
+                HttpPost request = new HttpPost();
+                try {
+                    request.setURI(new URI(URL_TO_HIT));
+                } catch (URISyntaxException e) {
+                    e.printStackTrace();
+                }
+                Log.e("salesManInfos","doInBackground="+datePlan);
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+                nameValuePairs.add(new BasicNameValuePair("CONO", CONO));
+                nameValuePairs.add(new BasicNameValuePair("JSONSTR",addsalesmanobject.toString().trim()));
+
+
+                Log.e("JSONSTR","ADMADDPLAN="+addsalesmanobject.toString());
+                request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+
+
+                HttpResponse response = client.execute(request);
+
+
+                BufferedReader in = new BufferedReader(new
+                        InputStreamReader(response.getEntity().getContent()));
+
+                StringBuffer sb = new StringBuffer("");
+                String line = "";
+
+                while ((line = in.readLine()) != null) {
+                    sb.append(line);
+                }
+
+                in.close();
+
+
+                JsonResponse = sb.toString();
+                Log.e("tag_requestState", "JsonResponse\t" + JsonResponse);
+
+                return JsonResponse;
+
+
+            }//org.apache.http.conn.HttpHostConnectException: Connection to http://10.0.0.115 refused
+            catch (HttpHostConnectException ex) {
+                ex.printStackTrace();
+//                progressDialog.dismiss();
+
+                Handler h = new Handler(Looper.getMainLooper());
+                h.post(new Runnable() {
+                    public void run() {
+
+                        Toast.makeText(main_context, "Ip Connection Failed ", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
+                return null;
+            } catch (Exception e) {
+                e.printStackTrace();
+//                progressDialog.dismiss();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.e("salesManInfos","onPostExecute="+datePlan);
+            pd.dismissWithAnimation();
+            if (s != null) {
+                if (s.contains("Saved Successfully")) {
+                    Log.e("salesManInfos",""+salesManInfos.size());
+                    new JSONTaskIIs_AddPlan(context,datePlan,salesNo).execute();
+                    Log.e("salesManInfo", "ADD_SALES_MAN_SUCCESS\t" + s.toString());
+
+
+                }else{
+                    Toast.makeText(context, "Plan  not added", Toast.LENGTH_SHORT).show();
+
+                }
+//                progressDialog.dismiss();
+            }
+        }
+
+    }
     private class JSONTaskIIs_AddPlan extends AsyncTask<String, String, String> {
         Context  context;
         List<Plan_SalesMan_model>salesManInfos=new ArrayList<>();
         JSONObject jsonObject;
+        String datePlan="",salesNo="";
 
 
 
-        public JSONTaskIIs_AddPlan(   Context context, List<Plan_SalesMan_model> salesManInfos) {
+        public JSONTaskIIs_AddPlan(   Context context,String dateP,String salesNumber) {
             this.context = context;
             this.salesManInfos = salesManInfos;
+            datePlan=dateP;
+            salesNo=salesNumber;
         }
 
         @Override
@@ -824,8 +960,6 @@ public  String headerDll="";
 
         @Override
         protected String doInBackground(String... params) {
-
-//            ipAddress = "";
             try {
 
 
@@ -917,10 +1051,9 @@ public  String headerDll="";
                 if (s.contains("Saved Successfully")) {
                     Log.e("salesManInfo", "ADD_SALES_MAN_SUCCESS\t" + s.toString());
                     showMessageSucsess("Add Plan Successful");
-//                    Toast.makeText(context, "ADD SALES MAN SUCCESS", Toast.LENGTH_SHORT).show();
-//
-////                    context.clearTextFun();
-//                    globelFunction.getSalesManInfo(context,0);
+                    ImportData importData =new ImportData(context);
+                    importData.getPlan(salesNo,datePlan);
+
 
                 }else{
                     Toast.makeText(context, "Plan  not added", Toast.LENGTH_SHORT).show();

@@ -67,7 +67,9 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -126,13 +128,14 @@ public class ImportData {
     public static ArrayList<Account__Statment_Model> listCustomerInfo = new ArrayList<Account__Statment_Model>();
     public static ArrayList<CustomerInfo> listCustomer = new ArrayList<CustomerInfo>();
     public static List<String> customername = new ArrayList<>();
+    public  static Set<String> listAllArea=new HashSet<>();
 
 
     public static List<OfferGroupModel> offerGroupModels = new ArrayList<>();
     ProgressDialog progressDialog;
     GlobelFunction globelFunction;
-// public  String headerDll="/Falcons/VAN.dll";
-public  String headerDll="";
+ public  String headerDll="/Falcons/VAN.dll";
+//   public  String headerDll="";
     public ImportData(Context context) {
         databaseHandler = new DataBaseHandler(context);
         this.main_context = context;
@@ -392,11 +395,6 @@ public  String headerDll="";
 
         @Override
         protected void onPreExecute() {
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
             super.onPreExecute();
             progressDialog = new ProgressDialog(main_context);
             progressDialog.setCancelable(false);
@@ -523,7 +521,7 @@ public  String headerDll="";
                                 plan.setLong_customer(jsonObject1.getString("LO"));
                                 plan.setCustomerName(  jsonObject1.getString("CUSNAME"));
                                 plan.setCustomerNumber(  jsonObject1.getString("CUSTNO"));
-                                plan.setOrderd(Integer.parseInt(  jsonObject1.getString("ORDERD")));
+                                plan.setOrderd(Integer.parseInt(  jsonObject1.getString("ORDERD"))-1);
                                 plan.setType_orderd(Integer.parseInt(  jsonObject1.getString("TYPEORDER")));
                                 if (flag == 0)
                                     listPlan.add( plan);
@@ -1119,6 +1117,9 @@ Log.e("URL_TO_HIT",URL_TO_HIT+"");
             } else if (flag == 3) {
                 this.context = (PlansReport) context;
             }
+            else if (flag == 4) {
+                this.context = (PlanSalesMan) context;
+            }
         }
 
         @Override
@@ -1268,6 +1269,10 @@ Log.e("URL_TO_HIT",URL_TO_HIT+"");
                         } else if (flag == 2) {
                             SalesmanMapsActivity salesmanMapsActivity = (SalesmanMapsActivity) context;
                             salesmanMapsActivity.location(1);
+                        }
+                        else if (flag == 4) {
+                            PlanSalesMan salesmanMapsActivity = (PlanSalesMan) context;
+                            salesmanMapsActivity.fillSalesManSpinner();
                         }
 
 
@@ -3109,6 +3114,7 @@ Log.e("URL_TO_HIT",URL_TO_HIT+"");
 //            Log.e("importData","importData"+s.toString());
             if ( array != null) {
                 if ( array.contains("CUSTID")) {
+                    listAllArea.clear();
                     // Log.e("CUSTOMER_INFO","onPostExecute\t"+s.toString());
                     //{"CUSTOMER_INFO":[{"VHFNo":"0","TransName":"ÞíÏ ÇÝÊÊÇÍí","VHFDATE":"31-DEC-19","DEBIT":"0","Credit":"16194047.851"}
 
@@ -3118,11 +3124,12 @@ Log.e("URL_TO_HIT",URL_TO_HIT+"");
                             JSONArray requestArray = null;
                             requestArray = new JSONArray( array);
                             listCustomerInfo = new ArrayList<>();
+                            listCustomer= new ArrayList<>();
+                            customername=new ArrayList<>();
 
-//                            for (int i = 0; i < requestArray.length(); i++) {
-                                for (int i = 0; i < 20; i++) {
+                            for (int i = 0; i < requestArray.length(); i++) {
 
-                                    Log.e("requestArray===", "requestArray" );
+                                Log.e("requestArray===", "requestArray" );
                                 CustomerInfo customerInfo=new CustomerInfo();
                                 jsonObject1 = requestArray.getJSONObject(i);
                                 customerInfo.setCustomerNumber( jsonObject1.get("CUSTID").toString());
@@ -3136,14 +3143,16 @@ Log.e("URL_TO_HIT",URL_TO_HIT+"");
                                 }
 
                                 customerInfo.setIsSelected(0);
-                                customerInfo.setOrder(i);
-                                if(i<10)
-                                customerInfo.setAreaName("جبل الحسين");
-                                else customerInfo.setAreaName("العبدلي");
+                                customerInfo.setOrder(1000);
+                                customerInfo.setAreaName(jsonObject1.get("AREA").toString());
+//                                if(jsonObject1.get("AREA").toString().trim().length()!=0)
+                                listAllArea.add(jsonObject1.get("AREA").toString());
+
                                 listCustomer.add( customerInfo);
                                 customername.add( customerInfo.getCustomerName());
 
                             }
+                            Log.e("listAllArea",""+listAllArea.size());
 
 
 

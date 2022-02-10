@@ -2,6 +2,7 @@ package com.example.adminvansales.Adapters;
 
 import static com.example.adminvansales.GlobelFunction.salesManInfosList;
 import static com.example.adminvansales.GlobelFunction.salesManNameList;
+import static com.example.adminvansales.PlanSalesMan.orderType;
 
 import android.content.Context;
 import android.util.Log;
@@ -66,11 +67,32 @@ public class SelectedCustomerAdapterPlan extends RecyclerView.Adapter<SelectedCu
         holder.select_customer_checkbox.setVisibility(View.GONE);
         // holder.orderd_customer.setText(holder.getAdapterPosition()+"");
             holder.select_customer_checkbox.setChecked(true);
-            Log.e("getOrder","=="+inventorylist.get(position).getOrder());
+            Log.e("getOrder","=="+inventorylist.get(position).getOrder()+"\t"+inventorylist.get(position).getCustomerName());
+            if(orderType==1)
+            {
+                holder.orderSpinner.setVisibility(View.GONE);
+            }
 
             if(inventorylist.get(position).getOrder()<inventorylist.size())
             holder.orderSpinner.setSelection(inventorylist.get(position).getOrder());
-            else  holder.orderSpinner.setSelection(position);
+            else
+            {
+//                if(position!=0)
+//                {
+////                    int previusOrder=inventorylist.get(position-1).getOrder();
+////                    if(previusOrder<position)
+//                    inventorylist.get(position).setOrder(inventorylist.get(position-1).getOrder()+1);
+//                }else
+                holder.orderSpinner.setSelection(position);
+//                holder.orderSpinner.setSelection(inventorylist.get(position-1).getOrder()+1);
+            }
+
+            if(inventorylist.get(position).getDuplicat()==1)
+            {
+                holder.mailLinearInfo.setBackgroundColor(context.getResources().getColor(R.color.darkOrange2));
+            }else {
+                holder.mailLinearInfo.setBackgroundColor(context.getResources().getColor(R.color.white));
+            }
 
 
 
@@ -85,7 +107,7 @@ public class SelectedCustomerAdapterPlan extends RecyclerView.Adapter<SelectedCu
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        LinearLayout linearLayout;
+        LinearLayout linearLayout,mailLinearInfo;
 
         TextView customerName,address_customer,customer_number,orderd_customer,customerLocat;
         CheckBox select_customer_checkbox;
@@ -97,6 +119,7 @@ public class SelectedCustomerAdapterPlan extends RecyclerView.Adapter<SelectedCu
             super(itemView);
 
             linearLayout = itemView.findViewById(R.id.liner_inventory);
+            mailLinearInfo = itemView.findViewById(R.id.mailLinearInfo);
             customerName = itemView.findViewById(R.id.customerName);
             address_customer = itemView.findViewById(R.id.address_customer);
             customer_number = itemView.findViewById(R.id.customer_number);

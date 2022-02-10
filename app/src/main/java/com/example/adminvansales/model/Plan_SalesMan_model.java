@@ -12,6 +12,15 @@ public class Plan_SalesMan_model {
     private  String salesNo;
     private  int orderd;
     private int type_orderd;
+    private  String areaPlan;
+
+    public String getAreaPlan() {
+        return areaPlan;
+    }
+
+    public void setAreaPlan(String areaPlan) {
+        this.areaPlan = areaPlan;
+    }
 
     public Plan_SalesMan_model() {
     }
@@ -80,8 +89,7 @@ public class Plan_SalesMan_model {
         this.type_orderd = type_orderd;
     }
     public JSONObject getJsonObject2(){
-
-                JSONObject jsonObject=new JSONObject();
+         JSONObject jsonObject=new JSONObject();
 
         try {
             jsonObject.put("SALESNO", salesNo);
@@ -94,8 +102,7 @@ public class Plan_SalesMan_model {
             jsonObject.put("LO", long_customer);
             jsonObject.put("ORDERD", orderd);
             jsonObject.put("TYPEORDER", type_orderd);
-
-
+            jsonObject.put("AREAPLAN", areaPlan);
 
         } catch (JSONException e) {
             e.printStackTrace();
