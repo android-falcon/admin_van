@@ -39,7 +39,7 @@ public class PlansReportAdapter extends RecyclerView.Adapter<PlansReportAdapter.
 
         holder.custNameTV.setText(planList.get(position).getCustomerName());
         holder.custNoTV.setText(planList.get(position).getCustomerNumber());
-        holder.orderTV.setText(planList.get(position).getOrderd()+"");  //0 --- Manual  1 --- Location
+        holder.orderTV.setText(planList.get(position).getOrderd()+"");
 
     }
 

@@ -131,14 +131,17 @@ public class PlansReport extends AppCompatActivity {
 
                         String custName = custNameSearch.getText().toString().trim().toLowerCase();
 
+                        if (allPlans.get(0).getType_orderd() == 1)
+                            orderRG.check(R.id.locationRBtn);
+                        else
+                            orderRG.check(R.id.manualRBtn);
+
                         for (int p = 0; p < allPlans.size(); p++) {
 
                             if (allPlans.get(p).getCustomerName().toLowerCase().contains(custName)) {
-                                if (allPlans.get(p).getType_orderd() == 1 && orderRG.getCheckedRadioButtonId() == R.id.locationRBtn)
-                                    searchPlanList.add(allPlans.get(p));
 
-                                else if (allPlans.get(p).getType_orderd() == 0 && orderRG.getCheckedRadioButtonId() == R.id.manualRBtn)
-                                    searchPlanList.add(allPlans.get(p));
+                                searchPlanList.add(allPlans.get(p));
+
                             }
 
                         }
@@ -159,48 +162,48 @@ public class PlansReport extends AppCompatActivity {
             }
         });
 
-        orderRG.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-
-                searchPlanList.clear();
-
-                String custName = custNameSearch.getText().toString().trim().toLowerCase();
-
-                if (i == R.id.locationRBtn) {
-
-                    for (int p = 0; p < allPlans.size(); p++) {
-
-                        if (allPlans.get(p).getCustomerName().toLowerCase().contains(custName)) {
-                            if (allPlans.get(p).getType_orderd() == 1) {
-
-                                searchPlanList.add(allPlans.get(p));
-
-                            }
-                        }
-
-                    }
-
-                } else {
-
-                    for (int p = 0; p < allPlans.size(); p++) {
-
-                        if (allPlans.get(p).getCustomerName().toLowerCase().contains(custName)) {
-                            if (allPlans.get(p).getType_orderd() == 0) {
-
-                                searchPlanList.add(allPlans.get(p));
-
-                            }
-                        }
-
-                    }
-
-                }
-                plansReportAdapter = new PlansReportAdapter(PlansReport.this, searchPlanList);
-                plans_recycler.setAdapter(plansReportAdapter);
-
-            }
-        });
+//        orderRG.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+//
+//                searchPlanList.clear();
+//
+//                String custName = custNameSearch.getText().toString().trim().toLowerCase();
+//
+//                if (i == R.id.locationRBtn) {
+//
+//                    for (int p = 0; p < allPlans.size(); p++) {
+//
+//                        if (allPlans.get(p).getCustomerName().toLowerCase().contains(custName)) {
+//                            if (allPlans.get(p).getType_orderd() == 1) {
+//
+//                                searchPlanList.add(allPlans.get(p));
+//
+//                            }
+//                        }
+//
+//                    }
+//
+//                } else {
+//
+//                    for (int p = 0; p < allPlans.size(); p++) {
+//
+//                        if (allPlans.get(p).getCustomerName().toLowerCase().contains(custName)) {
+//                            if (allPlans.get(p).getType_orderd() == 0) {
+//
+//                                searchPlanList.add(allPlans.get(p));
+//
+//                            }
+//                        }
+//
+//                    }
+//
+//                }
+//                plansReportAdapter = new PlansReportAdapter(PlansReport.this, searchPlanList);
+//                plans_recycler.setAdapter(plansReportAdapter);
+//
+//            }
+//        });
 
         custNameSearch.addTextChangedListener(new TextWatcher() {
             @Override
