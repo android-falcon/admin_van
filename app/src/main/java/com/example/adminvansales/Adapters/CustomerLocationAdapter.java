@@ -72,6 +72,12 @@ public class CustomerLocationAdapter extends RecyclerView.Adapter<CustomerLocati
         // holder.orderd_customer.setText(holder.getAdapterPosition()+"");
         holder.select_customer_checkbox.setVisibility(View.GONE);
         Log.e("updateListCustomer",""+   inventorylist.get(position).getLong_customer());
+        if(inventorylist.get(holder.getAdapterPosition()).getLatit_customer().equals(""))
+        {
+            holder.customerLocat.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_baseline_add_location_alt_24, 0);
+        }else  holder.customerLocat.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_location_on_black_24dp, 0);
+
+
 
 
 

@@ -10,10 +10,13 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.adminvansales.ItemVisibility;
 import com.example.adminvansales.R;
+import com.example.adminvansales.databinding.ItemVisiblLayoutBinding;
+import com.example.adminvansales.databinding.RowOfferListAdapterBinding;
 import com.example.adminvansales.model.CustomerInfo;
 import com.example.adminvansales.model.ItemInfo;
 
@@ -22,8 +25,6 @@ import java.util.List;
 
 public class ItemVisibleAdapter extends RecyclerView.Adapter<ItemVisibleAdapter.ViewHolder> {
     static List<ItemInfo> inventorylist;
-    public double totalBalance = 0;
-
     Context context;
     private DecimalFormat decimalFormat;
 
@@ -36,9 +37,10 @@ public class ItemVisibleAdapter extends RecyclerView.Adapter<ItemVisibleAdapter.
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_visibl_layout, parent, false);
-        Log.e("", "onCreateViewHolder");
-        return new ViewHolder(view);
+        LayoutInflater inflater = LayoutInflater.from(context);
+        ItemVisiblLayoutBinding adapterBinding = DataBindingUtil.inflate(inflater, R.layout.item_visibl_layout,
+                parent, false);
+        return new ViewHolder(adapterBinding);
 
     }
 
@@ -48,12 +50,9 @@ public class ItemVisibleAdapter extends RecyclerView.Adapter<ItemVisibleAdapter.
     public void onBindViewHolder(ItemVisibleAdapter.ViewHolder holder, int position) {
 
         holder.setIsRecyclable(false);
-        holder.customerName.setText(inventorylist.get(holder.getAdapterPosition()).getItemNameA());
-        holder.customer_number.setText(inventorylist.get(holder.getAdapterPosition()).getItemOcode());
 
-        holder.customerLocat.setVisibility(View.GONE);
+        holder.itemInfoBinding.setItemInfoModel(inventorylist.get(position));
         holder.select_customer_checkbox.setVisibility(View.VISIBLE);
-        // holder.orderd_customer.setText(holder.getAdapterPosition()+"");
         if  (  inventorylist.get(holder.getAdapterPosition()).getSelect()==1)
             holder.select_customer_checkbox.setChecked(true);
         else  if (  inventorylist.get(holder.getAdapterPosition()).getSelect()==0)
@@ -61,15 +60,11 @@ public class ItemVisibleAdapter extends RecyclerView.Adapter<ItemVisibleAdapter.
         holder.select_customer_checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                Log.e("select_customer_","bb"+b);
                 if(b)
                 {
                     inventorylist.get(holder.getAdapterPosition()).setSelect(1);
-//                    updateqty(holder, list.get(holder.getAdapterPosition()).getItemNo());
-
                 }else {
                     inventorylist.get(holder.getAdapterPosition()).setSelect(0);
-//                    updateqty2(holder, list.get(holder.getAdapterPosition()).getItemNo());
                 }
             }
         });
@@ -80,24 +75,16 @@ public class ItemVisibleAdapter extends RecyclerView.Adapter<ItemVisibleAdapter.
 
     @Override
     public int getItemCount() {
-
         return inventorylist.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        LinearLayout linearLayout;
-
-        TextView customerName,address_customer,customer_number,orderd_customer,customerLocat;
         CheckBox select_customer_checkbox;
+        ItemVisiblLayoutBinding itemInfoBinding;
 
-        public ViewHolder(View itemView) {
-            super(itemView);
-
-            linearLayout = itemView.findViewById(R.id.liner_inventory);
-            customerName = itemView.findViewById(R.id.customerName);
-            address_customer = itemView.findViewById(R.id.address_customer);
-            customer_number = itemView.findViewById(R.id.customer_number);
-
+        public ViewHolder( ItemVisiblLayoutBinding itemInfoBinding) {
+            super(itemInfoBinding.getRoot());
+            this.itemInfoBinding=itemInfoBinding;
             select_customer_checkbox=itemView.findViewById(R.id.select_customer_checkbox);
             Log.e("", "ViewHolder const");
 

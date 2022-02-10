@@ -499,7 +499,7 @@ public class PlanSalesMan extends AppCompatActivity {
 
     public void getData() {
         String salesNum = salesManInfosList.get((int) salesNameSpinner.getSelectedItemId()).getSalesManNo();
-        importData.getPlan(salesNum, fromDate.getText().toString());
+        importData.getPlan(salesNum, fromDate.getText().toString(),0);
 
     }
 
@@ -560,7 +560,7 @@ public class PlanSalesMan extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String salesNum = salesManInfosList.get(position).getSalesManNo();
-                importData.getPlan(salesNum, fromDate.getText().toString());
+                importData.getPlan(salesNum, fromDate.getText().toString(),0);
 
             }
 

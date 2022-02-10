@@ -57,8 +57,8 @@ public class ExportData {
     GlobelFunction globelFunction;
     SweetAlertDialog pdValidationAdd;
     SweetAlertDialog pdValidationUpdate;
-    public  String headerDll="/Falcons/VAN.dll";
-   //public  String headerDll="";
+//    public  String headerDll="/Falcons/VAN.dll";
+   public  String headerDll="";
     public  String CONO="";
     Context main_context;
     int flag=0;
@@ -1052,7 +1052,7 @@ public class ExportData {
                     Log.e("salesManInfo", "ADD_SALES_MAN_SUCCESS\t" + s.toString());
                     showMessageSucsess("Add Plan Successful");
                     ImportData importData =new ImportData(context);
-                    importData.getPlan(salesNo,datePlan);
+                    importData.getPlan(salesNo,datePlan,0);
 
 
                 }else{

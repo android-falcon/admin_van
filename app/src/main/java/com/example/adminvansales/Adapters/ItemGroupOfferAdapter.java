@@ -58,43 +58,6 @@ public class ItemGroupOfferAdapter  extends RecyclerView.Adapter<ItemGroupOfferA
 //        holder.adapterBinding.qtyOffer.setText(listAllOfferGroup.get(position).qtyItem+"");
         holder.adapterBinding.qtyOffer.setTag(position);
 
-
-//        holder.adapterBinding.qtyOffer.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//                if(s.toString().trim().length()!=0)
-//                {
-//                    if(!s.toString().equals("0"))
-//                    {
-//                        Log.e("posi12","="+holder.adapterBinding.qtyOffer.getTag());
-//
-////                        holder.adapterBinding.qtyOffer.getTag().toString();
-//                        int posi= Integer.parseInt(holder.adapterBinding.qtyOffer.getTag().toString());
-////                        posi=   holder.getAdapterPosition();
-//                        updateList(posi,s.toString());
-//
-//                       // holder.adapterBinding.setItemOffer(listAllOfferGroup.get(position));
-//
-//                        Log.e("posi22020","="+ posi);
-//
-//                    }
-//                }
-//
-//            }
-//        });
-
-
-
     }
 
     private void updateList(int posi,String qty) {
@@ -110,13 +73,6 @@ public class ItemGroupOfferAdapter  extends RecyclerView.Adapter<ItemGroupOfferA
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         RowOfferListAdapterBinding adapterBinding;
-        TextView textView_counterNo;
-//        public ViewHolder(View itemView) {
-//            super(itemView);
-//            textView_counterNo = itemView.findViewById(R.id.qtyOffer);
-//            Log.e("onCreateViewHolder", "ViewHolder");
-
-
         public ViewHolder(final RowOfferListAdapterBinding binding) {
 
             super(binding.getRoot());

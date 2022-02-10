@@ -1,19 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+   >
     <data>
         <import type="com.example.adminvansales.model.ItemInfo"/>
         <variable
             name="itemInfoModel"
             type="com.example.adminvansales.model.ItemInfo"
             />
-        <variable
-            name="fromDate"
-            type="String"
-            />
-
     </data>
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
 
@@ -53,22 +50,11 @@
             android:gravity="center"
             android:textSize="14sp"
             android:padding="2dp"
-            android:text=""
+            android:text="@{itemInfoModel.itemNameA}"
             android:textColor="@color/colorPrimary"
             android:textColorLink="@color/colorPrimary" />
 
-        <TextView
-            android:id="@+id/address_customer"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:textSize="14sp"
-            android:gravity="center"
-            android:padding="2dp"
-            android:visibility="gone"
-            android:text=""
-            android:textColor="@color/colorPrimary"
-            android:textColorLink="@color/colorPrimary" />
+
         <TextView
             android:id="@+id/customer_number"
             android:layout_width="0dp"
@@ -77,17 +63,15 @@
             android:gravity="center"
             android:textSize="14sp"
             android:padding="2dp"
-            android:text=""
+            android:text="@{itemInfoModel.itemOcode}"
             android:textColor="@color/colorPrimary"
             android:textColorLink="@color/colorPrimary" />
     </LinearLayout>
 
 
     <LinearLayout
-
         android:layout_width="match_parent"
         android:layout_height="2dp"
-
         android:background="@color/layer4"
         android:layout_margin="3dp"/>
 

@@ -6,6 +6,7 @@ import static com.example.adminvansales.ImportData.listCustomer;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,9 +24,11 @@ import android.widget.TextView;
 
 import com.example.adminvansales.Adapters.CustomerAdapter;
 import com.example.adminvansales.Adapters.ItemVisibleAdapter;
+import com.example.adminvansales.databinding.ActivityItemVisibilityBinding;
 import com.example.adminvansales.model.ErrorHandler;
 import com.example.adminvansales.model.ItemInfo;
 import com.example.adminvansales.model.Plan_SalesMan_model;
+import com.example.adminvansales.modelView.ItemVisibleViewModel;
 import com.example.adminvansales.retrofit.ApiItem;
 import com.example.adminvansales.retrofit.ApiUrl;
 import com.example.adminvansales.retrofit.RetrofitInstance;
@@ -57,22 +60,21 @@ public class ItemVisibility extends AppCompatActivity {
     ApiUrl apiUrl;
     String url = "";
     ApiItem myAPI;
-    RecyclerView recycler_posts;
-    LinearLayoutManager layoutManager;
+
     CompositeDisposable compositeDisposable = new CompositeDisposable();
     SweetAlertDialog pdValidation;
-    Spinner salesNameSpinner, itemVisibleFilter;
+
     ArrayAdapter<String> salesNameSpinnerAdapter, itemStateVisiAdapter;
-    TextView customerSearch, clearSearch;
     List<ItemInfo> listFilterItem, allItemsList, listSelectItems;
     List<String> listItemVisib = new ArrayList<>();
-    Button saveButton;
     public int stateFilterVisibl = 0;
+    ActivityItemVisibilityBinding myBinding;
+    public ItemVisibleViewModel itemVisibleViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_item_visibility);
+        myBinding= DataBindingUtil.setContentView(this,R.layout.activity_item_visibility);
         inititView();
 
 //      fetchCallData();
@@ -82,6 +84,25 @@ public class ItemVisibility extends AppCompatActivity {
 
     private void fetchData() {
 
+//        myBinding.progressBar.setVisibility(View.VISIBLE);
+        itemVisibleViewModel=new ItemVisibleViewModel();
+        itemVisibleViewModel.getItemInfoList().observe(this, new androidx.lifecycle.Observer<List<ItemInfo>>() {
+            @Override
+            public void onChanged(List<ItemInfo> itemInfos) {
+                if(itemInfos!=null&& !itemInfos.isEmpty())
+                {
+
+                    displayData(itemInfos);
+                }
+
+            }
+        });
+//        getRetrofitData();
+
+
+    }
+
+    private void getRetrofitData() {
         Observable<List<ItemInfo>> issueObservable = myAPI.gatItem(295);
         issueObservable.subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -120,7 +141,6 @@ public class ItemVisibility extends AppCompatActivity {
 
                     }
                 });
-
     }
 
     private void fetchCallData() {
@@ -146,11 +166,16 @@ public class ItemVisibility extends AppCompatActivity {
 
     private void displayData(List<ItemInfo> itemInfos) {
         Log.e("displayData", "" + itemInfos.size());
+//        myBinding.progressBar.setVisibility(View.GONE);
+//        myBinding.itemRecycler.setVisibility(View.VISIBLE);
         if (itemInfos.size() != 0) {
-
+            myBinding.progressBar.setVisibility(View.GONE);
             ItemVisibleAdapter adapter = new ItemVisibleAdapter(itemInfos, this);
-            recycler_posts.setAdapter(adapter);
+            myBinding.itemRecycler.setAdapter(adapter);
+
         }
+//        myBinding.progressBar.setVisibility(View.GONE);
+
 
     }
 
@@ -160,22 +185,19 @@ public class ItemVisibility extends AppCompatActivity {
         Log.e("url", "==" + url);
         Retrofit retrofit = RetrofitInstance.getInstance(url);
         myAPI = retrofit.create(ApiItem.class);
-        recycler_posts = findViewById(R.id.item_recycler);
-        recycler_posts.setHasFixedSize(true);
-        recycler_posts.setLayoutManager(new LinearLayoutManager(this));
-        salesNameSpinner = findViewById(R.id.salesNameSpinner);
-        itemVisibleFilter = findViewById(R.id.visiblestateSpinner);
+        myBinding.progressBar.setVisibility(View.VISIBLE);
+        myBinding.itemRecycler.setHasFixedSize(true);
+        myBinding.itemRecycler.setLayoutManager(new LinearLayoutManager(this));
         fillSalesManSpinner();
         fillItemVisibleSpinner();
-        customerSearch = findViewById(R.id.customerSearch);
-        clearSearch = findViewById(R.id.clearSearch);
-        clearSearch.setOnClickListener(v -> {
-            customerSearch.setText("");
+
+        myBinding. clearSearch.setOnClickListener(v -> {
+            myBinding.customerSearch.setText("");
         });
         listFilterItem = new ArrayList<>();
         allItemsList = new ArrayList<>();
         listSelectItems = new ArrayList<>();
-        customerSearch.addTextChangedListener(new TextWatcher() {
+        myBinding.customerSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -198,17 +220,20 @@ public class ItemVisibility extends AppCompatActivity {
 
             }
         });
-        saveButton = findViewById(R.id.saveButton);
-        saveButton.setOnClickListener(v -> {
+        myBinding.saveButton.setOnClickListener(v -> {
             checkData();
         });
     }
 
     private void checkData() {
-
         addsalesmanobject = new JSONObject();
         addsalesmanobject = getJsonObject();// for test
-
+//        ErrorHandler errorHandler=new ErrorHandler();
+//         errorHandler= itemVisibleViewModel.addItemVisibile(addsalesmanobject);
+//        sweetSaved(errorHandler.getErrorDics());
+//           if (errorHandler.getErrorDics().contains("Saved")) {
+//                        clearSelected();
+//                    }
 
         Observable<ErrorHandler> issueObservable = myAPI.addItemVisibleList(295, addsalesmanobject);
         issueObservable.subscribeOn(Schedulers.newThread())
@@ -241,7 +266,7 @@ public class ItemVisibility extends AppCompatActivity {
 
                     @Override
                     public void onNext(ErrorHandler itemInfos) {
-                        Log.e("onNext", "" + itemInfos.toString());
+                        Log.e("onNext", "" + itemInfos.getErrorDics());
 
                         sweetSaved(itemInfos.getErrorDics());
                         if (itemInfos.getErrorDics().contains("Saved")) {
@@ -273,7 +298,7 @@ public class ItemVisibility extends AppCompatActivity {
 
 
     private JSONObject getJsonObject() {
-        int salesNo = Integer.parseInt(salesManInfosList.get((int) salesNameSpinner.getSelectedItemId()).getSalesManNo());
+        int salesNo = Integer.parseInt(salesManInfosList.get((int) myBinding.salesNameSpinner.getSelectedItemId()).getSalesManNo());
 
         jsonArraysalesman = new JSONArray();
         for (int i = 0; i < allItemsList.size(); i++) {
@@ -342,16 +367,13 @@ public class ItemVisibility extends AppCompatActivity {
     private void fillSalesManSpinner() {
         salesNameSpinnerAdapter = new ArrayAdapter<String>(this, R.layout.spinner_layout, salesManNameList);
         salesNameSpinnerAdapter.setDropDownViewResource(R.layout.spinner_layout);
-        salesNameSpinner.setAdapter(salesNameSpinnerAdapter);
-        salesNameSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        myBinding.salesNameSpinner.setAdapter(salesNameSpinnerAdapter);
+        myBinding. salesNameSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-
                 String salesNum = salesManInfosList.get(position).getSalesManNo();
-
                 Log.e("onItemSelected", "" + salesNum);
-//                importData.getPlan(salesNum,fromDate.getText().toString());
 
             }
 
@@ -370,8 +392,8 @@ public class ItemVisibility extends AppCompatActivity {
         listItemVisib.add("Hide");
         itemStateVisiAdapter = new ArrayAdapter<String>(this, R.layout.spinner_layout, listItemVisib);
         itemStateVisiAdapter.setDropDownViewResource(R.layout.spinner_layout);
-        itemVisibleFilter.setAdapter(itemStateVisiAdapter);
-        itemVisibleFilter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        myBinding.visiblestateSpinner.setAdapter(itemStateVisiAdapter);
+        myBinding.visiblestateSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 stateFilterVisibl = position;

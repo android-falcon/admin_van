@@ -7,16 +7,16 @@ import org.json.JSONObject;
 
 public class ItemInfo {
     @SerializedName("ItemOCode")
-    public  String itemOcode;
+    private   String itemOcode;
 
     @SerializedName("ItemNameE")
-    public  String itemNameE;
+    private   String itemNameE;
 
     @SerializedName("ItemNameA")
-    public  String itemNameA;
+    private   String itemNameA;
     @SerializedName("ItemNCode")
-    public  String itemNcode;
-    public  int select=0;
+    private   String itemNcode;
+    private   int select=0;
 
     public int getSelect() {
         return select;

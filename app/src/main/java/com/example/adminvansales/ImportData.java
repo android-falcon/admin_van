@@ -134,8 +134,8 @@ public class ImportData {
     public static List<OfferGroupModel> offerGroupModels = new ArrayList<>();
     ProgressDialog progressDialog;
     GlobelFunction globelFunction;
- public  String headerDll="/Falcons/VAN.dll";
-//   public  String headerDll="";
+// public  String headerDll="/Falcons/VAN.dll";
+   public  String headerDll="";
     public ImportData(Context context) {
         databaseHandler = new DataBaseHandler(context);
         this.main_context = context;
@@ -521,7 +521,9 @@ public class ImportData {
                                 plan.setLong_customer(jsonObject1.getString("LO"));
                                 plan.setCustomerName(  jsonObject1.getString("CUSNAME"));
                                 plan.setCustomerNumber(  jsonObject1.getString("CUSTNO"));
+                                if (flag == 0)
                                 plan.setOrderd(Integer.parseInt(  jsonObject1.getString("ORDERD"))-1);
+                                else   plan.setOrderd(Integer.parseInt(  jsonObject1.getString("ORDERD")));
                                 plan.setType_orderd(Integer.parseInt(  jsonObject1.getString("TYPEORDER")));
                                 if (flag == 0)
                                     listPlan.add( plan);
@@ -1213,7 +1215,7 @@ Log.e("URL_TO_HIT",URL_TO_HIT+"");
                         salesManNameList.clear();
                         //salesManNameList.add("All");
                      //   JSONObject jsonObject = new JSONObject(s);
-                        s = s + "]"; /////B
+//                        s = s + "]"; /////B
                         JSONArray jsonArray = new JSONArray(s);
 
                         Log.e("jsonArray", jsonArray.toString());
