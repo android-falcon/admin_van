@@ -549,7 +549,7 @@ Log.e("onItemClick",""+position);
              String  salesNum = salesManInfosList.get(position).getSalesManNo();
 
                 Log.e("onItemSelected",""+salesNum);
-                importData.getPlan(salesNum,fromDate.getText().toString());
+                importData.getPlan(salesNum,fromDate.getText().toString(), 0);
 
             }
 
