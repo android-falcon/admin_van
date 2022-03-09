@@ -57,8 +57,8 @@ public class ExportData {
     GlobelFunction globelFunction;
     SweetAlertDialog pdValidationAdd;
     SweetAlertDialog pdValidationUpdate;
-//    public  String headerDll="/Falcons/VAN.dll";
-   public  String headerDll="";
+    public  String headerDll="/Falcons/VAN.dll";
+//   public  String headerDll="";
     public  String CONO="";
     Context main_context;
     int flag=0;
@@ -812,6 +812,7 @@ public class ExportData {
             this.salesManInfos = salesManInfos;
             datePlan=salesManInfos.get(0).getPlan_date();
             salesNo=salesManInfos.get(0).getSalesNo();
+            Log.e("savePlan","JSONTaskIIs_DeletePlan-2-");
 
         }
 
@@ -914,7 +915,7 @@ public class ExportData {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Log.e("salesManInfos","onPostExecute="+datePlan);
+            Log.e("savePlan","JSONTaskIIs_DeletePlan-3-");
             pd.dismissWithAnimation();
             if (s != null) {
                 if (s.contains("Saved Successfully")) {
@@ -945,6 +946,7 @@ public class ExportData {
             this.salesManInfos = salesManInfos;
             datePlan=dateP;
             salesNo=salesNumber;
+            Log.e("savePlan","JSONTaskIIs_AddPlan-4-");
         }
 
         @Override
@@ -1015,7 +1017,7 @@ public class ExportData {
 
 
                 JsonResponse = sb.toString();
-                Log.e("tag_requestState", "JsonResponse\t" + JsonResponse);
+
 
                 return JsonResponse;
 
@@ -1045,7 +1047,7 @@ public class ExportData {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-
+            Log.e("savePlan","JSONTaskIIs_AddPlan-5-");
             pd.dismissWithAnimation();
             if (s != null) {
                 if (s.contains("Saved Successfully")) {

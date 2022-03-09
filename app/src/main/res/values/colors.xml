@@ -17,23 +17,29 @@
     <color name="peacockBlue">#E8C8E8F7</color>
     <color name="darkGray">#000000</color>
     <color name="darkOrange">#ffc34d</color>//E43C27
-    <color name="darkOrange2">#D8FFEB3B</color>
-    <color name="colorblue_dark3">#016392</color>
+    <color name="darkOrange2">   #FFDE3F</color>
+<!--    #FFDE3F-->
+    <color name="colorblue_dark3">#1E3354</color>
+<!--    background: #1E3354;-->
+
     <color name="darkOrange_light">#9AFAC55D</color>//E43C27
     <color name="darkWhite">#FFFFFF</color>
     <color name="lightWhite">#D2BEB9B9</color>
     <color name="White2">#F5F8F8F5</color>
     <color name="white">#ffffff</color>
     <color name="NoColor">#02FFFFFF</color>
-    <color name="gray">#32BDBABA</color>
+    <color name="gray">#F2F2F2</color>
     <color name="dark_red">#AD0505</color>
     <color name="light_red">#43EC4242</color>
     <color name="colorblue_dark">#04578A</color>
     <color name="colorblue_dark_4">#DC04499F</color>
     <color name="green">#C399F09D</color>
-    <color name="colorblue1">#3F86B5</color>
+    <color name="colorblue1"> #23A8FE    </color>
     <color name="colorblue2">#B0C4DE</color>
     <color name="babyblue" >#89CFF0</color>
     <color name="done_button">#3F86B5</color>
     <color name="cancel_button">#E6CA221C</color>
+    <color name="gray_2">#F2F2F2</color>
+
+
 </resources>

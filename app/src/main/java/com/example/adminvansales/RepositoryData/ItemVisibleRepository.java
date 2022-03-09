@@ -1,11 +1,13 @@
 package com.example.adminvansales.RepositoryData;
 
+import android.app.Application;
 import android.graphics.Color;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.adminvansales.DataBaseHandler;
 import com.example.adminvansales.ItemVisibility;
 import com.example.adminvansales.R;
 import com.example.adminvansales.model.ErrorHandler;
@@ -27,11 +29,21 @@ import retrofit2.Retrofit;
 
 public class ItemVisibleRepository {
 
-    String BASE_URL = "http://10.0.0.22/";
+//    String BASE_URL = "http://10.0.0.22/",port="";
+    String BASE_URL = "",port="";
+
     Retrofit retrofit = RetrofitInstance.getInstance(BASE_URL);
     ApiItem myAPI = retrofit.create(ApiItem.class);
     SweetAlertDialog pdValidation;
     ErrorHandler itemInfoHandler=new ErrorHandler();
+    DataBaseHandler dataBaseHandler;
+
+    public ItemVisibleRepository(Application aplication ) {
+        dataBaseHandler=new DataBaseHandler(aplication.getApplicationContext());
+        BASE_URL=dataBaseHandler.getAllSetting().getIpAddress();
+        port=dataBaseHandler.getAllSetting().getPort();
+        Log.e("ItemVisibleRepository",""+BASE_URL+"\t"+port);
+    }
 
     public MutableLiveData<List<ItemInfo>> getItemInfoRepo() {
         final MutableLiveData<List<ItemInfo>> mutableLiveData = new MutableLiveData<>();

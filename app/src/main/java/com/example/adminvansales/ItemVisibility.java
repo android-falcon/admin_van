@@ -7,9 +7,11 @@ import static com.example.adminvansales.ImportData.listCustomer;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Application;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
@@ -75,6 +77,12 @@ public class ItemVisibility extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         myBinding= DataBindingUtil.setContentView(this,R.layout.activity_item_visibility);
+//        itemVisibleViewModel = new ViewModelProvider(this).get(ItemVisibleViewModel.class);
+        myBinding.setItemInfoModel(itemVisibleViewModel);
+        myBinding.setLifecycleOwner(this);
+        myBinding.executePendingBindings();
+
+
         inititView();
 
 //      fetchCallData();
@@ -85,12 +93,14 @@ public class ItemVisibility extends AppCompatActivity {
     private void fetchData() {
 
 //        myBinding.progressBar.setVisibility(View.VISIBLE);
-        itemVisibleViewModel=new ItemVisibleViewModel();
+        itemVisibleViewModel=new ItemVisibleViewModel(getApplication());
         itemVisibleViewModel.getItemInfoList().observe(this, new androidx.lifecycle.Observer<List<ItemInfo>>() {
             @Override
             public void onChanged(List<ItemInfo> itemInfos) {
                 if(itemInfos!=null&& !itemInfos.isEmpty())
                 {
+                    allItemsList.clear();
+                    allItemsList.addAll(itemInfos);
 
                     displayData(itemInfos);
                 }
@@ -168,6 +178,7 @@ public class ItemVisibility extends AppCompatActivity {
         Log.e("displayData", "" + itemInfos.size());
 //        myBinding.progressBar.setVisibility(View.GONE);
 //        myBinding.itemRecycler.setVisibility(View.VISIBLE);
+
         if (itemInfos.size() != 0) {
             myBinding.progressBar.setVisibility(View.GONE);
             ItemVisibleAdapter adapter = new ItemVisibleAdapter(itemInfos, this);
@@ -185,18 +196,19 @@ public class ItemVisibility extends AppCompatActivity {
         Log.e("url", "==" + url);
         Retrofit retrofit = RetrofitInstance.getInstance(url);
         myAPI = retrofit.create(ApiItem.class);
+        listFilterItem = new ArrayList<>();
+        allItemsList = new ArrayList<>();
+        listSelectItems = new ArrayList<>();
         myBinding.progressBar.setVisibility(View.VISIBLE);
         myBinding.itemRecycler.setHasFixedSize(true);
         myBinding.itemRecycler.setLayoutManager(new LinearLayoutManager(this));
         fillSalesManSpinner();
         fillItemVisibleSpinner();
-
+//
         myBinding. clearSearch.setOnClickListener(v -> {
             myBinding.customerSearch.setText("");
         });
-        listFilterItem = new ArrayList<>();
-        allItemsList = new ArrayList<>();
-        listSelectItems = new ArrayList<>();
+
         myBinding.customerSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -302,6 +314,10 @@ public class ItemVisibility extends AppCompatActivity {
 
         jsonArraysalesman = new JSONArray();
         for (int i = 0; i < allItemsList.size(); i++) {
+            if(allItemsList.get(i).getSelect()==1)
+            {
+                Log.e("allItemsList",""+allItemsList.get(i).getItemOcode());
+            }
 
             jsonArraysalesman.put(allItemsList.get(i).getJsonObject(salesNo));
 
@@ -318,13 +334,14 @@ public class ItemVisibility extends AppCompatActivity {
     }
 
     private void filterListcustomer(String name) {
-        Log.e("filterListcustomer", "stateFilterVisibl=" + stateFilterVisibl);
+        Log.e("filterListcustomer", "stateFilterVisibl=" + stateFilterVisibl+"\t"+allItemsList.size());
         listFilterItem.clear();
         for (int i = 0; i < allItemsList.size(); i++) {
             if (name.length() == 0)// search by visible
             {
                 if (stateFilterVisibl == 1)// visible
                 {
+                    Log.e("filterListcustomer", "stateFilterVisibl=" + allItemsList.get(i).getSelect() );
                     if (allItemsList.get(i).getSelect() == 0) {
                         listFilterItem.add(allItemsList.get(i));
                     }

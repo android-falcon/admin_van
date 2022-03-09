@@ -12,6 +12,15 @@ public class CustomerInfo {
     private  String areaName;
     private  int order;
     private  int duplicat=0;
+    private  String salesNo;
+
+    public String getSalesNo() {
+        return salesNo;
+    }
+
+    public void setSalesNo(String salesNo) {
+        this.salesNo = salesNo;
+    }
 
     public int getDuplicat() {
         return duplicat;

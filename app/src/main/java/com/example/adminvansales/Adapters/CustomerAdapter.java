@@ -71,6 +71,7 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ViewHo
                 }
             }
         });
+        holder.address_customer.setText(inventorylist.get(holder.getAdapterPosition()).getAreaName());
 
 
 

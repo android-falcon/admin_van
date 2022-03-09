@@ -1,5 +1,7 @@
 package com.example.adminvansales.modelView;
 
+import android.app.Application;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -18,8 +20,9 @@ public class ItemVisibleViewModel extends ViewModel {
     ItemVisibleRepository itemVisibleRepository;
     MutableLiveData<List<ItemInfo>> mutableLiveDataItem;
 
-    public ItemVisibleViewModel() {
-       itemVisibleRepository=new ItemVisibleRepository();
+
+    public ItemVisibleViewModel(Application app) {
+       itemVisibleRepository=new ItemVisibleRepository(app);
     }
     public LiveData<List<ItemInfo>> getItemInfoList(){
         if(mutableLiveDataItem==null){
@@ -33,4 +36,5 @@ public class ItemVisibleViewModel extends ViewModel {
 
        return itemVisibleRepository.AddItemVisible(addsalesmanobject);
     }
+
 }

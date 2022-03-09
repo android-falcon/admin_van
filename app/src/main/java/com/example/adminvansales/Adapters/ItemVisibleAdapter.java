@@ -50,22 +50,24 @@ public class ItemVisibleAdapter extends RecyclerView.Adapter<ItemVisibleAdapter.
     public void onBindViewHolder(ItemVisibleAdapter.ViewHolder holder, int position) {
 
         holder.setIsRecyclable(false);
-
         holder.itemInfoBinding.setItemInfoModel(inventorylist.get(position));
-        holder.select_customer_checkbox.setVisibility(View.VISIBLE);
+
+//        holder.select_customer_checkbox.setVisibility(View.VISIBLE);
         if  (  inventorylist.get(holder.getAdapterPosition()).getSelect()==1)
-            holder.select_customer_checkbox.setChecked(true);
+            holder.itemInfoBinding.selectCustomerCheckbox.setChecked(true);
         else  if (  inventorylist.get(holder.getAdapterPosition()).getSelect()==0)
-            holder.select_customer_checkbox.setChecked(false);
-        holder.select_customer_checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            holder.itemInfoBinding.selectCustomerCheckbox.setChecked(false);
+        holder.itemInfoBinding.selectCustomerCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                Log.e("onCheckedChanged",""+b);
                 if(b)
                 {
                     inventorylist.get(holder.getAdapterPosition()).setSelect(1);
                 }else {
                     inventorylist.get(holder.getAdapterPosition()).setSelect(0);
                 }
+//                holder.itemInfoBinding.setItemInfoModel(inventorylist.get(holder.getAdapterPosition()));
             }
         });
 
@@ -79,13 +81,13 @@ public class ItemVisibleAdapter extends RecyclerView.Adapter<ItemVisibleAdapter.
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        CheckBox select_customer_checkbox;
+//        CheckBox select_customer_checkbox;
         ItemVisiblLayoutBinding itemInfoBinding;
 
         public ViewHolder( ItemVisiblLayoutBinding itemInfoBinding) {
             super(itemInfoBinding.getRoot());
             this.itemInfoBinding=itemInfoBinding;
-            select_customer_checkbox=itemView.findViewById(R.id.select_customer_checkbox);
+//            select_customer_checkbox=itemView.findViewById(R.id.select_customer_checkbox);
             Log.e("", "ViewHolder const");
 
         }

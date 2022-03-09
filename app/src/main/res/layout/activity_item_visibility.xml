@@ -3,11 +3,11 @@
 
     <data>
 
-        <import type="com.example.adminvansales.model.ItemInfo" />
+        <import type="com.example.adminvansales.modelView.ItemVisibleViewModel" />
 
         <variable
             name="itemInfoModel"
-            type="com.example.adminvansales.model.ItemInfo" />
+            type="com.example.adminvansales.modelView.ItemVisibleViewModel" />
 
         <variable
             name="salesManNameList"
@@ -124,8 +124,7 @@
                 android:drawableStart="@drawable/ic_baseline_clear_24"
                 android:drawableLeft="@drawable/ic_baseline_clear_24"
                 android:gravity="center"
-
-                android:padding="2dp"
+                               android:padding="2dp"
                 android:text="@string/hide"
                 android:textColor="@color/white"
 

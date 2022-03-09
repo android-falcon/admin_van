@@ -83,7 +83,7 @@ public class CustomerLogReport extends AppCompatActivity {
             if( settingModel.getImport_way().equals("0"))
                 importData.getCustomerLogReport(CustomerLogReport.this,"-1",toDay,toDay);
             else if( settingModel.getImport_way().equals("1"))
-                importData.  IIS_getCustomerLogReport(CustomerLogReport.this,no,toDay,toDay);
+                importData.IIS_getCustomerLogReport(CustomerLogReport.this,no,toDay,toDay);
 
         }catch (Exception e){}
 

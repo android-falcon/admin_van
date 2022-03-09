@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.example.adminvansales.model.SalesManInfo;
 import com.example.adminvansales.model.SettingModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.androidgamesdk.gametextinput.Settings;
 import com.smarteist.autoimageslider.DefaultSliderView;
 import com.smarteist.autoimageslider.IndicatorAnimations;
 import com.smarteist.autoimageslider.SliderAnimations;
@@ -42,7 +43,8 @@ import static com.example.adminvansales.ImportData.listId;
 
 public class LogIn extends AppCompatActivity {
     SliderLayout sliderLayout;
-    FloatingActionButton setting_floatingBtn;
+//    FloatingActionButton setting_floatingBtn;
+    TextView setting_floatingBtn;
     Button button_logIn,button_sighnup;
     public  static String ipAddress="",portSettings="",import_way="",Cono="";
     SettingModel settingModelList;

@@ -74,7 +74,7 @@
         android:textSize="14sp"
         android:gravity="center"
         android:padding="2dp"
-        android:visibility="gone"
+        android:visibility="visible"
         android:text=""
         android:textColor="@color/colorPrimary"
         android:textColorLink="@color/colorPrimary" />

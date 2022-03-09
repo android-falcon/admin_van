@@ -134,8 +134,8 @@ public class ImportData {
     public static List<OfferGroupModel> offerGroupModels = new ArrayList<>();
     ProgressDialog progressDialog;
     GlobelFunction globelFunction;
-// public  String headerDll="/Falcons/VAN.dll";
-   public  String headerDll="";
+ public  String headerDll="/Falcons/VAN.dll";
+//   public  String headerDll="";
     public ImportData(Context context) {
         databaseHandler = new DataBaseHandler(context);
         this.main_context = context;
@@ -366,7 +366,8 @@ public class ImportData {
         new JSONTaskGetCustomerLogReport(context, SalesNo, fromDate, toDate).execute();
     }
     public void IIS_getCustomerLogReport(Context context, String SalesNo, String fromDate, String
-            toDate) {
+            toDate)
+    {
        getCONO();
 
         new JSONTaskIIS_GetCustomerLogReport(context, SalesNo, fromDate, toDate).execute();
@@ -391,6 +392,7 @@ public class ImportData {
             SalesmanNum = salesmanNum;
             this.date = date;
             this.flag = flag;
+            Log.e("savePlan","JSONTask_GetSalesmanPlan-6-");
         }
 
         @Override
@@ -498,6 +500,8 @@ public class ImportData {
             super.onPostExecute(array);
             progressDialog.dismiss();
             JSONObject jsonObject1 = null;
+            listPlan.clear();
+            Log.e("savePlan","JSONTask_GetSalesmanPlan-7-");
             if (array != null) {
                 if (array.contains("CUSNAME")) {
 
@@ -1239,8 +1243,6 @@ Log.e("URL_TO_HIT",URL_TO_HIT+"");
                            if(jsonObject1.getString("LONGITUDE").equals(""))
                             salesManInfo.setLongitudeLocation("0");
                            else    salesManInfo.setLongitudeLocation(jsonObject1.getString("LONGITUDE"));
-
-
 //                            salesManInfo.setfVoucherSerial(jsonObject1.getString("FROM_VOUCHER_SERIAL"));
 //                            salesManInfo.settVoucherSerial(jsonObject1.getString("TO_VOUCHER_SERIAL"));
 //                            salesManInfo.setfReturnSerial(jsonObject1.getString("FROM_RETURN_SERIAL"));
@@ -3131,58 +3133,33 @@ Log.e("URL_TO_HIT",URL_TO_HIT+"");
 
                             for (int i = 0; i < requestArray.length(); i++) {
 
-                                Log.e("requestArray===", "requestArray" );
-                                CustomerInfo customerInfo=new CustomerInfo();
+                                Log.e("requestArray===", "requestArray");
+                                CustomerInfo customerInfo = new CustomerInfo();
                                 jsonObject1 = requestArray.getJSONObject(i);
-                                customerInfo.setCustomerNumber( jsonObject1.get("CUSTID").toString());
-                                customerInfo.setCustomerName( jsonObject1.get("CUSTNAME").toString());
+                                customerInfo.setCustomerNumber(jsonObject1.get("CUSTID").toString());
+                                customerInfo.setCustomerName(jsonObject1.get("CUSTNAME").toString());
                                 try {
                                     customerInfo.setLatit_customer(jsonObject1.get("LATITUDE").toString());
                                     customerInfo.setLong_customer(jsonObject1.get("LONGITUDE").toString());
-                                }catch (Exception e){
+                                } catch (Exception e) {
                                     customerInfo.setLatit_customer("0");
                                     customerInfo.setLong_customer("0");
                                 }
 
                                 customerInfo.setIsSelected(0);
                                 customerInfo.setOrder(1000);
+                                try {
                                 customerInfo.setAreaName(jsonObject1.get("AREA").toString());
-//                                if(jsonObject1.get("AREA").toString().trim().length()!=0)
+                                customerInfo.setSalesNo(jsonObject1.get("SALESMANNO").toString());
                                 listAllArea.add(jsonObject1.get("AREA").toString());
+                            }catch (Exception e){
+
+                                }
 
                                 listCustomer.add( customerInfo);
                                 customername.add( customerInfo.getCustomerName());
 
                             }
-                            Log.e("listAllArea",""+listAllArea.size());
-
-
-
-                   /*     result = new JSONObject(s);
-                        CustomerInfo requestDetail;
-
-
-                        JSONArray requestArray = null;
-                        listCustomerInfo = new ArrayList<>();
-
-                        requestArray = result.getJSONArray(s);
-                        Log.e("requestArray", "" + requestArray.length());
-
-
-                        for (int i = 0; i < requestArray.length(); i++) {
-                            JSONObject infoDetail = requestArray.getJSONObject(i);
-                            requestDetail = new CustomerInfo();
-                            requestDetail.setCustomerNumber(infoDetail.get("CustID").toString());
-                            requestDetail.setCustomerName(infoDetail.get("CustName").toString());
-
-
-                            listCustomer.add(requestDetail);
-                            customername.add(requestDetail.getCustomerName());
-                            //  Log.e("listRequest", "CUSTOMER_INFO" + listCustomer.get(i).getCustomerName());
-
-
-                        }*/
-
 
                     } catch (JSONException e) {
 //                        progressDialog.dismiss();

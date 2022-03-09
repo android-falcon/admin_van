@@ -71,6 +71,8 @@ public class PlanSalesMan extends AppCompatActivity {
     ImportData importData;
     public ArrayList<CustomerInfo> listCustomer_filtered = new ArrayList<CustomerInfo>();
     public ArrayList<CustomerInfo> listSelectedCustomer = new ArrayList<CustomerInfo>();
+    public ArrayList<CustomerInfo> listCustomer_SalesNo = new ArrayList<CustomerInfo>();
+    public ArrayList<CustomerInfo> listCustomer_spair = new ArrayList<CustomerInfo>();
 
     public ArrayList<AreaModel> listOfArea = new ArrayList<>();
     public static int orderType = 0;
@@ -128,7 +130,13 @@ public class PlanSalesMan extends AppCompatActivity {
         customer_recycler = findViewById(R.id.customer_recycler);
         selectedCustomer_recycler = findViewById(R.id.customer_recycler_toOrderd);
         if (listCustomer.size() != 0)
+        {
+            listCustomer_spair.clear();
+            listCustomer_spair.addAll(listCustomer);
+            if(salesManInfosList.size()!=0)
+            filterbySalesNo();
             fillRecyclerCustomer(listCustomer);
+        }
         else {
 
             importData.IIs_getCustomerInfo(0);
@@ -165,13 +173,31 @@ public class PlanSalesMan extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.toString().length() != 0) {
-                    Log.e("afterTextChanged", "" + s.toString());
+                    Log.e("afterTextChanged", "rew" + s.toString());
                     if (s.toString().equals("fill")) {
+                        fillAllCustomerList();
                         setSelectedDefault();
+                        fillCustomerList_Plan();
+                        fillMainList();
 
-                        fillCustomerList();
+                        getDataToSelectedRecycler();
                     } else if (s.toString().contains("No Data Found")) {
+
+                        fillAllCustomerList();
                         setSelectedDefault();
+                        fillCustomerList_Plan();
+                        fillMainList();
+
+                        getDataToSelectedRecycler();
+
+
+//                        fillAllCustomerList();
+//                        setSelectedDefault();
+//                        fillMainList();
+//
+//                        filterbySalesNo();
+//                        fillCustomerList_Plan();
+//                        getDataToSelectedRecycler();
 
                     }
                 }
@@ -211,6 +237,11 @@ public class PlanSalesMan extends AppCompatActivity {
                 fillSelectedRecycler();
             }
         });
+    }
+
+    private void fillAllCustomerList() {
+        listCustomer.clear();
+        listCustomer.addAll(listCustomer_spair);
     }
 
     private void chechOrder() {
@@ -350,13 +381,17 @@ public class PlanSalesMan extends AppCompatActivity {
             }
 
         }
+        Log.e("listSelectedArea=","1="+listSelectedArea.size());
 
         for (int i = 0; i < listSelectedArea.size(); i++) {
 //            map
             String area = listSelectedArea.get(i);
             List<CustomerInfo> listCustomerLoc = map.get(area);
+            Log.e("listSelectedArea=","listCustomerLoc="+listCustomerLoc.size());
+            Log.e("listSelectedArea=","map2="+map.toString());
             listCustomer_filtered.addAll(listCustomerLoc);
         }
+        Log.e("listSelectedArea=","2="+listCustomer_filtered.size()+"\tlistCustomer="+listCustomer.size());
         if (listCustomer_filtered.size() != 0)
             fillRecyclerCustomer(listCustomer_filtered);
         else fillRecyclerCustomer(listCustomer);
@@ -444,7 +479,7 @@ public class PlanSalesMan extends AppCompatActivity {
         }
     }
 
-    private void fillCustomerList() {
+    private void fillCustomerList_Plan() {
         for (int i = 0; i < listCustomer.size(); i++) {
 
             for (int k = 0; k < listPlan.size(); k++) {
@@ -455,7 +490,9 @@ public class PlanSalesMan extends AppCompatActivity {
                 }
             }
         }
-        fillRecyclerCustomer(listCustomer);
+        Log.e("fillCustomerList",""+listCustomer.size());
+        filterbySalesNo();
+//        fillRecyclerCustomer(listCustomer);
         refreshOrderType();
 
 
@@ -510,6 +547,7 @@ public class PlanSalesMan extends AppCompatActivity {
     }
 
     private void savePlan() {
+        Log.e("savePlan","1-");
         ExportData exportData = new ExportData(this);
         exportData.IIs_AddPlan(listPlan, this);
         clearData();
@@ -517,7 +555,7 @@ public class PlanSalesMan extends AppCompatActivity {
 
     private void clearData() {
         listPlan.clear();
-        fromDate.setText(toDay);
+//        fromDate.setText(toDay);
         orderd_typeGroup.check(R.id.manual_RadioButton);
         fillRecyclerCustomer(listCustomer);
         setSelectedDefault();
@@ -540,6 +578,7 @@ public class PlanSalesMan extends AppCompatActivity {
     }
 
     private void fillRecyclerCustomer(ArrayList<CustomerInfo> listCustomer) {
+
         if (listCustomer.size() != 0) {
             final LinearLayoutManager layoutManager;
             layoutManager = new LinearLayoutManager(PlanSalesMan.this);
@@ -551,6 +590,39 @@ public class PlanSalesMan extends AppCompatActivity {
 
         }}
 
+    private void filterbySalesNo() {
+        listCustomer_SalesNo.clear();
+        String sales = salesManInfosList.get((int) salesNameSpinner.getSelectedItemId()).getSalesManNo();
+
+        for(int i=0;i<listCustomer.size();i++){
+            if(listCustomer.get(i).getSalesNo().trim().equals(sales.trim()))
+            {
+                listCustomer_SalesNo.add(listCustomer.get(i));
+            }
+        }
+
+            replaceShortListCustomer();
+
+        Log.e("listCustomer_SalesNo",""+listCustomer_SalesNo.size()+"\t"+listCustomer.size());
+
+    }
+
+    private void replaceShortListCustomer() {
+        if(listCustomer_SalesNo.size()!=0)
+        {
+
+            listCustomer.clear();
+            listCustomer.addAll(listCustomer_SalesNo);
+        }else {
+            listCustomer.clear();
+            listCustomer.addAll(listCustomer_spair);
+
+        }
+
+        fillRecyclerCustomer(listCustomer);
+
+    }
+
 
     public void fillSalesManSpinner() {
         salesNameSpinnerAdapter = new ArrayAdapter<String>(this, R.layout.spinner_layout, salesManNameList);
@@ -560,6 +632,7 @@ public class PlanSalesMan extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String salesNum = salesManInfosList.get(position).getSalesManNo();
+                Log.e("onItemSelected",""+salesNum);
                 importData.getPlan(salesNum, fromDate.getText().toString(),0);
 
             }
