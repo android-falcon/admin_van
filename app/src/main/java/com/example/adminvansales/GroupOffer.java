@@ -92,7 +92,7 @@ public class GroupOffer extends AppCompatActivity {
                     globelFunction.DateClick(myBinding.toDateTextView);
                     break;
                 case R.id.selectItem:
-                    
+
                     //dialogShow();
 
                     break;
