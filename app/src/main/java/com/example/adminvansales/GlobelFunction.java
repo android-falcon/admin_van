@@ -45,19 +45,19 @@ public class GlobelFunction {
 
     }
 
-    public void getSalesManInfo(Context context,int flag){
+    public void getSalesManInfo(Context context, int flag) {
 
-        Log.e("getSalesManInfo","flag="+flag);
-        if(flag!=90) {
-            settingModel=new com.example.adminvansales.model.SettingModel ();
-            databaseHandler=new DataBaseHandler(context);
-            settingModel=databaseHandler.getAllSetting();
-            Log.e("getSalesManInfo","getImport_way="+settingModel.getImport_way());
-            if( settingModel.getImport_way().equals("0"))
-            importData.getSalesMan(context, flag);
-            else if( settingModel.getImport_way().equals("1"))
-            importData.  IIs_getSalesMan(context, flag);
-        }else {
+        Log.e("getSalesManInfo", "flag=" + flag);
+        if (flag != 90) {
+            settingModel = new com.example.adminvansales.model.SettingModel();
+            databaseHandler = new DataBaseHandler(context);
+            settingModel = databaseHandler.getAllSetting();
+            Log.e("getSalesManInfo", "getImport_way=" + settingModel.getImport_way());
+            if (settingModel.getImport_way().equals("0"))
+                importData.getSalesMan(context, flag);
+            else if (settingModel.getImport_way().equals("1"))
+                importData.IIs_getSalesMan(context, flag);
+        } else {
             importData.getAdmin(context, 0);
 
         }
