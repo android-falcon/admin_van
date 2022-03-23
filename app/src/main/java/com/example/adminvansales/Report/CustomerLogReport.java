@@ -16,7 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.adminvansales.CustomerLogReportAdapter;
+import com.example.adminvansales.Adapters.CustomerLogReportAdapter;
 import com.example.adminvansales.DataBaseHandler;
 import com.example.adminvansales.ExportToExcel;
 import com.example.adminvansales.GlobelFunction;
@@ -83,7 +83,7 @@ public class CustomerLogReport extends AppCompatActivity {
             if( settingModel.getImport_way().equals("0"))
                 importData.getCustomerLogReport(CustomerLogReport.this,"-1",toDay,toDay);
             else if( settingModel.getImport_way().equals("1"))
-                importData.  IIS_getCustomerLogReport(CustomerLogReport.this,no,toDay,toDay);
+                importData.IIS_getCustomerLogReport(CustomerLogReport.this,no,toDay,toDay);
 
         }catch (Exception e){}
 

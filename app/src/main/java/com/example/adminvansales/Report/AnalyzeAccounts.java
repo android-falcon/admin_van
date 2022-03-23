@@ -18,7 +18,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.adminvansales.AnalyzeAdapter;
+import com.example.adminvansales.Adapters.AnalyzeAdapter;
 import com.example.adminvansales.ExportToExcel;
 import com.example.adminvansales.GlobelFunction;
 import com.example.adminvansales.ImportData;

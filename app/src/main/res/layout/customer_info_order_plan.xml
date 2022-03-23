@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    android:orientation="vertical"
+    android:id="@+id/liner_inventory">
+    <LinearLayout
+        android:id="@+id/mailLinearInfo"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_margin="5dp"
+        android:orientation="horizontal"
+
+        >
+        <TextView
+            android:id="@+id/customerLocat"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableStart="@drawable/ic_location_on_black_24dp"
+
+            android:gravity="center"
+            android:padding="2dp"
+            android:visibility="gone"
+            android:text=""
+            android:textColor="@color/colorPrimary"
+            android:textColorLink="@color/colorPrimary"
+            android:drawableLeft="@drawable/ic_location_on_black_24dp" />
+
+        <CheckBox
+            android:id="@+id/select_customer_checkbox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:visibility="gone"
+            android:gravity="center"
+            android:textSize="14sp"
+            android:padding="2dp"
+
+            android:textColor="@color/colorPrimary"
+            android:textColorLink="@color/colorPrimary" />
+
+        <TextView
+            android:id="@+id/orderd_customer"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:visibility="gone"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:padding="2dp"
+            android:text=""
+            android:textColor="@color/colorPrimary"
+            android:textColorLink="@color/colorPrimary" />
+        <Spinner
+            android:id="@+id/orderSpinner"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:padding="2dp"
+
+           />
+
+        <TextView
+            android:id="@+id/customerName"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:textSize="14sp"
+            android:padding="2dp"
+            android:text=""
+            android:textColor="@color/colorPrimary"
+            android:textColorLink="@color/colorPrimary" />
+
+        <TextView
+            android:id="@+id/address_customer"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:padding="2dp"
+            android:visibility="gone"
+            android:text=""
+            android:textColor="@color/colorPrimary"
+            android:textColorLink="@color/colorPrimary" />
+        <TextView
+            android:id="@+id/customer_number"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textSize="14sp"
+            android:padding="2dp"
+            android:text=""
+            android:textColor="@color/colorPrimary"
+            android:textColorLink="@color/colorPrimary" />
+    </LinearLayout>
+
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+
+        android:background="@color/layer4"
+        android:layout_margin="3dp"/>
+
+</LinearLayout>

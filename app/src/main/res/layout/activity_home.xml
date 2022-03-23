@@ -155,7 +155,7 @@ android:id="@+id/menuBtn"
         android:layout_weight="6"
         android:visibility="gone"
         android:gravity="bottom|center"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
         <!--<TextView-->
         <!--android:layout_width="match_parent"-->
@@ -166,6 +166,14 @@ android:id="@+id/menuBtn"
         <!--android:text="Welcome In Admin App"-->
         <!--android:textSize="18sp"-->
         <!--android:textColor="@color/colorblue_dark" />-->
+
+        <TextView
+            android:id="@+id/ad10"
+            android:visibility="invisible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_baseline_edit_24"
+            android:padding="5dp" />
         <TextView
             android:id="@+id/addVanSales"
             android:visibility="visible"
@@ -396,6 +404,19 @@ android:id="@+id/menuBtn"
                     android:visibility="visible"
                     android:text="Item Report"
                     android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/plansReport"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:padding="10dp"
+                    android:visibility="visible"
+                    android:text="@string/plans_report"
+                    android:textColor="@color/white"
+                    app:drawableStartCompat="@drawable/ic_equalizer_black_24dp"
+                    app:drawableTint="@color/white" />
+
                 <TextView
                     android:id="@+id/offersReport"
                     android:layout_width="wrap_content"
@@ -426,6 +447,20 @@ android:id="@+id/menuBtn"
             android:elevation="5dp"
             android:padding="5dp"
             android:text="Sales Man Location"
+            android:textColor="@color/colorblue_dark" />
+        <Button
+            android:id="@+id/addPlan_Sales_man"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="0"
+            android:visibility="visible"
+            android:background="@drawable/btn_login"
+            android:drawableStart="@drawable/ic_baseline_reorder_24"
+            android:drawableLeft="@drawable/ic_baseline_reorder_24"
+            android:elevation="5dp"
+            android:padding="5dp"
+            android:text="Sales Man Plan"
             android:textColor="@color/colorblue_dark" />
         <Button
             android:id="@+id/group_offerButton"

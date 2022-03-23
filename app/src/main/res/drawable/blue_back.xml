@@ -4,10 +4,10 @@
     <item>
         <shape android:shape="rectangle">
             <stroke
-                android:color="@color/colorblue_dark"
+                android:color="@color/colorblue1"
                 android:width="1dp"/>
 
-            <solid android:color="@color/colorblue_dark"/>
+            <solid android:color="@color/colorblue1"/>
             <corners android:radius="50dp" />
         </shape>
     </item>

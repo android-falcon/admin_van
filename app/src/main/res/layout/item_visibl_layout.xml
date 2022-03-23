@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+   >
+    <data>
+        <import type="com.example.adminvansales.model.ItemInfo"/>
+        <variable
+            name="itemInfoModel"
+            type="com.example.adminvansales.model.ItemInfo"
+            />
+    </data>
+<LinearLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:id="@+id/liner_inventory">
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_margin="5dp"
+        android:orientation="horizontal"
+
+        >
+
+
+        <CheckBox
+            android:id="@+id/select_customer_checkbox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:visibility="visible"
+            android:gravity="center"
+            android:textSize="14sp"
+            android:padding="2dp"
+
+            android:textColor="@color/colorPrimary"
+            android:textColorLink="@color/colorPrimary" />
+
+
+
+
+        <TextView
+            android:id="@+id/customerName"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:textSize="14sp"
+            android:padding="2dp"
+            android:text="@{itemInfoModel.itemNameA}"
+            android:textColor="@color/colorPrimary"
+            android:textColorLink="@color/colorPrimary" />
+
+
+        <TextView
+            android:id="@+id/customer_number"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textSize="14sp"
+            android:padding="2dp"
+            android:text="@{itemInfoModel.itemOcode}"
+            android:textColor="@color/colorPrimary"
+            android:textColorLink="@color/colorPrimary" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/layer4"
+        android:layout_margin="3dp"/>
+
+</LinearLayout>
+</layout>

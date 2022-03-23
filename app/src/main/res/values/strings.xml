@@ -161,14 +161,29 @@
     <string name="open_drawer">open drawer</string>
     <string name="close_drawer">close drawer</string>
 <string-array name="app_paymentTypeList">
+    <string name="plan_sales">Plan Sales Man</string>
+    <string name="select_customer">Select Customer</string>
+    <string name="typeOrderPlan">Type Order Plan</string>
+    <string name="manual">Manual</string>
+    <string name="byLocation">By Location</string>
+    <string name="noCustomerSelected">No Customer Selected !!!</string>
+    <string name="addCustomerLocation">Add Customer Location</string>
+    <string name="select_area">Select Area</string>
+    <string name="itemVisible">Item Visibility</string>
+    <string name="changeItemVisible">Item Visible</string>
+    <string name="hide">Hide</string>
+    <string name="haveDuplicateOrder">You Have Duplicate Order !!</string>
+    <string name="order">Order</string>
+    <string name="plans_report">Plans Report</string>
+    <string-array name="app_paymentTypeList">
 
-<!--        <item>All</item>-->
+        <!--        <item>All</item>-->
         <item>Cash</item>
         <item>Cheque</item>
-    <item>Credit card</item>
+        <item>Credit card</item>
     </string-array>
     <string-array name="ListTypeAll">
-<!--        <item>ALL</item>-->
+        <!--        <item>ALL</item>-->
         <item>price by customer</item>
         <item>price only</item>
         <item>offer</item>

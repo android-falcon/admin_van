@@ -4,6 +4,7 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -12,10 +13,12 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 
+import com.example.adminvansales.Report.PlansReport;
 import com.example.adminvansales.model.Account__Statment_Model;
 import com.example.adminvansales.model.AnalyzeAccountModel;
 import com.example.adminvansales.model.CashReportModel;
@@ -30,6 +33,7 @@ import com.example.adminvansales.model.OfferListModel;
 import com.example.adminvansales.model.PayMentReportModel;
 import com.example.adminvansales.model.CustomerInfo;
 import com.example.adminvansales.model.Payment;
+import com.example.adminvansales.model.Plan_SalesMan_model;
 import com.example.adminvansales.model.Request;
 import com.example.adminvansales.model.SalesManInfo;
 import com.example.adminvansales.model.SettingModel;
@@ -63,7 +67,9 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -86,6 +92,8 @@ import static com.example.adminvansales.MainActivity.isListUpdated;
 import static com.example.adminvansales.OfferPriceList.ItemCardList;
 import static com.example.adminvansales.OfferPriceList.customerList;
 import static com.example.adminvansales.OfferPriceList.customerListFoundInOtherList;
+import static com.example.adminvansales.PlanSalesMan.fillPlan;
+import static com.example.adminvansales.PlanSalesMan.listPlan;
 import static com.example.adminvansales.Report.AnalyzeAccounts.analyzeAccountModelArrayList;
 import static com.example.adminvansales.Report.CashReport.cashReportList;
 import static com.example.adminvansales.Report.CustomerLogReport.customerLogReportList;
@@ -97,6 +105,8 @@ import static com.example.adminvansales.Report.LogHistoryReport.logHistoryDetail
 import static com.example.adminvansales.Report.LogHistoryReport.logHistoryList;
 import static com.example.adminvansales.Report.OfferseReport.offersrespon;
 import static com.example.adminvansales.Report.PaymentDetailsReport.payMentReportList;
+import static com.example.adminvansales.Report.PlansReport.allPlans;
+import static com.example.adminvansales.Report.PlansReport.fillPlan2;
 import static com.example.adminvansales.Report.UnCollectedData.resultData;
 import static com.example.adminvansales.ShowNotifications.showNotification;
 
@@ -118,9 +128,14 @@ public class ImportData {
     public static ArrayList<Account__Statment_Model> listCustomerInfo = new ArrayList<Account__Statment_Model>();
     public static ArrayList<CustomerInfo> listCustomer = new ArrayList<CustomerInfo>();
     public static List<String> customername = new ArrayList<>();
+    public  static Set<String> listAllArea=new HashSet<>();
+
 
     public static List<OfferGroupModel> offerGroupModels = new ArrayList<>();
+    ProgressDialog progressDialog;
     GlobelFunction globelFunction;
+// public  String headerDll="/Falcons/VAN.dll";
+   public  String headerDll="";
 // public  String headerDll="/Falcons/VAN.dll";
 public  String headerDll="";
     public ImportData(Context context) {
@@ -128,6 +143,7 @@ public  String headerDll="";
         this.main_context = context;
         // globelFunction=new GlobelFunction(context);
         listId = new ArrayList<>();
+        getCONO();
 
     }
 
@@ -352,7 +368,8 @@ public  String headerDll="";
         new JSONTaskGetCustomerLogReport(context, SalesNo, fromDate, toDate).execute();
     }
     public void IIS_getCustomerLogReport(Context context, String SalesNo, String fromDate, String
-            toDate) {
+            toDate)
+    {
        getCONO();
 
         new JSONTaskIIS_GetCustomerLogReport(context, SalesNo, fromDate, toDate).execute();
@@ -361,6 +378,197 @@ public  String headerDll="";
     public void GetAuthentication(Context context, String userName, String password, int flag) {
 
         new JSONTaskGetAuthentication(context, userName, password, flag).execute();
+
+    }
+
+    public void getPlan(String salesNum, String fromDate, int flag) {
+        // flag=0 ---> PlanSalesMan.this / flag=1 ---> PlansReport.this
+        new JSONTask_GetSalesmanPlan(salesNum,fromDate, flag).execute();
+    } //B
+    private class JSONTask_GetSalesmanPlan extends AsyncTask<String, String, String> {
+        String  SalesmanNum;
+        String date;
+        int flag;
+
+        public JSONTask_GetSalesmanPlan(String salesmanNum, String date, int flag) {
+            SalesmanNum = salesmanNum;
+            this.date = date;
+            this.flag = flag;
+            Log.e("savePlan","JSONTask_GetSalesmanPlan-6-");
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(main_context);
+            progressDialog.setCancelable(false);
+            progressDialog.setMessage("Loading ...");
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.setProgress(0);
+            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            try {
+                if (!ipAddress.equals("")) {
+
+                    // http://10.0.0.22:8085/ADMGetPlan?CONO=290&SALESNO=1&PDATE=17/01/2022
+                    URL_TO_HIT =
+                            "http://" + ipAddress + ":"+ portSettings.trim() + headerDll.trim() +"/ADMGetPlan?CONO="+CONO.trim()+"&SALESNO="+SalesmanNum+"&PDATE="+date;
+
+                    Log.e("link", "getplan " +  URL_TO_HIT );
+                }
+            } catch (Exception e) {
+                progressDialog.dismiss();
+            }
+
+            try {
+
+                //*************************************
+
+                String JsonResponse = null;
+                HttpClient client = new DefaultHttpClient();
+                HttpGet request = new HttpGet();
+                request.setURI(new URI(URL_TO_HIT));
+
+//
+
+                HttpResponse response = client.execute(request);
+
+
+                BufferedReader in = new BufferedReader(new
+                        InputStreamReader(response.getEntity().getContent()));
+
+                StringBuffer sb = new StringBuffer("");
+                String line = "";
+                Log.e("finalJson***Import", sb.toString());
+
+                while ((line = in.readLine()) != null) {
+                    sb.append(line);
+                }
+
+                in.close();
+
+
+                // JsonResponse = sb.toString();
+
+                String finalJson = sb.toString();
+                Log.e("finalJson***Import", finalJson);
+
+
+
+
+                return finalJson;
+
+
+            }//org.apache.http.conn.HttpHostConnectException: Connection to http://10.0.0.115 refused
+            catch (HttpHostConnectException ex)
+
+            {
+                ex.printStackTrace();
+//                progressDialog.dismiss();
+                progressDialog.dismiss();
+                Handler h = new Handler(Looper.getMainLooper());
+                h.post(new Runnable() {
+                    public void run() {
+
+                        Toast.makeText(main_context, "Ip Connection Failed", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
+                return null;
+            }
+            catch (Exception e)
+
+            {
+                e.printStackTrace();
+                Log.e("Exception", "" + e.getMessage());
+//                progressDialog.dismiss();
+                progressDialog.dismiss();
+                return null;
+            }
+
+
+            //***************************
+
+        }
+
+
+        @Override
+        protected void onPostExecute(String array) {
+            super.onPostExecute(array);
+            progressDialog.dismiss();
+            JSONObject jsonObject1 = null;
+            listPlan.clear();
+            Log.e("savePlan","JSONTask_GetSalesmanPlan-7-");
+            if (array != null) {
+                if (array.contains("CUSNAME")) {
+
+                    if (array.length() != 0) {
+                        try {
+                            JSONArray requestArray = null;
+                            requestArray = new JSONArray(array);
+                            if (flag == 0)
+                                listPlan.clear();
+                            else if (flag == 1)
+                                allPlans.clear();
+
+                            Log.e("requestArray==",""+requestArray.length());
+                            for (int i = 0; i < requestArray.length(); i++) {
+                                Log.e("sss===","sssss");
+                                Plan_SalesMan_model plan = new      Plan_SalesMan_model();
+                                jsonObject1 = requestArray.getJSONObject(i);
+                                plan.setPlan_date(  jsonObject1.getString("TRDATE"));
+                                plan.setSalesNo( jsonObject1.getString("SALESNO"));
+                                plan.setLatit_customer( jsonObject1.getString("LA"));
+                                plan.setLong_customer(jsonObject1.getString("LO"));
+                                plan.setCustomerName(  jsonObject1.getString("CUSNAME"));
+                                plan.setCustomerNumber(  jsonObject1.getString("CUSTNO"));
+                                if (flag == 0)
+                                plan.setOrderd(Integer.parseInt(  jsonObject1.getString("ORDERD"))-1);
+                                else   plan.setOrderd(Integer.parseInt(  jsonObject1.getString("ORDERD")));
+                                plan.setType_orderd(Integer.parseInt(  jsonObject1.getString("TYPEORDER")));
+                                if (flag == 0)
+                                    listPlan.add( plan);
+                                else
+                                    allPlans.add(plan);
+                            }
+//                            Log.e("salesManPlanList==",""+listPlan.size());
+                            if (flag == 0)
+                                fillPlan.setText("fill");
+                            else
+                                fillPlan2.setText("fill");
+
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+
+
+
+                }
+                else if(array.contains("No Data Found")){
+                    switch (flag) {
+                        case 0:
+                            fillPlan.setText("No Data Found");
+                            break;
+                        case 1:
+                            fillPlan2.setText("No Data Found");
+                            break;
+                    }
+                }
+                {}
+            } else {
+
+            }
+        }
 
     }
 
@@ -740,7 +948,7 @@ Log.e("URL_TO_HIT",URL_TO_HIT+"");
             }
         }
     }
-
+//B
     private class JSONTaskGetSalesMan extends AsyncTask<String, String, String> {
         Object context;
         int flag;
@@ -914,6 +1122,11 @@ Log.e("URL_TO_HIT",URL_TO_HIT+"");
                 this.context = (HomeActivity) context;
             } else if (flag == 2) {
                 this.context = (SalesmanMapsActivity) context;
+            } else if (flag == 3) {
+                this.context = (PlansReport) context;
+            }
+            else if (flag == 4) {
+                this.context = (PlanSalesMan) context;
             }
         }
 
@@ -997,7 +1210,7 @@ Log.e("URL_TO_HIT",URL_TO_HIT+"");
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-Log.e("respon==",s+"");
+            Log.e("respon==",s+"");
             if (s != null) {
                 if (s.contains("SALESNO")) {
 
@@ -1008,13 +1221,16 @@ Log.e("respon==",s+"");
                         salesManNameList.clear();
                         //salesManNameList.add("All");
                      //   JSONObject jsonObject = new JSONObject(s);
+//                        s = s + "]"; /////B
+                        JSONArray jsonArray = new JSONArray(s);
 
-                        JSONArray jsonArray = new JSONArray(s);;
-
+                        Log.e("jsonArray", jsonArray.toString());
 
                         for (int i = 0; i < jsonArray.length(); i++) {
                             SalesManInfo salesManInfo = new SalesManInfo();
                             JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+
+                            Log.e("jsonObject1", jsonObject1.toString());
 
 
                             salesManInfo.setSalesManNo(jsonObject1.getString("SALESNO"));
@@ -1029,8 +1245,6 @@ Log.e("respon==",s+"");
                            if(jsonObject1.getString("LONGITUDE").equals(""))
                             salesManInfo.setLongitudeLocation("0");
                            else    salesManInfo.setLongitudeLocation(jsonObject1.getString("LONGITUDE"));
-
-
 //                            salesManInfo.setfVoucherSerial(jsonObject1.getString("FROM_VOUCHER_SERIAL"));
 //                            salesManInfo.settVoucherSerial(jsonObject1.getString("TO_VOUCHER_SERIAL"));
 //                            salesManInfo.setfReturnSerial(jsonObject1.getString("FROM_RETURN_SERIAL"));
@@ -1061,6 +1275,10 @@ Log.e("respon==",s+"");
                         } else if (flag == 2) {
                             SalesmanMapsActivity salesmanMapsActivity = (SalesmanMapsActivity) context;
                             salesmanMapsActivity.location(1);
+                        }
+                        else if (flag == 4) {
+                            PlanSalesMan salesmanMapsActivity = (PlanSalesMan) context;
+                            salesmanMapsActivity.fillSalesManSpinner();
                         }
 
 
@@ -2775,6 +2993,7 @@ Log.e("respon==",s+"");
                             requestDetail = new CustomerInfo();
                             requestDetail.setCustomerNumber(infoDetail.get("CustID").toString());
                             requestDetail.setCustomerName(infoDetail.get("CustName").toString());
+                            requestDetail.setIsSelected(0);
 
 
                             listCustomer.add(requestDetail);
@@ -2901,6 +3120,7 @@ Log.e("respon==",s+"");
 //            Log.e("importData","importData"+s.toString());
             if ( array != null) {
                 if ( array.contains("CUSTID")) {
+                    listAllArea.clear();
                     // Log.e("CUSTOMER_INFO","onPostExecute\t"+s.toString());
                     //{"CUSTOMER_INFO":[{"VHFNo":"0","TransName":"ÞíÏ ÇÝÊÊÇÍí","VHFDATE":"31-DEC-19","DEBIT":"0","Credit":"16194047.851"}
 
@@ -2910,45 +3130,38 @@ Log.e("respon==",s+"");
                             JSONArray requestArray = null;
                             requestArray = new JSONArray( array);
                             listCustomerInfo = new ArrayList<>();
+                            listCustomer= new ArrayList<>();
+                            customername=new ArrayList<>();
 
                             for (int i = 0; i < requestArray.length(); i++) {
-                                Log.e("requestArray===", "requestArray" );
-                                CustomerInfo customerInfo=new CustomerInfo();
+
+                                Log.e("requestArray===", "requestArray");
+                                CustomerInfo customerInfo = new CustomerInfo();
                                 jsonObject1 = requestArray.getJSONObject(i);
-                                customerInfo.setCustomerNumber( jsonObject1.get("CUSTID").toString());
-                                customerInfo.setCustomerName( jsonObject1.get("CUSTNAME").toString());
+                                customerInfo.setCustomerNumber(jsonObject1.get("CUSTID").toString());
+                                customerInfo.setCustomerName(jsonObject1.get("CUSTNAME").toString());
+                                try {
+                                    customerInfo.setLatit_customer(jsonObject1.get("LATITUDE").toString());
+                                    customerInfo.setLong_customer(jsonObject1.get("LONGITUDE").toString());
+                                } catch (Exception e) {
+                                    customerInfo.setLatit_customer("0");
+                                    customerInfo.setLong_customer("0");
+                                }
+
+                                customerInfo.setIsSelected(0);
+                                customerInfo.setOrder(1000);
+                                try {
+                                customerInfo.setAreaName(jsonObject1.get("AREA").toString());
+                                customerInfo.setSalesNo(jsonObject1.get("SALESMANNO").toString());
+                                listAllArea.add(jsonObject1.get("AREA").toString());
+                            }catch (Exception e){
+
+                                }
+
                                 listCustomer.add( customerInfo);
                                 customername.add( customerInfo.getCustomerName());
 
                             }
-
-
-
-                   /*     result = new JSONObject(s);
-                        CustomerInfo requestDetail;
-
-
-                        JSONArray requestArray = null;
-                        listCustomerInfo = new ArrayList<>();
-
-                        requestArray = result.getJSONArray(s);
-                        Log.e("requestArray", "" + requestArray.length());
-
-
-                        for (int i = 0; i < requestArray.length(); i++) {
-                            JSONObject infoDetail = requestArray.getJSONObject(i);
-                            requestDetail = new CustomerInfo();
-                            requestDetail.setCustomerNumber(infoDetail.get("CustID").toString());
-                            requestDetail.setCustomerName(infoDetail.get("CustName").toString());
-
-
-                            listCustomer.add(requestDetail);
-                            customername.add(requestDetail.getCustomerName());
-                            //  Log.e("listRequest", "CUSTOMER_INFO" + listCustomer.get(i).getCustomerName());
-
-
-                        }*/
-
 
                     } catch (JSONException e) {
 //                        progressDialog.dismiss();

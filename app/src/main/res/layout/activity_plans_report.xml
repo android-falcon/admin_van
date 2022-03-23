@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Report.PlansReport">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="2"
+            android:text="Date:"
+            android:textColor="#595959"
+            android:textSize="20sp" />
+
+
+        <EditText
+            android:id="@+id/dateEdt"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@drawable/white_and_blue"
+            android:drawableEnd="@drawable/ic_baseline_calendar_today_24"
+            android:drawableRight="@drawable/ic_baseline_calendar_today_24"
+            android:focusable="false"
+            android:gravity="center"
+            android:hint="Date"
+            android:inputType="date"
+            android:padding="5dp"
+            android:text="02-02-2022"
+            android:textColor="@color/colorblue_dark"
+            android:textSize="15sp" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0.5"
+            android:text="Ordered By:"
+            android:textColor="#595959"
+            android:textSize="20sp" />
+
+        <RadioGroup
+            android:id="@+id/orderRG"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="start|center_vertical"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/locationRBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:buttonTint="#CB04499F"
+                android:checked="true"
+                android:enabled="false"
+                android:text="Location"
+                android:textColor="#D84C5C6C" />
+
+            <RadioButton
+                android:id="@+id/manualRBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="#CB04499F"
+                android:enabled="false"
+                android:text="Manually"
+                android:textColor="#D84C5C6C" />
+
+
+        </RadioGroup>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <EditText
+            android:id="@+id/custNameSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/hover_color"
+            android:drawableEnd="@drawable/ic_baseline_search_24"
+            android:drawableRight="@drawable/ic_baseline_search_24"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:hint="Customer Name"
+            android:inputType="text"
+            android:padding="5dp"
+            android:textColor="@color/colorblue_dark"
+            android:textSize="12sp" />
+
+        <Spinner
+            android:id="@+id/salesManSP"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="5dp"
+            android:textColor="@color/colorblue_dark"
+            android:textSize="12sp" />
+
+        <!--        <EditText-->
+        <!--            android:id="@+id/salesManSearch"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginStart="5dp"-->
+        <!--            android:layout_marginLeft="5dp"-->
+        <!--            android:layout_marginTop="5dp"-->
+        <!--            android:layout_weight="1"-->
+        <!--            android:background="@drawable/hover_color"-->
+        <!--            android:drawableEnd="@drawable/ic_baseline_search_24"-->
+        <!--            android:drawableRight="@drawable/ic_baseline_search_24"-->
+        <!--            android:focusable="false"-->
+        <!--            android:gravity="center_vertical"-->
+        <!--            android:hint="Sales Man"-->
+        <!--            android:inputType="text"-->
+        <!--            android:padding="5dp"-->
+        <!--            android:textColor="@color/colorblue_dark"-->
+        <!--            android:textSize="12sp" />-->
+
+    </LinearLayout>
+
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:background="@color/colorblue_dark"
+        android:gravity="center"
+        android:padding="2dp">
+
+        <TextView
+            android:id="@+id/custNameTV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/customerName"
+            android:textColor="@color/white"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:background="@color/darkOrange2"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/custNoTV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/customerNo"
+            android:textColor="@color/white"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:background="@color/darkOrange2"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/orderTV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/order"
+            android:textColor="@color/white"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/fillPlan2"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_weight="1.3"
+            android:gravity="center|start"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
+            android:textColor="@color/colorblue_dark"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+    </TableRow>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/plans_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="2dp"
+        android:visibility="visible"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+    <LinearLayout
+        android:id="@+id/noDataLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center"
+            android:alpha="0.2"
+            android:src="@drawable/no_plans" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:alpha="0.2"
+            android:text="No Plans Found"
+            android:textColor="#000" />
+
+    </LinearLayout>
+
+</LinearLayout>

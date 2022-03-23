@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.example.adminvansales.model.SalesManInfo;
 import com.example.adminvansales.model.SettingModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.androidgamesdk.gametextinput.Settings;
 import com.smarteist.autoimageslider.DefaultSliderView;
 import com.smarteist.autoimageslider.IndicatorAnimations;
 import com.smarteist.autoimageslider.SliderAnimations;
@@ -42,7 +43,8 @@ import static com.example.adminvansales.ImportData.listId;
 
 public class LogIn extends AppCompatActivity {
     SliderLayout sliderLayout;
-    FloatingActionButton setting_floatingBtn;
+//    FloatingActionButton setting_floatingBtn;
+    TextView setting_floatingBtn;
     Button button_logIn,button_sighnup;
     public  static String ipAddress="",portSettings="",import_way="",Cono="";
     SettingModel settingModelList;
@@ -54,7 +56,7 @@ public class LogIn extends AppCompatActivity {
     String typeimport="0";
     List<Flag_Settingss> flag_settingsList;
     com.example.adminvansales.model.SettingModel settingModel;
-    public static int typaImport=1;//0---- mySql   1-----IIs
+    public static int typaImport=0;//0---- mySql   1-----IIs
 
     public  static int rawahneh=0;// 1= EXPORT STOCK TABLES
     public  static    int getMaxVoucherServer=0;
@@ -115,6 +117,8 @@ public class LogIn extends AppCompatActivity {
          {
              typeimport="1";
          }
+        typeimport="1";
+        Log.e("importData","importData="+typeimport);
         if (typeimport.equals("0"))
             importData.getCustomerInfo(0);
         else if (typeimport.equals("1"))

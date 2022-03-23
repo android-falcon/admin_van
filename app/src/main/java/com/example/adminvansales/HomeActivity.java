@@ -32,7 +32,9 @@ import android.widget.TextView;
 import com.azoft.carousellayoutmanager.CarouselLayoutManager;
 import com.azoft.carousellayoutmanager.CarouselZoomPostLayoutListener;
 import com.azoft.carousellayoutmanager.CenterScrollListener;
+import com.example.adminvansales.Adapters.SalesManAdapter;
 import com.example.adminvansales.Report.OfferseReport;
+import com.example.adminvansales.Report.PlansReport;
 import com.example.adminvansales.model.Password;
 import com.example.adminvansales.model.SalesManInfo;
 import com.example.adminvansales.Report.AnalyzeAccounts;
@@ -51,8 +53,6 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 
 import static com.example.adminvansales.GlobelFunction.salesManInfoAdmin;
 import static com.example.adminvansales.GlobelFunction.salesManInfosList;
-import static com.example.adminvansales.GlobelFunction.salesManNameList;
-import static com.example.adminvansales.ImportData.listSalesMan;
 
 public class HomeActivity extends AppCompatActivity
 
@@ -66,10 +66,11 @@ public class HomeActivity extends AppCompatActivity
     public static TextView waitList, addVanSales;
     RelativeLayout notifyLayout, accountLayout;
     GlobelFunction globelFunction;
-    Button locationButton, ReportButton, offerButton,group_offerButton;
+    Button locationButton, ReportButton, offerButton,group_offerButton,addPlan_Sales_man;
     LinearLayout ReportLinear;
     public static EditText editPassword;
-    TextView offersReport,customerLogReport, paymentReport, cashReport, offerReport,LogReport,unCollectedCheques,analyzeAcountsReport,ItemReport;
+    TextView offersReport,customerLogReport, paymentReport, cashReport, offerReport,LogReport,unCollectedCheques,
+            analyzeAcountsReport,ItemReport, plansReport;
     com.example.adminvansales.model.SettingModel settingModel;
     DataBaseHandler databaseHandler;
     private NavigationView navigationView;
@@ -198,6 +199,15 @@ public class HomeActivity extends AppCompatActivity
         offerReport = findViewById(R.id.offerReport);
         LogReport=findViewById(R.id.LogReport);
         ItemReport=findViewById(R.id.ItemReport);
+        plansReport = findViewById(R.id.plansReport);
+        addPlan_Sales_man=findViewById(R.id.addPlan_Sales_man);
+        addPlan_Sales_man.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =new Intent(HomeActivity.this,PlanSalesMan.class);
+                startActivity(intent);
+            }
+        });
 
         waitList.addTextChangedListener(new TextWatcher() {
             @Override
@@ -392,6 +402,16 @@ public class HomeActivity extends AppCompatActivity
             }
         });
 
+        plansReport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ReportLinear.setVisibility(View.GONE);
+                Intent intent = new Intent(HomeActivity.this, PlansReport.class);
+                startActivity(intent);
+
+            }
+        });
+
     }
 
 
@@ -460,6 +480,45 @@ public class HomeActivity extends AppCompatActivity
 //
 //                onOptionsItemSelected(item);
 //    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.changePassowrd) {
+            openchangePasswordDialog();
+
+        } else if (id == R.id.button_notif) {
+            finish();
+            Intent i = new Intent(HomeActivity.this, MainActivity.class);
+            startActivity(i);
+        } else if (id == R.id.button_account) {
+            globelFunction.setValidation();
+            if(salesManInfoAdmin.getAddSalesMen()==1) {
+                finish();
+                Intent i = new Intent(HomeActivity.this, AccountStatment.class);
+                startActivity(i);
+            }else {
+                globelFunction.AuthenticationMessage();
+            }
+        }
+        else  if (id == R.id.customerLocation)
+        {
+//            finish();
+            Intent i = new Intent(HomeActivity.this, AddCustomerLocation.class);
+            startActivity(i);
+        }
+        else  if (id == R.id.itemVisiblity)
+        {
+//            finish();
+            Intent i = new Intent(HomeActivity.this, ItemVisibility.class);
+            startActivity(i);
+        }
+
+        return super.
+
+                onOptionsItemSelected(item);
+    }
 
     private void openchangePasswordDialog() {
 
