@@ -131,8 +131,6 @@ public class SalesmanMapsActivity extends FragmentActivity implements OnMapReady
                 builder.include(sydney);
             }
         }
-        }else {
-            Log.e("salesManInfosList",""+salesManInfosList.size());
         }
 //        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
 //        mMap.animateCamera(CameraUpdateFactory.newLatLng(sydney));

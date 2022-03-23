@@ -127,7 +127,7 @@ public class HomeActivity extends AppCompatActivity
             }
             break;
             case R.id.add_cust: {
-                Intent intent=new Intent(HomeActivity.this,addC)
+                Intent intent=new Intent(HomeActivity.this,AddCustomerLocation.class);
                 drawerLayout.closeDrawer(navigationView);
             }
             break;
@@ -480,45 +480,45 @@ public class HomeActivity extends AppCompatActivity
 //
 //                onOptionsItemSelected(item);
 //    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.changePassowrd) {
-            openchangePasswordDialog();
-
-        } else if (id == R.id.button_notif) {
-            finish();
-            Intent i = new Intent(HomeActivity.this, MainActivity.class);
-            startActivity(i);
-        } else if (id == R.id.button_account) {
-            globelFunction.setValidation();
-            if(salesManInfoAdmin.getAddSalesMen()==1) {
-                finish();
-                Intent i = new Intent(HomeActivity.this, AccountStatment.class);
-                startActivity(i);
-            }else {
-                globelFunction.AuthenticationMessage();
-            }
-        }
-        else  if (id == R.id.customerLocation)
-        {
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        int id = item.getItemId();
+//
+//        //noinspection SimplifiableIfStatement
+//        if (id == R.id.changePassowrd) {
+//            openchangePasswordDialog();
+//
+//        } else if (id == R.id.button_notif) {
 //            finish();
-            Intent i = new Intent(HomeActivity.this, AddCustomerLocation.class);
-            startActivity(i);
-        }
-        else  if (id == R.id.itemVisiblity)
-        {
-//            finish();
-            Intent i = new Intent(HomeActivity.this, ItemVisibility.class);
-            startActivity(i);
-        }
-
-        return super.
-
-                onOptionsItemSelected(item);
-    }
+//            Intent i = new Intent(HomeActivity.this, MainActivity.class);
+//            startActivity(i);
+//        } else if (id == R.id.button_account) {
+//            globelFunction.setValidation();
+//            if(salesManInfoAdmin.getAddSalesMen()==1) {
+//                finish();
+//                Intent i = new Intent(HomeActivity.this, AccountStatment.class);
+//                startActivity(i);
+//            }else {
+//                globelFunction.AuthenticationMessage();
+//            }
+//        }
+//        else  if (id == R.id.customerLocation)
+//        {
+////            finish();
+//            Intent i = new Intent(HomeActivity.this, AddCustomerLocation.class);
+//            startActivity(i);
+//        }
+//        else  if (id == R.id.itemVisiblity)
+//        {
+////            finish();
+//            Intent i = new Intent(HomeActivity.this, ItemVisibility.class);
+//            startActivity(i);
+//        }
+//
+//        return super.
+//
+//                onOptionsItemSelected(item);
+//    }
 
     private void openchangePasswordDialog() {
 

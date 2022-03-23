@@ -137,7 +137,7 @@ public class ImportData {
 // public  String headerDll="/Falcons/VAN.dll";
    public  String headerDll="";
 // public  String headerDll="/Falcons/VAN.dll";
-public  String headerDll="";
+
     public ImportData(Context context) {
         databaseHandler = new DataBaseHandler(context);
         this.main_context = context;
