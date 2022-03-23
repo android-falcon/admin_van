@@ -152,6 +152,14 @@
     <string name="password_from_admin">Password From Admin</string>
     <string name="voucher_return">Split Returned Vouchers</string>
     <string name="more">more</string>
+    <string name="Plan">Plan</string>
+    <string name="Location">Location</string>
+    <string name="Notifications">Notifications</string>
+    <string name="Reports">Reports</string>
+    <string name="addcustomerlocation">Add Customer Location</string>
+    <string name="itemvisble">Item Visble</string>
+    <string name="open_drawer">open drawer</string>
+    <string name="close_drawer">close drawer</string>
 <string-array name="app_paymentTypeList">
 
 <!--        <item>All</item>-->

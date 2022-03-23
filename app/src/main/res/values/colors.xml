@@ -35,4 +35,7 @@
     <color name="babyblue" >#89CFF0</color>
     <color name="done_button">#3F86B5</color>
     <color name="cancel_button">#E6CA221C</color>
+    <color name="gray3">#D8D7D7</color>
+    <color name="bule3">#76C4FF</color>
+
 </resources>

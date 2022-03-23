@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_home"
+        android:enabled="true"
+        android:iconTint="@color/white"
+        android:icon="@drawable/planedit"
+        android:title="@string/Plan"/>
+
+    <item
+        android:id="@+id/action_cart"
+        android:enabled="true"
+        android:iconTint="@color/white"
+        android:icon="@drawable/locationimg"
+        android:title="@string/Reports"/>
+    <item
+        android:id="@+id/action_add"
+        android:enabled="true"
+        android:iconTint="@color/white"
+        android:icon="@drawable/locationimg"
+        android:title="@string/Location"/>
+    <item
+        android:id="@+id/action_report"
+        android:enabled="true"
+        android:iconTint="@color/white"
+        android:icon="@drawable/notifications"
+        android:title="@string/Notifications"/>
+</menu>

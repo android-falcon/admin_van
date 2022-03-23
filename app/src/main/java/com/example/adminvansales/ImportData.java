@@ -121,8 +121,8 @@ public class ImportData {
 
     public static List<OfferGroupModel> offerGroupModels = new ArrayList<>();
     GlobelFunction globelFunction;
- public  String headerDll="/Falcons/VAN.dll";
-//public  String headerDll="";
+// public  String headerDll="/Falcons/VAN.dll";
+public  String headerDll="";
     public ImportData(Context context) {
         databaseHandler = new DataBaseHandler(context);
         this.main_context = context;

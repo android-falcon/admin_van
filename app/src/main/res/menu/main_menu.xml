@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/pass_setting"
+     app:showAsAction="always"
+        android:title="@string/PassowrdSetting"
+       />
+
+
+    <item
+        android:id="@+id/add_cust"
+        app:showAsAction="always"
+        android:title="@string/addcustomerlocation"
+      />
+
+    <item
+        android:id="@+id/itemvible"
+        android:title="@string/itemvisble"
+        app:showAsAction="always" />
+</menu>

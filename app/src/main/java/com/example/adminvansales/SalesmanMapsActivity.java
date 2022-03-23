@@ -116,8 +116,8 @@ GlobelFunction globelFunction;
              if(LatLngListMarker.get(i)!=null&&salesManInfosList.get(i)!=null)
             if (!salesManInfosList.get(i).getLatitudeLocation().equals("0") && !salesManInfosList.get(i).getLongitudeLocation().equals("0")) {
                 sydney = LatLngListMarker.get(i);
-
-                mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(iconSize())).position(sydney).title(salesManInfosList.get(i).getSalesName()+salesManInfosList.get(i).getLatitudeLocation()+salesManInfosList.get(i).getLongitudeLocation()));
+                mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(iconSize())).position(sydney).title(salesManInfosList.get(i).getSalesName() + salesManInfosList.get(i).getLatitudeLocation() + salesManInfosList.get(i).getLongitudeLocation()));
+           //     mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(iconSize()))BitmapDescriptorFactory).position(sydney).title(salesManInfosList.get(i).getSalesName()+salesManInfosList.get(i).getLatitudeLocation()+salesManInfosList.get(i).getLongitudeLocation()));
                 builder.include(sydney);
             }
         }
