@@ -122,6 +122,15 @@ public class SalesmanMapsActivity extends FragmentActivity implements OnMapReady
             }
         } else {
             Log.e("salesManInfosList", "" + salesManInfosList.size());
+        for (int i = 0; i < LatLngListMarker.size(); i++) {
+             if(LatLngListMarker.get(i)!=null&&salesManInfosList.get(i)!=null)
+            if (!salesManInfosList.get(i).getLatitudeLocation().equals("0") && !salesManInfosList.get(i).getLongitudeLocation().equals("0")) {
+                sydney = LatLngListMarker.get(i);
+                mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(iconSize())).position(sydney).title(salesManInfosList.get(i).getSalesName() + salesManInfosList.get(i).getLatitudeLocation() + salesManInfosList.get(i).getLongitudeLocation()));
+           //     mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(iconSize()))BitmapDescriptorFactory).position(sydney).title(salesManInfosList.get(i).getSalesName()+salesManInfosList.get(i).getLatitudeLocation()+salesManInfosList.get(i).getLongitudeLocation()));
+                builder.include(sydney);
+            }
+        }
         }
 //        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
 //        mMap.animateCamera(CameraUpdateFactory.newLatLng(sydney));

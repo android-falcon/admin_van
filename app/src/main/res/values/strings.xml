@@ -124,6 +124,16 @@
     <string name="password_from_admin">Password from admin</string>
     <string name="voucher_return">Split returned vouchers</string>
     <string name="more">More</string>
+    <string name="no">No</string>
+    <string name="Plan">Plan</string>
+    <string name="Location">Location</string>
+    <string name="Notifications">Notifications</string>
+    <string name="Reports">Reports</string>
+    <string name="addcustomerlocation">Add Customer Location</string>
+    <string name="itemvisble">Item Visble</string>
+    <string name="open_drawer">open drawer</string>
+    <string name="close_drawer">close drawer</string>
+
     <string name="plan_sales">Plan Sales Man</string>
     <string name="typeOrderPlan">Type Order Plan</string>
     <string name="manual">Manual</string>
@@ -137,8 +147,8 @@
     <string name="haveDuplicateOrder">You Have Duplicate Order !!</string>
     <string name="order">Order</string>
     <string name="plans_report">Plans Report</string>
-    <string-array name="app_paymentTypeList">
 
+<string-array name="app_paymentTypeList">
         <!--        <item>All</item>-->
         <item>Cash</item>
         <item>Cheque</item>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:id="@+id/nav_header"
+    android:layout_width="match_parent"
+    android:layout_height="180dp"
+
+    android:gravity="bottom|center"
+    android:orientation="vertical"
+    android:padding="16dp"
+    >
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/nav_header_imageView"
+        android:layout_width="130dp"
+        android:background="@drawable/logomain"
+        android:layout_height="100dp"
+        />
+
+</LinearLayout>

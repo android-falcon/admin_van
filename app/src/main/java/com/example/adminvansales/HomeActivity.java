@@ -1,7 +1,11 @@
 package com.example.adminvansales;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
@@ -19,6 +23,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -38,17 +44,25 @@ import com.example.adminvansales.Report.ListOfferReport;
 import com.example.adminvansales.Report.LogHistoryReport;
 import com.example.adminvansales.Report.PaymentDetailsReport;
 import com.example.adminvansales.Report.UnCollectedData;
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 import static com.example.adminvansales.GlobelFunction.salesManInfoAdmin;
 import static com.example.adminvansales.GlobelFunction.salesManInfosList;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity
+
+        implements NavigationView.OnNavigationItemSelectedListener{
     public List<SalesManInfo> picforbar;
+    private ActionBarDrawerToggle toggle;
+    private DrawerLayout drawerLayout;
+
     public CarouselLayoutManager layoutManagerd;
-    public RecyclerView recyclerViews;
+    public GridView recyclerViews;
     public static TextView waitList, addVanSales;
     RelativeLayout notifyLayout, accountLayout;
     GlobelFunction globelFunction;
@@ -59,12 +73,19 @@ public class HomeActivity extends AppCompatActivity {
             analyzeAcountsReport,ItemReport, plansReport;
     com.example.adminvansales.model.SettingModel settingModel;
     DataBaseHandler databaseHandler;
-
+    private NavigationView navigationView;
+   ImageView menuBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         initalView();
+        menuBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerLayout.openDrawer(navigationView);
+            }
+        });
         globelFunction = new GlobelFunction(HomeActivity.this);
         settingModel=new com.example.adminvansales.model.SettingModel ();
         ImportData  importData=new ImportData(HomeActivity.this);
@@ -82,14 +103,65 @@ public class HomeActivity extends AppCompatActivity {
       //      importData.  IIs_getSalesMan(HomeActivity.this, 1);
 
     }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (toggle.onOptionsItemSelected(item)) {
+            Log.e("iditem", "onOptionsItemSelected " + item.getItemId());
+            return true;
+        }
+
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+        int id = item.getItemId();
+        Log.e("id", "onNavigationItemSelected " + id);
+        switch (id) {
+
+            case R.id.pass_setting: {
+                openchangePasswordDialog();
+                drawerLayout.closeDrawer(navigationView);
+            }
+            break;
+            case R.id.add_cust: {
+                Intent intent=new Intent(HomeActivity.this,AddCustomerLocation.class);
+                drawerLayout.closeDrawer(navigationView);
+            }
+            break;
+            case R.id.itemvible: {
+                drawerLayout.closeDrawer(navigationView);
+
+            }
+            break;
+
+
+        }
+
+        return true;
+
+    }
+    private void setupDrawerContent(NavigationView navigationView) {
+        navigationView.setNavigationItemSelectedListener(this);
+    }
 
     private void initalView() {
+        drawerLayout = findViewById(R.id.main_drawerLayout);
+        menuBtn=findViewById(    R.id.menuBtn);
+
+        toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open_drawer, R.string.close_drawer);
+
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
         offersReport=findViewById(R.id.offersReport);
         notifyLayout = findViewById(R.id.notifyLayout);
         addVanSales = findViewById(R.id.addVanSales);
         accountLayout = findViewById(R.id.accountLayout);
-
-
+        navigationView = findViewById(R.id.nav_view);
+        setupDrawerContent(navigationView);
         addVanSales.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -113,7 +185,7 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(offerIntent);
             }
         });
-        locationButton = findViewById(R.id.LocationButton);
+       locationButton = findViewById(R.id.LocationButton);
         ReportButton = findViewById(R.id.ReportButton);
         recyclerViews = findViewById(R.id.res);
         waitList = findViewById(R.id.waitList);
@@ -347,22 +419,29 @@ public class HomeActivity extends AppCompatActivity {
 //        picforbar = dbHandler.getAllAcCount();
 //        new GetAllAccount().execute();
 
-        try {
-            layoutManagerd = new CarouselLayoutManager(CarouselLayoutManager.VERTICAL, true);
+//        try {
+//            layoutManagerd = new CarouselLayoutManager(CarouselLayoutManager.VERTICAL, true);
+//
+//            recyclerViews.setLayoutManager(layoutManagerd);
+//            recyclerViews.setHasFixedSize(true);
+//            recyclerViews.addOnScrollListener(new CenterScrollListener());
+//            layoutManagerd.setPostLayoutListener(new CarouselZoomPostLayoutListener());
+//
+//            recyclerViews.setAdapter(new SalesManAdapter(this, listSalesMan));
+//            recyclerViews.requestFocus();
+//            recyclerViews.scrollToPosition(2);
+//            recyclerViews.requestFocus();
+//
+//        }catch (Exception e){
+//            Log.e("mapException",e.getMessage());
+//        }
 
-            recyclerViews.setLayoutManager(layoutManagerd);
-            recyclerViews.setHasFixedSize(true);
-            recyclerViews.addOnScrollListener(new CenterScrollListener());
-            layoutManagerd.setPostLayoutListener(new CarouselZoomPostLayoutListener());
-
-            recyclerViews.setAdapter(new SalesManAdapter(this, listSalesMan));
-            recyclerViews.requestFocus();
-            recyclerViews.scrollToPosition(2);
-            recyclerViews.requestFocus();
-
-        }catch (Exception e){
-            Log.e("mapException",e.getMessage());
-        }
+//        RecyclerView.LayoutManager   layoutManager = new LinearLayoutManager(HomeActivity.this,LinearLayoutManager.HORIZONTAL,false);
+//        recyclerViews.setLayoutManager(layoutManager);
+        SalesManInfo salesManInfo =new SalesManInfo();
+        salesManInfo.setSalesName("add salesman");
+        listSalesMan.add(salesManInfo);
+        recyclerViews.setAdapter(new SalmanAdapter(this, listSalesMan));
 
 
     }
@@ -375,45 +454,71 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.changePassowrd) {
-            openchangePasswordDialog();
-
-        } else if (id == R.id.button_notif) {
-            finish();
-            Intent i = new Intent(HomeActivity.this, MainActivity.class);
-            startActivity(i);
-        } else if (id == R.id.button_account) {
-            globelFunction.setValidation();
-            if(salesManInfoAdmin.getAddSalesMen()==1) {
-                finish();
-                Intent i = new Intent(HomeActivity.this, AccountStatment.class);
-                startActivity(i);
-            }else {
-                globelFunction.AuthenticationMessage();
-            }
-        }
-        else  if (id == R.id.customerLocation)
-        {
+    //@Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        int id = item.getItemId();
+//
+//        //noinspection SimplifiableIfStatement
+//        if (id == R.id.changePassowrd) {
+//            openchangePasswordDialog();
+//
+//        } else if (id == R.id.button_notif) {
 //            finish();
-            Intent i = new Intent(HomeActivity.this, AddCustomerLocation.class);
-            startActivity(i);
-        }
-        else  if (id == R.id.itemVisiblity)
-        {
+//            Intent i = new Intent(HomeActivity.this, MainActivity.class);
+//            startActivity(i);
+//        } else if (id == R.id.button_account) {
+//            globelFunction.setValidation();
+//            if(salesManInfoAdmin.getAddSalesMen()==1) {
+//                finish();
+//                Intent i = new Intent(HomeActivity.this, AccountStatment.class);
+//                startActivity(i);
+//            }else {
+//                globelFunction.AuthenticationMessage();
+//            }
+//        }
+//        return super.
+//
+//                onOptionsItemSelected(item);
+//    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        int id = item.getItemId();
+//
+//        //noinspection SimplifiableIfStatement
+//        if (id == R.id.changePassowrd) {
+//            openchangePasswordDialog();
+//
+//        } else if (id == R.id.button_notif) {
 //            finish();
-            Intent i = new Intent(HomeActivity.this, ItemVisibility.class);
-            startActivity(i);
-        }
-
-        return super.
-
-                onOptionsItemSelected(item);
-    }
+//            Intent i = new Intent(HomeActivity.this, MainActivity.class);
+//            startActivity(i);
+//        } else if (id == R.id.button_account) {
+//            globelFunction.setValidation();
+//            if(salesManInfoAdmin.getAddSalesMen()==1) {
+//                finish();
+//                Intent i = new Intent(HomeActivity.this, AccountStatment.class);
+//                startActivity(i);
+//            }else {
+//                globelFunction.AuthenticationMessage();
+//            }
+//        }
+//        else  if (id == R.id.customerLocation)
+//        {
+////            finish();
+//            Intent i = new Intent(HomeActivity.this, AddCustomerLocation.class);
+//            startActivity(i);
+//        }
+//        else  if (id == R.id.itemVisiblity)
+//        {
+////            finish();
+//            Intent i = new Intent(HomeActivity.this, ItemVisibility.class);
+//            startActivity(i);
+//        }
+//
+//        return super.
+//
+//                onOptionsItemSelected(item);
+//    }
 
     private void openchangePasswordDialog() {
 
@@ -484,7 +589,6 @@ public class HomeActivity extends AppCompatActivity {
         else      if(settingModel.getImport_way().equals("1"))
             exportData. IIs_savePassowrdSetting( passwords);
     }
-
 
 
 
