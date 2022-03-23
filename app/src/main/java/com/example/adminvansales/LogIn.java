@@ -1,13 +1,18 @@
 package com.example.adminvansales;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
+
 import com.example.adminvansales.model.Flag_Settingss;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -24,6 +29,7 @@ import android.widget.Toast;
 import com.example.adminvansales.model.SalesManInfo;
 import com.example.adminvansales.model.SettingModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.androidgamesdk.gametextinput.Settings;
 import com.smarteist.autoimageslider.DefaultSliderView;
 import com.smarteist.autoimageslider.IndicatorAnimations;
@@ -330,13 +336,21 @@ public class LogIn extends AppCompatActivity {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(true);
         dialog.setContentView(R.layout.setting_dialog);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        DisplayMetrics dm = new DisplayMetrics();
+        LogIn.this.getWindow().getWindowManager().getDefaultDisplay().getMetrics(dm);
+        int width = dm.widthPixels;
+        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+        layoutParams.copyFrom(dialog.getWindow().getAttributes());
+        layoutParams.width = (int) (width / 1.3);
+        dialog.getWindow().setAttributes(layoutParams);
         TextView more=dialog.findViewById( R.id. more);
         Button saveSetting=dialog.findViewById(R.id.saveSetting);
         final EditText editTextIp=dialog.findViewById(R.id.setindEditText);
         final EditText  portSetting=dialog.findViewById(R.id.portSetting);
-RadioButton RB_mysql= dialog.findViewById(R.id.RB_mysql);
-        RB_mysql.setChecked(true);
-        RadioButton RB_iis= dialog.findViewById(R.id.RB_iis);
+//RadioButton RB_mysql= dialog.findViewById(R.id.RB_mysql);
+//        RB_mysql.setChecked(true);
+//        RadioButton RB_iis= dialog.findViewById(R.id.RB_iis);
         final EditText  CoNo=dialog.findViewById(R.id.cono);
         ipAddress="";
         portSettings="";
@@ -350,10 +364,10 @@ RadioButton RB_mysql= dialog.findViewById(R.id.RB_mysql);
                 portSettings=settingModels.getPort();
                 import_way=settingModels.getImport_way();
                 Cono=settingModels.getCono();
-                if(import_way.equals("0"))
-                    RB_mysql.setChecked(true);
-                else
-                    RB_iis.setChecked(true);
+//                if(import_way.equals("0"))
+//                    RB_mysql.setChecked(true);
+//                else
+//                    RB_iis.setChecked(true);
                 editTextIp.setText(ipAddress);
                 portSetting.setText(portSettings);
                 CoNo.setText(Cono);
@@ -395,9 +409,11 @@ RadioButton RB_mysql= dialog.findViewById(R.id.RB_mysql);
         final Dialog moreDialog = new Dialog(LogIn.this);
         moreDialog.setCancelable(false);
         moreDialog.setContentView(R.layout.more_settings_dialog);
+        moreDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(moreDialog.getWindow().getAttributes());
         lp.width = (int)(getResources().getDisplayMetrics().widthPixels/1.15);
+        lp.height = (int)(getResources().getDisplayMetrics().heightPixels/1.25);
         moreDialog.getWindow().setAttributes(lp);
         moreDialog.show();
 
@@ -409,7 +425,8 @@ RadioButton RB_mysql= dialog.findViewById(R.id.RB_mysql);
 //            RadioButton radioBtnSQL = moreDialog.findViewById(R.id.radioBtnSQL);
 //            RadioButton radioBtnIIS = moreDialog.findViewById(R.id.radioBtnIIS);
 
-        Switch swExport, swMax, swOrder, swPassword, swTotal, swReturn;
+        SwitchCompat swExport;
+        SwitchCompat swMax, swOrder, swPassword, swTotal, swReturn;
         swExport = moreDialog.findViewById(R.id.swExport);
         swMax = moreDialog.findViewById(R.id.swMax);
         swOrder = moreDialog.findViewById(R.id.swOrder);

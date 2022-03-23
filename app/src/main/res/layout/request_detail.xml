@@ -15,7 +15,6 @@
         android:layout_height="match_parent"
         >
         <LinearLayout
-            android:id="@+id/linerEditing"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
@@ -31,7 +30,6 @@
 
 
                 <TextView
-                    android:id="@+id/textView4"
 
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
@@ -71,7 +69,6 @@
                     android:padding="5dp">
 
                     <TextView
-                        android:id="@+id/textView27"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="2dp"
@@ -118,7 +115,6 @@
                     android:padding="5dp">
 
                     <TextView
-                        android:id="@+id/textView0227"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="2dp"
@@ -162,7 +158,6 @@
                     android:padding="5dp">
 
                     <TextView
-                        android:id="@+id/textVi117"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="2dp"
@@ -211,7 +206,6 @@
                     android:padding="5dp">
 
                     <TextView
-                        android:id="@+id/textVi7"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="2dp"
@@ -260,7 +254,6 @@
                     android:padding="5dp">
 
                     <TextView
-                        android:id="@+id/textView37"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="2dp"
@@ -304,7 +297,6 @@
                     android:padding="5dp">
 
                     <TextView
-                        android:id="@+id/textView3027"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="2dp"
@@ -341,7 +333,6 @@
 
                 <LinearLayout
                     android:orientation="horizontal"
-                    android:id="@+id/rowcompany"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="5dp"
@@ -351,7 +342,6 @@
                     android:padding="5dp">
 
                     <TextView
-                        android:id="@+id/textView33"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="2dp"

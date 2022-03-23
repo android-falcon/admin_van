@@ -1,282 +1,421 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mainLinearAdapter"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/White2"
-    android:layoutDirection="locale"
-    android:orientation="vertical"
-    android:padding="2dp"
-    android:textDirection="locale">
-
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="15dp"
+    app:cardElevation="3dp">
 
     <LinearLayout
-        android:id="@+id/lineardetail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layoutDirection="locale"
-        android:orientation="horizontal"
-        android:padding="5dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/setting_floatingBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/quicksand_medium"
+            android:gravity="center"
+            android:text="IP Settings"
+            android:textColor="@color/colorblue1"
+            android:textSize="30sp" />
 
 
-        android:textDirection="locale">
-
-        <RelativeLayout
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_marginHorizontal="28dp"
+            android:layout_marginTop="40dp"
+            app:boxCornerRadiusBottomEnd="@dimen/padd_10"
+            app:boxCornerRadiusBottomStart="@dimen/padd_10"
+            app:boxCornerRadiusTopEnd="@dimen/padd_10"
+            app:boxCornerRadiusTopStart="@dimen/padd_10"
+            app:boxStrokeColor="@color/colorblue1"
+            app:hintTextColor="@color/colorblue1">
 
-
-            <LinearLayout
-                android:id="@+id/linearCheckInfo"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/setindEditText"
                 android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="IP Address"
+                android:textColor="#000" />
+
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="28dp"
+            android:layout_marginTop="26dp"
+            app:boxCornerRadiusBottomEnd="@dimen/padd_10"
+            app:boxCornerRadiusBottomStart="@dimen/padd_10"
+            app:boxCornerRadiusTopEnd="@dimen/padd_10"
+            app:boxCornerRadiusTopStart="@dimen/padd_10"
+            app:boxStrokeColor="@color/colorblue1"
+            app:hintTextColor="@color/colorblue1">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/portSetting"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="IP Port"
+                android:textColor="#000" />
+
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="28dp"
+            android:layout_marginTop="26dp"
+            app:boxCornerRadiusBottomEnd="@dimen/padd_10"
+            app:boxCornerRadiusBottomStart="@dimen/padd_10"
+            app:boxCornerRadiusTopEnd="@dimen/padd_10"
+            app:boxCornerRadiusTopStart="@dimen/padd_10"
+            app:boxStrokeColor="@color/colorblue1"
+            app:hintTextColor="@color/colorblue1">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/cono"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Company No"
+                android:textColor="#000" />
+
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="28dp"
+            android:layout_marginTop="36dp"
+            android:layout_marginBottom="40dp"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/saveSetting"
+                android:layout_width="104dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_weight="1"
+                android:background="@drawable/blue_btn"
+                android:text="@string/ok"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/more"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                android:background="@drawable/container"
-                android:elevation="2dp"
-                android:gravity="center"
-
-                android:orientation="vertical"
-                android:padding="2dp">
-
-                <TextView
-                    android:id="@+id/cust_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-
-                    android:layout_gravity="center_horizontal"
-                    android:text="Setting"
-                    android:textColor="@color/colorblue_dark"
-
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/cust"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_gravity="center_horizontal"
-
-                    android:layout_margin="5dp"
-                    android:background="@color/darkOrange"
-                    android:gravity="center"
-                    android:textColor="@color/colorblue_dark"
-
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/amount_check"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginTop="2dp"
-                        android:layout_marginBottom="1dp"
-                        android:layout_weight="2"
-                        android:gravity="center_vertical"
-
-                        android:text="Ip Address "
-                        android:textColor="@color/colorblue_dark"
-                        android:textSize="14sp"
-
-                        android:textStyle="bold" />
-
-                    <EditText
-                        android:id="@+id/setindEditText"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:layout_marginTop="2dp"
-                        android:layout_marginBottom="1dp"
-                        android:layout_weight="1"
-
-                        android:background="@drawable/btn_sighn_up"
-
-                        android:lines="1"
-                        android:text=""
-                        android:textColor="@color/colorblue_dark"
-
-                        android:textSize="14sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <TextView
-
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginTop="2dp"
-                        android:layout_marginBottom="1dp"
-                        android:layout_weight="2"
-                        android:gravity="center_vertical"
-
-                        android:text="CONO "
-                        android:textColor="@color/colorblue_dark"
-                        android:textSize="14sp"
-
-                        android:textStyle="bold" />
-
-                    <EditText
-                        android:id="@+id/cono"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:layout_marginTop="2dp"
-                        android:layout_marginBottom="1dp"
-                        android:layout_weight="1"
-
-                        android:background="@drawable/btn_sighn_up"
-
-                        android:lines="1"
-                        android:text=""
-                        android:textColor="@color/colorblue_dark"
-
-                        android:textSize="14sp" />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginTop="2dp"
-                        android:layout_marginBottom="1dp"
-                        android:layout_weight="2"
-                        android:gravity="center_vertical"
-
-                        android:text="Port"
-                        android:textColor="@color/colorblue_dark"
-                        android:textSize="14sp"
-
-                        android:textStyle="bold" />
-
-                    <EditText
-                        android:id="@+id/portSetting"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:layout_marginTop="2dp"
-                        android:layout_marginBottom="1dp"
-                        android:layout_weight="1"
-
-                        android:background="@drawable/btn_sighn_up"
-
-                        android:lines="1"
-                        android:text=""
-                        android:textColor="@color/colorblue_dark"
-
-                        android:textSize="14sp" />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:visibility="gone"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginTop="2dp"
-                        android:layout_marginBottom="1dp"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical"
-
-                        android:text="Import Data"
-                        android:textColor="@color/colorblue_dark"
-                        android:textSize="14sp"
-
-                        android:textStyle="bold" />
-                    <RadioGroup
-                        android:layout_width="wrap_content"
-                        android:id="@+id/RadioGroup"
-                        android:layout_weight="1"
-                        android:orientation="horizontal"
-                        android:layout_height="wrap_content">
-                        <RadioButton
-                            android:layout_width="wrap_content"
-
-                            android:text="mysql  "
-                            android:textColor="@drawable/blue_back"
-                            android:textSize="17dp"
-                            android:textStyle="bold"
-                            android:layout_weight="2"
-                            android:id="@+id/RB_mysql"
-                            android:layout_height="wrap_content"/>
-                        <RadioButton
-                            android:layout_width="wrap_content"
-                            android:text="IIs  "
-                            android:textColor="@drawable/blue_back"
-                            android:textStyle="bold"
-                            android:layout_weight="2"
-                            android:textSize="17dp"
-                            android:id="@+id/RB_iis"
-                            android:layout_height="wrap_content"/>
-
-                    </RadioGroup>
-                </LinearLayout>
-
-            </LinearLayout>
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/more"
+                android:layout_width="104dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/borders_btn"
+                android:drawableEnd="@android:drawable/arrow_down_float"
+                android:drawableRight="@android:drawable/arrow_down_float"
+                android:drawableTint="@color/colorblue1"
+                android:padding="@dimen/padd_10"
+                android:text="@string/more"
+                android:textAllCaps="false"
+                android:textColor="@color/colorblue1"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@id/saveSetting"/>
 
 
-        </RelativeLayout>
-    </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_gravity="center_vertical"
-        android:layout_margin="15dp"
-        android:gravity="center_horizontal">
-
-        <Button
-            android:id="@+id/saveSetting"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="@drawable/btn_login"
-            android:text="Save"
-            android:textColor="@color/colorblue_dark"
-            android:textSize="14sp" />
-        <Button
-
-            android:visibility="invisible"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="@drawable/btn_login"
-            android:text="Save"
-            android:textColor="@color/colorblue_dark"
-            android:textSize="14sp" />
-        <TextView
-            android:id="@+id/more"
-            android:layout_width="0dp"
-            android:layout_weight="2"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="1dp"
-            android:drawableStart="@drawable/ic_more"
-            android:gravity="center_vertical"
-            android:text="@string/more"
-            android:textColor="#76797A"
-            android:textSize="16sp"
-            android:textStyle="bold" />
 
     </LinearLayout>
 
 
-</LinearLayout>
+</com.google.android.material.card.MaterialCardView><!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--    android:id="@+id/mainLinearAdapter"-->
+    <!--    android:layout_width="match_parent"-->
+    <!--    android:layout_height="wrap_content"-->
+    <!--    android:background="@color/White2"-->
+    <!--    android:layoutDirection="locale"-->
+    <!--    android:orientation="vertical"-->
+    <!--    android:padding="2dp"-->
+    <!--    android:textDirection="locale">-->
+
+
+    <!--    <LinearLayout-->
+    <!--        android:id="@+id/lineardetail"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="20dp"-->
+    <!--        android:layoutDirection="locale"-->
+    <!--        android:orientation="horizontal"-->
+    <!--        android:padding="5dp"-->
+
+
+    <!--        android:textDirection="locale">-->
+
+    <!--        <RelativeLayout-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_weight="1">-->
+
+
+    <!--            <LinearLayout-->
+    <!--                android:id="@+id/linearCheckInfo"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_marginTop="5dp"-->
+    <!--                android:layout_weight="1"-->
+
+    <!--                android:background="@drawable/container"-->
+    <!--                android:elevation="2dp"-->
+    <!--                android:gravity="center"-->
+
+    <!--                android:orientation="vertical"-->
+    <!--                android:padding="2dp">-->
+
+    <!--                <TextView-->
+    <!--                    android:id="@+id/cust_name"-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="wrap_content"-->
+
+    <!--                    android:layout_gravity="center_horizontal"-->
+    <!--                    android:text="Setting"-->
+    <!--                    android:textColor="@color/colorblue_dark"-->
+
+    <!--                    android:textSize="14sp"-->
+    <!--                    android:textStyle="bold" />-->
+
+    <!--                <TextView-->
+    <!--                    android:id="@+id/cust"-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="1dp"-->
+    <!--                    android:layout_gravity="center_horizontal"-->
+
+    <!--                    android:layout_margin="5dp"-->
+    <!--                    android:background="@color/darkOrange"-->
+    <!--                    android:gravity="center"-->
+    <!--                    android:textColor="@color/colorblue_dark"-->
+
+    <!--                    android:textSize="16sp"-->
+    <!--                    android:textStyle="bold" />-->
+
+    <!--                <LinearLayout-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="match_parent"-->
+    <!--                    android:orientation="horizontal">-->
+
+    <!--                    <TextView-->
+    <!--                        android:id="@+id/amount_check"-->
+    <!--                        android:layout_width="match_parent"-->
+    <!--                        android:layout_height="match_parent"-->
+    <!--                        android:layout_gravity="center_vertical"-->
+    <!--                        android:layout_marginTop="2dp"-->
+    <!--                        android:layout_marginBottom="1dp"-->
+    <!--                        android:layout_weight="2"-->
+    <!--                        android:gravity="center_vertical"-->
+
+    <!--                        android:text="Ip Address "-->
+    <!--                        android:textColor="@color/colorblue_dark"-->
+    <!--                        android:textSize="14sp"-->
+
+    <!--                        android:textStyle="bold" />-->
+
+    <!--                    <EditText-->
+    <!--                        android:id="@+id/setindEditText"-->
+    <!--                        android:layout_width="match_parent"-->
+    <!--                        android:layout_height="40dp"-->
+    <!--                        android:layout_marginTop="2dp"-->
+    <!--                        android:layout_marginBottom="1dp"-->
+    <!--                        android:layout_weight="1"-->
+
+    <!--                        android:background="@drawable/btn_sighn_up"-->
+
+    <!--                        android:lines="1"-->
+    <!--                        android:text=""-->
+    <!--                        android:textColor="@color/colorblue_dark"-->
+
+    <!--                        android:textSize="14sp" />-->
+    <!--                </LinearLayout>-->
+
+    <!--                <LinearLayout-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="match_parent"-->
+    <!--                    android:orientation="horizontal">-->
+
+    <!--                    <TextView-->
+
+    <!--                        android:layout_width="match_parent"-->
+    <!--                        android:layout_height="match_parent"-->
+    <!--                        android:layout_gravity="center_vertical"-->
+    <!--                        android:layout_marginTop="2dp"-->
+    <!--                        android:layout_marginBottom="1dp"-->
+    <!--                        android:layout_weight="2"-->
+    <!--                        android:gravity="center_vertical"-->
+
+    <!--                        android:text="CONO "-->
+    <!--                        android:textColor="@color/colorblue_dark"-->
+    <!--                        android:textSize="14sp"-->
+
+    <!--                        android:textStyle="bold" />-->
+
+    <!--                    <EditText-->
+    <!--                        android:id="@+id/cono"-->
+    <!--                        android:layout_width="match_parent"-->
+    <!--                        android:layout_height="40dp"-->
+    <!--                        android:layout_marginTop="2dp"-->
+    <!--                        android:layout_marginBottom="1dp"-->
+    <!--                        android:layout_weight="1"-->
+
+    <!--                        android:background="@drawable/btn_sighn_up"-->
+
+    <!--                        android:lines="1"-->
+    <!--                        android:text=""-->
+    <!--                        android:textColor="@color/colorblue_dark"-->
+
+    <!--                        android:textSize="14sp" />-->
+    <!--                </LinearLayout>-->
+    <!--                <LinearLayout-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="match_parent"-->
+    <!--                    android:orientation="horizontal">-->
+
+    <!--                    <TextView-->
+    <!--                        android:layout_width="match_parent"-->
+    <!--                        android:layout_height="match_parent"-->
+    <!--                        android:layout_gravity="center_vertical"-->
+    <!--                        android:layout_marginTop="2dp"-->
+    <!--                        android:layout_marginBottom="1dp"-->
+    <!--                        android:layout_weight="2"-->
+    <!--                        android:gravity="center_vertical"-->
+
+    <!--                        android:text="Port"-->
+    <!--                        android:textColor="@color/colorblue_dark"-->
+    <!--                        android:textSize="14sp"-->
+
+    <!--                        android:textStyle="bold" />-->
+
+    <!--                    <EditText-->
+    <!--                        android:id="@+id/portSetting"-->
+    <!--                        android:layout_width="match_parent"-->
+    <!--                        android:layout_height="40dp"-->
+    <!--                        android:layout_marginTop="2dp"-->
+    <!--                        android:layout_marginBottom="1dp"-->
+    <!--                        android:layout_weight="1"-->
+
+    <!--                        android:background="@drawable/btn_sighn_up"-->
+
+    <!--                        android:lines="1"-->
+    <!--                        android:text=""-->
+    <!--                        android:textColor="@color/colorblue_dark"-->
+
+    <!--                        android:textSize="14sp" />-->
+    <!--                </LinearLayout>-->
+    <!--                <LinearLayout-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_margin="5dp"-->
+    <!--                    android:visibility="gone"-->
+    <!--                    android:gravity="center"-->
+    <!--                    android:orientation="horizontal">-->
+    <!--                    <TextView-->
+    <!--                        android:layout_width="wrap_content"-->
+    <!--                        android:layout_height="match_parent"-->
+    <!--                        android:layout_gravity="center_vertical"-->
+    <!--                        android:layout_marginTop="2dp"-->
+    <!--                        android:layout_marginBottom="1dp"-->
+    <!--                        android:layout_weight="1"-->
+    <!--                        android:gravity="center_vertical"-->
+
+    <!--                        android:text="Import Data"-->
+    <!--                        android:textColor="@color/colorblue_dark"-->
+    <!--                        android:textSize="14sp"-->
+
+    <!--                        android:textStyle="bold" />-->
+    <!--                    <RadioGroup-->
+    <!--                        android:layout_width="wrap_content"-->
+    <!--                        android:id="@+id/RadioGroup"-->
+    <!--                        android:layout_weight="1"-->
+    <!--                        android:orientation="horizontal"-->
+    <!--                        android:layout_height="wrap_content">-->
+    <!--                        <RadioButton-->
+    <!--                            android:layout_width="wrap_content"-->
+
+    <!--                            android:text="mysql  "-->
+    <!--                            android:textColor="@drawable/blue_back"-->
+    <!--                            android:textSize="17dp"-->
+    <!--                            android:textStyle="bold"-->
+    <!--                            android:layout_weight="2"-->
+    <!--                            android:id="@+id/RB_mysql"-->
+    <!--                            android:layout_height="wrap_content"/>-->
+    <!--                        <RadioButton-->
+    <!--                            android:layout_width="wrap_content"-->
+    <!--                            android:text="IIs  "-->
+    <!--                            android:textColor="@drawable/blue_back"-->
+    <!--                            android:textStyle="bold"-->
+    <!--                            android:layout_weight="2"-->
+    <!--                            android:textSize="17dp"-->
+    <!--                            android:id="@+id/RB_iis"-->
+    <!--                            android:layout_height="wrap_content"/>-->
+
+    <!--                    </RadioGroup>-->
+    <!--                </LinearLayout>-->
+
+    <!--            </LinearLayout>-->
+
+
+    <!--        </RelativeLayout>-->
+    <!--    </LinearLayout>-->
+
+    <!--    <LinearLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="40dp"-->
+    <!--        android:layout_gravity="center_vertical"-->
+    <!--        android:layout_margin="15dp"-->
+    <!--        android:gravity="center_horizontal">-->
+
+    <!--        <Button-->
+    <!--            android:id="@+id/saveSetting"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="match_parent"-->
+    <!--            android:background="@drawable/btn_login"-->
+    <!--            android:text="Save"-->
+    <!--            android:textColor="@color/colorblue_dark"-->
+    <!--            android:textSize="14sp" />-->
+    <!--        <Button-->
+
+    <!--            android:visibility="invisible"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="match_parent"-->
+    <!--            android:background="@drawable/btn_login"-->
+    <!--            android:text="Save"-->
+    <!--            android:textColor="@color/colorblue_dark"-->
+    <!--            android:textSize="14sp" />-->
+    <!--        <TextView-->
+    <!--            android:id="@+id/more"-->
+    <!--            android:layout_width="0dp"-->
+    <!--            android:layout_weight="2"-->
+    <!--            android:layout_height="match_parent"-->
+    <!--            android:layout_gravity="center_vertical"-->
+    <!--            android:layout_marginTop="8dp"-->
+    <!--            android:layout_marginBottom="1dp"-->
+    <!--            android:drawableStart="@drawable/ic_more"-->
+    <!--            android:gravity="center_vertical"-->
+    <!--            android:text="@string/more"-->
+    <!--            android:textColor="#76797A"-->
+    <!--            android:textSize="16sp"-->
+    <!--            android:textStyle="bold" />-->
+
+    <!--    </LinearLayout>-->
+
+
+    <!--</LinearLayout>-->

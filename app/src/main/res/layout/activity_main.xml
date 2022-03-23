@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/White2"
-    android:id="@+id/mainlayout"
     android:layoutDirection="locale"
     android:orientation="vertical"
     >
@@ -21,7 +20,6 @@
     android:visibility="gone"
     android:id="@+id/Requstrespon"/>
         <TextView
-            android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_margin="6dp"
@@ -36,7 +34,6 @@
             app:fontFamily="sans-serif-smallcaps" />
 
         <TextView
-            android:id="@+id/textCheckstateChanger"
             android:layout_height="wrap_content"
             android:visibility="gone"
             android:text="0"

@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mainLinearAdapter"
     android:textDirection="locale"
     android:layoutDirection="locale"
     android:padding="2dp"
@@ -53,7 +52,6 @@
                 android:textStyle="bold"
                 android:textColor="@color/colorblue_dark" />
             <TextView
-                android:id="@+id/cust"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                android:layout_margin="5dp"
@@ -96,7 +94,6 @@
 
 
             <LinearLayout
-                android:id="@+id/rowStatus"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
@@ -202,7 +199,6 @@
 
         </LinearLayout>
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/checkimage_state"
 
                 android:layout_width="30dp"
                 android:layout_height="30dp"

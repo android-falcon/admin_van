@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -34,7 +35,8 @@ import static com.example.adminvansales.GlobelFunction.salesManNameList;
 
 public class CustomerLogReport extends AppCompatActivity {
 
-    TextView fromDate,toDate,excelConvert,pdfConvert,share;
+    TextView fromDate,toDate;
+    ImageButton excelConvert,pdfConvert,share, backBtn;
     GlobelFunction globelFunction;
     String toDay;
     CustomerLogReportAdapter customerLogReportAdapter;
@@ -69,6 +71,7 @@ public class CustomerLogReport extends AppCompatActivity {
         excelConvert=findViewById(R.id.excelConvert);
         pdfConvert=findViewById(R.id.pdfConvert);
         share=findViewById(R.id.share);
+        backBtn = findViewById(R.id.backBtn);
         globelFunction=new GlobelFunction(CustomerLogReport.this);
         toDay=globelFunction.DateInToday();
         fromDate.setText(toDay);
@@ -93,6 +96,7 @@ public class CustomerLogReport extends AppCompatActivity {
         excelConvert.setOnClickListener(onClick);
         pdfConvert.setOnClickListener(onClick);
         share.setOnClickListener(onClick);
+        backBtn.setOnClickListener(v -> onBackPressed());
 
 
     }
@@ -190,8 +194,7 @@ public class CustomerLogReport extends AppCompatActivity {
 
     public void fillSalesManSpinner(){
 
-        salesNameSpinnerAdapter = new ArrayAdapter<String>(this, R.layout.spinner_layout, salesManNameList);
-        salesNameSpinnerAdapter.setDropDownViewResource(R.layout.spinner_layout);
+        salesNameSpinnerAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item, salesManNameList);
         salesNameSpinner.setAdapter(salesNameSpinnerAdapter);
 
     }

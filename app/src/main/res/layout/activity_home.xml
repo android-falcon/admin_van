@@ -8,7 +8,6 @@
     android:orientation="vertical"
     tools:context=".HomeActivity">
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/main_toolbar"
         android:visibility="gone"
         android:layout_width="match_parent"
         android:background="@color/colorblue_dark"
@@ -20,7 +19,6 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/main_username"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
@@ -126,7 +124,6 @@
         <!--android:textColor="@color/colorblue_dark" />-->
 
         <TextView
-            android:id="@+id/ad10"
             android:visibility="invisible"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
