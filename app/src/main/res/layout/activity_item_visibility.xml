@@ -30,7 +30,6 @@
             android:layout_width="match_parent"
             android:layout_height="70dp"
 
-            android:background="@drawable/title_back"
             android:elevation="5dp"
             android:orientation="horizontal">
 
@@ -40,7 +39,8 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="@string/itemVisible"
-                android:textColor="@color/layer7"
+                android:textColor="@color/bule3"
+                android:textStyle="bold"
                 android:textSize="18sp" />
 
         </LinearLayout>
@@ -60,7 +60,7 @@
                 android:paddingLeft="2dp"
                 android:paddingRight="2dp"
                 android:text="@string/sales_man_name"
-                android:textColor="@color/colorblue_dark"
+                android:textColor="@color/bule5"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
@@ -75,6 +75,7 @@
                 android:gravity="center"
                 android:padding="3dp"
                 android:textSize="15sp" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -104,16 +105,16 @@
 
 
                 android:layout_weight="2"
-                android:background="@drawable/hover_color"
-                android:drawableRight="@drawable/ic_search_black_24dp"
-                android:drawableTint="@color/colorblue_dark3"
+                android:background="@drawable/searchbox"
+                android:drawableLeft="@drawable/ic_search_black_24dp"
+                android:drawableTint="@color/layer3"
                 android:elevation="2dp"
                 android:fontFamily="sans-serif-light"
                 android:hint="type Item Name ...."
                 android:inputType="text"
                 android:padding="1dp"
                 android:textColor="@color/darkGray"
-                android:textColorHint="@color/lightWhite" />
+                android:textColorHint="@color/layer3" />
 
             <TextView
                 android:id="@+id/clearSearch"
@@ -135,7 +136,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_weight="2"
-            android:background="@color/colorblue_dark"
+            android:background="@color/bule3"
             android:gravity="center"
             android:padding="1dp"
 
@@ -158,6 +159,7 @@
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
                 android:layout_margin="3dp"
+                android:visibility="invisible"
                 android:background="@color/colorblue1"
 
                 />
@@ -177,6 +179,7 @@
 
             <TextView
                 android:layout_width="1dp"
+                android:visibility="invisible"
                 android:layout_height="match_parent"
                 android:layout_margin="3dp"
                 android:background="@color/colorblue1"
@@ -247,11 +250,11 @@
             android:layout_gravity="center"
             android:layout_margin="5dp"
             android:layout_weight="0.2"
-            android:background="@drawable/yellow_button"
+            android:background="@drawable/bluebtn"
             android:elevation="5dp"
             android:gravity="center"
             android:text="@string/save"
-            android:textColor="@color/colorblue_dark"
+            android:textColor="@color/white"
             android:textSize="15sp"
             android:textStyle="bold" />
 

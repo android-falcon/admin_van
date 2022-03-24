@@ -105,6 +105,7 @@ public class HomeActivity extends AppCompatActivity
     }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        Log.e("onOptionsItemSelected " ,"onOptionsItemSelected");
         if (toggle.onOptionsItemSelected(item)) {
             Log.e("iditem", "onOptionsItemSelected " + item.getItemId());
             return true;
@@ -148,6 +149,7 @@ public class HomeActivity extends AppCompatActivity
     }
 
     private void initalView() {
+        Log.e("initalView", "initalView " );
         drawerLayout = findViewById(R.id.main_drawerLayout);
         menuBtn=findViewById(    R.id.menuBtn);
 
@@ -590,6 +592,9 @@ public class HomeActivity extends AppCompatActivity
             exportData. IIs_savePassowrdSetting( passwords);
     }
 
-
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        drawerLayout.closeDrawer(navigationView);
+    }
 }

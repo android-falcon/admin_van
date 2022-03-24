@@ -2,6 +2,7 @@ package com.example.adminvansales;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,12 +53,20 @@ class SalmanAdapter extends BaseAdapter {
         LinearLayout layBar;
         TextView text_name,AccType;
         ImageView imageView;
+      LinearLayout  salesLin;
         imageView= convertView.findViewById(R.id.imgbar);
         text_name = convertView.findViewById(R.id.text_name);
-        layBar = convertView.findViewById(R.id.layBar);
+        salesLin= convertView.findViewById(R.id.salesLin);
         layBar = convertView.findViewById(R.id.layBar);
 
-       if(i==(list.size()-1)) imageView.setImageDrawable(context.getDrawable(R.drawable.addimg));
+
+       if(i==(list.size()-1)) {
+           imageView.setImageDrawable(context.getDrawable(R.drawable.addimg));
+           imageView.getLayoutParams().height = 100;
+
+           salesLin.setBackground(context.getDrawable(R.drawable.whitesales_mancard_style));
+           text_name.setTextColor(context.getColor(R.color.bule3));
+       }
       text_name.setText(list.get(i).getSalesName());
 
    layBar.setTag("" + i);
@@ -66,16 +75,24 @@ class SalmanAdapter extends BaseAdapter {
     layBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                globelFunction.setValidation();
-                if(salesManInfoAdmin.getAddSalesMen()==1) {
-                    Intent LogHistoryIntent = new Intent(context, EditSalesMan.class);
-                    LogHistoryIntent.putExtra("FillData", "FillData");
-                    LogHistoryIntent.putExtra("SalesManInfoL", list.get(i));
-                    context.startActivity(LogHistoryIntent);
-                }else {
-                    globelFunction.AuthenticationMessage();
-                }
+                Log.e("onClick","onClick");
+                if (i != (list.size() - 1)) {
+                    globelFunction.setValidation();
+                    if (salesManInfoAdmin.getAddSalesMen() == 1) {
+                        Intent LogHistoryIntent = new Intent(context, EditSalesMan.class);
+                        LogHistoryIntent.putExtra("FillData", "FillData");
+                        LogHistoryIntent.putExtra("SalesManInfoL", list.get(i));
+                        context.startActivity(LogHistoryIntent);
+                    } else {
+                        globelFunction.AuthenticationMessage();
+                    }
 
+                }
+                else
+                {
+                    Intent intent=new Intent(context,EditSalesMan.class);
+                    context.startActivity(intent);
+                }
             }
         });
 

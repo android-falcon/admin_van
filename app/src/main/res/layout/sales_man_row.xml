@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layBar"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="150dp"
     android:gravity="center"
     android:padding="10dp"
     android:layout_weight="1"
@@ -63,12 +63,13 @@
         android:layout_weight="1"
         android:background="@drawable/sales_mancard_style"
         android:gravity="center"
-
+android:id="@+id/salesLin"
         android:orientation="vertical"
         android:padding="5dp">
 
         <ImageView
             android:id="@+id/imgbar"
+           android:layout_marginTop="5dp"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_weight="1"
