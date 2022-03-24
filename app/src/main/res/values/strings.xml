@@ -19,6 +19,7 @@
     <string name="data_type">Data Type :</string>
     <string name="ok">OK</string>
     <string name="customerName">Customer Name</string>
+    <string name="customerName_">Customer Name:</string>
     <string name="preview">Preview</string>
     <string name="transName">Trans Name</string>
     <string name="date_voucher">Date</string>

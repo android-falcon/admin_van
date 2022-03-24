@@ -8,8 +8,12 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
@@ -44,6 +48,7 @@ import com.example.adminvansales.Report.ListOfferReport;
 import com.example.adminvansales.Report.LogHistoryReport;
 import com.example.adminvansales.Report.PaymentDetailsReport;
 import com.example.adminvansales.Report.UnCollectedData;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
@@ -75,6 +80,7 @@ public class HomeActivity extends AppCompatActivity
     DataBaseHandler databaseHandler;
     private NavigationView navigationView;
    ImageView menuBtn;
+    BottomNavigationView bottom_navigation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,6 +107,47 @@ public class HomeActivity extends AppCompatActivity
         globelFunction.getSalesManInfo(HomeActivity.this, 1);
       //  else if( settingModel.getImport_way().equals("1"))
       //      importData.  IIs_getSalesMan(HomeActivity.this, 1);
+
+
+
+        //bottom_navigation
+        bottom_navigation.setSelectedItemId(R.id.action_plan);
+
+        bottom_navigation.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        switch (item.getItemId()) {
+
+                            case R.id.action_plan:
+                          Intent intent=new Intent(HomeActivity.this,PlanSalesMan.class);
+                          startActivity(intent);
+
+                                return true;
+
+                            case R.id.action_reports:
+
+
+                                return true;
+
+                            case R.id.action_location:
+
+                                                 return true;
+
+                            case R.id.action_notifications:
+
+                                return true;
+                        }
+                        return false;
+                    }
+                });
+
+
+
+
+
+
+
 
     }
     @Override
@@ -154,6 +201,7 @@ public class HomeActivity extends AppCompatActivity
         menuBtn=findViewById(    R.id.menuBtn);
 
         toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open_drawer, R.string.close_drawer);
+        bottom_navigation = (BottomNavigationView) findViewById(R.id.bottom_navigation);
 
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
