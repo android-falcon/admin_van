@@ -82,7 +82,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/alegreya_sans"
-            android:text="@string/from_date"
+            android:text="From :"
             android:textColor="#103164"
             android:textSize="18sp" />
 
@@ -106,7 +106,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:fontFamily="@font/alegreya_sans"
-            android:text="To"
+            android:text="To :"
             android:textColor="#103164"
             android:textSize="18sp" />
 

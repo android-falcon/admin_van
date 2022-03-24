@@ -35,6 +35,7 @@ import com.azoft.carousellayoutmanager.CenterScrollListener;
 import com.example.adminvansales.Adapters.SalesManAdapter;
 import com.example.adminvansales.Report.OfferseReport;
 import com.example.adminvansales.Report.PlansReport;
+import com.example.adminvansales.Report.ReportsPopUpClass;
 import com.example.adminvansales.model.Password;
 import com.example.adminvansales.model.SalesManInfo;
 import com.example.adminvansales.Report.AnalyzeAccounts;
@@ -44,6 +45,7 @@ import com.example.adminvansales.Report.ListOfferReport;
 import com.example.adminvansales.Report.LogHistoryReport;
 import com.example.adminvansales.Report.PaymentDetailsReport;
 import com.example.adminvansales.Report.UnCollectedData;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
@@ -75,6 +77,8 @@ public class HomeActivity extends AppCompatActivity
     DataBaseHandler databaseHandler;
     private NavigationView navigationView;
    ImageView menuBtn;
+    private BottomNavigationView bottom_navigation;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,6 +105,43 @@ public class HomeActivity extends AppCompatActivity
         globelFunction.getSalesManInfo(HomeActivity.this, 1);
       //  else if( settingModel.getImport_way().equals("1"))
       //      importData.  IIs_getSalesMan(HomeActivity.this, 1);
+
+        bottom_navigation = findViewById(R.id.bottom_navigation);
+
+        bottom_navigation.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        switch (item.getItemId()) {
+
+                            case R.id.action_plan:
+
+                                startActivity(new Intent(getApplicationContext(), PlanSalesMan.class));
+                                overridePendingTransition(0, 0);
+
+                                return true;
+
+                            case R.id.action_reports:
+
+                                ReportsPopUpClass popUpClass = new ReportsPopUpClass();
+                                popUpClass.showPopupWindow(item.getActionView(), HomeActivity.this);
+
+                                return true;
+
+                            case R.id.action_location:
+
+                                return true;
+
+                            case R.id.action_notifications:
+
+                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                overridePendingTransition(0, 0);
+
+                                return true;
+                        }
+                        return false;
+                    }
+                });
 
     }
     @Override
