@@ -11,14 +11,18 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,6 +36,7 @@ import com.example.adminvansales.Adapters.CustomerLogReportAdapter;
 import com.example.adminvansales.DataBaseHandler;
 import com.example.adminvansales.ExportToExcel;
 import com.example.adminvansales.GlobelFunction;
+import com.example.adminvansales.HomeActivity;
 import com.example.adminvansales.ImportData;
 import com.example.adminvansales.LocationService;
 import com.example.adminvansales.MainActivity;
@@ -46,6 +51,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.adminvansales.GlobelFunction.salesManInfoAdmin;
 import static com.example.adminvansales.GlobelFunction.salesManInfosList;
 import static com.example.adminvansales.GlobelFunction.salesManNameList;
 
@@ -136,6 +142,9 @@ public class CustomerLogReport extends AppCompatActivity {
                                 return true;
 
                             case R.id.action_reports:
+
+                                ReportsPopUpClass popUpClass = new ReportsPopUpClass();
+                                popUpClass.showPopupWindow(item.getActionView(), CustomerLogReport.this);
 
                                 return true;
 

@@ -39,6 +39,7 @@ import com.azoft.carousellayoutmanager.CenterScrollListener;
 import com.example.adminvansales.Adapters.SalesManAdapter;
 import com.example.adminvansales.Report.OfferseReport;
 import com.example.adminvansales.Report.PlansReport;
+import com.example.adminvansales.Report.ReportsPopUpClass;
 import com.example.adminvansales.model.Password;
 import com.example.adminvansales.model.SalesManInfo;
 import com.example.adminvansales.Report.AnalyzeAccounts;
@@ -108,10 +109,7 @@ public class HomeActivity extends AppCompatActivity
       //  else if( settingModel.getImport_way().equals("1"))
       //      importData.  IIs_getSalesMan(HomeActivity.this, 1);
 
-
-
-        //bottom_navigation
-        bottom_navigation.setSelectedItemId(R.id.action_plan);
+        bottom_navigation = findViewById(R.id.bottom_navigation);
 
         bottom_navigation.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -120,34 +118,33 @@ public class HomeActivity extends AppCompatActivity
                         switch (item.getItemId()) {
 
                             case R.id.action_plan:
-                          Intent intent=new Intent(HomeActivity.this,PlanSalesMan.class);
-                          startActivity(intent);
+
+                                startActivity(new Intent(getApplicationContext(), PlanSalesMan.class));
+                                overridePendingTransition(0, 0);
 
                                 return true;
 
                             case R.id.action_reports:
 
+                                ReportsPopUpClass popUpClass = new ReportsPopUpClass();
+                                popUpClass.showPopupWindow(item.getActionView(), HomeActivity.this);
 
                                 return true;
 
                             case R.id.action_location:
 
-                                                 return true;
+                                return true;
 
                             case R.id.action_notifications:
+
+                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                overridePendingTransition(0, 0);
 
                                 return true;
                         }
                         return false;
                     }
                 });
-
-
-
-
-
-
-
 
     }
     @Override

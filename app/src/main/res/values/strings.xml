@@ -33,7 +33,7 @@
     <string name="sales_man_no">Sales Man No</string>
     <string name="Active">DeActive User</string>
     <string name="title_activity_salesman_maps">Map</string>
-    <string name="customer_log_report">Customer Log Report</string>
+    <string name="customer_log_report">Customer log report</string>
     <string name="delete">Are you sure you want to
             \n delete this entry?</string>
     <string name="SALES_MAN_ID">Sales Man ID</string>
@@ -55,8 +55,8 @@
     <string name="net_sales">Net Sales</string>
     <string name="pay_date">Pay Date</string>
     <string name="check_number">Cheque Number</string>
-    <string name="payment_details_report">Payment Details Report</string>
-    <string name="cash_report">Cash Report</string>
+    <string name="payment_details_report">Payment details report</string>
+    <string name="cash_report">Cash report</string>
     <string name="date">Date</string>
     <string name="sales">Sales</string>
     <string name="app_creditCard">Credit Card</string>
@@ -88,9 +88,9 @@
     <string name="voucherSerial">Voucher Serial</string>
     <string name="returnSerial">Return Serial</string>
     <string name="paymentSerial">Payment Serial</string>
-    <string name="unCollectedCheques_report">Un Collected cheques Report</string>
+    <string name="unCollectedCheques_report">Un collected cheques report</string>
     <string name="chaequeDate">Date</string>
-    <string name="recivedAmount">Recived Amount</string>
+    <string name="recivedAmount">Received Amount</string>
     <string name="PAIDAMT">Paid Amount</string>
     <string name="app_cheque">Cheque</string>
     <string name="app_bank_name">Bank Name</string>
@@ -111,7 +111,7 @@
     <string name="user_no">User No</string>
     <string name="userName">User Name</string>
     <string name="log_history_report">Log History report</string>
-    <string name="itemReport">Item Report</string>
+    <string name="itemReport">Items report</string>
     <string name="getItemReport">Get Item Report</string>
     <string name="discountType">Discount Type</string>
     <string name="qty">Qty</string>
@@ -147,7 +147,7 @@
     <string name="hide">Hide</string>
     <string name="haveDuplicateOrder">You Have Duplicate Order !!</string>
     <string name="order">Order</string>
-    <string name="plans_report">Plans Report</string>
+    <string name="plans_report">Plans report</string>
 
 <string-array name="app_paymentTypeList">
         <!--        <item>All</item>-->
