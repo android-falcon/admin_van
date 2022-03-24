@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     android:layoutDirection="locale"
     android:background="@color/white"
-    android:id="@+id/linearMain"
     android:orientation="vertical"
     android:padding="2dp">
     <LinearLayout
@@ -18,7 +17,6 @@
         >
 
         <TextView
-            android:id="@+id/print"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
@@ -53,7 +51,6 @@
 
 
     <LinearLayout
-        android:id="@+id/row221"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="8.8"
@@ -92,7 +89,6 @@
 
     </LinearLayout>
     <LinearLayout
-        android:id="@+id/row2210205"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="8.8"
@@ -179,7 +175,6 @@
 
 
             <TextView
-                android:id="@+id/textView_voucherNo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
@@ -202,7 +197,6 @@
 
 
             <TextView
-                android:id="@+id/textView_transName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
@@ -222,7 +216,6 @@
 
 
             <TextView
-                android:id="@+id/textView_date_voucher"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
@@ -241,7 +234,6 @@
             android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView_debit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
@@ -260,7 +252,6 @@
             android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView_cridit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
@@ -279,7 +270,6 @@
             android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView_balance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 

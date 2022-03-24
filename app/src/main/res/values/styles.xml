@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorblue_dark</item>
         <item name="colorPrimaryDark">@color/colorblue_dark</item>
@@ -17,13 +17,5 @@
         <item name="android:windowMinWidthMinor">100%</item>
     </style>
 
-
-
-    <style name="MySwitch" parent="@style/Widget.AppCompat.CompoundButton.Switch">
-        <item name="android:textColorPrimaryDisableOnly">#807B7B</item>
-        <item name="android:colorControlActivated">@color/colorblue_dark</item>
-        <item name="android:colorForeground">#C89E4A4A</item>
-        <item name="android:textAppearance">@style/TextAppearance.AppCompat</item>
-    </style>
 
 </resources>

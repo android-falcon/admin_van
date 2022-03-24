@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#333333</color>
-    <color name="colorPrimaryDark">#333333</color>
-    <color name="colorAccent">#D8FFEB3B</color>
     <!--    <color name="colorAccent">#03DAC5</color>-->
 
 
-    <color name="layer1">#B6B6B4</color>
-    <color name="layer2">#D1D0CE</color>
     <color name="layer3">#ECECEB</color>
     <color name="layer4">#F2B4C3CC</color>
     <color name="layer5">#C8C5D4DB</color>
@@ -17,10 +13,10 @@
     <color name="peacockBlue">#E8C8E8F7</color>
     <color name="darkGray">#000000</color>
     <color name="darkOrange">#ffc34d</color>//E43C27
-    <color name="darkOrange2">   #FFDE3F</color>
-<!--    #FFDE3F-->
+    <color name="darkOrange2">#FFDE3F</color>
+    <!--    #FFDE3F-->
     <color name="colorblue_dark3">#1E3354</color>
-<!--    background: #1E3354;-->
+    <!--    background: #1E3354;-->
 
     <color name="darkOrange_light">#9AFAC55D</color>//E43C27
     <color name="darkWhite">#FFFFFF</color>
@@ -32,15 +28,13 @@
     <color name="dark_red">#AD0505</color>
     <color name="light_red">#43EC4242</color>
     <color name="colorblue_dark">#04578A</color>
-    <color name="colorblue_dark_4">#DC04499F</color>
-    <color name="green">#C399F09D</color>
-    <color name="colorblue1"> #23A8FE    </color>
+    <color name="green">#4CAF50</color>
+    <color name="colorblue1">#23A8FE</color>
     <color name="colorblue2">#B0C4DE</color>
-    <color name="babyblue" >#89CFF0</color>
-    <color name="done_button">#3F86B5</color>
-    <color name="cancel_button">#E6CA221C</color>
-    <color name="gray_2">#F2F2F2</color>
-
+    <color name="new_dark_blue">#103164</color>
+    <color name="red">#FB2121</color>
+    <color name="light_pink">#FFE0E0</color>
+    <color name="yellow">#FEED58</color>
 
     <color name="gray3">#D8D7D7</color>
     <color name="bule3">#76C4FF</color>

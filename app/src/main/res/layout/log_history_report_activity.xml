@@ -13,7 +13,6 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/expotTpExcel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -94,7 +93,6 @@
         </LinearLayout>
     </LinearLayout>
     <LinearLayout
-        android:id="@+id/row2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0"
@@ -161,7 +159,6 @@
 
     </LinearLayout>
     <LinearLayout
-        android:id="@+id/row22"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0"
@@ -209,7 +206,6 @@
     </LinearLayout>
 
     <HorizontalScrollView
-        android:id="@+id/HorizontalScrollView01"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="5dp"
