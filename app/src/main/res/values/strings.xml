@@ -18,7 +18,7 @@
     <string name="AccountStatment">Account Statment</string>
     <string name="data_type">Data Type :</string>
     <string name="ok">OK</string>
-    <string name="customerName">Customer Name</string>
+    <string name="customerName">Customer name</string>
     <string name="preview">Preview</string>
     <string name="transName">Trans Name</string>
     <string name="date_voucher">Date</string>
@@ -32,12 +32,12 @@
     <string name="sales_man_no">Sales Man No</string>
     <string name="Active">DeActive User</string>
     <string name="title_activity_salesman_maps">Map</string>
-    <string name="customer_log_report">Customer log report</string>
+    <string name="customer_log_report">Customer Log Report</string>
     <string name="delete">Are you sure you want to
             \n delete this entry?</string>
     <string name="SALES_MAN_ID">Sales Man ID</string>
     <string name="CUS_CODE">Customer Code</string>
-    <string name="CUS_NAME">Customer Name</string>
+    <string name="CUS_NAME">Customer name</string>
     <string name="CHECK_IN_DATE">Check In Date</string>
     <string name="CHECK_IN_TIME">Check In Time</string>
     <string name="CHECK_OUT_DATE">Check Out Date</string>
@@ -51,24 +51,24 @@
     <string name="sale_man_number">Sales Man Number</string>
     <string name="remark">Remark</string>
     <string name="pay_method">Pay Method</string>
-    <string name="net_sales">Net Sales</string>
+    <string name="net_sales">Net sales</string>
     <string name="pay_date">Pay Date</string>
     <string name="check_number">Cheque Number</string>
-    <string name="payment_details_report">Payment details report</string>
-    <string name="cash_report">Cash report</string>
+    <string name="payment_details_report">Payment Details Report</string>
+    <string name="cash_report">Cash Report</string>
     <string name="date">Date</string>
     <string name="sales">Sales</string>
     <string name="app_creditCard">Credit Card</string>
-    <string name="cash_sale">Cash Sale</string>
-    <string name="credit_sales">Credit Sale</string>
+    <string name="cash_sale">Cash sale</string>
+    <string name="credit_sales">Credit sale</string>
     <string name="total_sales">Total Sales</string>
     <string name="cash">Cash</string>
-    <string name="netpayment">Net Payment</string>
-    <string name="credit_value">Credit Value</string>
-    <string name="total_cash">Total Cash</string>
+    <string name="netpayment">Net payment</string>
+    <string name="credit_value">Credit value</string>
+    <string name="total_cash">Total cash</string>
     <string name="pay">Pay</string>
-    <string name="paymentCash">payment Cash</string>
-    <string name="paymentCheque">payment Cheque</string>
+    <string name="paymentCash">Payment cash</string>
+    <string name="paymentCheque">Payment cheque</string>
     <string name="export_to_pdf">Export To Pdf</string>
     <string name="itemName">Item Name</string>
     <string name="price">Price</string>
@@ -87,7 +87,7 @@
     <string name="voucherSerial">Voucher Serial</string>
     <string name="returnSerial">Return Serial</string>
     <string name="paymentSerial">Payment Serial</string>
-    <string name="unCollectedCheques_report">Un collected cheques report</string>
+    <string name="unCollectedCheques_report">Un Collected Cheques Report</string>
     <string name="chaequeDate">Date</string>
     <string name="recivedAmount">Received Amount</string>
     <string name="PAIDAMT">Paid Amount</string>
@@ -95,7 +95,7 @@
     <string name="app_bank_name">Bank Name</string>
     <string name="app_amount">Amount</string>
     <string name="AnalyzeCustomersAccount">Analyze Customer\'s Account</string>
-    <string name="customerNo">Customer No</string>
+    <string name="customerNo">Customer no.</string>
     <string name="df">DF</string>
     <string name="cf">CF</string>
     <string name="cancel">Cancel</string>
@@ -110,7 +110,7 @@
     <string name="user_no">User No</string>
     <string name="userName">User Name</string>
     <string name="log_history_report">Log History report</string>
-    <string name="itemReport">Items report</string>
+    <string name="itemReport">Items Report</string>
     <string name="getItemReport">Get Item Report</string>
     <string name="discountType">Discount Type</string>
     <string name="qty">Qty</string>
@@ -146,7 +146,7 @@
     <string name="hide">Hide</string>
     <string name="haveDuplicateOrder">You Have Duplicate Order !!</string>
     <string name="order">Order</string>
-    <string name="plans_report">Plans report</string>
+    <string name="plans_report">Plans Report</string>
 
 <string-array name="app_paymentTypeList">
         <!--        <item>All</item>-->

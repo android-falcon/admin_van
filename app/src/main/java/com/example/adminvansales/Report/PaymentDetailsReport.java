@@ -41,7 +41,7 @@ import static com.example.adminvansales.GlobelFunction.salesManNameList;
 
 public class PaymentDetailsReport extends AppCompatActivity {
     TextView fromDate,toDate;
-    ImageButton excelConvert,pdfConvert,share;
+    ImageButton excelConvert,pdfConvert,share, backBtn;
     GlobelFunction globelFunction;
     String toDay;
     PayMentReportAdapter payMentReportAdapter;
@@ -80,6 +80,8 @@ public class PaymentDetailsReport extends AppCompatActivity {
         excelConvert=findViewById(R.id.excelConvert);
         pdfConvert=findViewById(R.id.pdfConvert);
         share=findViewById(R.id.share);
+        backBtn = findViewById(R.id.backBtn);
+        backBtn.setOnClickListener(v -> onBackPressed());
         globelFunction=new GlobelFunction(PaymentDetailsReport.this);
         toDay=globelFunction.DateInToday();
         fromDate.setText(toDay);
@@ -123,7 +125,7 @@ public class PaymentDetailsReport extends AppCompatActivity {
                             case R.id.action_reports:
 
                                 ReportsPopUpClass popUpClass = new ReportsPopUpClass();
-                                popUpClass.showPopupWindow(item.getActionView(), getApplicationContext());
+                                popUpClass.showPopupWindow(item.getActionView(), PaymentDetailsReport.this);
 
                                 return true;
 
@@ -251,7 +253,7 @@ public class PaymentDetailsReport extends AppCompatActivity {
 
     public void fillSalesManSpinner(){
 
-        salesNameSpinnerAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item, salesManNameList);
+        salesNameSpinnerAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, salesManNameList);
         salesNameSpinner.setAdapter(salesNameSpinnerAdapter);
 
     }
