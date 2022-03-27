@@ -18,7 +18,9 @@
     <string name="AccountStatment">Account Statment</string>
     <string name="data_type">Data Type :</string>
     <string name="ok">OK</string>
-    <string name="customerName">Customer name</string>
+    <string name="customerName">Customer Name</string>
+    <string name="customerName_">Customer Name:</string>
+
     <string name="preview">Preview</string>
     <string name="transName">Trans Name</string>
     <string name="date_voucher">Date</string>
@@ -59,16 +61,16 @@
     <string name="date">Date</string>
     <string name="sales">Sales</string>
     <string name="app_creditCard">Credit Card</string>
-    <string name="cash_sale">Cash sale</string>
-    <string name="credit_sales">Credit sale</string>
+    <string name="cash_sale">Cash Sale</string>
+    <string name="credit_sales">Credit Sale</string>
     <string name="total_sales">Total Sales</string>
     <string name="cash">Cash</string>
-    <string name="netpayment">Net payment</string>
-    <string name="credit_value">Credit value</string>
-    <string name="total_cash">Total cash</string>
+    <string name="netpayment">Net Payment</string>
+    <string name="credit_value">Credit Value</string>
+    <string name="total_cash">Total Cash</string>
     <string name="pay">Pay</string>
-    <string name="paymentCash">Payment cash</string>
-    <string name="paymentCheque">Payment cheque</string>
+    <string name="paymentCash">payment Cash</string>
+    <string name="paymentCheque">payment Cheque</string>
     <string name="export_to_pdf">Export To Pdf</string>
     <string name="itemName">Item Name</string>
     <string name="price">Price</string>

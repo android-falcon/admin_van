@@ -8,8 +8,12 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
@@ -77,8 +81,7 @@ public class HomeActivity extends AppCompatActivity
     DataBaseHandler databaseHandler;
     private NavigationView navigationView;
    ImageView menuBtn;
-    private BottomNavigationView bottom_navigation;
-
+    BottomNavigationView bottom_navigation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -195,6 +198,7 @@ public class HomeActivity extends AppCompatActivity
         menuBtn=findViewById(    R.id.menuBtn);
 
         toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open_drawer, R.string.close_drawer);
+        bottom_navigation = (BottomNavigationView) findViewById(R.id.bottom_navigation);
 
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
