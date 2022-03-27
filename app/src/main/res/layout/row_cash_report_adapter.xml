@@ -3,138 +3,104 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="2dp">
+    android:paddingHorizontal="12dp">
 
     <TableRow
         android:id="@+id/table"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp">
+        android:layout_marginVertical="3dp">
 
         <TextView
             android:id="@+id/salesNo"
-            android:layout_width="match_parent"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:gravity="center"
-            android:padding="10dp"
-
-            android:text="@string/SALES_MAN_ID"
-            android:textColor="@color/colorblue_dark"
+            android:text="ID"
+            android:textColor="@color/new_dark_blue"
             android:textSize="14sp" />
 
         <TextView
             android:id="@+id/salesManName"
-            android:layout_width="match_parent"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.9"
             android:gravity="center"
-            android:padding="10dp"
-
-            android:text="@string/sales_man_name"
-            android:textColor="@color/colorblue_dark"
+            android:text="Name"
+            android:textColor="@color/new_dark_blue"
             android:textSize="14sp" />
 
         <TextView
             android:id="@+id/cashSales"
-            android:layout_width="match_parent"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.98"
             android:gravity="center"
-
-            android:padding="10dp"
-
             android:text="@string/cash_sale"
-            android:textColor="@color/colorblue_dark"
-            android:textSize="12sp" />
+            android:textColor="@color/new_dark_blue"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/creditSale"
-            android:layout_width="match_parent"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.9"
             android:gravity="center"
-
-            android:padding="10dp"
-
             android:text="@string/credit_sales"
-            android:textColor="@color/colorblue_dark"
+            android:textColor="@color/new_dark_blue"
             android:textSize="14sp" />
 
         <TextView
             android:id="@+id/netSales"
-            android:layout_width="match_parent"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:gravity="center"
-
-            android:padding="10dp"
-
             android:text="@string/net_sales"
-            android:textColor="@color/colorblue_dark"
+            android:textColor="@color/new_dark_blue"
             android:textSize="14sp" />
 
         <TextView
             android:id="@+id/paymentCash"
-            android:layout_width="match_parent"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:gravity="center"
-
-            android:padding="10dp"
-
             android:text="@string/paymentCash"
-            android:textColor="@color/colorblue_dark"
+            android:textColor="@color/new_dark_blue"
             android:textSize="14sp" />
 
         <TextView
             android:id="@+id/sales"
-            android:layout_width="match_parent"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:gravity="center"
-
-            android:padding="10dp"
-
             android:text="@string/paymentCheque"
-            android:textColor="@color/colorblue_dark"
+            android:textColor="@color/new_dark_blue"
             android:textSize="14sp" />
 
         <TextView
             android:id="@+id/net"
-            android:layout_width="match_parent"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:gravity="center"
-            android:padding="10dp"
             android:text="@string/netpayment"
-            android:textColor="@color/colorblue_dark"
-            android:textSize="12sp" />
+            android:textColor="@color/new_dark_blue"
+            android:textSize="14sp" />
 
 
         <TextView
             android:id="@+id/credit"
-            android:layout_width="match_parent"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:gravity="center"
-
-            android:padding="10dp"
-
             android:text="@string/credit_value"
-            android:textColor="@color/colorblue_dark"
+            android:textColor="@color/new_dark_blue"
             android:textSize="14sp" />
 
         <TextView
             android:id="@+id/netCash"
-            android:layout_width="match_parent"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:gravity="center"
-            android:padding="10dp"
             android:text="@string/total_cash"
-            android:textColor="@color/colorblue_dark"
-            android:textSize="12sp" />
+            android:textColor="@color/new_dark_blue"
+            android:textSize="14sp" />
 
     </TableRow>
 

@@ -38,6 +38,9 @@ public class ReportsPopUpClass {
 
         //Set the location of the window on the screen
         popupWindow.showAtLocation(popupView, Gravity.CENTER, 0, 0);
+        popupWindow.setElevation(10);
+        popupWindow.setFocusable(true);
+        popupWindow.setAnimationStyle(android.R.style.Widget_PopupWindow);
 
         //Initialize the elements of our window, install the handler
 

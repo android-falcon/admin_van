@@ -113,7 +113,7 @@
     <string name="user_no">User No</string>
     <string name="userName">User Name</string>
     <string name="log_history_report">Log History report</string>
-    <string name="itemReport">Items report</string>
+    <string name="itemReport">Items Report</string>
     <string name="getItemReport">Get Item Report</string>
     <string name="discountType">Discount Type</string>
     <string name="qty">Qty</string>
@@ -149,9 +149,8 @@
     <string name="hide">Hide</string>
     <string name="haveDuplicateOrder">You Have Duplicate Order !!</string>
     <string name="order">Order</string>
-    <string name="plans_report">Plans report</string>
-    <string name="addnew">Add New</string>
-    <string name="addnew_">Add New:</string>
+    <string name="plans_report">Plans Report</string>
+
 <string-array name="app_paymentTypeList">
         <!--        <item>All</item>-->
         <item>Cash</item>

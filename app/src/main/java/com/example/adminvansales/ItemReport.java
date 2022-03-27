@@ -1,18 +1,25 @@
 package com.example.adminvansales;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.adminvansales.Adapters.ItemReportAdapter;
+import com.example.adminvansales.Report.ReportsPopUpClass;
+import com.example.adminvansales.Report.UnCollectedData;
 import com.example.adminvansales.model.ItemReportModel;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -117,6 +124,48 @@ public class ItemReport extends AppCompatActivity {
 
             }
         });
+
+        ImageButton backBtn = findViewById(R.id.backBtn);
+        backBtn.setOnClickListener(v -> onBackPressed());
+
+        BottomNavigationView bottom_navigation = findViewById(R.id.bottom_navigation);
+
+        bottom_navigation.setSelectedItemId(R.id.action_reports);
+
+        bottom_navigation.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        switch (item.getItemId()) {
+
+                            case R.id.action_plan:
+
+                                startActivity(new Intent(getApplicationContext(), PlanSalesMan.class));
+                                overridePendingTransition(0, 0);
+
+                                return true;
+
+                            case R.id.action_reports:
+
+                                ReportsPopUpClass popUpClass = new ReportsPopUpClass();
+                                popUpClass.showPopupWindow(item.getActionView(), ItemReport.this);
+
+                                return true;
+
+                            case R.id.action_location:
+
+                                return true;
+
+                            case R.id.action_notifications:
+
+                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                overridePendingTransition(0, 0);
+
+                                return true;
+                        }
+                        return false;
+                    }
+                });
 
     }
         View.OnClickListener onClickListener = new View.OnClickListener() {

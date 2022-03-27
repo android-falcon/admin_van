@@ -9,5 +9,8 @@ android:background="@drawable/navigatestyle"
     android:layout_centerHorizontal="true"
     android:layout_gravity="bottom"
     app:menu="@menu/bottom_navigation_menu"
-     />
+    android:translationZ="100dp"
+    android:elevation="100dp"
+
+    />
 
