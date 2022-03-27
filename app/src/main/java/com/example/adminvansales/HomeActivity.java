@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -64,8 +65,7 @@ public class HomeActivity extends AppCompatActivity
 
         implements NavigationView.OnNavigationItemSelectedListener{
     public List<SalesManInfo> picforbar;
-    private ActionBarDrawerToggle toggle;
-    private DrawerLayout drawerLayout;
+
 
     public CarouselLayoutManager layoutManagerd;
     public GridView recyclerViews;
@@ -79,9 +79,13 @@ public class HomeActivity extends AppCompatActivity
             analyzeAcountsReport,ItemReport, plansReport;
     com.example.adminvansales.model.SettingModel settingModel;
     DataBaseHandler databaseHandler;
+   BottomNavigationView bottom_navigation;
+   TextView menuBtn,acc_statments;
+
+    private DrawerLayout drawerLayout;
+    private Toolbar toolbar;
+    private ActionBarDrawerToggle toggle;
     private NavigationView navigationView;
-   ImageView menuBtn;
-    BottomNavigationView bottom_navigation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,6 +95,13 @@ public class HomeActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 drawerLayout.openDrawer(navigationView);
+            }
+        });
+        acc_statments.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), AccountStatment.class));
+
             }
         });
         globelFunction = new GlobelFunction(HomeActivity.this);
@@ -109,7 +120,18 @@ public class HomeActivity extends AppCompatActivity
       //  else if( settingModel.getImport_way().equals("1"))
       //      importData.  IIs_getSalesMan(HomeActivity.this, 1);
 
-        bottom_navigation = findViewById(R.id.bottom_navigation);
+        drawerLayout = findViewById(R.id.main_drawerLayout);
+        navigationView = findViewById(R.id.nav_view);
+        setupDrawerContent(navigationView);
+
+
+        toolbar = findViewById(R.id.main_toolbar);
+        setSupportActionBar(toolbar);
+        setTitle("");
+        toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open_drawer, R.string.close_drawer);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         bottom_navigation.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -118,9 +140,10 @@ public class HomeActivity extends AppCompatActivity
                         switch (item.getItemId()) {
 
                             case R.id.action_plan:
-
                                 startActivity(new Intent(getApplicationContext(), PlanSalesMan.class));
-                                overridePendingTransition(0, 0);
+
+                           //     startActivity(new Intent(getApplicationContext(), PlanSalesMan.class));
+                          //    overridePendingTransition(0, 0);
 
                                 return true;
 
@@ -132,7 +155,8 @@ public class HomeActivity extends AppCompatActivity
                                 return true;
 
                             case R.id.action_location:
-
+                                startActivity(new Intent(getApplicationContext(), SalesmanMapsActivity.class));
+                                overridePendingTransition(0, 0);
                                 return true;
 
                             case R.id.action_notifications:
@@ -141,6 +165,7 @@ public class HomeActivity extends AppCompatActivity
                                 overridePendingTransition(0, 0);
 
                                 return true;
+
                         }
                         return false;
                     }
@@ -169,18 +194,23 @@ public class HomeActivity extends AppCompatActivity
             case R.id.pass_setting: {
                 openchangePasswordDialog();
                 drawerLayout.closeDrawer(navigationView);
-            }
-            break;
-            case R.id.add_cust: {
-                Intent intent=new Intent(HomeActivity.this,AddCustomerLocation.class);
-                drawerLayout.closeDrawer(navigationView);
-            }
-            break;
-            case R.id.itemvible: {
-                drawerLayout.closeDrawer(navigationView);
+                return true;
 
             }
-            break;
+
+            case R.id.add_cust: {
+              startActivity(new Intent(HomeActivity.this,AddCustomerLocation.class));
+                drawerLayout.closeDrawer(navigationView);
+                return true;
+            }
+
+            case R.id.itemvible: {
+                startActivity(new Intent(HomeActivity.this,ItemVisibility.class));
+
+                drawerLayout.closeDrawer(navigationView);
+                return true;
+            }
+
 
 
         }
@@ -194,21 +224,16 @@ public class HomeActivity extends AppCompatActivity
 
     private void initalView() {
         Log.e("initalView", "initalView " );
-        drawerLayout = findViewById(R.id.main_drawerLayout);
+        bottom_navigation=findViewById(    R.id.bottom_navigation);
         menuBtn=findViewById(    R.id.menuBtn);
+        acc_statments=findViewById(    R.id.acc_statments);
 
-        toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open_drawer, R.string.close_drawer);
-        bottom_navigation = (BottomNavigationView) findViewById(R.id.bottom_navigation);
-
-        drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
 
         offersReport=findViewById(R.id.offersReport);
         notifyLayout = findViewById(R.id.notifyLayout);
         addVanSales = findViewById(R.id.addVanSales);
         accountLayout = findViewById(R.id.accountLayout);
-        navigationView = findViewById(R.id.nav_view);
-        setupDrawerContent(navigationView);
+
         addVanSales.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

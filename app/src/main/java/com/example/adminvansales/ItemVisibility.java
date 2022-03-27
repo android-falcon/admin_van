@@ -12,11 +12,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Application;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -26,6 +28,7 @@ import android.widget.TextView;
 
 import com.example.adminvansales.Adapters.CustomerAdapter;
 import com.example.adminvansales.Adapters.ItemVisibleAdapter;
+import com.example.adminvansales.Report.ReportsPopUpClass;
 import com.example.adminvansales.databinding.ActivityItemVisibilityBinding;
 import com.example.adminvansales.model.ErrorHandler;
 import com.example.adminvansales.model.ItemInfo;
@@ -34,6 +37,7 @@ import com.example.adminvansales.modelView.ItemVisibleViewModel;
 import com.example.adminvansales.retrofit.ApiItem;
 import com.example.adminvansales.retrofit.ApiUrl;
 import com.example.adminvansales.retrofit.RetrofitInstance;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -72,7 +76,7 @@ public class ItemVisibility extends AppCompatActivity {
     public int stateFilterVisibl = 0;
     ActivityItemVisibilityBinding myBinding;
     public ItemVisibleViewModel itemVisibleViewModel;
-
+    BottomNavigationView bottom_navigation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,6 +91,45 @@ public class ItemVisibility extends AppCompatActivity {
 
 //      fetchCallData();
         fetchData();
+
+
+        bottom_navigation = findViewById(R.id.bottom_navigation);
+
+        bottom_navigation.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        switch (item.getItemId()) {
+
+                            case R.id.action_plan:
+                                startActivity(new Intent(getApplicationContext(), PlanSalesMan.class));
+                                overridePendingTransition(0, 0);
+
+                                return true;
+
+                            case R.id.action_reports:
+
+                                ReportsPopUpClass popUpClass = new ReportsPopUpClass();
+                                popUpClass.showPopupWindow(item.getActionView(), ItemVisibility.this);
+
+                                return true;
+
+                            case R.id.action_location:
+                                startActivity(new Intent(getApplicationContext(), SalesmanMapsActivity.class));
+                                overridePendingTransition(0, 0);
+                                return true;
+
+                            case R.id.action_notifications:
+
+                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                overridePendingTransition(0, 0);
+
+                                return true;
+                        }
+                        return false;
+                    }
+                });
+
 
     }
 

@@ -10,21 +10,21 @@
     android:orientation="vertical"
     tools:context=".HomeActivity">
 
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/nav_view"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:visibility="visible"
-        app:headerLayout="@layout/header_menu"
-        app:itemTextColor="@color/bule3"
-        app:menu="@menu/main_menu" />
+
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/main_toolbar"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/cardview_dark_background"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"/>
 <!--        <androidx.appcompat.widget.Toolbar-->
 <!--            android:id="@+id/main_toolbar"-->
 
@@ -39,13 +39,17 @@
         android:layout_height="match_parent"
         android:layout_weight="13"
         android:orientation="horizontal">
-       <ImageButton
-           android:layout_width="30dp"
+
+
+        <TextView
+           android:layout_width="match_parent"
 android:id="@+id/menuBtn"
+           android:layout_weight="1"
+           android:drawableStart="@drawable/menuimg"
            android:layout_gravity="center"
            android:layout_marginStart="20dp"
            android:layout_height="20dp"
-           android:background="@drawable/menuimg"/>
+           />
 
 
         <TextView android:layout_height="match_parent"
@@ -54,11 +58,19 @@ android:id="@+id/menuBtn"
 
             android:layout_gravity="center"
             android:gravity="center"
-
+            android:layout_weight="1"
             android:textColor="@color/bule3"
             android:textStyle="bold"
             android:textSize="20sp"/>
+<TextView
+    android:layout_width="match_parent"
+    android:layout_weight="1"
+    android:paddingEnd="30dp"
+    android:id="@+id/acc_statments"
+    android:drawableEnd="@drawable/acc_statment"
+    android:layout_height="match_parent">
 
+</TextView>
     </LinearLayout>
     <androidx.appcompat.widget.Toolbar
         android:visibility="gone"
@@ -504,5 +516,13 @@ android:id="@+id/menuBtn"
             android:layout_height="wrap_content" />
        </LinearLayout>
 
-
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:visibility="visible"
+        app:headerLayout="@layout/header_menu"
+        app:itemTextColor="@color/bule3"
+        app:menu="@menu/main_menu" />
 </androidx.drawerlayout.widget.DrawerLayout>

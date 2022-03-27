@@ -84,6 +84,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".EditSalesMan"
+            android:windowSoftInputMode="adjustResize|adjustPan"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".HomeActivity"
             android:theme="@style/AppTheme.NoActionBar" />

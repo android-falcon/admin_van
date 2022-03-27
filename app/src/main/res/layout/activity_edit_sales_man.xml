@@ -9,68 +9,106 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0"
-        android:background="@drawable/activate_button"
-        android:gravity="center"
-        android:layout_marginTop="5dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/sales"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/activite_bac_button"
-            android:drawableStart="@drawable/ic_person_add_black_24dp"
-            android:drawableLeft="@drawable/ic_person_add_black_24dp"
-            android:drawablePadding="5dp"
-            android:padding="10dp"
-            android:text="@string/add_van_sales"
-            android:textColor="@color/colorblue_dark"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/addAdmin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawableStart="@drawable/ic_person_add_black_24dp"
-            android:drawableLeft="@drawable/ic_person_add_black_24dp"
-            android:drawablePadding="5dp"
-            android:padding="10dp"
-            android:visibility="visible"
-            android:text="@string/addAdmin"
-            android:textColor="@color/colorblue_dark3"
-            android:textSize="16sp" />
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="vertical"
-        android:background="@drawable/white_and_yelow"
         android:padding="10dp">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+
+            android:padding="10dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+
+            android:elevation="5dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/addnew"
+                android:textColor="@color/bule3"
+                android:textStyle="bold"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+
+            android:gravity="center"
+
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:padding="3dp"
+                android:gravity="center"
+                android:text="@string/addnew_"
+                android:textColor="@color/new_dark_blue"
+                android:textStyle="bold"
+                android:drawableStart="@drawable/addnew"
+                android:layout_weight="2"
+                android:textSize="18sp" />
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                android:id="@+id/newSalandAdmnRG"
+                android:layout_height="match_parent">
+
+
+                <RadioButton
+                    android:id="@+id/sales"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+
+                    android:drawablePadding="5dp"
+
+                    android:text="@string/add_van_sales1"
+                    android:textColor="@color/colorblue_dark"
+                    android:textSize="16sp" />
+
+                <RadioButton
+                    android:id="@+id/addAdmin"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:drawablePadding="5dp"
+
+                    android:visibility="visible"
+                    android:text="@string/addAdmin1"
+                    android:textColor="@color/colorblue_dark3"
+                    android:textSize="16sp" />
+
+            </RadioGroup>
+        </LinearLayout>
         <TableLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="5dp"
-            android:layout_weight="0">
+            android:layout_height="match_parent"
+            android:layout_weight="1">
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginVertical="5dp">
+                android:layout_weight="1"
+                android:layout_height="match_parent">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:padding="5dp"
+                    android:padding="2dp"
                     android:text="@string/user_no"
                     android:textColor="@color/colorblue_dark"
                     android:textSize="16sp" />
@@ -80,9 +118,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@drawable/card_layout"
+                    android:background="@drawable/white_and_blue"
                     android:gravity="center"
-                    android:padding="5dp"
+                    android:padding="1dp"
                     android:text="00000"
                     android:textColor="@color/colorblue_dark"
                     android:textSize="16sp" />
@@ -90,14 +128,14 @@
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginVertical="5dp">
+                android:layout_weight="1"
+                android:layout_height="match_parent">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:padding="5dp"
+                    android:padding="2dp"
                     android:text="@string/userName"
                     android:textColor="@color/colorblue_dark"
                     android:textSize="16sp" />
@@ -107,25 +145,26 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@drawable/white_and_yelow"
+                    android:background="@drawable/white_and_blue"
                     android:ems="10"
                     android:gravity="center"
                     android:inputType="textPersonName"
-                    android:padding="5dp"
+                    android:padding="1dp"
                     android:textColor="@color/colorblue_dark"
                     android:textSize="18sp" />
             </TableRow>
 
             <TableRow
                 android:layout_width="match_parent"
+                android:layout_weight="1"
                 android:layout_height="match_parent"
-                android:layout_marginVertical="5dp">
+            >
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:padding="5dp"
+                    android:padding="2dp"
                     android:text="@string/password"
                     android:textColor="@color/colorblue_dark"
                     android:textSize="16sp" />
@@ -135,11 +174,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@drawable/white_and_yelow"
+                    android:background="@drawable/white_and_blue"
                     android:ems="10"
                     android:gravity="center"
                     android:inputType="textPassword"
-                    android:padding="5dp"
+                    android:padding="1dp"
                     android:textColor="@color/colorblue_dark"
                     android:textSize="18sp" />
             </TableRow>
@@ -147,7 +186,8 @@
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginVertical="5dp"
+                android:layout_weight="1"
+
                 android:visibility="gone">
 
                 <TextView
@@ -194,8 +234,9 @@
 
             <TableRow
                 android:layout_width="match_parent"
+                android:layout_weight="1"
                 android:layout_height="match_parent"
-                android:layout_marginVertical="5dp"
+
                 android:visibility="gone">
 
                 <TextView
@@ -243,7 +284,7 @@
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginVertical="5dp"
+
                 android:visibility="gone">
 
                 <TextView
@@ -289,8 +330,9 @@
             </TableRow>
 
             <TableRow
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="match_parent">
 
 
                 <CheckBox
@@ -318,54 +360,31 @@
             </TableRow>
 
         </TableLayout>
-
+        </LinearLayout>
         <LinearLayout
             android:id="@+id/validityLinear"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginBottom="10dp"
-            android:layout_weight="0"
+            android:layout_weight="1"
             android:orientation="vertical"
             android:padding="5dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/white_and_yelow"
-                android:orientation="horizontal"
-                android:padding="5dp">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:padding="5dp"
-                    android:text="@string/Validity"
-                    android:textColor="@color/colorblue_dark"
-                    android:textSize="14sp" />
-
-                <CheckBox
-                    android:id="@+id/AllChecked"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:layout_weight="2"
-                    android:text="ALL"
-                    android:textColor="@color/colorblue_dark3" />
-            </LinearLayout>
 
             <HorizontalScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0"
-                android:background="@drawable/white_and_yelow"
+                android:layout_height="match_parent"
+                android:layout_weight="6"
+                android:fillViewport="true"
+
                 android:orientation="vertical"
                 android:padding="5dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_weight="3"
                     android:orientation="horizontal">
 
                     <LinearLayout
@@ -377,19 +396,22 @@
                         <CheckBox
                             android:id="@+id/AddSalesCheckBox"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent"
                             android:text="Add Sales Men" />
 
                         <CheckBox
                             android:id="@+id/AddAdminCheckBox"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent"
                             android:text="Add Admin" />
 
                         <CheckBox
                             android:id="@+id/makeOfferCheckBox"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent"
                             android:text="Make Offer" />
                     </LinearLayout>
 
@@ -402,19 +424,22 @@
                         <CheckBox
                             android:id="@+id/offerReportCheckBox"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent"
                             android:text="Offer Report" />
 
                         <CheckBox
                             android:id="@+id/accountRCheckBox"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent"
                             android:text="Account Report" />
 
                         <CheckBox
                             android:id="@+id/paymentRCheckBox"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent"
                             android:text="@string/payment_details_report" />
                     </LinearLayout>
 
@@ -427,19 +452,22 @@
                         <CheckBox
                             android:id="@+id/CustomerCheckBox"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent"
                             android:text="@string/customer_log_report" />
 
                         <CheckBox
                             android:id="@+id/CashRCheckBox"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent"
                             android:text="@string/cash_report" />
 
                         <CheckBox
                             android:id="@+id/LocationCheckBox"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent"
                             android:text="Sales Men Location " />
                     </LinearLayout>
 
@@ -452,13 +480,15 @@
                         <CheckBox
                             android:id="@+id/UncollectedRCheckBox"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent"
                             android:text="@string/unCollectedCheques_report" />
 
                         <CheckBox
                             android:id="@+id/analyzeRCheckBox"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent"
                             android:text="@string/AnalyzeCustomersAccount" />
 
                         <CheckBox
@@ -469,11 +499,82 @@
                     </LinearLayout>
                 </LinearLayout>
             </HorizontalScrollView>
-        </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
 
+
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:padding="5dp"
+                    android:visibility="gone"
+                    android:text="@string/Validity"
+                    android:textColor="@color/colorblue_dark"
+                    android:textSize="14sp" />
+
+                <CheckBox
+                    android:id="@+id/AllChecked"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="end"
+                    android:text="ALL"
+                    android:textColor="@color/colorblue_dark3" />
+            </LinearLayout>
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_weight="1.1"
+
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_weight="2.5"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/searchSalesMan"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/searchbox"
+                android:drawableStart="@drawable/ic_search_black_24dp"
+                android:drawableLeft="@drawable/ic_search_black_24dp"
+                android:drawablePadding="2dp"
+                android:gravity="center"
+                android:hint="@android:string/search_go"
+                android:padding="2dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="14dp" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="3"
+                android:background="@drawable/accept_btn"
+                android:drawableStart="@drawable/ic_search_black_24dp"
+                android:drawableLeft="@drawable/ic_search_black_24dp"
+                android:drawablePadding="2dp"
+                android:gravity="center"
+                android:hint="@android:string/search_go"
+                android:padding="2dp"
+                android:textColorHint="@color/colorblue_dark"
+                android:textSize="14dp"
+                android:visibility="invisible" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/white_and_blue"
             android:orientation="vertical">
@@ -481,52 +582,16 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/blue_back_table"
+
                 android:orientation="vertical"
                 android:padding="5dp">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
 
-                    <EditText
-                        android:id="@+id/searchSalesMan"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/accept_btn"
-                        android:drawableStart="@drawable/ic_search_black_24dp"
-                        android:drawableLeft="@drawable/ic_search_black_24dp"
-                        android:drawablePadding="2dp"
-                        android:gravity="center"
-                        android:hint="@android:string/search_go"
-                        android:padding="2dp"
-                        android:textColor="@color/white"
-                        android:textColorHint="@color/white"
-                        android:textSize="14dp" />
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/accept_btn"
-                        android:drawableStart="@drawable/ic_search_black_24dp"
-                        android:drawableLeft="@drawable/ic_search_black_24dp"
-                        android:drawablePadding="2dp"
-                        android:gravity="center"
-                        android:hint="@android:string/search_go"
-                        android:padding="2dp"
-                        android:textColorHint="@color/colorblue_dark"
-                        android:textSize="14dp"
-                        android:visibility="invisible" />
-                </LinearLayout>
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+
+                    android:layout_height="match_parent">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -534,7 +599,7 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="@string/user_no"
-                        android:textColor="@color/darkWhite"
+                        android:textColor="@color/new_dark_blue"
                         android:textStyle="bold" />
 
                     <TextView
@@ -543,7 +608,7 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="@string/userName"
-                        android:textColor="@color/darkWhite"
+                        android:textColor="@color/new_dark_blue"
                         android:textStyle="bold" />
 
                     <TextView
@@ -552,7 +617,7 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="@string/password"
-                        android:textColor="@color/darkWhite"
+                        android:textColor="@color/new_dark_blue"
                         android:textStyle="bold" />
                 </TableRow>
 
@@ -567,32 +632,35 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:layout_weight="0"
+            android:layout_height="match_parent"
+           android:layout_marginTop="4dp"
+            android:layout_weight="2.5"
             android:orientation="horizontal">
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/addButton"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginRight="3dp"
                 android:layout_weight="1"
-                android:background="@drawable/yellow_button"
+                android:background="@drawable/darkbluebtn"
                 android:text="Add"
-                android:textColor="@color/colorblue_dark"
+                android:textColor="@color/white"
                 android:textStyle="bold" />
-
-            <Button
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+           android:layout_weight="1.5" />
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/updateButton"
                 android:visibility="visible"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="3dp"
                 android:layout_weight="1"
-                android:background="@drawable/blue_back"
+                android:background="@drawable/white_and_blue"
                 android:text="Update"
-                android:textColor="@color/darkOrange2" />
+                android:textColor="@color/new_dark_blue" />
 
             <!--<Button-->
             <!--android:id="@+id/button3"-->
@@ -605,6 +673,16 @@
             <!--android:text="@string/dialog_cancel" />-->
         </LinearLayout>
 
+        </LinearLayout>
+    </LinearLayout>
+    <include
+        android:id="@+id/bottom_navigation"
+        layout="@layout/bottom_nav_bar"
+        android:layout_marginBottom="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 
     </LinearLayout>
-</LinearLayout>

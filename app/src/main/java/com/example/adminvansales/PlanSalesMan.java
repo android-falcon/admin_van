@@ -16,11 +16,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -37,9 +39,11 @@ import android.widget.TextView;
 import com.example.adminvansales.Adapters.CustomerAdapter;
 import com.example.adminvansales.Adapters.SelectedCustomerAdapterPlan;
 import com.example.adminvansales.Report.CashReport;
+import com.example.adminvansales.Report.ReportsPopUpClass;
 import com.example.adminvansales.model.AreaModel;
 import com.example.adminvansales.model.CustomerInfo;
 import com.example.adminvansales.model.Plan_SalesMan_model;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONObject;
 
@@ -77,7 +81,7 @@ public class PlanSalesMan extends AppCompatActivity {
     public ArrayList<AreaModel> listOfArea = new ArrayList<>();
     public static int orderType = 0;
     public StringBuilder allAreaPlan;
-
+    BottomNavigationView bottom_navigation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,6 +95,44 @@ public class PlanSalesMan extends AppCompatActivity {
         fillArea();
         fillMainList();
         orderType = getTypeOrder();
+
+
+        bottom_navigation = findViewById(R.id.bottom_navigation);
+
+        bottom_navigation.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        switch (item.getItemId()) {
+
+                            case R.id.action_plan:
+
+
+                                return true;
+
+                            case R.id.action_reports:
+
+                                ReportsPopUpClass popUpClass = new ReportsPopUpClass();
+                                popUpClass.showPopupWindow(item.getActionView(), PlanSalesMan.this);
+
+                                return true;
+
+                            case R.id.action_location:
+                                startActivity(new Intent(getApplicationContext(), SalesmanMapsActivity.class));
+                                overridePendingTransition(0, 0);
+                                return true;
+
+                            case R.id.action_notifications:
+
+                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                overridePendingTransition(0, 0);
+
+                                return true;
+                        }
+                        return false;
+                    }
+                });
+
 
     }
 

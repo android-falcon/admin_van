@@ -28,6 +28,7 @@
     <string name="credit">Credit</string>
     <string name="balance">Balance</string>
     <string name="add_van_sales">Add Sales Man</string>
+    <string name="add_van_sales1">Sales Man</string>
     <string name="sales_man_name">Sales Man Name </string>
     <string name="password">Password</string>
     <string name="sales_man_no">Sales Man No</string>
@@ -107,6 +108,7 @@
     <string name="TotalCreditF">TCredit F</string>
     <string name="search">Search</string>
     <string name="addAdmin">Add Admin</string>
+    <string name="addAdmin1">Admin</string>
     <string name="Validity">Validity</string>
     <string name="user_no">User No</string>
     <string name="userName">User Name</string>
@@ -148,7 +150,8 @@
     <string name="haveDuplicateOrder">You Have Duplicate Order !!</string>
     <string name="order">Order</string>
     <string name="plans_report">Plans report</string>
-
+    <string name="addnew">Add New</string>
+    <string name="addnew_">Add New:</string>
 <string-array name="app_paymentTypeList">
         <!--        <item>All</item>-->
         <item>Cash</item>

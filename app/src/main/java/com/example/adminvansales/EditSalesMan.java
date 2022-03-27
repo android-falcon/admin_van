@@ -1,10 +1,13 @@
 package com.example.adminvansales;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -12,10 +15,15 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.example.adminvansales.Adapters.SalesMenListAdapter;
+import com.example.adminvansales.Report.ReportsPopUpClass;
 import com.example.adminvansales.model.SalesManInfo;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +37,8 @@ public class EditSalesMan extends AppCompatActivity {
     ListView salesManList;
     SalesMenListAdapter salesMenListAdapter;
     GlobelFunction globelFunction;
-    TextView salesNo, clearText, sales, addAdmin;
+    TextView salesNo, clearText;
+       RadioButton     sales, addAdmin;
     EditText salesName, password, searchSalesMan, fVSerial, tVSerial, tRSerial, fRSerial, fSSerial, tSSerial;
     Button addButton, updateButton;
     com.example.adminvansales.model.SettingModel SettingModel;
@@ -38,7 +47,7 @@ public class EditSalesMan extends AppCompatActivity {
     int AdminSales = 1;//1 sales 2 ADMIN
     public static List<SalesManInfo> AdminInfoList;
     LinearLayout validityLinear;
-
+    RadioGroup newSalandAdmnRG;
     CheckBox AddSalesCheckBox, AddAdminCheckBox, makeOfferCheckBox,
             offerReportCheckBox, accountRCheckBox, paymentRCheckBox, CustomerCheckBox,
             CashRCheckBox, LocationCheckBox, UncollectedRCheckBox, analyzeRCheckBox,
@@ -46,12 +55,28 @@ public class EditSalesMan extends AppCompatActivity {
     int isUpdate = 0;
     String intentEdit;
     SalesManInfo SalesManInfoFill;
-
+    BottomNavigationView bottom_navigation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_sales_man);
         initial();
+        newSalandAdmnRG.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+                    switch(checkedId) {
+                    case R.id.sales:
+
+                        alertMessage(1);
+                        break;
+                    case R.id.addAdmin:
+
+                        alertMessage(2);
+                        break;
+                }
+            }
+        });
         databaseHandler=new DataBaseHandler(EditSalesMan.this);
         SettingModel=databaseHandler.getAllSetting();
 
@@ -63,6 +88,44 @@ public class EditSalesMan extends AppCompatActivity {
             fillEditText(SalesManInfoFill);
         }
 
+        bottom_navigation = findViewById(R.id.bottom_navigation);
+
+        bottom_navigation.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        switch (item.getItemId()) {
+
+                            case R.id.action_plan:
+                                startActivity(new Intent(getApplicationContext(), PlanSalesMan.class));
+
+                                //     startActivity(new Intent(getApplicationContext(), PlanSalesMan.class));
+                                //    overridePendingTransition(0, 0);
+
+                                return true;
+
+                            case R.id.action_reports:
+
+                                ReportsPopUpClass popUpClass = new ReportsPopUpClass();
+                                popUpClass.showPopupWindow(item.getActionView(), EditSalesMan.this);
+
+                                return true;
+
+                            case R.id.action_location:
+                                startActivity(new Intent(getApplicationContext(), SalesmanMapsActivity.class));
+                                overridePendingTransition(0, 0);
+                                return true;
+
+                            case R.id.action_notifications:
+
+                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                overridePendingTransition(0, 0);
+
+                                return true;
+                        }
+                        return false;
+                    }
+                });
 
 
     }
@@ -163,6 +226,7 @@ public class EditSalesMan extends AppCompatActivity {
     }
 
     private void initial() {
+        newSalandAdmnRG=findViewById(R.id.newSalandAdmnRG);
         salesManList = findViewById(R.id.salesManList);
         salesMenListAdapter = new SalesMenListAdapter();
         AdminInfoList = new ArrayList<>();
@@ -208,8 +272,8 @@ public class EditSalesMan extends AppCompatActivity {
         clearText.setOnClickListener(onClick);
         addButton.setOnClickListener(onClick);
         updateButton.setOnClickListener(onClick);
-        addAdmin.setOnClickListener(onClick);
-        sales.setOnClickListener(onClick);
+    //    addAdmin.setOnClickListener(onClick);
+        //sales.setOnClickListener(onClick);
         searchSalesMan.addTextChangedListener(textWatcher);
         ChangeBetweenAdminSales(AdminSales);
     }
@@ -262,14 +326,7 @@ public class EditSalesMan extends AppCompatActivity {
                         updateAdmin();
                     }
                     break;
-                case R.id.sales:
 
-                    alertMessage(1);
-                    break;
-                case R.id.addAdmin:
-
-                    alertMessage(2);
-                    break;
             }
 
         }
@@ -308,7 +365,7 @@ public class EditSalesMan extends AppCompatActivity {
                 AdminSales = 1;
                 fillList(salesManInfosList);
                 validityLinear.setVisibility(View.GONE);
-                sales.setBackground(EditSalesMan.this.getResources().getDrawable(R.drawable.activite_bac_button));
+             //   sales.setBackground(EditSalesMan.this.getResources().getDrawable(R.drawable.activite_bac_button));
                 addAdmin.setBackground(null);
             } else {
                 globelFunction.AuthenticationMessage();
@@ -320,7 +377,7 @@ public class EditSalesMan extends AppCompatActivity {
                 ImportData importData = new ImportData(EditSalesMan.this);
                 importData.getAdmin(EditSalesMan.this, 0);
                 validityLinear.setVisibility(View.VISIBLE);
-                addAdmin.setBackground(EditSalesMan.this.getResources().getDrawable(R.drawable.activite_bac_button_ri));
+             //   addAdmin.setBackground(EditSalesMan.this.getResources().getDrawable(R.drawable.activite_bac_button_ri));
                 sales.setBackground(null);
             } else {
                 globelFunction.AuthenticationMessage();
