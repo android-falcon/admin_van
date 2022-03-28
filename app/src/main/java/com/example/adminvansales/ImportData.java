@@ -564,7 +564,6 @@ public class ImportData {
                             break;
                     }
                 }
-                {}
             } else {
 
             }

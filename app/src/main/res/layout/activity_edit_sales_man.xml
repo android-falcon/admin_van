@@ -33,7 +33,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="@string/addnew"
+                android:text="Add new"
                 android:textColor="@color/bule3"
                 android:textStyle="bold"
                 android:textSize="18sp" />
@@ -54,12 +54,13 @@
                 android:layout_gravity="center"
                 android:padding="3dp"
                 android:gravity="center"
-                android:text="@string/addnew_"
+                android:text="Add new :"
                 android:textColor="@color/new_dark_blue"
                 android:textStyle="bold"
-                android:drawableStart="@drawable/addnew"
                 android:layout_weight="2"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                app:drawableLeftCompat="@drawable/addnew"
+                app:drawableStartCompat="@drawable/addnew" />
             <RadioGroup
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
