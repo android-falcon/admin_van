@@ -70,7 +70,7 @@ class SalmanAdapter extends BaseAdapter {
       text_name.setText(list.get(i).getSalesName());
 
    layBar.setTag("" + i);
-       layBar.setEnabled(false);
+       layBar.setEnabled(true);
         final boolean[] longIsOpen = {false};
     layBar.setOnClickListener(new View.OnClickListener() {
             @Override
