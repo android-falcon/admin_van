@@ -20,7 +20,6 @@
     <string name="ok">OK</string>
     <string name="customerName">Customer Name</string>
     <string name="customerName_">Customer Name:</string>
-
     <string name="preview">Preview</string>
     <string name="transName">Trans Name</string>
     <string name="date_voucher">Date</string>
@@ -29,17 +28,18 @@
     <string name="credit">Credit</string>
     <string name="balance">Balance</string>
     <string name="add_van_sales">Add Sales Man</string>
+    <string name="add_van_sales1">Sales Man</string>
     <string name="sales_man_name">Sales Man Name </string>
     <string name="password">Password</string>
     <string name="sales_man_no">Sales Man No</string>
     <string name="Active">DeActive User</string>
     <string name="title_activity_salesman_maps">Map</string>
-    <string name="customer_log_report">Customer Log Report</string>
+    <string name="customer_log_report">Customer log report</string>
     <string name="delete">Are you sure you want to
             \n delete this entry?</string>
     <string name="SALES_MAN_ID">Sales Man ID</string>
     <string name="CUS_CODE">Customer Code</string>
-    <string name="CUS_NAME">Customer name</string>
+    <string name="CUS_NAME">Customer Name</string>
     <string name="CHECK_IN_DATE">Check In Date</string>
     <string name="CHECK_IN_TIME">Check In Time</string>
     <string name="CHECK_OUT_DATE">Check Out Date</string>
@@ -53,11 +53,11 @@
     <string name="sale_man_number">Sales Man Number</string>
     <string name="remark">Remark</string>
     <string name="pay_method">Pay Method</string>
-    <string name="net_sales">Net sales</string>
+    <string name="net_sales">Net Sales</string>
     <string name="pay_date">Pay Date</string>
     <string name="check_number">Cheque Number</string>
-    <string name="payment_details_report">Payment Details Report</string>
-    <string name="cash_report">Cash Report</string>
+    <string name="payment_details_report">Payment details report</string>
+    <string name="cash_report">Cash report</string>
     <string name="date">Date</string>
     <string name="sales">Sales</string>
     <string name="app_creditCard">Credit Card</string>
@@ -89,7 +89,7 @@
     <string name="voucherSerial">Voucher Serial</string>
     <string name="returnSerial">Return Serial</string>
     <string name="paymentSerial">Payment Serial</string>
-    <string name="unCollectedCheques_report">Un Collected Cheques Report</string>
+    <string name="unCollectedCheques_report">Un collected cheques report</string>
     <string name="chaequeDate">Date</string>
     <string name="recivedAmount">Received Amount</string>
     <string name="PAIDAMT">Paid Amount</string>
@@ -97,7 +97,7 @@
     <string name="app_bank_name">Bank Name</string>
     <string name="app_amount">Amount</string>
     <string name="AnalyzeCustomersAccount">Analyze Customer\'s Account</string>
-    <string name="customerNo">Customer no.</string>
+    <string name="customerNo">Customer No</string>
     <string name="df">DF</string>
     <string name="cf">CF</string>
     <string name="cancel">Cancel</string>
@@ -108,6 +108,7 @@
     <string name="TotalCreditF">TCredit F</string>
     <string name="search">Search</string>
     <string name="addAdmin">Add Admin</string>
+    <string name="addAdmin1">Admin</string>
     <string name="Validity">Validity</string>
     <string name="user_no">User No</string>
     <string name="userName">User Name</string>
