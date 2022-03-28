@@ -187,13 +187,22 @@ public class PlansReport extends AppCompatActivity {
 
                         for (int p = 0; p < allPlans.size(); p++) {
 
-                            if (allPlans.get(p).getCustomerName().toLowerCase().contains(custName)) {
 
+                            if (!custName.equals("")) {
+                                if (allPlans.get(p).getCustomerName().toLowerCase().contains(custName)) {
+
+                                    searchPlanList.add(allPlans.get(p));
+
+                                }
+                            } else
                                 searchPlanList.add(allPlans.get(p));
 
-                            }
-
                         }
+
+                        Log.e("All_Plans_size", allPlans.size()+"");
+
+                        Log.e("searchPlanList", searchPlanList.toString());
+                        Log.e("searchPlanList_size", searchPlanList.size()+"");
 
                         plansReportAdapter = new PlansReportAdapter(PlansReport.this, searchPlanList);
                         plans_recycler.setAdapter(plansReportAdapter);
