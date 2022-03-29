@@ -43,6 +43,8 @@ public class SalesmanMapsActivity extends FragmentActivity implements OnMapReady
     Handler locationHandler;
     final static long REFRESH = 1 * 1000;
     final static int SUBJECT = 0;
+    int existLocation=0;
+    double latit=0,longtud=0;
 boolean flag=false;
 GlobelFunction globelFunction;
 
@@ -103,7 +105,9 @@ GlobelFunction globelFunction;
         if(move==1){
             mMap.clear();
         }
-
+        existLocation=0;
+        latit=31.9695985;
+        longtud=35.9138707;
         // Add a marker in Sydney and move the camera
         Log.e("mmmmmm", "locationCall");
         LatLng sydney = null;
@@ -115,6 +119,7 @@ GlobelFunction globelFunction;
         for (int i = 0; i < LatLngListMarker.size(); i++) {
              if(LatLngListMarker.get(i)!=null&&salesManInfosList.get(i)!=null)
             if (!salesManInfosList.get(i).getLatitudeLocation().equals("0") && !salesManInfosList.get(i).getLongitudeLocation().equals("0")) {
+                existLocation++;
                 sydney = LatLngListMarker.get(i);
 
                 mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(iconSize())).position(sydney).title(salesManInfosList.get(i).getSalesName()+salesManInfosList.get(i).getLatitudeLocation()+salesManInfosList.get(i).getLongitudeLocation()));
@@ -122,8 +127,15 @@ GlobelFunction globelFunction;
             }
         }
         }else {
-            Log.e("salesManInfosList",""+salesManInfosList.size());
+
+
         }
+        Log.e("salesManInfosList",""+salesManInfosList.size()+"\t"+existLocation);
+        if(existLocation==0||salesManInfosList.size()==0)
+        {
+            fillCurentLocation();
+        }
+
 //        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
 //        mMap.animateCamera(CameraUpdateFactory.newLatLng(sydney));
         if(move==0) {
@@ -137,6 +149,16 @@ GlobelFunction globelFunction;
         }
         flag=true;
 //        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 0));
+    }
+
+    private void fillCurentLocation() {
+        mMap.addMarker(new MarkerOptions()
+                .position(new LatLng(latit, longtud))
+                .title("cool place")
+
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE)));
+
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latit, longtud), 15f));
     }
 
     Bitmap iconSize(){
