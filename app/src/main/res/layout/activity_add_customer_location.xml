@@ -17,7 +17,7 @@
         android:layout_height="70dp"
 
         android:elevation="5dp"
-        android:background="@drawable/title_back"
+
         android:orientation="horizontal">
         <TextView
             android:layout_height="match_parent"
@@ -25,13 +25,12 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:textSize="18sp"
-            android:textColor="@color/layer7"
+            android:textColor="@color/bule3"
             android:text="@string/addCustomerLocation"/>
 
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/row2220"
         android:layout_width="match_parent"
         android:layout_height="50dp"
 
@@ -64,16 +63,16 @@
         android:layout_margin="5dp"
 
         android:layout_weight="1"
-        android:background="@drawable/hover_color"
-        android:drawableRight="@drawable/ic_search_black_24dp"
-        android:drawableTint="@color/colorblue_dark3"
+        android:background="@drawable/searchbox"
+        android:drawableLeft="@drawable/ic_search_black_24dp"
+        android:drawableTint="@color/layer3"
         android:elevation="2dp"
         android:fontFamily="sans-serif-light"
         android:inputType="text"
         android:textColor="@color/darkGray"
         android:padding="1dp"
         android:hint="type customer Name"
-        android:textColorHint="@color/lightWhite" />
+        android:textColorHint="@color/layer3" />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/customer_recycler"
 

@@ -4,11 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layBar"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="150dp"
     android:gravity="center"
-    android:background="@drawable/btn_sighn_up"
-
-
     android:padding="10dp"
     android:layout_weight="1"
     android:orientation="vertical">
@@ -19,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="2"
         android:visibility="gone"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/currency"
@@ -64,18 +61,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="@color/white"
+        android:background="@drawable/sales_mancard_style"
         android:gravity="center"
+android:id="@+id/salesLin"
         android:orientation="vertical"
         android:padding="5dp">
 
         <ImageView
             android:id="@+id/imgbar"
+           android:layout_marginTop="5dp"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:src="@drawable/ic_person_pin_yelow_24dp"
+            android:src="@drawable/profile"
             android:textColor="@color/white"
             tools:ignore="VectorDrawableCompat" />
 <!--        <de.hdodenhof.circleimageview.CircleImageView-->
@@ -97,7 +96,7 @@
             android:fontFamily="sans-serif-light"
             android:gravity="center"
             android:text="Mohemmed Ali "
-            android:textColor="@color/colorblue_dark"
+            android:textColor="@color/white"
             android:textSize="20sp"
             app:autoSizeMaxTextSize="22sp"
             app:autoSizeMinTextSize="12sp"

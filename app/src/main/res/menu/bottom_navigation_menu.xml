@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/action_plan"
+        android:enabled="true"
+        android:icon="@drawable/planedit"
+        android:iconTint="@color/white"
+        android:title="@string/Plan" />
+
+    <item
+        android:id="@+id/action_reports"
+        android:enabled="true"
+        android:icon="@drawable/chart"
+        android:iconTint="@color/white"
+        android:title="@string/Reports" />
+
+    <item
+        android:id="@+id/action_location"
+        android:enabled="true"
+        android:icon="@drawable/locationimg"
+        android:iconTint="@color/white"
+        android:title="@string/Location" />
+
+    <item
+        android:id="@+id/action_notifications"
+        android:enabled="true"
+        android:icon="@drawable/notifications"
+        android:iconTint="@color/white"
+        android:title="@string/Notifications" />
+
+</menu>

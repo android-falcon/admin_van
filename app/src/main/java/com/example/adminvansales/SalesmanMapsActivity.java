@@ -47,6 +47,8 @@ public class SalesmanMapsActivity extends FragmentActivity implements OnMapReady
     double latit=0,longtud=0;
 boolean flag=false;
 GlobelFunction globelFunction;
+    boolean flag = false;
+    GlobelFunction globelFunction;
 
     @SuppressLint("HandlerLeak")
     @Override
@@ -56,16 +58,17 @@ GlobelFunction globelFunction;
         try {
 
 
-        builder = new LatLngBounds.Builder();
-        globelFunction=new GlobelFunction(SalesmanMapsActivity.this);
-        timer = new Timer();
-        timer.schedule(new TimerTask() {
+            builder = new LatLngBounds.Builder();
+            globelFunction = new GlobelFunction(SalesmanMapsActivity.this);
+            timer = new Timer();
+            timer.schedule(new TimerTask() {
 
-            @Override
-            public void run() {
-                if(flag){
-                    globelFunction.getSalesManInfo(SalesmanMapsActivity.this,2);
-                }}
+                @Override
+                public void run() {
+                    if (flag) {
+                        globelFunction.getSalesManInfo(SalesmanMapsActivity.this, 2);
+                    }
+                }
 
         }, 0, 10000);
 

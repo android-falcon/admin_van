@@ -76,7 +76,7 @@ public class ItemReportAdapter extends BaseAdapter {
         holder.tableRow = view.findViewById(R.id.table);
         holder.itemName = view.findViewById(R.id.itemName);
         holder.date = view.findViewById(R.id.date);
-        holder.salesName = view.findViewById(R.id.salesManName);
+//        holder.salesName = view.findViewById(R.id.salesManName);
         holder.qty = view.findViewById(R.id.qty);
         holder.price = view.findViewById(R.id.price);
         holder.total=view.findViewById(R.id.total);
@@ -85,7 +85,7 @@ public class ItemReportAdapter extends BaseAdapter {
 
         holder.itemName .setText(""+itemsList.get(i).getName());
         holder.date .setText(""+itemsList.get(i).getVoucherDate());
-        holder.salesName .setText(""+itemsList.get(i).getSalesName());
+//        holder.salesName .setText(""+itemsList.get(i).getSalesName());
         holder.qty .setText(""+itemsList.get(i).getQty());
         holder.price .setText(""+globelFunction.convertToEnglish(globelFunction.getDecimal(itemsList.get(i).getUnitPrice())));
         holder.total.setText(""+globelFunction.convertToEnglish(globelFunction.getDecimal(itemsList.get(i).getTotal())));

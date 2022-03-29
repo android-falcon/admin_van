@@ -1,17 +1,21 @@
 package com.example.adminvansales.Report;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,10 +24,13 @@ import com.example.adminvansales.DataBaseHandler;
 import com.example.adminvansales.ExportToExcel;
 import com.example.adminvansales.GlobelFunction;
 import com.example.adminvansales.ImportData;
+import com.example.adminvansales.MainActivity;
+import com.example.adminvansales.PlanSalesMan;
 import com.example.adminvansales.model.PayMentReportModel;
 import com.example.adminvansales.Adapters.PayMentReportAdapter;
 import com.example.adminvansales.PdfConverter;
 import com.example.adminvansales.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -33,7 +40,8 @@ import static com.example.adminvansales.GlobelFunction.salesManInfosList;
 import static com.example.adminvansales.GlobelFunction.salesManNameList;
 
 public class PaymentDetailsReport extends AppCompatActivity {
-    TextView fromDate,toDate,excelConvert,pdfConvert,share;
+    TextView fromDate,toDate;
+    ImageButton excelConvert,pdfConvert,share, backBtn;
     GlobelFunction globelFunction;
     String toDay;
     PayMentReportAdapter payMentReportAdapter;
@@ -45,6 +53,8 @@ public class PaymentDetailsReport extends AppCompatActivity {
     ArrayAdapter<String>salesNameSpinnerAdapter;
     com.example.adminvansales.model.SettingModel SettingModel;
    DataBaseHandler databaseHandler;
+    private BottomNavigationView bottom_navigation;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +80,8 @@ public class PaymentDetailsReport extends AppCompatActivity {
         excelConvert=findViewById(R.id.excelConvert);
         pdfConvert=findViewById(R.id.pdfConvert);
         share=findViewById(R.id.share);
+        backBtn = findViewById(R.id.backBtn);
+        backBtn.setOnClickListener(v -> onBackPressed());
         globelFunction=new GlobelFunction(PaymentDetailsReport.this);
         toDay=globelFunction.DateInToday();
         fromDate.setText(toDay);
@@ -93,7 +105,44 @@ public class PaymentDetailsReport extends AppCompatActivity {
         pdfConvert.setOnClickListener(onClick);
         share.setOnClickListener(onClick);
 
+        bottom_navigation = findViewById(R.id.bottom_navigation);
 
+        bottom_navigation.setSelectedItemId(R.id.action_reports);
+
+        bottom_navigation.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        switch (item.getItemId()) {
+
+                            case R.id.action_plan:
+
+                                startActivity(new Intent(getApplicationContext(), PlanSalesMan.class));
+                                overridePendingTransition(0, 0);
+
+                                return true;
+
+                            case R.id.action_reports:
+
+                                ReportsPopUpClass popUpClass = new ReportsPopUpClass();
+                                popUpClass.showPopupWindow(item.getActionView(), PaymentDetailsReport.this);
+
+                                return true;
+
+                            case R.id.action_location:
+
+                                return true;
+
+                            case R.id.action_notifications:
+
+                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                overridePendingTransition(0, 0);
+
+                                return true;
+                        }
+                        return false;
+                    }
+                });
 
     }
 
@@ -204,8 +253,7 @@ public class PaymentDetailsReport extends AppCompatActivity {
 
     public void fillSalesManSpinner(){
 
-        salesNameSpinnerAdapter = new ArrayAdapter<String>(this, R.layout.spinner_layout, salesManNameList);
-        salesNameSpinnerAdapter.setDropDownViewResource(R.layout.spinner_layout);
+        salesNameSpinnerAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, salesManNameList);
         salesNameSpinner.setAdapter(salesNameSpinnerAdapter);
 
     }

@@ -62,7 +62,6 @@
         app:srcCompat="@drawable/delivery_man" />
 
     <TextView
-        android:id="@+id/textView13"
         android:layout_width="209dp"
         android:layout_height="52dp"
         android:layout_marginTop="30dp"

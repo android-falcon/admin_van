@@ -134,8 +134,10 @@ public class ImportData {
     public static List<OfferGroupModel> offerGroupModels = new ArrayList<>();
     ProgressDialog progressDialog;
     GlobelFunction globelFunction;
- public  String headerDll="/Falcons/VAN.dll";
-//   public  String headerDll="";
+// public  String headerDll="/Falcons/VAN.dll";
+   public  String headerDll="";
+// public  String headerDll="/Falcons/VAN.dll";
+
     public ImportData(Context context) {
         databaseHandler = new DataBaseHandler(context);
         this.main_context = context;
@@ -562,7 +564,6 @@ public class ImportData {
                             break;
                     }
                 }
-                {}
             } else {
 
             }

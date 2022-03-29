@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="2dp">
+    android:paddingHorizontal="12dp">
 
     <TableRow
         android:id="@+id/table"
@@ -17,8 +17,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.9"
             android:gravity="center"
-            android:padding="10dp"
-
             android:text="@string/SALES_MAN_ID"
             android:textColor="@color/colorblue_dark"
             android:textSize="14sp" />
@@ -29,8 +27,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.9"
             android:gravity="center"
-            android:padding="10dp"
-
             android:text="@string/sales_man_name"
             android:textColor="@color/colorblue_dark"
             android:textSize="14sp" />
@@ -41,9 +37,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.9"
             android:gravity="center"
-
-            android:padding="10dp"
-
             android:text="@string/CUS_CODE"
             android:textColor="@color/colorblue_dark"
             android:textSize="12sp" />
@@ -54,9 +47,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.9"
             android:gravity="center"
-
-            android:padding="10dp"
-
             android:text="@string/CUS_NAME"
             android:textColor="@color/colorblue_dark"
             android:textSize="14sp" />
@@ -67,9 +57,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.9"
             android:gravity="center"
-
-            android:padding="10dp"
-
             android:text="@string/CHECK_IN_DATE"
             android:textColor="@color/colorblue_dark"
             android:textSize="14sp" />
@@ -80,9 +67,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.9"
             android:gravity="center"
-
-            android:padding="10dp"
-
             android:text="@string/CHECK_IN_TIME"
             android:textColor="@color/colorblue_dark"
             android:textSize="14sp" />
@@ -93,9 +77,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.9"
             android:gravity="center"
-
-            android:padding="10dp"
-
             android:text="@string/CHECK_OUT_DATE"
             android:textColor="@color/colorblue_dark"
             android:textSize="14sp" />
@@ -106,28 +87,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.9"
             android:gravity="center"
-            android:padding="10dp"
             android:text="@string/CHECK_OUT_TIME"
             android:textColor="@color/colorblue_dark"
-            android:textSize="12sp" />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:padding="10dp"
-            android:textColor="@color/colorblue_dark"
-            android:textSize="12sp"
-            android:visibility="invisible"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:padding="10dp"
-            android:textColor="@color/colorblue_dark"
-            android:textSize="12sp"
-            android:visibility="invisible"/>
+            android:textSize="14sp" />
+
     </TableRow>
 
 </LinearLayout>

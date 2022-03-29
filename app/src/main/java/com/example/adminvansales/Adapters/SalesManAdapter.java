@@ -65,8 +65,12 @@ public class SalesManAdapter extends RecyclerView.Adapter<SalesManAdapter.CViewH
                 }else {
                     globelFunction.AuthenticationMessage();
                 }
-
+                if(i==(list.size()-1)){
+                    context.startActivity(new Intent(context,EditSalesMan.class));
+                }
             }
+
+
         });
 
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

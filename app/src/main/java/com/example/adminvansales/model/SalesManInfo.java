@@ -246,6 +246,8 @@ public class SalesManInfo implements Serializable {
             jsonObject.put("ACCNAME", salesName);
             jsonObject.put("USER_PASSWORD", salesPassword);
             jsonObject.put("ACTIVE_USER", active);
+            jsonObject.put("USERTYPE", "0");
+            jsonObject.put("DISCOUNTPER", "");
 
             jsonObject.put("FROM_VOUCHER_SERIAL", fVoucherSerial);
             jsonObject.put("TO_VOUCHER_SERIAL", tVoucherSerial);

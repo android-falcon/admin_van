@@ -40,7 +40,10 @@
         </activity>
         <activity
             android:name=".Report.PlansReport"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan|adjustResize"
+            />
         <activity
             android:name=".ItemVisibility"
             android:exported="false"
@@ -84,8 +87,10 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".EditSalesMan"
+            android:windowSoftInputMode="adjustResize|adjustPan"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".HomeActivity" />
+        <activity android:name=".HomeActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Report.LogHistoryReport"
             android:theme="@style/AppTheme.NoActionBar" />

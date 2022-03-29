@@ -1,11 +1,20 @@
 package com.example.adminvansales;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
@@ -19,6 +28,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -29,6 +40,7 @@ import com.azoft.carousellayoutmanager.CenterScrollListener;
 import com.example.adminvansales.Adapters.SalesManAdapter;
 import com.example.adminvansales.Report.OfferseReport;
 import com.example.adminvansales.Report.PlansReport;
+import com.example.adminvansales.Report.ReportsPopUpClass;
 import com.example.adminvansales.model.Password;
 import com.example.adminvansales.model.SalesManInfo;
 import com.example.adminvansales.Report.AnalyzeAccounts;
@@ -38,17 +50,25 @@ import com.example.adminvansales.Report.ListOfferReport;
 import com.example.adminvansales.Report.LogHistoryReport;
 import com.example.adminvansales.Report.PaymentDetailsReport;
 import com.example.adminvansales.Report.UnCollectedData;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 import static com.example.adminvansales.GlobelFunction.salesManInfoAdmin;
 import static com.example.adminvansales.GlobelFunction.salesManInfosList;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity
+
+        implements NavigationView.OnNavigationItemSelectedListener{
     public List<SalesManInfo> picforbar;
+
+
     public CarouselLayoutManager layoutManagerd;
-    public RecyclerView recyclerViews;
+    public GridView recyclerViews;
     public static TextView waitList, addVanSales;
     RelativeLayout notifyLayout, accountLayout;
     GlobelFunction globelFunction;
@@ -59,12 +79,31 @@ public class HomeActivity extends AppCompatActivity {
             analyzeAcountsReport,ItemReport, plansReport;
     com.example.adminvansales.model.SettingModel settingModel;
     DataBaseHandler databaseHandler;
+   BottomNavigationView bottom_navigation;
+   TextView menuBtn,acc_statments;
 
+    private DrawerLayout drawerLayout;
+    private Toolbar toolbar;
+    private ActionBarDrawerToggle toggle;
+    private NavigationView navigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         initalView();
+        menuBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerLayout.openDrawer(navigationView);
+            }
+        });
+        acc_statments.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), AccountStatment.class));
+
+            }
+        });
         globelFunction = new GlobelFunction(HomeActivity.this);
         settingModel=new com.example.adminvansales.model.SettingModel ();
         ImportData  importData=new ImportData(HomeActivity.this);
@@ -81,14 +120,119 @@ public class HomeActivity extends AppCompatActivity {
       //  else if( settingModel.getImport_way().equals("1"))
       //      importData.  IIs_getSalesMan(HomeActivity.this, 1);
 
+        drawerLayout = findViewById(R.id.main_drawerLayout);
+        navigationView = findViewById(R.id.nav_view);
+        setupDrawerContent(navigationView);
+
+
+        toolbar = findViewById(R.id.main_toolbar);
+        setSupportActionBar(toolbar);
+        setTitle("");
+        toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open_drawer, R.string.close_drawer);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        bottom_navigation.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        switch (item.getItemId()) {
+
+                            case R.id.action_plan:
+                                startActivity(new Intent(getApplicationContext(), PlanSalesMan.class));
+
+                           //     startActivity(new Intent(getApplicationContext(), PlanSalesMan.class));
+                          //    overridePendingTransition(0, 0);
+
+                                return true;
+
+                            case R.id.action_reports:
+
+                                ReportsPopUpClass popUpClass = new ReportsPopUpClass();
+                                popUpClass.showPopupWindow(item.getActionView(), HomeActivity.this);
+
+                                return true;
+
+                            case R.id.action_location:
+                                startActivity(new Intent(getApplicationContext(), SalesmanMapsActivity.class));
+                                overridePendingTransition(0, 0);
+                                return true;
+
+                            case R.id.action_notifications:
+
+                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                overridePendingTransition(0, 0);
+
+                                return true;
+
+                        }
+                        return false;
+                    }
+                });
+
+    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        Log.e("onOptionsItemSelected " ,"onOptionsItemSelected");
+        if (toggle.onOptionsItemSelected(item)) {
+            Log.e("iditem", "onOptionsItemSelected " + item.getItemId());
+            return true;
+        }
+
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+        int id = item.getItemId();
+        Log.e("id", "onNavigationItemSelected " + id);
+        switch (id) {
+
+            case R.id.pass_setting: {
+                openchangePasswordDialog();
+                drawerLayout.closeDrawer(navigationView);
+                return true;
+
+            }
+
+            case R.id.add_cust: {
+              startActivity(new Intent(HomeActivity.this,AddCustomerLocation.class));
+                drawerLayout.closeDrawer(navigationView);
+                return true;
+            }
+
+            case R.id.itemvible: {
+                startActivity(new Intent(HomeActivity.this,ItemVisibility.class));
+
+                drawerLayout.closeDrawer(navigationView);
+                return true;
+            }
+
+
+
+        }
+
+        return true;
+
+    }
+    private void setupDrawerContent(NavigationView navigationView) {
+        navigationView.setNavigationItemSelectedListener(this);
     }
 
     private void initalView() {
+        Log.e("initalView", "initalView " );
+        bottom_navigation=findViewById(    R.id.bottom_navigation);
+        menuBtn=findViewById(    R.id.menuBtn);
+        acc_statments=findViewById(    R.id.acc_statments);
+
+
         offersReport=findViewById(R.id.offersReport);
         notifyLayout = findViewById(R.id.notifyLayout);
         addVanSales = findViewById(R.id.addVanSales);
         accountLayout = findViewById(R.id.accountLayout);
-
 
         addVanSales.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,7 +257,7 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(offerIntent);
             }
         });
-        locationButton = findViewById(R.id.LocationButton);
+       locationButton = findViewById(R.id.LocationButton);
         ReportButton = findViewById(R.id.ReportButton);
         recyclerViews = findViewById(R.id.res);
         waitList = findViewById(R.id.waitList);
@@ -347,22 +491,29 @@ public class HomeActivity extends AppCompatActivity {
 //        picforbar = dbHandler.getAllAcCount();
 //        new GetAllAccount().execute();
 
-        try {
-            layoutManagerd = new CarouselLayoutManager(CarouselLayoutManager.VERTICAL, true);
+//        try {
+//            layoutManagerd = new CarouselLayoutManager(CarouselLayoutManager.VERTICAL, true);
+//
+//            recyclerViews.setLayoutManager(layoutManagerd);
+//            recyclerViews.setHasFixedSize(true);
+//            recyclerViews.addOnScrollListener(new CenterScrollListener());
+//            layoutManagerd.setPostLayoutListener(new CarouselZoomPostLayoutListener());
+//
+//            recyclerViews.setAdapter(new SalesManAdapter(this, listSalesMan));
+//            recyclerViews.requestFocus();
+//            recyclerViews.scrollToPosition(2);
+//            recyclerViews.requestFocus();
+//
+//        }catch (Exception e){
+//            Log.e("mapException",e.getMessage());
+//        }
 
-            recyclerViews.setLayoutManager(layoutManagerd);
-            recyclerViews.setHasFixedSize(true);
-            recyclerViews.addOnScrollListener(new CenterScrollListener());
-            layoutManagerd.setPostLayoutListener(new CarouselZoomPostLayoutListener());
-
-            recyclerViews.setAdapter(new SalesManAdapter(this, listSalesMan));
-            recyclerViews.requestFocus();
-            recyclerViews.scrollToPosition(2);
-            recyclerViews.requestFocus();
-
-        }catch (Exception e){
-            Log.e("mapException",e.getMessage());
-        }
+//        RecyclerView.LayoutManager   layoutManager = new LinearLayoutManager(HomeActivity.this,LinearLayoutManager.HORIZONTAL,false);
+//        recyclerViews.setLayoutManager(layoutManager);
+        SalesManInfo salesManInfo =new SalesManInfo();
+        salesManInfo.setSalesName("add salesman");
+        listSalesMan.add(salesManInfo);
+        recyclerViews.setAdapter(new SalmanAdapter(this, listSalesMan));
 
 
     }
@@ -375,45 +526,71 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.changePassowrd) {
-            openchangePasswordDialog();
-
-        } else if (id == R.id.button_notif) {
-            finish();
-            Intent i = new Intent(HomeActivity.this, MainActivity.class);
-            startActivity(i);
-        } else if (id == R.id.button_account) {
-            globelFunction.setValidation();
-            if(salesManInfoAdmin.getAddSalesMen()==1) {
-                finish();
-                Intent i = new Intent(HomeActivity.this, AccountStatment.class);
-                startActivity(i);
-            }else {
-                globelFunction.AuthenticationMessage();
-            }
-        }
-        else  if (id == R.id.customerLocation)
-        {
+    //@Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        int id = item.getItemId();
+//
+//        //noinspection SimplifiableIfStatement
+//        if (id == R.id.changePassowrd) {
+//            openchangePasswordDialog();
+//
+//        } else if (id == R.id.button_notif) {
 //            finish();
-            Intent i = new Intent(HomeActivity.this, AddCustomerLocation.class);
-            startActivity(i);
-        }
-        else  if (id == R.id.itemVisiblity)
-        {
+//            Intent i = new Intent(HomeActivity.this, MainActivity.class);
+//            startActivity(i);
+//        } else if (id == R.id.button_account) {
+//            globelFunction.setValidation();
+//            if(salesManInfoAdmin.getAddSalesMen()==1) {
+//                finish();
+//                Intent i = new Intent(HomeActivity.this, AccountStatment.class);
+//                startActivity(i);
+//            }else {
+//                globelFunction.AuthenticationMessage();
+//            }
+//        }
+//        return super.
+//
+//                onOptionsItemSelected(item);
+//    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        int id = item.getItemId();
+//
+//        //noinspection SimplifiableIfStatement
+//        if (id == R.id.changePassowrd) {
+//            openchangePasswordDialog();
+//
+//        } else if (id == R.id.button_notif) {
 //            finish();
-            Intent i = new Intent(HomeActivity.this, ItemVisibility.class);
-            startActivity(i);
-        }
-
-        return super.
-
-                onOptionsItemSelected(item);
-    }
+//            Intent i = new Intent(HomeActivity.this, MainActivity.class);
+//            startActivity(i);
+//        } else if (id == R.id.button_account) {
+//            globelFunction.setValidation();
+//            if(salesManInfoAdmin.getAddSalesMen()==1) {
+//                finish();
+//                Intent i = new Intent(HomeActivity.this, AccountStatment.class);
+//                startActivity(i);
+//            }else {
+//                globelFunction.AuthenticationMessage();
+//            }
+//        }
+//        else  if (id == R.id.customerLocation)
+//        {
+////            finish();
+//            Intent i = new Intent(HomeActivity.this, AddCustomerLocation.class);
+//            startActivity(i);
+//        }
+//        else  if (id == R.id.itemVisiblity)
+//        {
+////            finish();
+//            Intent i = new Intent(HomeActivity.this, ItemVisibility.class);
+//            startActivity(i);
+//        }
+//
+//        return super.
+//
+//                onOptionsItemSelected(item);
+//    }
 
     private void openchangePasswordDialog() {
 
@@ -485,7 +662,9 @@ public class HomeActivity extends AppCompatActivity {
             exportData. IIs_savePassowrdSetting( passwords);
     }
 
-
-
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        drawerLayout.closeDrawer(navigationView);
+    }
 }

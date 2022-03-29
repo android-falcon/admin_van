@@ -3,17 +3,21 @@ package com.example.adminvansales.Report;
 import static com.example.adminvansales.GlobelFunction.salesManInfosList;
 import static com.example.adminvansales.GlobelFunction.salesManNameList;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -23,8 +27,12 @@ import com.example.adminvansales.Adapters.PlansReportAdapter;
 import com.example.adminvansales.GlobelFunction;
 import com.example.adminvansales.HomeActivity;
 import com.example.adminvansales.ImportData;
+import com.example.adminvansales.ItemReport;
+import com.example.adminvansales.MainActivity;
+import com.example.adminvansales.PlanSalesMan;
 import com.example.adminvansales.R;
 import com.example.adminvansales.model.Plan_SalesMan_model;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,7 +41,8 @@ import java.util.List;
 public class PlansReport extends AppCompatActivity {
 
     public static TextView fillPlan2;
-    EditText dateEdt, custNameSearch;
+    TextView dateEdt;
+    EditText custNameSearch;
     RadioGroup orderRG;
     Spinner salesManSP;
     RecyclerView plans_recycler;
@@ -43,7 +52,6 @@ public class PlansReport extends AppCompatActivity {
     List<Plan_SalesMan_model> searchPlanList;
     ImportData importData;
     PlansReportAdapter plansReportAdapter;
-    LinearLayout noDataLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,13 +65,54 @@ public class PlansReport extends AppCompatActivity {
 
     private void init() {
 
+        ImageButton backBtn = findViewById(R.id.backBtn);
+        backBtn.setOnClickListener(v -> onBackPressed());
+
+        BottomNavigationView bottom_navigation = findViewById(R.id.bottom_navigation);
+
+        bottom_navigation.setSelectedItemId(R.id.action_reports);
+
+        bottom_navigation.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        switch (item.getItemId()) {
+
+                            case R.id.action_plan:
+
+                                startActivity(new Intent(getApplicationContext(), PlanSalesMan.class));
+                                overridePendingTransition(0, 0);
+
+                                return true;
+
+                            case R.id.action_reports:
+
+                                ReportsPopUpClass popUpClass = new ReportsPopUpClass();
+                                popUpClass.showPopupWindow(item.getActionView(), PlansReport.this);
+
+                                return true;
+
+                            case R.id.action_location:
+
+                                return true;
+
+                            case R.id.action_notifications:
+
+                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                overridePendingTransition(0, 0);
+
+                                return true;
+                        }
+                        return false;
+                    }
+                });
+
         dateEdt = findViewById(R.id.dateEdt);
         custNameSearch = findViewById(R.id.custNameSearch);
         orderRG = findViewById(R.id.orderRG);
         salesManSP = findViewById(R.id.salesManSP);
         plans_recycler = findViewById(R.id.plans_recycler);
         fillPlan2 = findViewById(R.id.fillPlan2);
-        noDataLayout = findViewById(R.id.noDataLayout);
 
         importData = new ImportData(PlansReport.this);
         allPlans = new ArrayList<>();
@@ -79,7 +128,7 @@ public class PlansReport extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                globelFunction.DateClick((TextView) dateEdt);
+                globelFunction.DateClick(dateEdt);
 
             }
         });
@@ -138,24 +187,31 @@ public class PlansReport extends AppCompatActivity {
 
                         for (int p = 0; p < allPlans.size(); p++) {
 
-                            if (allPlans.get(p).getCustomerName().toLowerCase().contains(custName)) {
 
+                            if (!custName.equals("")) {
+                                if (allPlans.get(p).getCustomerName().toLowerCase().contains(custName)) {
+
+                                    searchPlanList.add(allPlans.get(p));
+
+                                }
+                            } else
                                 searchPlanList.add(allPlans.get(p));
-
-                            }
 
                         }
 
+                        Log.e("All_Plans_size", allPlans.size()+"");
+
+                        Log.e("searchPlanList", searchPlanList.toString());
+                        Log.e("searchPlanList_size", searchPlanList.size()+"");
+
                         plansReportAdapter = new PlansReportAdapter(PlansReport.this, searchPlanList);
                         plans_recycler.setAdapter(plansReportAdapter);
-                        noDataLayout.setVisibility(View.GONE);
 
                     } else if (editable.toString().contains("No Data Found")) {
 
                         allPlans.clear();
                         plansReportAdapter = new PlansReportAdapter(PlansReport.this, allPlans);
                         plans_recycler.setAdapter(plansReportAdapter);
-                        noDataLayout.setVisibility(View.VISIBLE);
                     }
                 }
 

@@ -1,5 +1,6 @@
 package com.example.adminvansales;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -19,8 +21,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.adminvansales.Adapters.AccountStatmentAdapter;
+import com.example.adminvansales.Report.ReportsPopUpClass;
 import com.example.adminvansales.model.Account__Statment_Model;
 import com.example.adminvansales.model.CustomerInfo;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -48,6 +52,8 @@ public class AccountStatment extends AppCompatActivity {
     ImportData importData;
     DataBaseHandler databaseHandler;
     com.example.adminvansales.model.SettingModel SettingModel;
+
+    BottomNavigationView bottom_navigation;
     @SuppressLint("WrongConstant")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +62,7 @@ public class AccountStatment extends AppCompatActivity {
         databaseHandler=new DataBaseHandler(AccountStatment.this);
 //        importData.getCustomerInfo();
         initialView();
+
         Log.e("customername",""+customername.size());
 
         preview_button_account.setOnClickListener(new View.OnClickListener() {
@@ -143,6 +150,45 @@ public class AccountStatment extends AppCompatActivity {
 
             }
         });
+
+        bottom_navigation = findViewById(R.id.bottom_navigation);
+
+        bottom_navigation.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        switch (item.getItemId()) {
+
+                            case R.id.action_plan:
+                                startActivity(new Intent(getApplicationContext(), PlanSalesMan.class));
+                                overridePendingTransition(0, 0);
+
+                                return true;
+
+                            case R.id.action_reports:
+
+                                ReportsPopUpClass popUpClass = new ReportsPopUpClass();
+                                popUpClass.showPopupWindow(item.getActionView(), AccountStatment.this);
+
+                                return true;
+
+                            case R.id.action_location:
+                                startActivity(new Intent(getApplicationContext(), SalesmanMapsActivity.class));
+                                overridePendingTransition(0, 0);
+                                return true;
+
+                            case R.id.action_notifications:
+
+                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                overridePendingTransition(0, 0);
+
+                                return true;
+                        }
+                        return false;
+                    }
+                });
+
+
 
     }
 

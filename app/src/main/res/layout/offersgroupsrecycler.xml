@@ -6,7 +6,6 @@
 
     android:orientation="vertical"
 
-android:id="@+id/grouplin"
     >
 
 
@@ -49,7 +48,6 @@ android:id="@+id/grouplin"
 />
         <TextView
             android:layout_width="5dp"
-            android:id="@+id/respon"
             android:visibility="gone"
             android:layout_height="wrap_content"
             />
