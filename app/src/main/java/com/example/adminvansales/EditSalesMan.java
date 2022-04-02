@@ -43,7 +43,7 @@ public class EditSalesMan extends AppCompatActivity {
     Button addButton, updateButton;
     com.example.adminvansales.model.SettingModel SettingModel;
     DataBaseHandler databaseHandler;
-    CheckBox activeCheck;
+    Switch activeCheck;
     int AdminSales = 1;//1 sales 2 ADMIN
     public static List<SalesManInfo> AdminInfoList;
     LinearLayout validityLinear;

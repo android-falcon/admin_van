@@ -6,6 +6,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -66,9 +67,9 @@ public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
     public List<SalesManInfo> picforbar;
 
-
+    LinearLayout  salesLin;
     public CarouselLayoutManager layoutManagerd;
-    public GridView recyclerViews;
+    public RecyclerView recyclerViews;
     public static TextView waitList, addVanSales;
     RelativeLayout notifyLayout, accountLayout;
     GlobelFunction globelFunction;
@@ -228,7 +229,13 @@ public class HomeActivity extends AppCompatActivity
         menuBtn=findViewById(    R.id.menuBtn);
         acc_statments=findViewById(    R.id.acc_statments);
 
-
+        salesLin= findViewById(R.id.salesLin);
+        salesLin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomeActivity.this,EditSalesMan.class));
+            }
+        });
         offersReport=findViewById(R.id.offersReport);
         notifyLayout = findViewById(R.id.notifyLayout);
         addVanSales = findViewById(R.id.addVanSales);
@@ -508,12 +515,18 @@ public class HomeActivity extends AppCompatActivity
 //            Log.e("mapException",e.getMessage());
 //        }
 
-//        RecyclerView.LayoutManager   layoutManager = new LinearLayoutManager(HomeActivity.this,LinearLayoutManager.HORIZONTAL,false);
-//        recyclerViews.setLayoutManager(layoutManager);
-        SalesManInfo salesManInfo =new SalesManInfo();
-        salesManInfo.setSalesName("add salesman");
-        listSalesMan.add(salesManInfo);
-        recyclerViews.setAdapter(new SalmanAdapter(this, listSalesMan));
+//    RecyclerView.LayoutManager   layoutManager = new LinearLayoutManager(
+//            HomeActivity.this,LinearLayoutManager.VERTICAL,false);
+        // recyclerViews.setLayoutManager(layoutManager);
+        recyclerViews.setLayoutManager(new GridLayoutManager(HomeActivity.this, 2));
+
+
+//   SalesManInfo salesManInfo =new SalesManInfo();
+//
+//        salesManInfo.setSalesName("add salesman");
+//        listSalesMan.add(salesManInfo);
+//        Log.e("listSalesMan===",listSalesMan.size()+"");
+        recyclerViews.setAdapter(new    SalesManAdapter(this, listSalesMan));
 
 
     }

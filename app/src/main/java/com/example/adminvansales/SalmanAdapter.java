@@ -58,8 +58,8 @@ class SalmanAdapter extends BaseAdapter {
         text_name = convertView.findViewById(R.id.text_name);
         salesLin= convertView.findViewById(R.id.salesLin);
         layBar = convertView.findViewById(R.id.layBar);
-
-
+        Log.e("i===",i+""+"   list==="+list.size());
+        text_name.setText(list.get(i).getSalesName());
        if(i==(list.size()-1)) {
            imageView.setImageDrawable(context.getDrawable(R.drawable.addimg));
            imageView.getLayoutParams().height = 100;
@@ -67,7 +67,7 @@ class SalmanAdapter extends BaseAdapter {
            salesLin.setBackground(context.getDrawable(R.drawable.whitesales_mancard_style));
            text_name.setTextColor(context.getColor(R.color.bule3));
        }
-      text_name.setText(list.get(i).getSalesName());
+
 
    layBar.setTag("" + i);
        layBar.setEnabled(true);
