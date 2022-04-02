@@ -334,15 +334,15 @@ public class EditSalesMan extends AppCompatActivity {
 
     void alertMessage(final int adminSales) {
         new SweetAlertDialog(EditSalesMan.this, SweetAlertDialog.WARNING_TYPE)
-                .setTitleText("This Change clear all text ")
+                .setTitleText("This will discard ALL unsaved changes. Do you want to continue ?")
                 .setContentText("")
-                .setCancelButton("cancel", new SweetAlertDialog.OnSweetClickListener() {
+                .setCancelButton("Cancel", new SweetAlertDialog.OnSweetClickListener() {
                     @Override
                     public void onClick(SweetAlertDialog sweetAlertDialog) {
                         sweetAlertDialog.dismissWithAnimation();
                     }
                 })
-                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                .setConfirmButton("Yes", new SweetAlertDialog.OnSweetClickListener() {
                     @Override
                     public void onClick(SweetAlertDialog sweetAlertDialog) {
                         ChangeBetweenAdminSales(adminSales);
