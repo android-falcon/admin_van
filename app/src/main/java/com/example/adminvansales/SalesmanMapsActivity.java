@@ -43,6 +43,10 @@ public class SalesmanMapsActivity extends FragmentActivity implements OnMapReady
     Handler locationHandler;
     final static long REFRESH = 1 * 1000;
     final static int SUBJECT = 0;
+    int existLocation=0;
+    double latit=0,longtud=0;
+boolean flag=false;
+GlobelFunction globelFunction;
     boolean flag = false;
     GlobelFunction globelFunction;
 
@@ -66,15 +70,15 @@ public class SalesmanMapsActivity extends FragmentActivity implements OnMapReady
                     }
                 }
 
-            }, 0, 10000);
+        }, 0, 10000);
 
 
-            // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-            SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                    .findFragmentById(R.id.map);
-            mapFragment.getMapAsync(this);
-        } catch (Exception e) {
-            Log.e("mapException", e.getMessage());
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+    }catch (Exception e){
+            Log.e("mapException",e.getMessage());
         }
 
 
@@ -101,56 +105,69 @@ public class SalesmanMapsActivity extends FragmentActivity implements OnMapReady
 
 
     public void location(int move) {
-        if (move == 1) {
+        if(move==1){
             mMap.clear();
         }
-
+        existLocation=0;
+        latit=31.9695985;
+        longtud=35.9138707;
         // Add a marker in Sydney and move the camera
         Log.e("mmmmmm", "locationCall");
         LatLng sydney = null;
-        Log.e("LatLngListMarker==", LatLngListMarker.size() + "");
-        if (salesManInfosList.size() != 0) {
+        Log.e("salesManInfosList==",salesManInfosList.size()+"");
+        Log.e("LatLngListMarker==",LatLngListMarker.size()+"");
+        if(salesManInfosList.size()!=0)
+        {
 
-            for (int i = 0; i < LatLngListMarker.size(); i++) {
-                if (LatLngListMarker.get(i) != null && salesManInfosList.get(i) != null)
-                    if (!salesManInfosList.get(i).getLatitudeLocation().equals("0") && !salesManInfosList.get(i).getLongitudeLocation().equals("0")) {
-                        sydney = LatLngListMarker.get(i);
-                        Log.e("LLLL", sydney.latitude+", "+sydney.longitude);
-                        mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(iconSize())).position(sydney).title(salesManInfosList.get(i).getSalesName() + salesManInfosList.get(i).getLatitudeLocation() + salesManInfosList.get(i).getLongitudeLocation()));
-                        builder.include(sydney);
-                    }
-            }
-        } else {
-            Log.e("salesManInfosList", "" + salesManInfosList.size());
         for (int i = 0; i < LatLngListMarker.size(); i++) {
              if(LatLngListMarker.get(i)!=null&&salesManInfosList.get(i)!=null)
             if (!salesManInfosList.get(i).getLatitudeLocation().equals("0") && !salesManInfosList.get(i).getLongitudeLocation().equals("0")) {
+                existLocation++;
                 sydney = LatLngListMarker.get(i);
-                mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(iconSize())).position(sydney).title(salesManInfosList.get(i).getSalesName() + salesManInfosList.get(i).getLatitudeLocation() + salesManInfosList.get(i).getLongitudeLocation()));
-           //     mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(iconSize()))BitmapDescriptorFactory).position(sydney).title(salesManInfosList.get(i).getSalesName()+salesManInfosList.get(i).getLatitudeLocation()+salesManInfosList.get(i).getLongitudeLocation()));
+
+                mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(iconSize())).position(sydney).title(salesManInfosList.get(i).getSalesName()+salesManInfosList.get(i).getLatitudeLocation()+salesManInfosList.get(i).getLongitudeLocation()));
                 builder.include(sydney);
             }
         }
+        }else {
+
+
         }
+        Log.e("salesManInfosList",""+salesManInfosList.size()+"\t"+existLocation);
+        if(existLocation==0||salesManInfosList.size()==0)
+        {
+            fillCurentLocation();
+        }
+
 //        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
 //        mMap.animateCamera(CameraUpdateFactory.newLatLng(sydney));
-        if (move == 0) {
+        if(move==0) {
             try {
                 bounds = builder.build();
                 CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, 0);
                 mMap.animateCamera(cu);
-            } catch (Exception e) {
+            }catch (Exception e){
 
             }
         }
-        flag = true;
+        flag=true;
 //        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 0));
     }
 
-    Bitmap iconSize() {
+    private void fillCurentLocation() {
+        mMap.addMarker(new MarkerOptions()
+                .position(new LatLng(latit, longtud))
+                .title("cool place")
+
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE)));
+
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latit, longtud), 15f));
+    }
+
+    Bitmap iconSize(){
         int height = 100;
         int width = 100;
-        BitmapDrawable bitmapdraw = (BitmapDrawable) getResources().getDrawable(R.drawable.van_blue);
+        BitmapDrawable bitmapdraw = (BitmapDrawable)getResources().getDrawable(R.drawable.van_blue);
         Bitmap b = bitmapdraw.getBitmap();
         Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
 
