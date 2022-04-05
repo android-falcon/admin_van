@@ -243,11 +243,11 @@ public class CustomerLogReport extends AppCompatActivity {
 
         if (positionSales == 0 || positionSales == -1) {
             salesNo = "-1";
-            Log.e("salesNo-1", "" + salesNo + "  ");
+//            Log.e("salesNo-1", "" + salesNo + "  ");
 
         } else {
             salesNo = salesManInfosList.get(positionSales - 1).getSalesManNo();
-            Log.e("salesNo", "" + salesNo + "   name ===> " + salesManInfosList.get(positionSales - 1).getSalesName() + "    " + positionSales);
+//            Log.e("salesNo", "" + salesNo + "   name ===> " + salesManInfosList.get(positionSales - 1).getSalesName() + "    " + positionSales);
         }
         String no = globelFunction.getsalesmanNum(salesNameSpinner.getSelectedItem().toString());
         if (settingModel.getImport_way().equals("0"))
@@ -260,6 +260,7 @@ public class CustomerLogReport extends AppCompatActivity {
 
         salesNameSpinnerAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item, salesManNameList);
         salesNameSpinner.setAdapter(salesNameSpinnerAdapter);
+        salesNameSpinner.setSelection(0);
 
     }
 
