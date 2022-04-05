@@ -13,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,6 +25,7 @@ import com.example.adminvansales.DataBaseHandler;
 import com.example.adminvansales.ExportToExcel;
 import com.example.adminvansales.GlobelFunction;
 import com.example.adminvansales.ImportData;
+import com.example.adminvansales.ItemReport;
 import com.example.adminvansales.MainActivity;
 import com.example.adminvansales.PlanSalesMan;
 import com.example.adminvansales.model.CashReportModel;
@@ -40,8 +42,8 @@ import static com.example.adminvansales.GlobelFunction.salesManNameList;
 
 public class CashReport extends AppCompatActivity {
 
-    TextView fromDate,toDate;
-    ImageButton excelConvert,pdfConvert,share, backBtn;
+    TextView fromDate, toDate;
+    ImageButton excelConvert, pdfConvert, share, backBtn;
     GlobelFunction globelFunction;
     String toDay;
     CashReportAdapter payMentReportAdapter;
@@ -50,7 +52,7 @@ public class CashReport extends AppCompatActivity {
     ImportData importData;
     Button previewButton;
     Spinner salesNameSpinner;
-    ArrayAdapter<String>salesNameSpinnerAdapter;
+    ArrayAdapter<String> salesNameSpinnerAdapter;
     List<CashReportModel> TempReports;
     com.example.adminvansales.model.SettingModel SettingModel;
     DataBaseHandler databaseHandler;
@@ -69,35 +71,34 @@ public class CashReport extends AppCompatActivity {
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
         builder.detectFileUriExposure();
-        fromDate=findViewById(R.id.from_date_r);
-        toDate=findViewById(R.id.to_date_r);
-        listCashReport=findViewById(R.id.listCashReport);
-        previewButton=findViewById(R.id.previewButton);
-        salesNameSpinner=findViewById(R.id.salesNameSpinner);
-        excelConvert=findViewById(R.id.excelConvert);
-        pdfConvert=findViewById(R.id.pdfConvert);
-        share=findViewById(R.id.share);
-        globelFunction=new GlobelFunction(CashReport.this);
-        toDay=globelFunction.DateInToday();
+        fromDate = findViewById(R.id.from_date_r);
+        toDate = findViewById(R.id.to_date_r);
+        listCashReport = findViewById(R.id.listCashReport);
+        previewButton = findViewById(R.id.previewButton);
+        salesNameSpinner = findViewById(R.id.salesNameSpinner);
+        excelConvert = findViewById(R.id.excelConvert);
+        pdfConvert = findViewById(R.id.pdfConvert);
+        share = findViewById(R.id.share);
+        globelFunction = new GlobelFunction(CashReport.this);
+        toDay = globelFunction.DateInToday();
         fromDate.setText(toDay);
         toDate.setText(toDay);
-        cashReportList=new ArrayList<>();
-        TempReports=new ArrayList<>();
-        importData=new ImportData(CashReport.this);
-        databaseHandler=new DataBaseHandler(CashReport.this);
-        SettingModel=databaseHandler.getAllSetting();
+        cashReportList = new ArrayList<>();
+        TempReports = new ArrayList<>();
+        importData = new ImportData(CashReport.this);
+        databaseHandler = new DataBaseHandler(CashReport.this);
+        SettingModel = databaseHandler.getAllSetting();
         fillSalesManSpinner();
         try {
-            int positionSales=salesNameSpinner.getSelectedItemPosition();
-            String no= globelFunction.getsalesmanNum(salesNameSpinner.getSelectedItem().toString());
-            if( SettingModel.getImport_way().equals("0"))
-                importData.getCashReport(CashReport.this,toDay,toDay);
-            else   if( SettingModel.getImport_way().equals("1"))
-                importData.  IIS_getCashReport(CashReport.this,toDay,toDay,no);
-        }
-       catch (Exception e){
+            int positionSales = salesNameSpinner.getSelectedItemPosition();
+            String no = globelFunction.getsalesmanNum(salesNameSpinner.getSelectedItem().toString());
+            if (SettingModel.getImport_way().equals("0"))
+                importData.getCashReport(CashReport.this, toDay, toDay);
+            else if (SettingModel.getImport_way().equals("1"))
+                importData.IIS_getCashReport(CashReport.this, toDay, toDay, no);
+        } catch (Exception e) {
 
-       }
+        }
         previewButton.setOnClickListener(onClick);
         fromDate.setOnClickListener(onClick);
         toDate.setOnClickListener(onClick);
@@ -150,28 +151,28 @@ public class CashReport extends AppCompatActivity {
 
     }
 
-    View.OnClickListener onClick=new View.OnClickListener() {
+    View.OnClickListener onClick = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
 
 
-            switch (view.getId()){
+            switch (view.getId()) {
 
-                case R.id.previewButton :
+                case R.id.previewButton:
                     previewFunction();
                     break;
 
-                case R.id.from_date_r :
+                case R.id.from_date_r:
                     globelFunction.DateClick(fromDate);
                     break;
 
-                case R.id.to_date_r :
+                case R.id.to_date_r:
                     globelFunction.DateClick(toDate);
                     break;
-                case R.id.excelConvert :
+                case R.id.excelConvert:
                     convertToExcel();
                     break;
-                case R.id.pdfConvert :
+                case R.id.pdfConvert:
                     convertToPdf();
                     break;
                 case R.id.share:
@@ -184,27 +185,24 @@ public class CashReport extends AppCompatActivity {
     };
 
     private File convertToPdf() {
-        PdfConverter pdf =new PdfConverter(CashReport.this);
-        File file=pdf.exportListToPdf(TempReports,"Cash Report",toDay,2);
+        PdfConverter pdf = new PdfConverter(CashReport.this);
+        File file = pdf.exportListToPdf(TempReports, "Cash Report", toDay, 2);
         return file;
     }
 
     private void convertToExcel() {
 
-        ExportToExcel exportToExcel=new ExportToExcel();
-     exportToExcel.createExcelFile(CashReport.this,"CashReport.xls",3,TempReports);
-       // return file;
+        ExportToExcel exportToExcel = new ExportToExcel();
+        exportToExcel.createExcelFile(CashReport.this, "CashReport.xls", 3, TempReports);
+        // return file;
     }
 
-    public void shareWhatsApp(){
-       globelFunction.shareWhatsAppA(convertToPdf(),1);
+    public void shareWhatsApp() {
+        globelFunction.shareWhatsAppA(convertToPdf(), 1);
     }
 
 
-
-
-
-    public void previewFunction(){
+    public void previewFunction() {
 //
 //        String payKind="-1";
 //        String salesNo="-1";
@@ -220,23 +218,29 @@ public class CashReport extends AppCompatActivity {
 //            salesNo = salesManInfosList.get(positionSales - 1).getSalesManNo();
 //            Log.e("salesNo", "" + salesNo + "   name ===> " + salesManInfosList.get(positionSales - 1).getSalesName() + "    " + positionSales);
 //        }
-        int positionSales=salesNameSpinner.getSelectedItemPosition();
-        String no="";
-if(salesNameSpinner.getSelectedItem()!=null) {
-    no = globelFunction.getsalesmanNum(salesNameSpinner.getSelectedItem().toString());
-    if (SettingModel.getImport_way().equals("0"))
-        importData.getCashReport(CashReport.this, fromDate.getText().toString(), toDate.getText().toString());
-    else if (SettingModel.getImport_way().equals("1"))
-        importData.IIS_getCashReport(CashReport.this, fromDate.getText().toString(), toDate.getText().toString(), no);
-}  }
+        int positionSales = salesNameSpinner.getSelectedItemPosition();
+        String no = "";
+        if (salesNameSpinner.getSelectedItem() != null) {
+            no = globelFunction.getsalesmanNum(salesNameSpinner.getSelectedItem().toString());
+            if (SettingModel.getImport_way().equals("0"))
+                importData.getCashReport(CashReport.this, fromDate.getText().toString(), toDate.getText().toString());
+            else if (SettingModel.getImport_way().equals("1"))
+                importData.IIS_getCashReport(CashReport.this, fromDate.getText().toString(), toDate.getText().toString(), no);
+        } else {
 
-    public void fillSalesManSpinner(){
+            Toast.makeText(CashReport.this, "No SalesMan Selected", Toast.LENGTH_SHORT).show();
+
+        }
+    }
+
+    public void fillSalesManSpinner() {
 
         salesNameSpinnerAdapter = new ArrayAdapter<String>(this, R.layout.spinner_layout, salesManNameList);
         salesNameSpinnerAdapter.setDropDownViewResource(R.layout.spinner_layout);
         salesNameSpinner.setAdapter(salesNameSpinnerAdapter);
 
     }
+
     public void fillCashAdapter() {
         try {
 
@@ -269,6 +273,14 @@ if(salesNameSpinner.getSelectedItem()!=null) {
             }
 
 
+        } catch (Exception exception) {
+        }
+    }
 
-    }catch(Exception exception){}
-}}
+    @Override
+    public void onRestart() {
+        super.onRestart();
+        finish();
+    }
+
+}

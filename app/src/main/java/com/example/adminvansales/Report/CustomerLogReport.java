@@ -38,6 +38,7 @@ import com.example.adminvansales.ExportToExcel;
 import com.example.adminvansales.GlobelFunction;
 import com.example.adminvansales.HomeActivity;
 import com.example.adminvansales.ImportData;
+import com.example.adminvansales.ItemReport;
 import com.example.adminvansales.LocationService;
 import com.example.adminvansales.MainActivity;
 import com.example.adminvansales.PlanSalesMan;
@@ -249,11 +250,17 @@ public class CustomerLogReport extends AppCompatActivity {
             salesNo = salesManInfosList.get(positionSales - 1).getSalesManNo();
             Log.e("salesNo", "" + salesNo + "   name ===> " + salesManInfosList.get(positionSales - 1).getSalesName() + "    " + positionSales);
         }
-        String no = globelFunction.getsalesmanNum(salesNameSpinner.getSelectedItem().toString());
-        if (settingModel.getImport_way().equals("0"))
-            importData.getCustomerLogReport(CustomerLogReport.this, salesNo, fromDate.getText().toString(), toDate.getText().toString());
-        else if (settingModel.getImport_way().equals("1"))
-            importData.IIS_getCustomerLogReport(CustomerLogReport.this, no, fromDate.getText().toString(), toDate.getText().toString());
+        if (positionSales != -1) {
+            String no = globelFunction.getsalesmanNum(salesNameSpinner.getSelectedItem().toString());
+            if (settingModel.getImport_way().equals("0"))
+                importData.getCustomerLogReport(CustomerLogReport.this, salesNo, fromDate.getText().toString(), toDate.getText().toString());
+            else if (settingModel.getImport_way().equals("1"))
+                importData.IIS_getCustomerLogReport(CustomerLogReport.this, no, fromDate.getText().toString(), toDate.getText().toString());
+        } else {
+
+            Toast.makeText(CustomerLogReport.this, "No SalesMan Selected", Toast.LENGTH_SHORT).show();
+
+        }
     }
 
     public void fillSalesManSpinner() {
@@ -267,6 +274,12 @@ public class CustomerLogReport extends AppCompatActivity {
         customerLogReportAdapter = new CustomerLogReportAdapter(CustomerLogReport.this, customerLogReportList);
         listCustomerLogReport.setAdapter(customerLogReportAdapter);
 
+    }
+
+    @Override
+    public void onRestart() {
+        super.onRestart();
+        finish();
     }
 
 }

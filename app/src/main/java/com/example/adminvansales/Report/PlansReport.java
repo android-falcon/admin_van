@@ -324,4 +324,10 @@ public class PlansReport extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onRestart() {
+        super.onRestart();
+        finish();
+    }
+
 }

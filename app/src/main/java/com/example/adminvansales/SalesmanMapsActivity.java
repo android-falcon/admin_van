@@ -47,7 +47,6 @@ public class SalesmanMapsActivity extends FragmentActivity implements OnMapReady
     double latit=0,longtud=0;
 boolean flag=false;
 GlobelFunction globelFunction;
-    
 
 
     @SuppressLint("HandlerLeak")

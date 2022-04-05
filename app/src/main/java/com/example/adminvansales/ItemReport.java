@@ -10,6 +10,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,24 +30,25 @@ import static com.example.adminvansales.GlobelFunction.salesManNameList;
 
 public class ItemReport extends AppCompatActivity {
 
-    TextView fromDate,toDate;
+    TextView fromDate, toDate;
     Spinner salesManSpinner;
     Button previewButton;
     ListView listItemReport;
-   public static List<ItemReportModel> itemReportModelsList;
+    public static List<ItemReportModel> itemReportModelsList;
     ItemReportAdapter itemReportAdapter;
     ImportData importData;
     GlobelFunction globelFunction;
-    ArrayAdapter<String>salesNameSpinnerAdapter ;
-   static TextView total_item_qty;
+    ArrayAdapter<String> salesNameSpinnerAdapter;
+    static TextView total_item_qty;
     DataBaseHandler databaseHandler;
     com.example.adminvansales.model.SettingModel settingModel;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.item_report_activity);
-        settingModel=new com.example.adminvansales.model.SettingModel ();
-        databaseHandler=new DataBaseHandler(ItemReport.this);
+        settingModel = new com.example.adminvansales.model.SettingModel();
+        databaseHandler = new DataBaseHandler(ItemReport.this);
 
         initial();
 
@@ -55,7 +57,7 @@ public class ItemReport extends AppCompatActivity {
     void initial() {
 
 
-        total_item_qty=findViewById(R.id.total_itemqty_text);
+        total_item_qty = findViewById(R.id.total_itemqty_text);
 
         globelFunction = new GlobelFunction(ItemReport.this);
         itemReportModelsList = new ArrayList<>();
@@ -65,20 +67,21 @@ public class ItemReport extends AppCompatActivity {
         previewButton = findViewById(R.id.previewButton);
         listItemReport = findViewById(R.id.listItemReport);
 
-          fromDate.setText(globelFunction.DateInToday());
+        fromDate.setText(globelFunction.DateInToday());
         toDate.setText(globelFunction.DateInToday());
         importData = new ImportData(ItemReport.this);
-        settingModel=databaseHandler.getAllSetting();
+        settingModel = databaseHandler.getAllSetting();
         fillSalesManSpinner();
-       try {
-           String no= globelFunction.getsalesmanNum(salesManSpinner.getSelectedItem().toString());
+        try {
+            String no = globelFunction.getsalesmanNum(salesManSpinner.getSelectedItem().toString());
 
-           if( settingModel.getImport_way().equals("0"))
-        importData.getItemReport(ItemReport.this,fromDate.getText().toString(),toDate.getText().toString(),"-1");
-    else if( settingModel.getImport_way().equals("1"))
-        importData. IIS_getItemReport(ItemReport.this,fromDate.getText().toString(),toDate.getText().toString(),no);
+            if (settingModel.getImport_way().equals("0"))
+                importData.getItemReport(ItemReport.this, fromDate.getText().toString(), toDate.getText().toString(), "-1");
+            else if (settingModel.getImport_way().equals("1"))
+                importData.IIS_getItemReport(ItemReport.this, fromDate.getText().toString(), toDate.getText().toString(), no);
 
-}catch (Exception e){}
+        } catch (Exception e) {
+        }
 
         fromDate.setOnClickListener(onClickListener);
         toDate.setOnClickListener(onClickListener);
@@ -106,18 +109,25 @@ public class ItemReport extends AppCompatActivity {
 //
 //                }
 //                else {
+
+                if (positionSales != -1) {
+
                     salesNo = salesManInfosList.get(positionSales).getSalesManNo();
-                   // Log.e("salesNo", "" + salesNo + "   name ===> " + salesManInfosList.get(positionSales).getSalesName() + "    " + positionSales);
+                    // Log.e("salesNo", "" + salesNo + "   name ===> " + salesManInfosList.get(positionSales).getSalesName() + "    " + positionSales);
 
 
+                    String no = globelFunction.getsalesmanNum(salesManSpinner.getSelectedItem().toString());
 
-                    String no= globelFunction.getsalesmanNum(salesManSpinner.getSelectedItem().toString());
-
-                    if( settingModel.getImport_way().equals("0"))
+                    if (settingModel.getImport_way().equals("0"))
                         importData.getItemReport(ItemReport.this, fromDate.getText().toString(), toDate.getText().toString(), salesNo);
-                    else if( settingModel.getImport_way().equals("1"))
-                        importData. IIS_getItemReport(ItemReport.this,fromDate.getText().toString(),toDate.getText().toString(),no);
+                    else if (settingModel.getImport_way().equals("1"))
+                        importData.IIS_getItemReport(ItemReport.this, fromDate.getText().toString(), toDate.getText().toString(), no);
 
+                } else {
+
+                    Toast.makeText(ItemReport.this, "No SalesMan Selected", Toast.LENGTH_SHORT).show();
+
+                }
 
 //                }
 
@@ -168,58 +178,58 @@ public class ItemReport extends AppCompatActivity {
                 });
 
     }
-        View.OnClickListener onClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                switch (v.getId()) {
+    View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
 
-                    case R.id.from_date_r:
-                        globelFunction.DateClick(fromDate);
-                        break;
-                    case R.id.to_date_r:
-                        globelFunction.DateClick(toDate);
-                        break;
+            switch (v.getId()) {
 
-                }
+                case R.id.from_date_r:
+                    globelFunction.DateClick(fromDate);
+                    break;
+                case R.id.to_date_r:
+                    globelFunction.DateClick(toDate);
+                    break;
 
             }
-        };
-
-        public void fillItemAdapter () {
-
-
-            itemReportAdapter = new ItemReportAdapter(ItemReport.this, itemReportModelsList);
-            listItemReport.setAdapter(itemReportAdapter);
 
         }
+    };
+
+    public void fillItemAdapter() {
 
 
-        public void fillSalesManSpinner () {
-
-            salesNameSpinnerAdapter = new ArrayAdapter<String>(this, R.layout.spinner_layout, salesManNameList);
-            salesNameSpinnerAdapter.setDropDownViewResource(R.layout.spinner_layout);
-            salesManSpinner.setAdapter(salesNameSpinnerAdapter);
-
-        }
-
-        public static void totalqty(){
-            total_item_qty.setText("0");
-           int sum=0;
-            for (int i=0;i<itemReportModelsList.size();i++)
-                sum+=Integer.parseInt(itemReportModelsList.get(i).getQty());
-            total_item_qty.setText(sum+"");
-
-        }
-
-
-
-
-
-
-
+        itemReportAdapter = new ItemReportAdapter(ItemReport.this, itemReportModelsList);
+        listItemReport.setAdapter(itemReportAdapter);
 
     }
+
+
+    public void fillSalesManSpinner() {
+
+        salesNameSpinnerAdapter = new ArrayAdapter<String>(this, R.layout.spinner_layout, salesManNameList);
+        salesNameSpinnerAdapter.setDropDownViewResource(R.layout.spinner_layout);
+        salesManSpinner.setAdapter(salesNameSpinnerAdapter);
+
+    }
+
+    public static void totalqty() {
+        total_item_qty.setText("0");
+        int sum = 0;
+        for (int i = 0; i < itemReportModelsList.size(); i++)
+            sum += Integer.parseInt(itemReportModelsList.get(i).getQty());
+        total_item_qty.setText(sum + "");
+
+    }
+
+    @Override
+    public void onRestart() {
+        super.onRestart();
+        finish();
+    }
+
+}
 
 
 
