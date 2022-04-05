@@ -384,6 +384,12 @@ public class UnCollectedData extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onRestart() {
+        super.onRestart();
+        finish();
+    }
+
     private void fillTable() {
         Log.e(" fillTable", "fillTable");
         TableRow row = null;

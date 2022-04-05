@@ -66,6 +66,12 @@ public class PaymentDetailsReport extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onRestart() {
+        super.onRestart();
+        finish();
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
     private void initial() {
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
@@ -241,13 +247,18 @@ public class PaymentDetailsReport extends AppCompatActivity {
                 Log.e("salesNo", "" + salesNo + "   name ===> " + salesManInfosList.get(positionSales - 1).getSalesName() + "    " + positionSales);
             }
 
-        String no= globelFunction.getsalesmanNum(salesNameSpinner.getSelectedItem().toString());
+        if (positionSales != -1) {
+            String no = globelFunction.getsalesmanNum(salesNameSpinner.getSelectedItem().toString());
 
-        if( SettingModel.getImport_way().equals("0"))
-            importData.getPaymentsReport(PaymentDetailsReport.this,"-1",fromDate.getText().toString(),toDate.getText().toString(),payKind);
-        else   if( SettingModel.getImport_way().equals("1"))
-            importData.IIS_getPaymentsReport(PaymentDetailsReport.this,no,fromDate.getText().toString(),toDate.getText().toString(),payKind);
+            if (SettingModel.getImport_way().equals("0"))
+                importData.getPaymentsReport(PaymentDetailsReport.this, "-1", fromDate.getText().toString(), toDate.getText().toString(), payKind);
+            else if (SettingModel.getImport_way().equals("1"))
+                importData.IIS_getPaymentsReport(PaymentDetailsReport.this, no, fromDate.getText().toString(), toDate.getText().toString(), payKind);
+        } else {
 
+            Toast.makeText(PaymentDetailsReport.this, "No SalesMan Selected", Toast.LENGTH_SHORT).show();
+
+        }
 
     }
 

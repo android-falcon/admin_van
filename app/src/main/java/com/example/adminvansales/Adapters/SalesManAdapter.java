@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -47,17 +48,26 @@ public class SalesManAdapter extends RecyclerView.Adapter<SalesManAdapter.CViewH
     public void onBindViewHolder(@NonNull final CViewHolderForbar cViewHolder, final int i) {
         cViewHolder.text_name.setText(list.get(i).getSalesName());
 
+cViewHolder.setIsRecyclable(false);
 
+//        if(i==(list.size()-1)) {
+//            cViewHolder.itemImage.setImageDrawable(context.getDrawable(R.drawable.addimg));
+//            cViewHolder. itemImage.getLayoutParams().height = 100;
+//
+//            cViewHolder.   salesLin.setBackground(context.getDrawable(R.drawable.whitesales_mancard_style));
+//            cViewHolder. text_name.setTextColor(context.getColor(R.color.bule3));
+//        }
 
 //            cViewHolder.itemImage.setBackgroundResource(getImage(pic2.get(i)));
         cViewHolder.layBar.setTag("" + i);
-        cViewHolder.layBar.setEnabled(false);
+        cViewHolder.layBar.setEnabled(true);
         final boolean[] longIsOpen = {false};
         cViewHolder.layBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 globelFunction.setValidation();
-                if(salesManInfoAdmin.getAddSalesMen()==1) {
+               if(salesManInfoAdmin.getAddSalesMen()==1)
+                {
                     Intent LogHistoryIntent = new Intent(context, EditSalesMan.class);
                     LogHistoryIntent.putExtra("FillData", "FillData");
                     LogHistoryIntent.putExtra("SalesManInfoL", list.get(i));
@@ -65,9 +75,9 @@ public class SalesManAdapter extends RecyclerView.Adapter<SalesManAdapter.CViewH
                 }else {
                     globelFunction.AuthenticationMessage();
                 }
-                if(i==(list.size()-1)){
-                    context.startActivity(new Intent(context,EditSalesMan.class));
-                }
+//                if(i==(list.size()-1)){
+//                    context.startActivity(new Intent(context,EditSalesMan.class));
+//                }
             }
 
 
@@ -110,14 +120,17 @@ public class SalesManAdapter extends RecyclerView.Adapter<SalesManAdapter.CViewH
     static class CViewHolderForbar extends RecyclerView.ViewHolder {
 
         TextView text_name,AccType;
-//        ImageView itemImage;
+     ImageView itemImage;
         LinearLayout layBar;
+        LinearLayout  salesLin;
+
 
         public CViewHolderForbar(@NonNull View itemView) {
             super(itemView);
             text_name = itemView.findViewById(R.id.text_name);
             layBar = itemView.findViewById(R.id.layBar);
-//            itemImage = itemView.findViewById(R.id.imgbar);
+          itemImage = itemView.findViewById(R.id.imgbar);
+            salesLin= itemView.findViewById(R.id.salesLin);
 //            AccType=itemView.findViewById(R.id.AccType);
         }
     }

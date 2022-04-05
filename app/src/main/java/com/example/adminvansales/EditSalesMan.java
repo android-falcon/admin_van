@@ -1,6 +1,7 @@
 package com.example.adminvansales;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -43,7 +44,7 @@ public class EditSalesMan extends AppCompatActivity {
     Button addButton, updateButton;
     com.example.adminvansales.model.SettingModel SettingModel;
     DataBaseHandler databaseHandler;
-    CheckBox activeCheck;
+    Switch activeCheck;
     int AdminSales = 1;//1 sales 2 ADMIN
     public static List<SalesManInfo> AdminInfoList;
     LinearLayout validityLinear;
@@ -333,16 +334,16 @@ public class EditSalesMan extends AppCompatActivity {
     };
 
     void alertMessage(final int adminSales) {
+
         new SweetAlertDialog(EditSalesMan.this, SweetAlertDialog.WARNING_TYPE)
-                .setTitleText("This Change clear all text ")
-                .setContentText("")
-                .setCancelButton("cancel", new SweetAlertDialog.OnSweetClickListener() {
+                .setContentText("This will discard ALL unsaved changes. Do you want to continue ?")
+                .setCancelButton("Cancel", new SweetAlertDialog.OnSweetClickListener() {
                     @Override
                     public void onClick(SweetAlertDialog sweetAlertDialog) {
                         sweetAlertDialog.dismissWithAnimation();
                     }
                 })
-                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                .setConfirmButton("Yes", new SweetAlertDialog.OnSweetClickListener() {
                     @Override
                     public void onClick(SweetAlertDialog sweetAlertDialog) {
                         ChangeBetweenAdminSales(adminSales);

@@ -90,6 +90,7 @@
             android:windowSoftInputMode="adjustResize|adjustPan"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".HomeActivity"
+            android:windowSoftInputMode="adjustResize|adjustPan"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Report.LogHistoryReport"
