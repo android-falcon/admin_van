@@ -20,6 +20,7 @@
             android:layout_marginTop="20dp"
             android:fontFamily="@font/quicksand_medium"
             android:gravity="center"
+
             android:text="IP Settings"
             android:textColor="@color/colorblue1"
             android:textSize="30sp" />
@@ -42,6 +43,7 @@
                 android:id="@+id/setindEditText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:maxLines="1"
                 android:hint="IP Address"
                 android:textColor="#000" />
 
@@ -65,6 +67,7 @@
                 android:id="@+id/portSetting"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:maxLines="1"
                 android:hint="IP Port"
                 android:textColor="#000" />
 
@@ -87,6 +90,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/cono"
                 android:layout_width="match_parent"
+                android:maxLines="1"
                 android:layout_height="match_parent"
                 android:hint="Company No"
                 android:textColor="#000" />
