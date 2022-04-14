@@ -49,6 +49,7 @@ boolean flag=false;
 GlobelFunction globelFunction;
 
 
+
     @SuppressLint("HandlerLeak")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,8 +114,8 @@ GlobelFunction globelFunction;
         // Add a marker in Sydney and move the camera
         Log.e("mmmmmm", "locationCall");
         LatLng sydney = null;
-        Log.e("salesManInfosList==",salesManInfosList.size()+"");
-        Log.e("LatLngListMarker==",LatLngListMarker.size()+"");
+//        Log.e("salesManInfosList==",salesManInfosList.size()+"");
+//        Log.e("LatLngListMarker==",LatLngListMarker.size()+"");
         if(salesManInfosList.size()!=0)
         {
 
@@ -132,7 +133,7 @@ GlobelFunction globelFunction;
 
 
         }
-        Log.e("salesManInfosList",""+salesManInfosList.size()+"\t"+existLocation);
+//        Log.e("salesManInfosList",""+salesManInfosList.size()+"\t"+existLocation);
         if(existLocation==0||salesManInfosList.size()==0)
         {
             fillCurentLocation();

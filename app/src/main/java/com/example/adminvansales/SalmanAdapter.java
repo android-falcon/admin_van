@@ -75,7 +75,7 @@ class SalmanAdapter extends BaseAdapter {
     layBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("onClick","onClick");
+//                Log.e("onClick","onClick"+i+"\t"+list.size());
                 if (i != (list.size() - 1)) {
                     globelFunction.setValidation();
                     if (salesManInfoAdmin.getAddSalesMen() == 1) {

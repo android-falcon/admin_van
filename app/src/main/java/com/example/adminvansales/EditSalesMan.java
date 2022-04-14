@@ -1,6 +1,7 @@
 package com.example.adminvansales;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -333,9 +334,9 @@ public class EditSalesMan extends AppCompatActivity {
     };
 
     void alertMessage(final int adminSales) {
+
         new SweetAlertDialog(EditSalesMan.this, SweetAlertDialog.WARNING_TYPE)
-                .setTitleText("This will discard ALL unsaved changes. Do you want to continue ?")
-                .setContentText("")
+                .setContentText("This will discard ALL unsaved changes. Do you want to continue ?")
                 .setCancelButton("Cancel", new SweetAlertDialog.OnSweetClickListener() {
                     @Override
                     public void onClick(SweetAlertDialog sweetAlertDialog) {

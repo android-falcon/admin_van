@@ -96,7 +96,7 @@
                     android:layout_weight="1"
                     android:drawablePadding="5dp"
 
-                    android:visibility="visible"
+                    android:visibility="invisible"
                     android:text="@string/addAdmin1"
                     android:textColor="@color/colorblue_dark3"
                     android:textSize="12sp"
