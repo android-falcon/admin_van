@@ -6,6 +6,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".EditSalesMan">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:fillViewport="true"
+        android:padding="2dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -43,7 +50,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="2"
+            android:layout_weight="1.3"
 
             android:gravity="center"
 
@@ -58,7 +65,7 @@
                 android:textColor="@color/new_dark_blue"
                 android:textStyle="bold"
                 android:layout_weight="2"
-                android:textSize="18sp"
+                android:textSize="13sp"
                 app:drawableLeftCompat="@drawable/addnew"
                 app:drawableStartCompat="@drawable/addnew" />
             <RadioGroup
@@ -79,7 +86,7 @@
 
                     android:text="@string/add_van_sales1"
                     android:textColor="@color/colorblue_dark"
-                    android:textSize="16sp"
+                    android:textSize="12sp"
                     android:checked="true"/>
 
                 <RadioButton
@@ -92,7 +99,7 @@
                     android:visibility="invisible"
                     android:text="@string/addAdmin1"
                     android:textColor="@color/colorblue_dark3"
-                    android:textSize="16sp"
+                    android:textSize="12sp"
                     />
 
             </RadioGroup>
@@ -100,7 +107,7 @@
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_weight=".6">
 
             <TableRow
                 android:layout_width="match_parent"
@@ -108,25 +115,27 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:padding="2dp"
+
                     android:text="@string/user_no"
                     android:textColor="@color/colorblue_dark"
-                    android:textSize="16sp" />
+                    android:textSize="13sp" />
 
                 <TextView
                     android:id="@+id/salesNo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:layout_marginTop="2dp"
+                   android:layout_marginEnd="2dp"
                     android:background="@drawable/white_and_blue"
                     android:gravity="center"
                     android:padding="1dp"
                     android:text="00000"
                     android:textColor="@color/colorblue_dark"
-                    android:textSize="16sp" />
+                    android:textSize="13sp" />
             </TableRow>
 
             <TableRow
@@ -135,26 +144,28 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:padding="2dp"
+
                     android:text="@string/userName"
                     android:textColor="@color/colorblue_dark"
-                    android:textSize="16sp" />
-
+                    android:textSize="13sp" />
                 <EditText
                     android:id="@+id/salesName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@drawable/white_and_blue"
                     android:ems="10"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="2dp"
                     android:gravity="center"
-                    android:inputType="textPersonName"
+                    android:inputType="textPassword"
                     android:padding="1dp"
                     android:textColor="@color/colorblue_dark"
-                    android:textSize="18sp" />
+                    android:textSize="13sp" />
+
             </TableRow>
 
             <TableRow
@@ -164,26 +175,28 @@
             >
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:padding="2dp"
+
                     android:text="@string/password"
                     android:textColor="@color/colorblue_dark"
-                    android:textSize="16sp" />
+                    android:textSize="13sp" />
 
                 <EditText
                     android:id="@+id/password"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@drawable/white_and_blue"
                     android:ems="10"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="2dp"
                     android:gravity="center"
                     android:inputType="textPassword"
                     android:padding="1dp"
                     android:textColor="@color/colorblue_dark"
-                    android:textSize="18sp" />
+                    android:textSize="13sp" />
             </TableRow>
 
             <TableRow
@@ -194,8 +207,8 @@
                 android:visibility="gone">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_weight="0"
                     android:padding="5dp"
                     android:text="@string/voucherSerial"
@@ -204,8 +217,8 @@
 
                 <EditText
                     android:id="@+id/FVserial"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_marginEnd="5dp"
                     android:layout_marginRight="5dp"
                     android:layout_weight="1"
@@ -221,8 +234,8 @@
 
                 <EditText
                     android:id="@+id/TVserial"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@drawable/white_and_yelow"
                     android:ems="10"
@@ -243,8 +256,8 @@
                 android:visibility="gone">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_weight="0"
                     android:padding="5dp"
                     android:text="@string/returnSerial"
@@ -253,8 +266,8 @@
 
                 <EditText
                     android:id="@+id/FRserial"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_marginEnd="5dp"
                     android:layout_marginRight="5dp"
                     android:layout_weight="1"
@@ -270,8 +283,8 @@
 
                 <EditText
                     android:id="@+id/TRserial"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@drawable/white_and_yelow"
                     android:ems="10"
@@ -291,8 +304,8 @@
                 android:visibility="gone">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_weight="0"
                     android:padding="5dp"
                     android:text="@string/paymentSerial"
@@ -301,8 +314,8 @@
 
                 <EditText
                     android:id="@+id/FstockSerial"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_marginEnd="5dp"
                     android:layout_marginRight="5dp"
                     android:layout_weight="1"
@@ -318,8 +331,8 @@
 
                 <EditText
                     android:id="@+id/TstockSerial"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@drawable/white_and_yelow"
                     android:ems="10"
@@ -340,25 +353,23 @@
 
                 <Switch
                     android:id="@+id/ActiveCheck"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:padding="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".5"
+
 
                     android:text="@string/Active"
                     android:textColor="@color/colorblue_dark"
-                    android:textSize="16sp" />
+                    android:textSize="13sp" />
 
                 <TextView
                     android:id="@+id/clearText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:layout_weight="0"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center|left"
+                    android:layout_weight="9"
                     android:drawableStart="@drawable/ic_delete_black_24dp"
-                    android:drawableLeft="@drawable/ic_delete_black_24dp"
                     android:drawableTint="@color/colorblue_dark3"
-                    android:padding="5dp"
                     android:text="clear"
                     android:textColor="@color/colorblue_dark" />
             </TableRow>
@@ -369,7 +380,7 @@
             android:id="@+id/validityLinear"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="5dp"
             android:layout_weight="1"
             android:orientation="vertical"
             android:padding="5dp">
@@ -379,20 +390,19 @@
             <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="6"
                 android:fillViewport="true"
-
+                android:layout_weight="1"
                 android:orientation="vertical"
                 android:padding="5dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="3"
+                    android:layout_weight="1"
                     android:orientation="horizontal">
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:orientation="vertical">
@@ -420,7 +430,7 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:orientation="vertical">
@@ -448,7 +458,7 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:orientation="vertical">
@@ -476,7 +486,7 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:orientation="vertical">
@@ -498,18 +508,18 @@
                         <CheckBox
                             android:id="@+id/LogHistoryRCheckBox"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:text="@string/log_history_report" />
                     </LinearLayout>
                 </LinearLayout>
             </HorizontalScrollView>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
+                android:layout_height="match_parent"
+android:layout_weight="7"
 
                 android:orientation="horizontal"
-                android:padding="5dp">
+                android:padding="2dp">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -533,13 +543,13 @@
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_weight="1.1"
+            android:layout_weight="1"
 
             android:layout_height="match_parent"
             android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_weight="2.5"
+            android:layout_weight="2"
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
@@ -547,7 +557,7 @@
                 android:id="@+id/searchSalesMan"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="5dp"
+                android:layout_marginBottom="2dp"
                 android:layout_weight="1"
                 android:background="@drawable/searchbox"
                 android:drawableStart="@drawable/ic_search_black_24dp"
@@ -598,8 +608,8 @@
                     android:layout_height="match_parent">
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="@string/user_no"
@@ -607,8 +617,8 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="@string/userName"
@@ -616,8 +626,8 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="@string/password"
@@ -637,8 +647,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-           android:layout_marginTop="4dp"
-            android:layout_weight="2.5"
+           android:layout_marginTop="2dp"
+            android:layout_weight="2"
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatButton
@@ -649,6 +659,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/darkbluebtn"
                 android:text="Add"
+                android:textSize="12sp"
                 android:textColor="@color/white"
                 android:textStyle="bold" />
             <TextView
@@ -662,6 +673,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="3dp"
                 android:layout_weight="1"
+                android:textSize="12sp"
                 android:background="@drawable/white_and_blue"
                 android:text="Update"
                 android:textColor="@color/new_dark_blue" />
@@ -679,14 +691,15 @@
 
         </LinearLayout>
     </LinearLayout>
+    </ScrollView>
     <include
         android:id="@+id/bottom_navigation"
         layout="@layout/bottom_nav_bar"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="20dp"
         android:layout_marginEnd="30dp"
         android:layout_marginStart="30dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
 
-    </LinearLayout>
+</LinearLayout>

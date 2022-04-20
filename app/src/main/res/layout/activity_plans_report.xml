@@ -74,6 +74,7 @@
             android:background="@drawable/border_dark_blue"
             android:gravity="center"
             android:padding="8dp"
+            android:textSize="12sp"
             app:drawableEndCompat="@drawable/calendar"
             app:drawableRightCompat="@drawable/calendar" />
 
@@ -163,7 +164,7 @@
             android:hint="@string/CUS_NAME"
             android:padding="5dp"
             android:textColor="#103164"
-            android:textSize="18sp" />
+            android:textSize="11sp" />
 
         <Spinner
             android:id="@+id/salesManSP"
