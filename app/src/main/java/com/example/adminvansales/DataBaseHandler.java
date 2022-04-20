@@ -230,6 +230,8 @@ public class DataBaseHandler extends SQLiteOpenHelper {
                 ip=settingModel;
             } while (cursor.moveToNext());
 
+        }else {
+            ip.setIpAddress("");
         }
         return ip;
     }

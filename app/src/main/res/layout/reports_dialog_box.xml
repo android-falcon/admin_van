@@ -101,6 +101,7 @@
             android:text="@string/plans_report"
             android:layout_gravity="center_horizontal"
             android:gravity="center"
+            android:visibility="gone"
             android:textSize="18sp"
             android:fontFamily="@font/alegreya_sans"
             android:textColor="@color/colorblue1"
