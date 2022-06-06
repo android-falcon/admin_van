@@ -61,6 +61,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 
 import static com.example.adminvansales.GlobelFunction.salesManInfoAdmin;
 import static com.example.adminvansales.GlobelFunction.salesManInfosList;
+import static com.example.adminvansales.LogIn.hidePlan;
 
 public class HomeActivity extends AppCompatActivity
 
@@ -279,6 +280,7 @@ public class HomeActivity extends AppCompatActivity
         LogReport=findViewById(R.id.LogReport);
         ItemReport=findViewById(R.id.ItemReport);
         plansReport = findViewById(R.id.plansReport);
+        if(hidePlan==1)
         plansReport.setVisibility(View.GONE);
         addPlan_Sales_man=findViewById(R.id.addPlan_Sales_man);
         addPlan_Sales_man.setOnClickListener(new View.OnClickListener() {

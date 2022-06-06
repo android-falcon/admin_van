@@ -62,7 +62,7 @@ public class LogIn extends AppCompatActivity {
     String typeimport="0";
     List<Flag_Settingss> flag_settingsList;
     com.example.adminvansales.model.SettingModel settingModel;
-    public static int typaImport=0;//0---- mySql   1-----IIs
+    public static int typaImport=1;//0---- mySql   1-----IIs
 
     public  static int rawahneh=0;// 1= EXPORT STOCK TABLES
     public  static    int getMaxVoucherServer=0;
@@ -72,6 +72,7 @@ public class LogIn extends AppCompatActivity {
     public  static    int getTotalBalanceInActivities=0;
     public  static    int voucherReturn_spreat=1;
     public  static   int  talaatLayoutAndPassowrd=0;
+    public static  int hidePlan=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
