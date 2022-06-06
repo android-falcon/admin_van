@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/linearMain"
     android:orientation="vertical"
     tools:context=".EditSalesMan">
     <ScrollView
@@ -61,7 +62,7 @@
                 android:layout_gravity="center"
                 android:padding="3dp"
                 android:gravity="center"
-                android:text="Add new :"
+                android:text="@string/addnew1"
                 android:textColor="@color/new_dark_blue"
                 android:textStyle="bold"
                 android:layout_weight="2"
@@ -95,8 +96,6 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:drawablePadding="5dp"
-
-                    android:visibility="invisible"
                     android:text="@string/addAdmin1"
                     android:textColor="@color/colorblue_dark3"
                     android:textSize="12sp"
@@ -412,21 +411,21 @@
                             android:layout_width="match_parent"
                             android:layout_weight="1"
                             android:layout_height="match_parent"
-                            android:text="Add Sales Men" />
+                            android:text="@string/AddSalesMen" />
 
                         <CheckBox
                             android:id="@+id/AddAdminCheckBox"
                             android:layout_width="match_parent"
                             android:layout_weight="1"
                             android:layout_height="match_parent"
-                            android:text="Add Admin" />
+                            android:text="@string/addAdmin" />
 
                         <CheckBox
                             android:id="@+id/makeOfferCheckBox"
                             android:layout_width="match_parent"
                             android:layout_weight="1"
                             android:layout_height="match_parent"
-                            android:text="Make Offer" />
+                            android:text="@string/MakeOffer" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -440,14 +439,14 @@
                             android:layout_width="match_parent"
                             android:layout_weight="1"
                             android:layout_height="match_parent"
-                            android:text="Offer Report" />
+                            android:text="@string/OfferReport" />
 
                         <CheckBox
                             android:id="@+id/accountRCheckBox"
                             android:layout_width="match_parent"
                             android:layout_weight="1"
                             android:layout_height="match_parent"
-                            android:text="Account Report" />
+                            android:text="@string/AccountReport" />
 
                         <CheckBox
                             android:id="@+id/paymentRCheckBox"
@@ -482,7 +481,7 @@
                             android:layout_width="match_parent"
                             android:layout_weight="1"
                             android:layout_height="match_parent"
-                            android:text="Sales Men Location " />
+                            android:text="@string/SalesMenLocation" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -537,7 +536,7 @@ android:layout_weight="7"
                     android:layout_weight="1"
                     android:layout_height="match_parent"
                     android:layout_gravity="end"
-                    android:text="ALL"
+                    android:text="@string/ALL"
                     android:textColor="@color/colorblue_dark3" />
             </LinearLayout>
         </LinearLayout>
@@ -658,7 +657,7 @@ android:layout_weight="7"
                 android:layout_marginRight="3dp"
                 android:layout_weight="1"
                 android:background="@drawable/darkbluebtn"
-                android:text="Add"
+                android:text="Add1"
                 android:textSize="12sp"
                 android:textColor="@color/white"
                 android:textStyle="bold" />

@@ -22,6 +22,7 @@
         android:layout_height="match_parent"
         android:background="@color/layer7"
         android:layoutDirection="rtl"
+        android:id="@+id/linearMain"
         android:orientation="vertical"
         tools:context=".ItemVisibility">
 
@@ -110,7 +111,7 @@
                 android:drawableTint="@color/layer3"
                 android:elevation="2dp"
                 android:fontFamily="sans-serif-light"
-                android:hint="type Item Name ...."
+                android:hint="@string/itemName"
                 android:inputType="text"
                 android:padding="1dp"
                 android:textColor="@color/darkGray"

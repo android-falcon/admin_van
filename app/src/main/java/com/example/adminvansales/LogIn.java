@@ -20,6 +20,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Switch;
@@ -38,6 +39,7 @@ import com.smarteist.autoimageslider.SliderLayout;
 import com.smarteist.autoimageslider.SliderView;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -45,7 +47,7 @@ import java.util.TimerTask;
 import static com.example.adminvansales.GlobelFunction.adminId;
 import static com.example.adminvansales.GlobelFunction.adminName;
 import static com.example.adminvansales.ImportData.listId;
-
+import com.example.adminvansales.model.LocaleAppUtils;
 
 public class LogIn extends AppCompatActivity {
     SliderLayout sliderLayout;
@@ -59,11 +61,12 @@ public class LogIn extends AppCompatActivity {
     GlobelFunction globelFunction;
     Timer timer;
     ImportData importData;
+    public static String languagelocalApp = "";
     String typeimport="0";
     List<Flag_Settingss> flag_settingsList;
     com.example.adminvansales.model.SettingModel settingModel;
     public static int typaImport=0;//0---- mySql   1-----IIs
-
+    public static int LANGUAGE=0;//0---- EN   1-----AR
     public  static int rawahneh=0;// 1= EXPORT STOCK TABLES
     public  static    int getMaxVoucherServer=0;
 
@@ -72,10 +75,11 @@ public class LogIn extends AppCompatActivity {
     public  static    int getTotalBalanceInActivities=0;
     public  static    int voucherReturn_spreat=1;
     public  static   int  talaatLayoutAndPassowrd=0;
-
+    public static Context contextG;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        new LocaleAppUtils().changeLayot(LogIn.this);
         setContentView(R.layout.activity_log_in);
         Log.e("importDataMasaterrrr","importData;;;");
 
@@ -89,6 +93,24 @@ public class LogIn extends AppCompatActivity {
         setSliderViews();
     }
     private void initView() {
+        LinearLayout linearMain=findViewById(R.id.linearMain);
+        try{
+            if(languagelocalApp.equals("ar"))
+            {
+                linearMain.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+            }
+            else{
+                if(languagelocalApp.equals("en"))
+                {
+                    linearMain.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
+                }
+
+            }
+        }
+        catch ( Exception e)
+        {
+            linearMain.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        }
         settingModel=new com.example.adminvansales.model.SettingModel ();
         databaseHandler=new DataBaseHandler(LogIn.this);
 
@@ -422,6 +444,9 @@ public class LogIn extends AppCompatActivity {
         Button cancelBtn = moreDialog.findViewById(R.id.cancelBtn);
 
         RadioGroup radioGrpData = moreDialog.findViewById(R.id.radioGrpData);
+        RadioGroup radioGrpLang = moreDialog.findViewById(R.id.radioGrplang);
+        RadioButton radioBtnEN= moreDialog.findViewById(R.id.radioBtnEN);
+
 //            RadioButton radioBtnSQL = moreDialog.findViewById(R.id.radioBtnSQL);
 //            RadioButton radioBtnIIS = moreDialog.findViewById(R.id.radioBtnIIS);
 
@@ -433,7 +458,7 @@ public class LogIn extends AppCompatActivity {
         swPassword = moreDialog.findViewById(R.id.swPassword);
         swTotal = moreDialog.findViewById(R.id.swTotal);
         swReturn = moreDialog.findViewById(R.id.swReturn);
-
+        RadioButton radioBtnAR= moreDialog.findViewById(R.id.radioBtnAR);
         flag_settingsList =databaseHandler.getFlagSettings();
 
         if (flag_settingsList.size() != 0) {
@@ -447,7 +472,16 @@ public class LogIn extends AppCompatActivity {
 //                    radioBtnIIS.setChecked(true);
                 radioGrpData.check(R.id.radioBtnIIS);
             }
+            if (flag_settingsList.get(0).getArabic_language()==1) {
+Log.e("gggggg","aaaaa");
+            //    radioGrpData.check(R.id.radioBtnEN);
+                radioBtnEN .setChecked(true);
+            } else {
+                Log.e("bbbbb","aaaaa");
 
+                radioBtnAR .setChecked(true);
+              //  radioGrpData.check(R.id.radioBtnAR);
+            }
             swExport.setChecked((flag_settingsList.get(0).getExport_Stock() == 1));
             swMax.setChecked((flag_settingsList.get(0).getMax_Voucher() == 1));
             swOrder.setChecked((flag_settingsList.get(0).getMake_Order() == 1));
@@ -469,20 +503,25 @@ public class LogIn extends AppCompatActivity {
                 typaImport = 1;
                 dataType1 = "iis";
             }
-
+            if (radioGrpLang.getCheckedRadioButtonId() == R.id.radioBtnAR) {
+                LANGUAGE=1;
+            } else {
+                LANGUAGE=0;
+            }
             rawahneh = swExport.isChecked() ? 1 : 0;
             getMaxVoucherServer = swMax.isChecked() ? 1 : 0;
             makeOrders = swOrder.isChecked() ? 1 : 0;
             passwordSettingAdmin = swPassword.isChecked() ? 1 : 0;
             getTotalBalanceInActivities = swTotal.isChecked() ? 1 : 0;
             voucherReturn_spreat = swReturn.isChecked() ? 1 : 0;
+
             if(flag_settingsList.size()==0)
             {
                databaseHandler.insertFlagSettings(new Flag_Settingss(dataType1, rawahneh, getMaxVoucherServer,
-                        makeOrders, passwordSettingAdmin, getTotalBalanceInActivities, voucherReturn_spreat));
+                        makeOrders, passwordSettingAdmin, getTotalBalanceInActivities, voucherReturn_spreat,LANGUAGE));
             }else {
                 databaseHandler.updateFlagSettings(dataType1, rawahneh, getMaxVoucherServer,
-                        makeOrders, passwordSettingAdmin, getTotalBalanceInActivities, voucherReturn_spreat);
+                        makeOrders, passwordSettingAdmin, getTotalBalanceInActivities, voucherReturn_spreat,LANGUAGE);
             }
 
 

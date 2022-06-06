@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -28,6 +29,7 @@ import com.example.adminvansales.GlobelFunction;
 import com.example.adminvansales.HomeActivity;
 import com.example.adminvansales.ImportData;
 import com.example.adminvansales.ItemReport;
+import com.example.adminvansales.LogIn;
 import com.example.adminvansales.MainActivity;
 import com.example.adminvansales.PlanSalesMan;
 import com.example.adminvansales.R;
@@ -37,7 +39,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
+import com.example.adminvansales.model.LocaleAppUtils;
 public class PlansReport extends AppCompatActivity {
 
     public static TextView fillPlan2;
@@ -56,6 +58,7 @@ public class PlansReport extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        new LocaleAppUtils().changeLayot(PlansReport.this);
         setContentView(R.layout.activity_plans_report);
         setTitle("Plans Report");
 
@@ -64,7 +67,24 @@ public class PlansReport extends AppCompatActivity {
     }
 
     private void init() {
+        RelativeLayout linearMain=findViewById(R.id.linearMain);
+        try{
+            if(LogIn.languagelocalApp.equals("ar"))
+            {
+                linearMain.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+            }
+            else{
+                if(LogIn.languagelocalApp.equals("en"))
+                {
+                    linearMain.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
+                }
 
+            }
+        }
+        catch ( Exception e)
+        {
+            linearMain.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        }
         ImageButton backBtn = findViewById(R.id.backBtn);
         backBtn.setOnClickListener(v -> onBackPressed());
 

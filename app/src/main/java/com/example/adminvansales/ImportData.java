@@ -19,12 +19,14 @@ import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 
 import com.example.adminvansales.Report.PlansReport;
+import com.example.adminvansales.Report.RequstReport;
 import com.example.adminvansales.model.Account__Statment_Model;
 import com.example.adminvansales.model.AnalyzeAccountModel;
 import com.example.adminvansales.model.CashReportModel;
 import com.example.adminvansales.model.CustomerLogReportModel;
 import com.example.adminvansales.model.ItemMaster;
 import com.example.adminvansales.model.ItemReportModel;
+import com.example.adminvansales.model.ItemsRequsts;
 import com.example.adminvansales.model.ListPriceOffer;
 import com.example.adminvansales.model.LogHistoryDetail;
 import com.example.adminvansales.model.LogHistoryModel;
@@ -117,7 +119,7 @@ public class ImportData {
     public int typeCustomerList = 0;
     SweetAlertDialog pdValidation, pdPayments, pdAnalyze, pdAccountStatment;
     SweetAlertDialog pdValidationCustomer, pdValidationSerial, pdValidationItem, getPdValidationItemCard, getPdValidationLogHistory, pdAuthentication, getPdValidationItemReport;
-
+    public static List<ItemsRequsts> itemsRequsts=new ArrayList<>();
     public static ArrayList<UnCollect_Modell> unCollectlList = new ArrayList<>();
     public static ArrayList<Payment> paymentChequesList = new ArrayList<>();
     Context main_context;
@@ -186,7 +188,16 @@ public class ImportData {
         }
 
     }
+    public void getAllItemsRequsts(String salesNo) {
 
+        itemsRequsts.clear();
+        if (!ipAddress.equals("")) {
+            new JSONTask_getItemsRequst(salesNo).execute();
+        } else {
+            Toast.makeText(main_context, "Fill Ip", Toast.LENGTH_SHORT).show();
+        }
+
+    }
     public void getAllcheques(String customerId) {
         try {
 
@@ -5769,6 +5780,147 @@ Log.e("URL_TO_HIT",URL_TO_HIT+"");
 
 
         }
+    }
+
+
+    private class JSONTask_getItemsRequst extends AsyncTask<String, String, String> {
+
+        String  salesNo;
+
+        public JSONTask_getItemsRequst(String salesNo) {
+            this.salesNo = salesNo;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            String do_ = "my";
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            try {
+                if (!ipAddress.equals("")) {
+
+                    URL_TO_HIT= "http://" + ipAddress +":"+portSettings +headerDll+"/GetTempLoadVan?CONO="+CONO+"&VANCODE="+ Integer.parseInt(salesNo);
+
+                    Log.e("link", "" + URL_TO_HIT);
+                }
+            } catch (Exception e) {
+
+            }
+
+            try {
+
+                String JsonResponse = null;
+                HttpClient client = new DefaultHttpClient();
+                HttpGet request = new HttpGet();
+                request.setURI(new URI(URL_TO_HIT));
+
+
+
+                HttpResponse response = client.execute(request);
+
+
+                BufferedReader in = new BufferedReader(new
+                        InputStreamReader(response.getEntity().getContent()));
+
+
+
+
+
+                StringBuffer sb = new StringBuffer("");
+                String line = "";
+
+                while ((line = in.readLine()) != null) {
+                    sb.append(line);
+                }
+
+                in.close();
+
+
+                JsonResponse = sb.toString();
+
+                return JsonResponse;
+
+
+            }
+            catch (HttpHostConnectException ex) {
+                ex.printStackTrace();
+//                progressDialog.dismiss();
+
+                Handler h = new Handler(Looper.getMainLooper());
+                h.post(new Runnable() {
+                    public void run() {
+
+                        Toast.makeText(main_context, "Ip Connection Failed ", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
+                return null;
+            } catch (Exception e) {
+                e.printStackTrace();
+//                progressDialog.dismiss();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            JSONObject jsonObject1 = null;
+
+            if (s != null) {
+                Log.e("respone==",s.toString()+"");
+                if (s.contains("LOADTYPE")) {
+                    Log.e("respone33==",s.toString()+"");
+                    itemsRequsts.clear();
+
+                    try {
+
+
+
+                        JSONArray requestArray = null;
+                        requestArray = new JSONArray(s);
+
+                        for (int i = 0; i < requestArray.length(); i++) {
+
+                            ItemsRequsts requsts= new  ItemsRequsts ();
+                            jsonObject1 = requestArray.getJSONObject(i);
+                            requsts.setRequestType(jsonObject1.getString("LOADTYPE"));
+                            requsts.setSalesmanNo(jsonObject1.getString("VANCODE"));
+                            requsts.setQty(jsonObject1.getString("LOADQTY"));
+                            requsts.setItemnumber(jsonObject1.getString("ITEMCODE"));
+                            requsts.setDate(jsonObject1.getString("LOADDATE"));
+                            requsts.setRNO(jsonObject1.getString("RNO"));
+                            requsts.setStatus("0");
+                            requsts.setApprovedqty(jsonObject1.getDouble("LOADQTY"));
+                            itemsRequsts.add(requsts);
+                        }
+
+
+
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    RequstReport.requstsRespon .setText("LOADTYPE");
+
+
+                } else {
+                    RequstReport.requstsRespon .setText("nodata");
+
+                }
+//                progressDialog.dismiss();
+            } else {
+                RequstReport.requstsRespon .setText("nodata");
+            }
+        }
+
     }
 }
    /* @Override

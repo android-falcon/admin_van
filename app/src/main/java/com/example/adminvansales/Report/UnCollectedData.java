@@ -16,6 +16,8 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -31,6 +33,7 @@ import androidx.core.content.ContextCompat;
 import com.example.adminvansales.ExportToExcel;
 import com.example.adminvansales.GlobelFunction;
 import com.example.adminvansales.ImportData;
+import com.example.adminvansales.LogIn;
 import com.example.adminvansales.MainActivity;
 import com.example.adminvansales.PlanSalesMan;
 import com.example.adminvansales.model.Payment;
@@ -55,7 +58,7 @@ import static com.example.adminvansales.ImportData.listCustomer;
 import static com.example.adminvansales.ImportData.paymentChequesList;
 import static com.example.adminvansales.ImportData.unCollectlList;
 
-
+import com.example.adminvansales.model.LocaleAppUtils;
 public class UnCollectedData extends AppCompatActivity {
 
     public TextView recivedAmount_text, paidAmountText;
@@ -77,6 +80,7 @@ public class UnCollectedData extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        new LocaleAppUtils().changeLayot(UnCollectedData.this);
         setContentView(R.layout.activity_un_collected_data);
         initialView();
 
@@ -189,6 +193,24 @@ public class UnCollectedData extends AppCompatActivity {
     }
 
     private void initialView() {
+        RelativeLayout linearMain=findViewById(R.id.linearMain);
+        try{
+            if(LogIn.languagelocalApp.equals("ar"))
+            {
+                linearMain.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+            }
+            else{
+                if(LogIn.languagelocalApp.equals("en"))
+                {
+                    linearMain.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
+                }
+
+            }
+        }
+        catch ( Exception e)
+        {
+            linearMain.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        }
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
         builder.detectFileUriExposure();

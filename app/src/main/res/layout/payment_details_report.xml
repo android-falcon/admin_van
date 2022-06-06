@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:id="@+id/linearMain"
     android:layout_height="match_parent">
 
     <ImageButton
@@ -83,7 +84,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/alegreya_sans"
-            android:text="From :"
+            android:text="@string/from_date"
             android:textColor="#103164"
             android:textSize="18sp" />
 
@@ -107,7 +108,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:fontFamily="@font/alegreya_sans"
-            android:text="To :"
+            android:text="@string/to_date"
             android:textColor="#103164"
             android:textSize="18sp" />
 
@@ -143,7 +144,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/alegreya_sans"
-            android:text="Name :"
+            android:text="@string/name"
             android:textColor="#103164"
             android:textSize="18sp"
             android:layout_weight="0"/>
@@ -168,7 +169,7 @@
             android:layout_weight="0.28"
             android:fontFamily="@font/alegreya_sans"
             android:gravity="center|start"
-            android:text="Payment type :"
+            android:text="@string/pay_method"
             android:textColor="#103164"
             android:textSize="18sp" />
 

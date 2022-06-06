@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -36,7 +37,7 @@ import static android.widget.LinearLayout.VERTICAL;
 import static com.example.adminvansales.ImportData.customername;
 import static com.example.adminvansales.ImportData.listCustomer;
 import static com.example.adminvansales.ImportData.listCustomerInfo;
-
+import com.example.adminvansales.model.LocaleAppUtils;
 public class AccountStatment extends AppCompatActivity {
 
     List<CustomerInfo> customerInfoList = new ArrayList<>();
@@ -59,6 +60,7 @@ public class AccountStatment extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        new LocaleAppUtils().changeLayot(AccountStatment.this);
         setContentView(R.layout.activity_account_statment);
         databaseHandler = new DataBaseHandler(AccountStatment.this);
 //        importData.getCustomerInfo();
@@ -196,6 +198,25 @@ public class AccountStatment extends AppCompatActivity {
 
     @SuppressLint("WrongConstant")
     private void initialView() {
+
+        LinearLayout linearMain=findViewById(R.id.linearMain);
+        try{
+            if(LogIn.languagelocalApp.equals("ar"))
+            {
+                linearMain.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+            }
+            else{
+                if(LogIn.languagelocalApp.equals("en"))
+                {
+                    linearMain.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
+                }
+
+            }
+        }
+        catch ( Exception e)
+        {
+            linearMain.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        }
         recyclerView_report = findViewById(R.id.recyclerView_report);
         getAccountList_text = findViewById(R.id.getAccountList_text);
         preview_button_account = findViewById(R.id.preview_button_account);

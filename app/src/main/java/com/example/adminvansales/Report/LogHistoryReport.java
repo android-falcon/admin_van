@@ -6,6 +6,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.Window;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,13 +18,14 @@ import com.example.adminvansales.GlobelFunction;
 import com.example.adminvansales.ImportData;
 import com.example.adminvansales.Adapters.LogHistoryDetailReportAdapter;
 import com.example.adminvansales.Adapters.LogHistoryReportAdapter;
+import com.example.adminvansales.LogIn;
 import com.example.adminvansales.model.LogHistoryDetail;
 import com.example.adminvansales.model.LogHistoryModel;
 import com.example.adminvansales.R;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import com.example.adminvansales.model.LocaleAppUtils;
 
 public class LogHistoryReport extends AppCompatActivity {
 
@@ -37,6 +39,7 @@ public class LogHistoryReport extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        new LocaleAppUtils().changeLayot(LogHistoryReport.this);
         setContentView(R.layout.log_history_report_activity);
 
         initial();
@@ -53,6 +56,24 @@ public class LogHistoryReport extends AppCompatActivity {
 
 
     private void initial() {
+        LinearLayout linearMain=findViewById(R.id.linearMain);
+        try{
+            if(LogIn.languagelocalApp.equals("ar"))
+            {
+                linearMain.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+            }
+            else{
+                if(LogIn.languagelocalApp.equals("en"))
+                {
+                    linearMain.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
+                }
+
+            }
+        }
+        catch ( Exception e)
+        {
+            linearMain.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        }
         logHistoryDetail=new ArrayList<>();
         logHistoryList=new ArrayList<>();
         globelFunction=new GlobelFunction(LogHistoryReport.this);

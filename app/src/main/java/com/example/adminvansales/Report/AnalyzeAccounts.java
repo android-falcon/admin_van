@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +23,7 @@ import com.example.adminvansales.Adapters.AnalyzeAdapter;
 import com.example.adminvansales.ExportToExcel;
 import com.example.adminvansales.GlobelFunction;
 import com.example.adminvansales.ImportData;
+import com.example.adminvansales.LogIn;
 import com.example.adminvansales.model.AnalyzeAccountModel;
 import com.example.adminvansales.PdfConverter;
 import com.example.adminvansales.R;
@@ -33,7 +35,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
+import com.example.adminvansales.model.LocaleAppUtils;
 public class AnalyzeAccounts extends AppCompatActivity {
     TextView fromDate,toDate,excelConvert,pdfConvert,share;
     GlobelFunction globelFunction;
@@ -51,11 +53,30 @@ public class AnalyzeAccounts extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        new LocaleAppUtils().changeLayot(AnalyzeAccounts.this);
         setContentView(R.layout.activity_analyze_accounts);
         initial();
     }
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
     private void initial() {
+        LinearLayout linearMain=findViewById(R.id.linearMain);
+        try{
+            if(LogIn.languagelocalApp.equals("ar"))
+            {
+                linearMain.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+            }
+            else{
+                if(LogIn.languagelocalApp.equals("en"))
+                {
+                    linearMain.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
+                }
+
+            }
+        }
+        catch ( Exception e)
+        {
+            linearMain.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        }
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
         builder.detectFileUriExposure();

@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.adminvansales.Report.RequstReport;
+import com.example.adminvansales.model.LocaleAppUtils;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -90,6 +92,7 @@ public class HomeActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        new LocaleAppUtils().changeLayot(HomeActivity.this);
         setContentView(R.layout.activity_home);
         initalView();
         menuBtn.setOnClickListener(new View.OnClickListener() {
@@ -121,7 +124,7 @@ public class HomeActivity extends AppCompatActivity
       //  else if( settingModel.getImport_way().equals("1"))
       //      importData.  IIs_getSalesMan(HomeActivity.this, 1);
 
-        drawerLayout = findViewById(R.id.main_drawerLayout);
+
         navigationView = findViewById(R.id.nav_view);
         setupDrawerContent(navigationView);
 
@@ -163,6 +166,12 @@ public class HomeActivity extends AppCompatActivity
                             case R.id.action_notifications:
 
                                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                overridePendingTransition(0, 0);
+
+                                return true;
+                            case R.id.RequestReport:
+
+                                startActivity(new Intent(getApplicationContext(), RequstReport.class));
                                 overridePendingTransition(0, 0);
 
                                 return true;
@@ -225,6 +234,25 @@ public class HomeActivity extends AppCompatActivity
 
     private void initalView() {
         Log.e("initalView", "initalView " );
+        drawerLayout = findViewById(R.id.main_drawerLayout);
+    //    LinearLayout linearMain=findViewById(R.id.main_drawerLayout);
+        try{
+            if(LogIn.languagelocalApp.equals("ar"))
+            {
+                drawerLayout.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+            }
+            else{
+                if(LogIn.languagelocalApp.equals("en"))
+                {
+                    drawerLayout.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
+                }
+
+            }
+        }
+        catch ( Exception e)
+        {
+            drawerLayout.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        }
         bottom_navigation=findViewById(    R.id.bottom_navigation);
         menuBtn=findViewById(    R.id.menuBtn);
         acc_statments=findViewById(    R.id.acc_statments);

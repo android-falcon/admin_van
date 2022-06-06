@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:id="@+id/linearMain"
     android:layout_height="match_parent">
 
     <TextView
@@ -95,7 +96,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.3"
             android:fontFamily="@font/alegreya_sans"
-            android:text="Customer name :"
+            android:text="@string/customerName"
             android:textColor="#103164"
             android:textSize="18sp" />
 
@@ -147,7 +148,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.3"
             android:fontFamily="@font/alegreya_sans"
-            android:text="Paid amount :"
+            android:text="@string/Paidamount"
             android:textColor="#103164"
             android:textSize="18sp" />
 
