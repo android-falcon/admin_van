@@ -307,6 +307,7 @@ public class HomeActivity extends AppCompatActivity
         LogReport=findViewById(R.id.LogReport);
         ItemReport=findViewById(R.id.ItemReport);
         plansReport = findViewById(R.id.plansReport);
+        plansReport.setVisibility(View.GONE);
         addPlan_Sales_man=findViewById(R.id.addPlan_Sales_man);
         addPlan_Sales_man.setOnClickListener(new View.OnClickListener() {
             @Override

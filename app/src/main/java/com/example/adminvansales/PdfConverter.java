@@ -220,7 +220,7 @@ public class PdfConverter {
         insertCell(pdfPTable,context.getString(R.string.voucher_number)                    , ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
         insertCell(pdfPTable,context.getString(R.string.sales_man_name      )                        , ALIGN_CENTER   , 1, arabicFont, BaseColor.BLACK);
         insertCell(pdfPTable,context.getString(R.string.pay_date      )                        , ALIGN_CENTER   , 1, arabicFont, BaseColor.BLACK);
-        insertCell(pdfPTable,context.getResources().getString(R.string.CUS_NAME   )   , ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+//        insertCell(pdfPTable,context.getResources().getString(R.string.CUS_NAME   )   , ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
 
         insertCell(pdfPTable,context.getResources().getString(R.string.amount_word  )  , ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
         insertCell(pdfPTable,context.getResources().getString(R.string.remark      ) , ALIGN_CENTER   , 1, arabicFont, BaseColor.BLACK);
@@ -238,7 +238,7 @@ public class PdfConverter {
             insertCell(pdfPTable, String.valueOf(list.get(i).getVouNo() ) , ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
             insertCell(pdfPTable, String.valueOf(list.get(i).getSalesmanname())       , ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
             insertCell(pdfPTable, String.valueOf(list.get(i).getPaymentDate()       ) , ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
-            insertCell(pdfPTable, String.valueOf(list.get(i).getCustomerNo()         ) , ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+//            insertCell(pdfPTable, String.valueOf(list.get(i).getCustomerNo()         ) , ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
             insertCell(pdfPTable, String.valueOf(list.get(i).getAmount()          )       , ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
             insertCell(pdfPTable, String.valueOf(list.get(i) .getNotes()   )       , ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
             insertCell(pdfPTable, String.valueOf(list.get(i)  .getSalesmanNo() )               , ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);

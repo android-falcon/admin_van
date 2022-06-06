@@ -400,7 +400,7 @@ public class ExportToExcel {
                 sheet.addCell(new Label(2, 0, context.getString(R.string.pay_date   )) );
 
 
-                sheet.addCell(new Label(3, 0, context.getResources().getString(R.string.CUS_NAME  )  ) );
+//                sheet.addCell(new Label(3, 0, context.getResources().getString(R.string.CUS_NAME  )  ) );
                 sheet.addCell(new Label(4, 0, context.getResources().getString(R.string.amount_word )   ));
                 sheet.addCell(new Label(5, 0, context.getResources().getString(R.string.remark     )  ));
                 sheet.addCell(new Label(6, 0, context.getResources().getString(R.string.sale_man_number     )  ));
@@ -411,7 +411,7 @@ public class ExportToExcel {
                 for (int i = 0; i < list.size(); i++) {
                     sheet.addCell(new Label(0, i + 2, list.get(i).getVouNo()+""));
                     sheet.addCell(new Label(2, i + 2,      list.get(i).getPaymentDate()));
-                    sheet.addCell(new Label(3, i + 2,  list.get(i).getCustomerNo()+""));
+//                    sheet.addCell(new Label(3, i + 2,  list.get(i).getCustomerNo()+""));
                     sheet.addCell(new Label(4, i + 2,  list.get(i).getAmount()+""));
                     sheet.addCell(new Label(5, i + 2,      list.get(i).getNotes()));
                     sheet.addCell(new Label(6, i + 2,  list.get(i).getSalesmanNo()+""));

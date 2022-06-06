@@ -11,6 +11,7 @@
     <item
         android:id="@+id/add_cust"
         app:showAsAction="always"
+        android:visible="false"
         android:title="@string/addcustomerlocation"
       />
 

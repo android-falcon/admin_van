@@ -120,8 +120,16 @@ public class LogIn extends AppCompatActivity {
         settingModelList=new SettingModel();
         try {
             settingModelList = databaseHandler.getAllSetting();
-            ipAddress = settingModelList.getIpAddress();
+//            Log.e("settingModelList",""+settingModelList.getIpAddress().trim().length());
+            if(settingModelList.getIpAddress().trim().length()!=0)
+            {
+                ipAddress = settingModelList.getIpAddress();
+            }else {
+                settingDialog();
+            }
+
         }catch (Exception t){
+
             Log.e("ipAddress","error");
         }
         setting_floatingBtn.setOnClickListener(new View.OnClickListener() {
@@ -403,17 +411,32 @@ public class LogIn extends AppCompatActivity {
             @Override
             public void onClick(View v) {
             //    databaseHandler.delete
-                ipAddress= editTextIp.getText().toString();
-                portSettings=portSetting.getText().toString();
-                Cono=CoNo.getText().toString();
-                databaseHandler.addSetting(ipAddress,portSettings,"1",Cono);
-               /* if(RB_mysql.isChecked()==true)
-                    //0 to mysql
-                databaseHandler.addSetting(ipAddress,portSettings,"0",Cono);
-                else
-                    //1 to IIs
-                    databaseHandler.addSetting(ipAddress,portSettings,"1",Cono);*/
-                dialog.dismiss();
+                ipAddress= editTextIp.getText().toString().trim();
+                portSettings=portSetting.getText().toString().trim();
+                Cono=CoNo.getText().toString().trim();
+                if(ipAddress.trim().length()!=0)
+                {
+                    if(portSettings.trim().length()!=0) {
+
+                        if(Cono.trim().length()!=0) {
+
+                            databaseHandler.addSetting(ipAddress,portSettings,"1",Cono);
+                            dialog.dismiss();
+
+                        }else {
+                            CoNo.setError("*Required");
+                        }
+
+
+                    }else {
+                        portSetting.setError("*Required");
+                    }
+
+
+                }else {
+                    editTextIp.setError("*Required");
+                }
+
 
             }
         });
