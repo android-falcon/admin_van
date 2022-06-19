@@ -15,12 +15,14 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.adminvansales.ExportData;
 import com.example.adminvansales.ImportData;
 import com.example.adminvansales.Adapters.OffersGroupAdapter;
+import com.example.adminvansales.LogIn;
 import com.example.adminvansales.R;
 import com.example.adminvansales.model.OfferGroupModel;
 
@@ -37,7 +39,7 @@ import java.util.List;
 import java.util.Locale;
 
 import static com.example.adminvansales.ImportData.offerGroupModels;
-
+import com.example.adminvansales.model.LocaleAppUtils;
 public class OfferseReport extends AppCompatActivity {
     RecyclerView recyclerView;
     public static TextView offersrespon;
@@ -89,6 +91,7 @@ public class OfferseReport extends AppCompatActivity {
         @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+            new LocaleAppUtils().changeLayot(OfferseReport.this);
         setContentView(R.layout.activity_offerse_report);
         init();
             offerGroupModels.clear();
@@ -254,7 +257,24 @@ public class OfferseReport extends AppCompatActivity {
         return !(date.before(min) || date.after(max));
     }
     private void init() {
+        LinearLayout linearMain=findViewById(R.id.linearMain);
+        try{
+            if(LogIn.languagelocalApp.equals("ar"))
+            {
+                linearMain.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+            }
+            else{
+                if(LogIn.languagelocalApp.equals("en"))
+                {
+                    linearMain.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
+                }
 
+            }
+        }
+        catch ( Exception e)
+        {
+            linearMain.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        }
         GroupidSpinner=findViewById(R.id.  GroupidSpinner);
         PRVIEW=findViewById(R.id.OFFERS_previewButton);
         from_date_r=findViewById(R.id.OFFERS_from_date_r);

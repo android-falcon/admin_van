@@ -14,8 +14,10 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.adminvansales.Adapters.RequestAdapter;
@@ -28,7 +30,7 @@ import java.util.TimerTask;
 import static android.widget.LinearLayout.VERTICAL;
 import static com.example.adminvansales.ImportData.listId;
 import static com.example.adminvansales.ImportData.listRequest;
-
+import com.example.adminvansales.model.LocaleAppUtils;
 public class MainActivity extends AppCompatActivity {
     public  static LinearLayoutManager layoutManager;
     public  static RecyclerView recyclerView;
@@ -41,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        new LocaleAppUtils().changeLayot(MainActivity.this);
         setContentView(R.layout.activity_main);
         settingModel=new com.example.adminvansales.model.SettingModel ();
         databaseHandler=new DataBaseHandler(MainActivity.this);
@@ -125,6 +128,24 @@ public class MainActivity extends AppCompatActivity {
 
     private void initialView() {
 //        databaseHandler=new DatabaseHandler(RequestCheque.this);
+        LinearLayout linearMain=findViewById(R.id.linearMain);
+        try{
+            if(LogIn.languagelocalApp.equals("ar"))
+            {
+                linearMain.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+            }
+            else{
+                if(LogIn.languagelocalApp.equals("en"))
+                {
+                    linearMain.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
+                }
+
+            }
+        }
+        catch ( Exception e)
+        {
+            linearMain.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        }
         recyclerView = findViewById(R.id.recycler);
         Requstrespon=findViewById(R.id.Requstrespon);
         Requstrespon.addTextChangedListener(new TextWatcher() {

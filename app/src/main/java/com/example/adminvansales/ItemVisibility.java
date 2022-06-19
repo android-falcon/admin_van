@@ -23,6 +23,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -59,7 +60,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-
+import com.example.adminvansales.model.LocaleAppUtils;
 public class ItemVisibility extends AppCompatActivity {
     JSONObject addsalesmanobject;
     JSONArray jsonArraysalesman;
@@ -80,6 +81,7 @@ public class ItemVisibility extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        new LocaleAppUtils().changeLayot(ItemVisibility.this);
         myBinding= DataBindingUtil.setContentView(this,R.layout.activity_item_visibility);
 //        itemVisibleViewModel = new ViewModelProvider(this).get(ItemVisibleViewModel.class);
         myBinding.setItemInfoModel(itemVisibleViewModel);
@@ -234,6 +236,24 @@ public class ItemVisibility extends AppCompatActivity {
     }
 
     private void inititView() {
+        LinearLayout linearMain=findViewById(R.id.linearMain);
+        try{
+            if(LogIn.languagelocalApp.equals("ar"))
+            {
+                linearMain.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+            }
+            else{
+                if(LogIn.languagelocalApp.equals("en"))
+                {
+                    linearMain.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
+                }
+
+            }
+        }
+        catch ( Exception e)
+        {
+            linearMain.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        }
         apiUrl = new ApiUrl(this);
         url = apiUrl.getBaseUrl();
         Log.e("url", "==" + url);

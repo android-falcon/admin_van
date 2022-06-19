@@ -23,6 +23,7 @@ import android.widget.TextView;
 
 import com.example.adminvansales.Adapters.SalesMenListAdapter;
 import com.example.adminvansales.Report.ReportsPopUpClass;
+import com.example.adminvansales.model.LocaleAppUtils;
 import com.example.adminvansales.model.SalesManInfo;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -33,7 +34,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 
 import static com.example.adminvansales.GlobelFunction.salesManInfoAdmin;
 import static com.example.adminvansales.GlobelFunction.salesManInfosList;
-
+import com.example.adminvansales.model.LocaleAppUtils;
 public class EditSalesMan extends AppCompatActivity {
     ListView salesManList;
     SalesMenListAdapter salesMenListAdapter;
@@ -60,6 +61,7 @@ public class EditSalesMan extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        new LocaleAppUtils().changeLayot(EditSalesMan.this);
         setContentView(R.layout.activity_edit_sales_man);
         initial();
         newSalandAdmnRG.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -227,6 +229,24 @@ public class EditSalesMan extends AppCompatActivity {
     }
 
     private void initial() {
+        LinearLayout linearMain=findViewById(R.id.linearMain);
+        try{
+            if(LogIn.languagelocalApp.equals("ar"))
+            {
+                linearMain.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+            }
+            else{
+                if(LogIn.languagelocalApp.equals("en"))
+                {
+                    linearMain.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
+                }
+
+            }
+        }
+        catch ( Exception e)
+        {
+            linearMain.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        }
         newSalandAdmnRG=findViewById(R.id.newSalandAdmnRG);
         salesManList = findViewById(R.id.salesManList);
         salesMenListAdapter = new SalesMenListAdapter();

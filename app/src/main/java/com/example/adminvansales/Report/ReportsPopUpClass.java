@@ -45,7 +45,7 @@ public class ReportsPopUpClass {
         //Initialize the elements of our window, install the handler
 
         TextView paymentReport, customerLogReport, cashReport, unCollectedCheques,
-                itemsReport, plansReport;
+                itemsReport, plansReport,RequestReport;
 
         paymentReport = popupView.findViewById(R.id.paymentReport);
         customerLogReport = popupView.findViewById(R.id.customerLogReport);
@@ -53,7 +53,7 @@ public class ReportsPopUpClass {
         unCollectedCheques = popupView.findViewById(R.id.unCollectedChequesReport);
         itemsReport = popupView.findViewById(R.id.itemsReport);
         plansReport = popupView.findViewById(R.id.plansReport);
-
+        RequestReport= popupView.findViewById(R.id.RequestReport);
         paymentReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -125,6 +125,14 @@ public class ReportsPopUpClass {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, PlansReport.class);
+                context.startActivity(intent);
+
+            }
+        });
+        RequestReport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, RequstReport.class);
                 context.startActivity(intent);
 
             }

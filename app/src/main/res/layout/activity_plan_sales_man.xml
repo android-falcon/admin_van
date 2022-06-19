@@ -10,6 +10,7 @@
     android:layoutDirection="rtl"
     android:orientation="vertical"
     android:background="@color/layer7"
+    android:id="@+id/linearMain"
     tools:context=".PlanSalesMan">
 
 
@@ -193,7 +194,7 @@
             android:textColor="@color/darkGray"
             android:padding="1dp"
             android:textColorHint="@color/layer3"
-            android:hint="type customer Name"
+            android:hint="@string/customerName"
              />
         <Button
             android:id="@+id/areaButton"

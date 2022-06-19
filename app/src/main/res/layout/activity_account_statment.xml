@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:layoutDirection="locale"
     android:background="@color/white"
+    android:id="@+id/linearMain"
     android:orientation="vertical"
     android:padding="2dp">
     <LinearLayout
@@ -129,7 +130,7 @@
             android:fontFamily="sans-serif-light"
             android:inputType="text"
             android:padding="1dp"
-            android:hint="type customer Name"
+            android:hint="@string/customerName"
             android:textColorHint="@color/layer3" />
     </LinearLayout>
     <LinearLayout

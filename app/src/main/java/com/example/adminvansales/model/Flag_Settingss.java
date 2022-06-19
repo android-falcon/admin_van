@@ -9,9 +9,17 @@ public class Flag_Settingss {
     private int Admin_Password;
     private int Total_Balance;
     private int Voucher_Return;
+    private int arabic_language;
+    public int getArabic_language() {
+        return arabic_language;
+    }
+
+    public void setArabic_language(int arabic_language) {
+        this.arabic_language = arabic_language;
+    }
 
     public Flag_Settingss(String data_Type, int export_Stock, int max_Voucher, int make_Order,
-                          int admin_Password, int total_Balance, int voucher_Return) {
+                          int admin_Password, int total_Balance, int voucher_Return,int lang) {
 
         Data_Type = data_Type;
         Export_Stock = export_Stock;
@@ -20,6 +28,7 @@ public class Flag_Settingss {
         Admin_Password = admin_Password;
         Total_Balance = total_Balance;
         Voucher_Return = voucher_Return;
+        lang=arabic_language;
 
     }
 

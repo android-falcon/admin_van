@@ -7,7 +7,9 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,6 +22,7 @@ import com.example.adminvansales.Adapters.ItemReportAdapter;
 import com.example.adminvansales.Report.ReportsPopUpClass;
 import com.example.adminvansales.Report.UnCollectedData;
 import com.example.adminvansales.model.ItemReportModel;
+import com.example.adminvansales.model.ItemsRequsts;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
@@ -27,7 +30,7 @@ import java.util.List;
 
 import static com.example.adminvansales.GlobelFunction.salesManInfosList;
 import static com.example.adminvansales.GlobelFunction.salesManNameList;
-
+import com.example.adminvansales.model.LocaleAppUtils;
 public class ItemReport extends AppCompatActivity {
 
     TextView fromDate, toDate;
@@ -35,6 +38,7 @@ public class ItemReport extends AppCompatActivity {
     Button previewButton;
     ListView listItemReport;
     public static List<ItemReportModel> itemReportModelsList;
+
     ItemReportAdapter itemReportAdapter;
     ImportData importData;
     GlobelFunction globelFunction;
@@ -46,16 +50,35 @@ public class ItemReport extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        new LocaleAppUtils().changeLayot(ItemReport.this);
         setContentView(R.layout.item_report_activity);
         settingModel = new com.example.adminvansales.model.SettingModel();
         databaseHandler = new DataBaseHandler(ItemReport.this);
 
         initial();
 
+
     }
 
     void initial() {
+        RelativeLayout linearMain=findViewById(R.id.linearMain);
+        try{
+            if(LogIn.languagelocalApp.equals("ar"))
+            {
+                linearMain.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+            }
+            else{
+                if(LogIn.languagelocalApp.equals("en"))
+                {
+                    linearMain.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
+                }
 
+            }
+        }
+        catch ( Exception e)
+        {
+            linearMain.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        }
 
         total_item_qty = findViewById(R.id.total_itemqty_text);
 

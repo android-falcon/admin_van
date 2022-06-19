@@ -30,6 +30,7 @@
     <string name="add_van_sales">Add Sales Man</string>
     <string name="add_van_sales1">Sales Man</string>
     <string name="sales_man_name">Sales Man Name </string>
+    <string name="name">Name </string>
     <string name="password">Password</string>
     <string name="sales_man_no">Sales Man No</string>
     <string name="Active">DeActive User</string>
@@ -152,8 +153,33 @@
     <string name="haveDuplicateOrder">You Have Duplicate Order !!</string>
     <string name="order">Order</string>
     <string name="plans_report">Plans Report</string>
+    <string name="language">language</string>
+    <string name="addnew1">Add new :</string>
+    <string name="clear">clear</string>
+    <string name="Add1">Add</string>
+    <string name="Update">Update</string>
+    <string name="Orderedby">Ordered by :</string>
+    <string name="Manually">Manually</string>
+    <string name="Paidamount">Paid amount :</string>
+    <string name="Receivedamount">Received amount :</string>
+    <string name="totalqty">Total Qty:</string>
+    <string name="AddSalesMen">Add Sales Men</string>
 
-<string-array name="app_paymentTypeList">
+    <string name="AccountReport">Account Report</string>
+    <string name="MakeOffer">Make Offer</string>
+    <string name="OfferReport"> Offer Report</string>
+    <string name="SalesMenLocation"> Sales Men Location</string>
+    <string name="ALL">ALL</string>
+    <string name="Request_qty">Request Qty</string>
+    <string name="ApprovedQuantity">Approved Qty</string>
+    <string name="ApprovedStatus">Approved Status</string>
+    <string name="RequestReport">Request Report</string>
+    <string name="req_num">Request Num</string>
+    <string name="itemCount">Items Count</string>
+    <string name="exits">Are you sure to Exit</string>
+    <string name="saveSuccessfuly">Save Successfuly</string>
+
+    <string-array name="app_paymentTypeList">
         <!--        <item>All</item>-->
         <item>Cash</item>
         <item>Cheque</item>

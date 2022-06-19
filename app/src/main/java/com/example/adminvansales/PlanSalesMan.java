@@ -31,6 +31,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -57,7 +58,7 @@ import java.util.Map;
 import java.util.Set;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
-
+import com.example.adminvansales.model.LocaleAppUtils;
 public class PlanSalesMan extends AppCompatActivity {
     Spinner salesNameSpinner;
     ArrayAdapter<String> salesNameSpinnerAdapter;
@@ -85,6 +86,7 @@ public class PlanSalesMan extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        new LocaleAppUtils().changeLayot(PlanSalesMan.this);
         setContentView(R.layout.activity_plan_sales_man);
         initialView();
         if (salesManInfosList.size() != 0)
@@ -137,6 +139,24 @@ public class PlanSalesMan extends AppCompatActivity {
     }
 
     private void initialView() {
+        LinearLayout linearMain=findViewById(R.id.linearMain);
+        try{
+            if(LogIn.languagelocalApp.equals("ar"))
+            {
+                linearMain.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+            }
+            else{
+                if(LogIn.languagelocalApp.equals("en"))
+                {
+                    linearMain.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
+                }
+
+            }
+        }
+        catch ( Exception e)
+        {
+            linearMain.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        }
         importData = new ImportData(this);
         allAreaPlan = new StringBuilder("");
         salesNameSpinner = findViewById(R.id.salesNameSpinner);

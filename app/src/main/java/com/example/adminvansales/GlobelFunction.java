@@ -200,6 +200,7 @@ public String getsalesmanNum(String name){
         for(int i=0;i<salesManInfosList.size();i++){
             if(salesManInfosList.get(i).getSalesName().equals(name)) {
                 Log.e("name===",salesManInfosList.get(i).getSalesName());
+                Log.e("num===",salesManInfosList.get(i).getSalesManNo());
              return salesManInfosList.get(i).getSalesManNo();
 
         }}

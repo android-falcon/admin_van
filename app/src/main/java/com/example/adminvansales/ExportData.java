@@ -8,7 +8,9 @@ import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.adminvansales.Report.RequstReport;
 import com.example.adminvansales.model.CustomerInfo;
+import com.example.adminvansales.model.ItemsRequsts;
 import com.example.adminvansales.model.Password;
 import com.example.adminvansales.model.Plan_SalesMan_model;
 import com.example.adminvansales.model.Request;
@@ -48,8 +50,8 @@ import static com.example.adminvansales.Report.ListOfferReport.control;
 
 public class ExportData {
     SweetAlertDialog pdRepRev;
-    private JSONArray jsonArraysalesman,jsonArrayadmins,passwordjsonArray,RequstsjsonArray;
-    JSONObject addsalesmanobject,addadminsmanobject,passwordobject,Requstobject;
+    private JSONArray jsonArraysalesman,jsonArrayadmins,passwordjsonArray,RequstsjsonArray,VanRequstsjsonArray,UpdateloadvanArray;
+    JSONObject addsalesmanobject,addadminsmanobject,passwordobject,Requstobject,VanRequstsjsonobject,Updateloadvanobject;
     private DataBaseHandler databaseHandler;
     private JSONArray jsonArrayRequest;
     private String URL_TO_HIT ;
@@ -208,6 +210,44 @@ public class ExportData {
             e.printStackTrace();
         }
     }
+
+    private void  getVanRequstObject(List<ItemsRequsts>itemsRequsts) {
+        VanRequstsjsonArray = new JSONArray();
+        for (int i = 0; i < itemsRequsts.size(); i++)
+        {
+
+            VanRequstsjsonArray.put(itemsRequsts.get(i).getJSONObject());
+
+        }
+        try {
+
+                    VanRequstsjsonobject =new JSONObject();
+            VanRequstsjsonobject.put("JSN", VanRequstsjsonArray);
+            Log.e("Object",""+ VanRequstsjsonArray.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void  getVanUpdateObject(List<ItemsRequsts>itemsRequsts) {
+        UpdateloadvanArray = new JSONArray();
+        for (int i = 0; i < itemsRequsts.size(); i++)
+        {
+
+            UpdateloadvanArray.put(itemsRequsts.get(i).getJSONObject2());
+
+        }
+        try {
+
+            Updateloadvanobject =new JSONObject();
+            Updateloadvanobject.put("JSN", UpdateloadvanArray);
+            Log.e("Object",""+ UpdateloadvanArray.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     public void IIs_AddSales(List<SalesManInfo>salesManInfos,EditSalesMan context){
         getCONO();
 
@@ -256,6 +296,21 @@ public class ExportData {
         new JSONTaskIIs_UpdateAdmin(context,salesManInfos).execute();
 
     }
+
+    public void IIs_SaveVanRequst(List<ItemsRequsts>itemsRequsts){
+        getCONO();
+        getVanRequstObject(itemsRequsts);
+        new JSONTaskIIs_SaveVanRequst(itemsRequsts).execute();
+
+    }
+
+    public void IIs_UpdateVanRequst(List<ItemsRequsts>itemsRequsts){
+        getCONO();
+        getVanUpdateObject(itemsRequsts);
+        new JSONTaskIIs_UpdateVanRequst(itemsRequsts).execute();
+
+    }
+
 
 
     public void addToList(Context context, JSONArray jsonArray,JSONObject jsonObject){
@@ -1527,6 +1582,221 @@ public class ExportData {
                 }
                 else {
                     Toast.makeText(context, "ADMIN not Updated", Toast.LENGTH_SHORT).show();
+
+                }
+//                progressDialog.dismiss();
+            }
+        }
+
+    }
+    private class JSONTaskIIs_SaveVanRequst extends AsyncTask<String, String, String> {
+
+        JSONObject jsonObject;
+        List<ItemsRequsts>itemsRequsts=new ArrayList<>();
+
+        public JSONTaskIIs_SaveVanRequst(List<ItemsRequsts> itemsRequsts) {
+            this.itemsRequsts = itemsRequsts;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            String do_ = "my";
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+//            ipAddress = "";
+            try {
+
+
+                if (!ipAddress.equals("")) {
+                    URL_TO_HIT = "http://" + ipAddress+":"+portSettings +  headerDll.trim() +"/ExportTempLoadVan";
+                    Log.e("URL_TO_HIT",URL_TO_HIT);
+                }
+            } catch (Exception e) {
+
+            }
+
+            try {
+
+                String JsonResponse = null;
+                HttpClient client = new DefaultHttpClient();
+                HttpPost request = new HttpPost();
+                request.setURI(new URI(URL_TO_HIT));
+//
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+                nameValuePairs.add(new BasicNameValuePair("CONO", CONO));
+                nameValuePairs.add(new BasicNameValuePair("JSONSTR",VanRequstsjsonobject.toString().trim()));
+
+
+                request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+
+
+                HttpResponse response = client.execute(request);
+
+
+                BufferedReader in = new BufferedReader(new
+                        InputStreamReader(response.getEntity().getContent()));
+
+                StringBuffer sb = new StringBuffer("");
+                String line = "";
+
+                while ((line = in.readLine()) != null) {
+                    sb.append(line);
+                }
+
+                in.close();
+
+
+                JsonResponse = sb.toString();
+                Log.e("tag_requestState", "JsonResponse\t" + JsonResponse);
+
+                return JsonResponse;
+
+
+            }//org.apache.http.conn.HttpHostConnectException: Connection to http://10.0.0.115 refused
+            catch (HttpHostConnectException ex) {
+                ex.printStackTrace();
+//                progressDialog.dismiss();
+
+                Handler h = new Handler(Looper.getMainLooper());
+                h.post(new Runnable() {
+                    public void run() {
+
+                        Toast.makeText(main_context, "Ip Connection Failed ", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
+                return null;
+            } catch (Exception e) {
+                e.printStackTrace();
+//                progressDialog.dismiss();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            if (s != null) {
+                if (s.contains("Saved Successfully")) {
+                   RequstReport. exportrespon.setText("Saved Successfully");
+
+                }
+                else {
+
+                }
+//                progressDialog.dismiss();
+            }
+        }
+
+    }
+    private class JSONTaskIIs_UpdateVanRequst extends AsyncTask<String, String, String> {
+
+        JSONObject jsonObject;
+        List<ItemsRequsts>itemsRequsts=new ArrayList<>();
+
+        public JSONTaskIIs_UpdateVanRequst(List<ItemsRequsts> itemsRequsts) {
+            this.itemsRequsts = itemsRequsts;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            String do_ = "my";
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+//            ipAddress = "";
+            try {
+
+
+                if (!ipAddress.equals("")) {
+                    URL_TO_HIT = "http://" + ipAddress+":"+portSettings +  headerDll.trim() +"/UpdateExportedTempLoadVan";
+                    Log.e("URL_TO_HIT",URL_TO_HIT);
+                }
+            } catch (Exception e) {
+
+            }
+
+            try {
+
+                String JsonResponse = null;
+                HttpClient client = new DefaultHttpClient();
+                HttpPost request = new HttpPost();
+                request.setURI(new URI(URL_TO_HIT));
+//
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+                nameValuePairs.add(new BasicNameValuePair("CONO", CONO));
+                nameValuePairs.add(new BasicNameValuePair("JSONSTR",Updateloadvanobject.toString().trim()));
+
+
+                request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+
+
+                HttpResponse response = client.execute(request);
+
+
+                BufferedReader in = new BufferedReader(new
+                        InputStreamReader(response.getEntity().getContent()));
+
+                StringBuffer sb = new StringBuffer("");
+                String line = "";
+
+                while ((line = in.readLine()) != null) {
+                    sb.append(line);
+                }
+
+                in.close();
+
+
+                JsonResponse = sb.toString();
+                Log.e("tag_requestState", "JsonResponse\t" + JsonResponse);
+
+                return JsonResponse;
+
+
+            }//org.apache.http.conn.HttpHostConnectException: Connection to http://10.0.0.115 refused
+            catch (HttpHostConnectException ex) {
+                ex.printStackTrace();
+//                progressDialog.dismiss();
+
+                Handler h = new Handler(Looper.getMainLooper());
+                h.post(new Runnable() {
+                    public void run() {
+
+                        Toast.makeText(main_context, "Ip Connection Failed ", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
+                return null;
+            } catch (Exception e) {
+                e.printStackTrace();
+//                progressDialog.dismiss();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            if (s != null) {
+                if (s.contains("Saved Successfully")) {
+                    Log.e("onPostExecute","Successfully");
+                    RequstReport. UpdateRespon.setText("Saved Successfully");
+
+                }
+                else {
 
                 }
 //                progressDialog.dismiss();
