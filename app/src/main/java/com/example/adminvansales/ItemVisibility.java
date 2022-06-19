@@ -218,7 +218,7 @@ public class ItemVisibility extends AppCompatActivity {
     }
 
     private void displayData(List<ItemInfo> itemInfos) {
-        Log.e("displayData", "" + itemInfos.size());
+//        Log.e("displayData", "" + itemInfos.size());
 //        myBinding.progressBar.setVisibility(View.GONE);
 //        myBinding.itemRecycler.setVisibility(View.VISIBLE);
 
