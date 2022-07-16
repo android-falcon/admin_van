@@ -17,7 +17,7 @@ import java.util.List;
 
 public class DataBaseHandler extends SQLiteOpenHelper {
 
-    private static final int VERSION =16;
+    private static final int VERSION =17;
     private static final String BD_NAME = "AdminVanSales_DB";
 
     // ********************************************************************
@@ -35,7 +35,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     private static final String Total_Balance = "Total_Balance";
     private static final String Voucher_Return = "Voucher_Return";
     private static final String   Language = "Language";
-
+    private static final String locationtracker ="LocationTracker";
 
 
     private final String SETTING_TABLE = "SETTING_TABLE";
@@ -43,6 +43,8 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     private final String IMPORT_WAY = "IMPORT_WAY";
     private final String CONO = "COMPANYNUM";
     private final String SETTING_PORT = "SETTING_PORT";
+
+
     //*********************************************************************
     private final String ACCOUNT_STATMENT_TABLE="ACCOUNT_STATMENT_TABLE";
     private final String VOUCHERNO="VOUCHERNO";
@@ -114,7 +116,8 @@ public class DataBaseHandler extends SQLiteOpenHelper {
                 + Admin_Password + " INTEGER,"
                 + Total_Balance + " INTEGER,"
                 + Voucher_Return + " INTEGER,"
-                + Language+ " INTEGER" +
+                + Language+ " INTEGER, "
+               + locationtracker +" INTEGER DEFAULT 0 "+
                 ")";
             sqLiteDatabase.execSQL(CREATE_TABLE_FlAG_SETTINGS);
         }
@@ -198,6 +201,13 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         catch (Exception e){
 
         }
+        try{
+            db.execSQL("ALTER TABLE Flag_Settings ADD " + locationtracker + " INTEGER DEFAULT '0'");
+        }
+        catch (Exception e){
+
+        }
+
     }
     public void addSetting(String settingIp,String port,String importway,String cono) {
         SQLiteDatabase database = this.getWritableDatabase();
@@ -329,7 +339,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         values.put(Total_Balance, flag_settings.getTotal_Balance());
         values.put(Voucher_Return, flag_settings.getVoucher_Return());
         values.put(Language, flag_settings.getArabic_language());
-
+        values.put(locationtracker, flag_settings.getLocationtracker());
         db.insert(Flag_Settings, null, values);
         db.close();
 
@@ -351,7 +361,8 @@ public class DataBaseHandler extends SQLiteOpenHelper {
                         cursor.getInt(4),
                         cursor.getInt(5),
                         cursor.getInt(6),
-                        cursor.getInt(7)
+                        cursor.getInt(7),
+                        cursor.getInt(8)
                 );
 
                 flagSettings.add(mySettings);
@@ -365,7 +376,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     }
 
     public void updateFlagSettings (String dataType, int export, int max, int order,
-                                    int password, int total, int vReturn,int lang) {
+                                    int password, int total, int vReturn,int lang,int locationtrackerFlage) {
         SQLiteDatabase db = this.getWritableDatabase();
         db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -378,6 +389,8 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         values.put(Total_Balance, total);
         values.put(Voucher_Return, vReturn);
         values.put(Language, lang);
+        values.put(locationtracker, locationtrackerFlage);
+
         db.update(Flag_Settings, values, null, null);
 
         Log.e("Flag Settings", "UPDATE");

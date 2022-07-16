@@ -179,6 +179,7 @@
     <string name="itemCount">Items Count</string>
     <string name="exits">هل أنت متأكد من الخروج</string>
     <string name="saveSuccessfuly">Save Successfuly</string>
+    <string name="locationtracker">تعقب الموقع</string>
     <string-array name="app_paymentTypeList">
         <!--        <item>All</item>-->
         <item>كاش</item>

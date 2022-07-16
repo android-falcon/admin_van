@@ -178,7 +178,7 @@
     <string name="itemCount">Items Count</string>
     <string name="exits">Are you sure to Exit</string>
     <string name="saveSuccessfuly">Save Successfuly</string>
-
+    <string name="locationtracker">location tracker</string>
     <string-array name="app_paymentTypeList">
         <!--        <item>All</item>-->
         <item>Cash</item>

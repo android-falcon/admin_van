@@ -31,7 +31,7 @@ import com.example.adminvansales.model.SalesManInfo;
 import com.example.adminvansales.model.SettingModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.switchmaterial.SwitchMaterial;
-import com.google.androidgamesdk.gametextinput.Settings;
+
 import com.smarteist.autoimageslider.DefaultSliderView;
 import com.smarteist.autoimageslider.IndicatorAnimations;
 import com.smarteist.autoimageslider.SliderAnimations;
@@ -64,10 +64,13 @@ public class LogIn extends AppCompatActivity {
     public static String languagelocalApp = "";
     String typeimport="0";
     List<Flag_Settingss> flag_settingsList;
+    List<Flag_Settingss> flagsettingsList;
+
     com.example.adminvansales.model.SettingModel settingModel;
     public static int typaImport=0;//0---- mySql   1-----IIs
     public static int LANGUAGE=0;//0---- EN   1-----AR
     public  static int rawahneh=0;// 1= EXPORT STOCK TABLES
+    public  static int locationtrackerFlage=0;
     public  static    int getMaxVoucherServer=0;
 
     public  static  int passwordSettingAdmin=0;//0 ---> static password   1 ----->password from admin
@@ -113,7 +116,11 @@ public class LogIn extends AppCompatActivity {
         }
         settingModel=new com.example.adminvansales.model.SettingModel ();
         databaseHandler=new DataBaseHandler(LogIn.this);
+        flagsettingsList =databaseHandler.getFlagSettings();
+      if(flagsettingsList.size()!=0) {
 
+          locationtrackerFlage= flagsettingsList.get(0).getLocationtracker();
+      }
         sliderLayout = findViewById(R.id.imageSlider_2);
         setting_floatingBtn=findViewById(R.id.setting_floatingBtn);
 
@@ -292,10 +299,12 @@ public class LogIn extends AppCompatActivity {
 
         adminName=userName_edit.getText().toString();
         adminId=password_edit.getText().toString();
-      //  startservice();
+    if(LogIn.locationtrackerFlage!=0)
+    {  startservice();
         finish();
         Intent i = new Intent(LogIn.this, HomeActivity.class);
         startActivity(i);
+    }
     }
 
     private void startservice() {
@@ -474,13 +483,14 @@ public class LogIn extends AppCompatActivity {
 //            RadioButton radioBtnIIS = moreDialog.findViewById(R.id.radioBtnIIS);
 
         SwitchCompat swExport;
-        SwitchCompat swMax, swOrder, swPassword, swTotal, swReturn;
+        SwitchCompat swMax, swOrder, swPassword, swTotal, swReturn,locationtracker;
         swExport = moreDialog.findViewById(R.id.swExport);
         swMax = moreDialog.findViewById(R.id.swMax);
         swOrder = moreDialog.findViewById(R.id.swOrder);
         swPassword = moreDialog.findViewById(R.id.swPassword);
         swTotal = moreDialog.findViewById(R.id.swTotal);
         swReturn = moreDialog.findViewById(R.id.swReturn);
+        locationtracker= moreDialog.findViewById(R.id.locationtracker);
         RadioButton radioBtnAR= moreDialog.findViewById(R.id.radioBtnAR);
         flag_settingsList =databaseHandler.getFlagSettings();
 
@@ -511,7 +521,7 @@ Log.e("gggggg","aaaaa");
             swPassword.setChecked((flag_settingsList.get(0).getAdmin_Password() == 1));
             swTotal.setChecked((flag_settingsList.get(0).getTotal_Balance() == 1));
             swReturn.setChecked((flag_settingsList.get(0).getVoucher_Return() == 1));
-
+            locationtracker.setChecked((flag_settingsList.get(0).getLocationtracker() == 1));
         }
 
         okBtn.setOnClickListener(v1 -> {
@@ -537,14 +547,14 @@ Log.e("gggggg","aaaaa");
             passwordSettingAdmin = swPassword.isChecked() ? 1 : 0;
             getTotalBalanceInActivities = swTotal.isChecked() ? 1 : 0;
             voucherReturn_spreat = swReturn.isChecked() ? 1 : 0;
-
+            locationtrackerFlage= locationtracker.isChecked() ? 1 : 0;
             if(flag_settingsList.size()==0)
             {
                databaseHandler.insertFlagSettings(new Flag_Settingss(dataType1, rawahneh, getMaxVoucherServer,
-                        makeOrders, passwordSettingAdmin, getTotalBalanceInActivities, voucherReturn_spreat,LANGUAGE));
+                        makeOrders, passwordSettingAdmin, getTotalBalanceInActivities, voucherReturn_spreat,LANGUAGE,locationtrackerFlage));
             }else {
                 databaseHandler.updateFlagSettings(dataType1, rawahneh, getMaxVoucherServer,
-                        makeOrders, passwordSettingAdmin, getTotalBalanceInActivities, voucherReturn_spreat,LANGUAGE);
+                        makeOrders, passwordSettingAdmin, getTotalBalanceInActivities, voucherReturn_spreat,LANGUAGE,locationtrackerFlage);
             }
 
 
