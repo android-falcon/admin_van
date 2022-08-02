@@ -314,6 +314,7 @@ public class LogIn extends AppCompatActivity {
     {
         Intent i = new Intent(LogIn.this, HomeActivity.class);
         startActivity(i);
+        stopSer();
     }
     }
 
