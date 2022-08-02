@@ -36,6 +36,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.azoft.carousellayoutmanager.CarouselLayoutManager;
 import com.azoft.carousellayoutmanager.CarouselZoomPostLayoutListener;
@@ -160,8 +161,11 @@ public class HomeActivity extends AppCompatActivity
                                 return true;
 
                             case R.id.action_location:
-                                startActivity(new Intent(getApplicationContext(), SalesmanMapsActivity.class));
-                                overridePendingTransition(0, 0);
+                                if(LogIn.locationtrackerFlage!=0)
+                                {   startActivity(new Intent(getApplicationContext(), SalesmanMapsActivity.class));
+                                overridePendingTransition(0, 0);}
+                                else
+                                    Toast.makeText(HomeActivity.this, "No Permission", Toast.LENGTH_SHORT).show();
                                 return true;
 
                             case R.id.action_notifications:

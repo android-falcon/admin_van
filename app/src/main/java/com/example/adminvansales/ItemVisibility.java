@@ -26,6 +26,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.adminvansales.Adapters.CustomerAdapter;
 import com.example.adminvansales.Adapters.ItemVisibleAdapter;
@@ -117,8 +118,12 @@ public class ItemVisibility extends AppCompatActivity {
                                 return true;
 
                             case R.id.action_location:
-                                startActivity(new Intent(getApplicationContext(), SalesmanMapsActivity.class));
-                                overridePendingTransition(0, 0);
+                                if(LogIn.locationtrackerFlage!=0)
+                                {   startActivity(new Intent(getApplicationContext(), SalesmanMapsActivity.class));
+                                    overridePendingTransition(0, 0);}
+                                else
+                                    Toast.makeText(ItemVisibility.this, "No Permission", Toast.LENGTH_SHORT).show();
+
                                 return true;
 
                             case R.id.action_notifications:
