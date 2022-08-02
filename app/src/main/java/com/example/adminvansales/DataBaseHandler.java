@@ -17,7 +17,7 @@ import java.util.List;
 
 public class DataBaseHandler extends SQLiteOpenHelper {
 
-    private static final int VERSION =17;
+    private static final int VERSION =18;
     private static final String BD_NAME = "AdminVanSales_DB";
 
     // ********************************************************************
@@ -69,7 +69,8 @@ public class DataBaseHandler extends SQLiteOpenHelper {
                     + SETTING_IP + " TEXT ,"
                     + SETTING_PORT + " TEXT ,"
                     +IMPORT_WAY+ " TEXT ,"
-                    +CONO+ " TEXT "
+                    +CONO+ " TEXT ,"
+                    + locationtracker +" INTEGER DEFAULT 0 "
                     + ")";
             sqLiteDatabase.execSQL(createTableSetting);
         }
@@ -207,9 +208,15 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         catch (Exception e){
 
         }
+        try{
+            db.execSQL("ALTER TABLE SETTING_TABLE ADD " + locationtracker + " INTEGER DEFAULT '0'");
+        }
+        catch (Exception e){
+
+        }
 
     }
-    public void addSetting(String settingIp,String port,String importway,String cono) {
+    public void addSetting(String settingIp,String port,String importway,String cono,int Locationtrack) {
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(SETTING_IP, settingIp);
@@ -217,6 +224,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 
         contentValues.put(IMPORT_WAY, importway);
         contentValues.put(CONO, cono);
+        contentValues.put(locationtracker, Locationtrack);
         database.insert(SETTING_TABLE, null, contentValues);
         database.close();
 
@@ -244,6 +252,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
                 settingModel.setPort(cursor.getString(1));
                 settingModel.setCono(cursor.getString(3));
                 settingModel.setImport_way(cursor.getString(2));
+                settingModel.setLocationtracker(cursor.getInt(4));
                 ip=settingModel;
             } while (cursor.moveToNext());
 

@@ -121,7 +121,7 @@ public class LogIn extends AppCompatActivity {
         flagsettingsList =databaseHandler.getFlagSettings();
       if(flagsettingsList.size()!=0) {
 
-          locationtrackerFlage= flagsettingsList.get(0).getLocationtracker();
+    //      locationtrackerFlage= flagsettingsList.get(0).getLocationtracker();
       }
         sliderLayout = findViewById(R.id.imageSlider_2);
         setting_floatingBtn=findViewById(R.id.setting_floatingBtn);
@@ -136,7 +136,7 @@ public class LogIn extends AppCompatActivity {
             }else {
                 settingDialog();
             }
-
+            locationtrackerFlage= settingModelList.getLocationtracker();
         }catch (Exception t){
 
             Log.e("ipAddress","error");
@@ -306,6 +306,10 @@ public class LogIn extends AppCompatActivity {
         finish();
         Intent i = new Intent(LogIn.this, HomeActivity.class);
         startActivity(i);
+    }else
+    {
+        Intent i = new Intent(LogIn.this, HomeActivity.class);
+        startActivity(i);
     }
     }
 
@@ -387,6 +391,7 @@ public class LogIn extends AppCompatActivity {
         dialog.getWindow().setAttributes(layoutParams);
         TextView more=dialog.findViewById( R.id. more);
         Button saveSetting=dialog.findViewById(R.id.saveSetting);
+        SwitchCompat   locationtracker= dialog.findViewById(R.id.locationtracker);
         final EditText editTextIp=dialog.findViewById(R.id.setindEditText);
         final EditText  portSetting=dialog.findViewById(R.id.portSetting);
 //RadioButton RB_mysql= dialog.findViewById(R.id.RB_mysql);
@@ -405,12 +410,15 @@ public class LogIn extends AppCompatActivity {
                 portSettings=settingModels.getPort();
                 import_way=settingModels.getImport_way();
                 Cono=settingModels.getCono();
+                locationtracker.setChecked((settingModels.getLocationtracker() == 1));
+                locationtrackerFlage=settingModels.getLocationtracker();
 //                if(import_way.equals("0"))
 //                    RB_mysql.setChecked(true);
 //                else
 //                    RB_iis.setChecked(true);
                 editTextIp.setText(ipAddress);
                 portSetting.setText(portSettings);
+
                 CoNo.setText(Cono);
             }
         }
@@ -425,13 +433,15 @@ public class LogIn extends AppCompatActivity {
                 ipAddress= editTextIp.getText().toString().trim();
                 portSettings=portSetting.getText().toString().trim();
                 Cono=CoNo.getText().toString().trim();
+                int loc_trac=0;
+                if(locationtracker.isChecked())loc_trac=1;
                 if(ipAddress.trim().length()!=0)
                 {
                     if(portSettings.trim().length()!=0) {
 
                         if(Cono.trim().length()!=0) {
 
-                            databaseHandler.addSetting(ipAddress,portSettings,"1",Cono);
+                            databaseHandler.addSetting(ipAddress,portSettings,"1",Cono,loc_trac);
                             dialog.dismiss();
 
                         }else {

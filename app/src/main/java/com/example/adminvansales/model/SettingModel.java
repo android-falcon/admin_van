@@ -8,6 +8,16 @@ public class SettingModel {
       String import_way;
     String Cono;
 
+    private  int  locationtracker;
+
+    public int getLocationtracker() {
+        return locationtracker;
+    }
+
+    public void setLocationtracker(int locationtracker) {
+        this.locationtracker = locationtracker;
+    }
+
     public String getCono() {
         return Cono;
     }
