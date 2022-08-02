@@ -447,6 +447,7 @@ public class LogIn extends AppCompatActivity {
 
                             databaseHandler.addSetting(ipAddress,portSettings,"1",Cono,loc_trac);
                             dialog.dismiss();
+                            locationtrackerFlage=loc_trac;
 
                         }else {
                             CoNo.setError("*Required");
