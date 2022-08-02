@@ -1,5 +1,6 @@
 package com.example.adminvansales;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 
@@ -11,6 +12,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -67,7 +69,7 @@ public class LogIn extends AppCompatActivity {
     List<Flag_Settingss> flagsettingsList;
 
     com.example.adminvansales.model.SettingModel settingModel;
-    public static int typaImport=0;//0---- mySql   1-----IIs
+    public static int typaImport=1;//0---- mySql   1-----IIs
     public static int LANGUAGE=0;//0---- EN   1-----AR
     public  static int rawahneh=0;// 1= EXPORT STOCK TABLES
     public  static int locationtrackerFlage=0;
@@ -78,9 +80,10 @@ public class LogIn extends AppCompatActivity {
     public  static    int getTotalBalanceInActivities=0;
     public  static    int voucherReturn_spreat=1;
     public  static   int  talaatLayoutAndPassowrd=0;
-    public static  int hidePlan=0;
+    public static  int hidePlan=1;
 
     public static Context contextG;
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,6 +100,7 @@ public class LogIn extends AppCompatActivity {
         sliderLayout.setScrollTimeInSec(4); //set scroll delay in seconds :
         setSliderViews();
     }
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     private void initView() {
         LinearLayout linearMain=findViewById(R.id.linearMain);
         try{
