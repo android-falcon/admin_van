@@ -3,12 +3,12 @@
     <string name="app_name">Admin Van</string>
     <string name="logIn">تسجيل دخول</string>
     <string name="Notification">الإشعارات</string>
-    <string name="RequestDetail">Request Detail</string>
-    <string name="amount_word">Amount</string>
+    <string name="RequestDetail">تفاصيل الطلب</string>
+    <string name="amount_word">الكمية</string>
     <string name="Note">ملاحظة</string>
     <string name="accept">قبول</string>
     <string name="Reject">رفض</string>
-    <string name="requestType">Request Type</string>
+    <string name="requestType">نوع الطلب</string>
     <string name="voucherNo">رقم الفاتورة </string>
     <string name="TotalVoucher">المجموع</string>
     <string name="totalDiscount">مجموع الخصم</string>
@@ -22,11 +22,11 @@
     <string name="customerName">اسم العميل</string>
     <string name="customerName_">اسم العميل:</string>
     <string name="preview">عرض</string>
-    <string name="transName">Trans Name</string>
+    <string name="transName">الحركة</string>
     <string name="date_voucher">التاريخ</string>
     <string name="total_balance">مجموع الحساب </string>
-    <string name="debit">Debit</string>
-    <string name="credit">Credit</string>
+    <string name="debit">مدين</string>
+    <string name="credit">دائن</string>
     <string name="balance">الحساب</string>
     <string name="add_van_sales">إضافة مندوب</string>
     <string name="add_van_sales1">مندوب</string>
@@ -53,7 +53,7 @@
     <string name="voucher_number">رقم الفاتورة</string>
 
     <string name="sale_man_number">رقم المندوب</string>
-    <string name="remark">Remark</string>
+    <string name="remark">ملاحظة</string>
     <string name="pay_method">طريقة الدفع</string>
     <string name="net_sales">الصافي</string>
     <string name="pay_date">تاريخ الدفع</string>

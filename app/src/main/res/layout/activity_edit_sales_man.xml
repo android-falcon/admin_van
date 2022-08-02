@@ -160,7 +160,7 @@
                     android:layout_marginTop="2dp"
                     android:layout_marginEnd="2dp"
                     android:gravity="center"
-                    android:inputType="textPassword"
+
                     android:padding="1dp"
                     android:textColor="@color/colorblue_dark"
                     android:textSize="13sp" />
