@@ -136,8 +136,8 @@ public class ImportData {
     public static List<OfferGroupModel> offerGroupModels = new ArrayList<>();
     ProgressDialog progressDialog;
     GlobelFunction globelFunction;
- public  String headerDll="/Falcons/VAN.dll";
-//   public  String headerDll="";
+// public  String headerDll="/Falcons/VAN.dll";
+   public  String headerDll="";
 
     public ImportData(Context context) {
         databaseHandler = new DataBaseHandler(context);
@@ -1136,6 +1136,16 @@ Log.e("URL_TO_HIT",URL_TO_HIT+"");
             }
             else if (flag == 4) {
                 this.context = (PlanSalesMan) context;
+            } else if (flag == 5) {
+                this.context = (CustomerLogReport) context;
+            }else if (flag ==6) {
+                this.context = (CashReport) context;
+            }else if (flag ==7) {
+                this.context = (PaymentDetailsReport) context;
+            }else if (flag ==8) {
+                this.context = (RequstReport) context;
+            }else if (flag ==9) {
+                this.context = (ItemReport) context;
             }
         }
 
@@ -1290,7 +1300,23 @@ Log.e("URL_TO_HIT",URL_TO_HIT+"");
                             salesmanMapsActivity.fillSalesManSpinner();
                         }
 
-
+                        else if (flag == 5) {
+                          CustomerLogReport customerLogReport = (CustomerLogReport) context;
+                            customerLogReport .fillSalesManSpinner();
+                        }  else if (flag == 6) {
+                            CashReport  cashReport = (CashReport) context;
+                            cashReport .fillSalesManSpinner();
+                        }else if (flag == 7) {
+                            PaymentDetailsReport  paymentDetailsReport = (PaymentDetailsReport) context;
+                            paymentDetailsReport .fillSalesManSpinner();
+                        }
+                        else if (flag == 8) {
+                            RequstReport  requstReport = (RequstReport) context;
+                            requstReport .fillSalesManSpinner();
+                        }else if (flag == 9) {
+                            ItemReport  itemReport = (ItemReport) context;
+                            itemReport .fillSalesManSpinner();
+                        }
                     } catch (JSONException e) {
                         Log.e("JSONException==",e.getMessage()+"");
                         e.printStackTrace();

@@ -122,11 +122,9 @@ public class PlanSalesMan extends AppCompatActivity {
 
                             case R.id.action_location:
 
-                                if(LogIn.locationtrackerFlage!=0)
+
                                 {   startActivity(new Intent(getApplicationContext(), SalesmanMapsActivity.class));
                                     overridePendingTransition(0, 0);}
-                                else
-                                    Toast.makeText(PlanSalesMan.this, "No Permission", Toast.LENGTH_SHORT).show();
 
                                 return true;
 
@@ -301,7 +299,9 @@ public class PlanSalesMan extends AppCompatActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId == R.id.manual_RadioButton) {
                     orderType = 0;
-                } else orderType = 1;
+                }
+                else if(checkedId == R.id.bySaleMan) orderType = 2;
+                else orderType = 1;
                 fillSelectedRecycler();
             }
         });
@@ -574,6 +574,7 @@ public class PlanSalesMan extends AppCompatActivity {
 
     private void checkData() {
         listPlan.clear();
+
         orderType = getTypeOrder();
         String currentDate = fromDate.getText().toString();
         for (int i = 0; i < listSelectedCustomer.size(); i++) {
@@ -586,7 +587,9 @@ public class PlanSalesMan extends AppCompatActivity {
                 String sales = salesManInfosList.get((int) salesNameSpinner.getSelectedItemId()).getSalesManNo();
                 plan.setSalesNo(sales);
                 plan.setOrderd(listSelectedCustomer.get(i).getOrder() + 1);
+
                 plan.setType_orderd(orderType);
+
                 plan.setLatit_customer(listSelectedCustomer.get(i).getLatit_customer());
                 plan.setLong_customer(listSelectedCustomer.get(i).getLong_customer());
                 plan.setAreaPlan(allAreaPlan.toString());
@@ -642,6 +645,7 @@ public class PlanSalesMan extends AppCompatActivity {
     private int getTypeOrder() {
         if (orderd_typeGroup.getCheckedRadioButtonId() == R.id.manual_RadioButton)
             return 0;
+        else if(orderd_typeGroup.getCheckedRadioButtonId() == R.id.bySaleMan)  return 2;
         else return 1;
     }
 

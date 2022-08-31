@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.View;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -58,21 +59,34 @@ GlobelFunction globelFunction;
        // if(LogIn.locationtrackerFlage==1)
         try {
 
+        findViewById(R.id.refresh) .setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                globelFunction.getSalesManInfo(SalesmanMapsActivity.this, 2);
 
+            }
+        });
             builder = new LatLngBounds.Builder();
             globelFunction = new GlobelFunction(SalesmanMapsActivity.this);
-            timer = new Timer();
-            timer.schedule(new TimerTask() {
 
-                @Override
-                public void run() {
-                    if (flag) {
-                        globelFunction.getSalesManInfo(SalesmanMapsActivity.this, 2);
-                    }
-                }
+          if(LogIn.locationtrackerFlage!=0) {
+              timer = new Timer();
+              timer.schedule(new TimerTask() {
 
-        }, 0, 10000);
+                  @Override
+                  public void run() {
+                      if (flag) {
+                          globelFunction.getSalesManInfo(SalesmanMapsActivity.this, 2);
+                      }
+                  }
 
+              }, 0, 10000);
+          }else
+          {
+              if (flag) {
+                  globelFunction.getSalesManInfo(SalesmanMapsActivity.this, 2);
+              }
+          }
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
