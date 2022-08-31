@@ -66,8 +66,7 @@ public class AccountStatment extends AppCompatActivity {
         databaseHandler = new DataBaseHandler(AccountStatment.this);
 //        importData.getCustomerInfo();
         initialView();
-
-        Log.e("customername", "" + customername.size());
+        
 
         preview_button_account.setOnClickListener(new View.OnClickListener() {
             @Override
