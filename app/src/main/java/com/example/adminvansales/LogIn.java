@@ -51,6 +51,8 @@ import static com.example.adminvansales.GlobelFunction.adminName;
 import static com.example.adminvansales.ImportData.listId;
 import com.example.adminvansales.model.LocaleAppUtils;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 public class LogIn extends AppCompatActivity {
     SliderLayout sliderLayout;
 //    FloatingActionButton setting_floatingBtn;
@@ -210,8 +212,29 @@ public class LogIn extends AppCompatActivity {
         button_logIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SettingModel settingModels;
+                try {
 
-               Authentication();
+                    settingModels =databaseHandler.getAllSetting();
+
+             if(!settingModels.getIpAddress().equals(""))
+
+             {
+                 Log.e("button_logIn","button_logIn");
+                 Authentication();
+
+             }
+
+
+
+                else
+             {
+                 GlobelFunction.showSweetDialog(LogIn.this,3,getResources().getString(R.string.fillip),"");
+             }
+
+                }catch (Exception e){
+
+                }
 
 //
 

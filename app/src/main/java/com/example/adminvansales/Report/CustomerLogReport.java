@@ -124,6 +124,7 @@ public class CustomerLogReport extends AppCompatActivity {
         fromDate.setText(toDay);
         toDate.setText(toDay);
         customerLogReportList = new ArrayList<>();
+        if(salesManNameList.size()==0)  globelFunction.getSalesManInfo(CustomerLogReport.this,5);
         fillSalesManSpinner();
         importData = new ImportData(CustomerLogReport.this);
         try {

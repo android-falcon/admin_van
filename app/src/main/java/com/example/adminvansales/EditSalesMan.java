@@ -116,11 +116,9 @@ public class EditSalesMan extends AppCompatActivity {
                                 return true;
 
                             case R.id.action_location:
-                                if(LogIn.locationtrackerFlage!=0)
+
                                 {   startActivity(new Intent(getApplicationContext(), SalesmanMapsActivity.class));
                                     overridePendingTransition(0, 0);}
-                                else
-                                    Toast.makeText(EditSalesMan.this, "No Permission", Toast.LENGTH_SHORT).show();
 
                                 return true;
 

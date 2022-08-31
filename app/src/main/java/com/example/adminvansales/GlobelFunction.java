@@ -44,6 +44,32 @@ public class GlobelFunction {
         decimalFormat = new DecimalFormat("00.0000");
 
     }
+    public static void showSweetDialog(Context context, int type, String title, String content) {
+        switch (type) {
+            case 0://Error Type
+                new SweetAlertDialog(context, SweetAlertDialog.ERROR_TYPE)
+                        .setTitleText(title)
+                        .setContentText(content)
+                        .setConfirmText(context.getString(R.string.ok))
+                        .show();
+                break;
+            case 1://Success Type
+                new SweetAlertDialog(context, SweetAlertDialog.SUCCESS_TYPE)
+                        .setTitleText(title)
+                        .setContentText(content)
+                        .setConfirmText(context.getString(R.string.ok))
+                        .show();
+                break;
+            case 3://warning Type
+                new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE)
+                        .setTitleText(title)
+                        .setContentText(content)
+                        .setConfirmText(context.getString(R.string.ok))
+                        .show();
+                break;
+
+        }
+    }
 
     public void getSalesManInfo(Context context, int flag) {
 

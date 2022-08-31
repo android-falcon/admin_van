@@ -110,6 +110,8 @@ public class CashReport extends AppCompatActivity {
         importData = new ImportData(CashReport.this);
         databaseHandler = new DataBaseHandler(CashReport.this);
         SettingModel = databaseHandler.getAllSetting();
+        if(salesManNameList.size()==0)  globelFunction.getSalesManInfo(CashReport.this,6);
+
         fillSalesManSpinner();
         try {
             int positionSales = salesNameSpinner.getSelectedItemPosition();

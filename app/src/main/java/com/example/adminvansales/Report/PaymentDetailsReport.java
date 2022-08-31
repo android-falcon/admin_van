@@ -116,6 +116,8 @@ public class PaymentDetailsReport extends AppCompatActivity {
         toDate.setText(toDay);
         payMentReportList=new ArrayList<>();
         importData=new ImportData(PaymentDetailsReport.this);
+        if(salesManNameList.size()==0)   globelFunction.  getSalesManInfo(PaymentDetailsReport.this,7);
+
         fillSalesManSpinner();
         SettingModel=databaseHandler.getAllSetting();
         try {
@@ -285,8 +287,7 @@ public class PaymentDetailsReport extends AppCompatActivity {
     }
 
     public void fillSalesManSpinner(){
-
-        salesNameSpinnerAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, salesManNameList);
+         salesNameSpinnerAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, salesManNameList);
         salesNameSpinner.setAdapter(salesNameSpinnerAdapter);
 
     }

@@ -125,13 +125,13 @@ public static TextView requstsRespon,sales_man_name1,date,exportrespon,UpdateRes
         });
     }
     public void fillSalesManSpinner() {
-
-        salesNameSpinnerAdapter = new ArrayAdapter<String>(this, R.layout.spinner_layout, salesManNameList);
+         salesNameSpinnerAdapter = new ArrayAdapter<String>(this, R.layout.spinner_layout, salesManNameList);
         salesNameSpinnerAdapter.setDropDownViewResource(R.layout.spinner_layout);
         salesManSpinner.setAdapter(salesNameSpinnerAdapter);
 
     }
     void init(){
+        globelFunction=new GlobelFunction(RequstReport.this);
         exportrespon=findViewById(R.id.exportrespon);
         UpdateRespon=findViewById(R.id.UpdateRespon);
         exportData=new ExportData(RequstReport.this);
@@ -181,8 +181,10 @@ public static TextView requstsRespon,sales_man_name1,date,exportrespon,UpdateRes
         res=findViewById(R.id.Res);
         res.setLayoutManager(layoutManager);
         salesManSpinner = findViewById(R.id.salesManSpinner);
+        if(salesManNameList.size()==0)   globelFunction.  getSalesManInfo(RequstReport.this,8);
+
         fillSalesManSpinner();
-       globelFunction=new GlobelFunction(RequstReport.this);
+
 
         importData=new ImportData(RequstReport.this);
 

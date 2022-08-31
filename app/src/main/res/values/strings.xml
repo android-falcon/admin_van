@@ -144,6 +144,8 @@
     <string name="typeOrderPlan">Type Order Plan</string>
     <string name="manual">Manual</string>
     <string name="byLocation">By Location</string>
+    <string name="bySaleMan">By SaleMan</string>
+
     <string name="noCustomerSelected">No Customer Selected !!!</string>
     <string name="addCustomerLocation">Add Customer Location</string>
     <string name="select_area">Select Area</string>
@@ -179,6 +181,8 @@
     <string name="exits">Are you sure to Exit</string>
     <string name="saveSuccessfuly">Save Successfuly</string>
     <string name="locationtracker">location tracker</string>
+    <string name="fillip">Fill Ip Setting</string>
+    <string name="refresh">Refresh</string>
     <string-array name="app_paymentTypeList">
         <!--        <item>All</item>-->
         <item>Cash</item>

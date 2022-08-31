@@ -118,11 +118,9 @@ public class ItemVisibility extends AppCompatActivity {
                                 return true;
 
                             case R.id.action_location:
-                                if(LogIn.locationtrackerFlage!=0)
+
                                 {   startActivity(new Intent(getApplicationContext(), SalesmanMapsActivity.class));
                                     overridePendingTransition(0, 0);}
-                                else
-                                    Toast.makeText(ItemVisibility.this, "No Permission", Toast.LENGTH_SHORT).show();
 
                                 return true;
 
@@ -450,6 +448,7 @@ public class ItemVisibility extends AppCompatActivity {
     }
 
     private void fillSalesManSpinner() {
+
         salesNameSpinnerAdapter = new ArrayAdapter<String>(this, R.layout.spinner_layout, salesManNameList);
         salesNameSpinnerAdapter.setDropDownViewResource(R.layout.spinner_layout);
         myBinding.salesNameSpinner.setAdapter(salesNameSpinnerAdapter);

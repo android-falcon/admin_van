@@ -19,6 +19,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.adminvansales.Adapters.ItemReportAdapter;
+import com.example.adminvansales.Report.CustomerLogReport;
 import com.example.adminvansales.Report.ReportsPopUpClass;
 import com.example.adminvansales.Report.UnCollectedData;
 import com.example.adminvansales.model.ItemReportModel;
@@ -94,6 +95,8 @@ public class ItemReport extends AppCompatActivity {
         toDate.setText(globelFunction.DateInToday());
         importData = new ImportData(ItemReport.this);
         settingModel = databaseHandler.getAllSetting();
+        if(salesManNameList.size()==0)    globelFunction. getSalesManInfo (ItemReport.this,9);
+
         fillSalesManSpinner();
         try {
             String no = globelFunction.getsalesmanNum(salesManSpinner.getSelectedItem().toString());
@@ -186,11 +189,9 @@ public class ItemReport extends AppCompatActivity {
                                 return true;
 
                             case R.id.action_location:
-                                if(LogIn.locationtrackerFlage!=0)
+
                                 {   startActivity(new Intent(getApplicationContext(), SalesmanMapsActivity.class));
                                     overridePendingTransition(0, 0);}
-                                else
-                                    Toast.makeText(ItemReport.this, "No Permission", Toast.LENGTH_SHORT).show();
 
                                 return true;
 
@@ -235,8 +236,7 @@ public class ItemReport extends AppCompatActivity {
 
 
     public void fillSalesManSpinner() {
-
-        salesNameSpinnerAdapter = new ArrayAdapter<String>(this, R.layout.spinner_layout, salesManNameList);
+         salesNameSpinnerAdapter = new ArrayAdapter<String>(this, R.layout.spinner_layout, salesManNameList);
         salesNameSpinnerAdapter.setDropDownViewResource(R.layout.spinner_layout);
         salesManSpinner.setAdapter(salesNameSpinnerAdapter);
 
