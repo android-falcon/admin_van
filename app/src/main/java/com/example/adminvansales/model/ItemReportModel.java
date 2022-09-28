@@ -29,34 +29,34 @@ public class ItemReportModel {
 //            "salesName": "AHMADq",
 //            "VoucherDate": "02/01/2021"
 
-    @SerializedName("ComapnyNo")
+    @SerializedName("COMAPNYNO")
     private String ComapnyNo;
-    @SerializedName("VoucherYear")
+    @SerializedName("VOUCHERYEAR")
     private String VoucherYear;
-    @SerializedName("VoucherNo")
+    @SerializedName("VOUCHERNO")
 
     private String VoucherNo;
-    @SerializedName("VoucherType")
+    @SerializedName("VOUCHERTYPE")
     private String VoucherType;
-    @SerializedName("ItemNo")
+    @SerializedName("ITEMNO")
     private String ItemNo;
-    @SerializedName("Unit")
+    @SerializedName("UNIT")
     private String Unit;
-    @SerializedName("Qty")
+    @SerializedName("QTY")
     private String Qty;
-    @SerializedName("Bonus")
+    @SerializedName("BONUS")
     private String Bonus;
-    @SerializedName("UnitPrice")
+    @SerializedName("UNITPRICE")
     private String UnitPrice;
-    @SerializedName("ItemDiscountValue")
+    @SerializedName("ITEMDISCOUNTVALUE")
     private String ItemDiscountValue;
-    @SerializedName("ItemDiscountPrc")
+    @SerializedName("ITEMDISCOUNTPRC")
     private String ItemDiscountPrc;
-    @SerializedName("VoucherDiscount")
+    @SerializedName("VOUCHERDISCOUNT")
     private String VoucherDiscount;
-    @SerializedName("TaxValue")
+    @SerializedName("TAXVALUE")
     private String TaxValue;
-    @SerializedName("TaxPercent")
+    @SerializedName("TAXPERCENT")
     private String TaxPercent;
     @SerializedName("ISPOSTED")
     private String ISPOSTED;
@@ -70,19 +70,19 @@ public class ItemReportModel {
     private String ITEM_SERIAL_CODE;
 
 
-    @SerializedName("total")
+    @SerializedName("TOTAL")
     private String total;
-    @SerializedName("SalesManNo")
+    @SerializedName("SALESMANNO")
     private String SalesManNo;
-    @SerializedName("Name")
+    @SerializedName("NAME")
     private String Name;
 
-    @SerializedName("salesName")
+    @SerializedName("SALESNAME")
     private String salesName;
-    @SerializedName("VoucherDate")
+    @SerializedName("VOUCHERDATE")
     private String VoucherDate;
 
-    @SerializedName("itemReport")
+
     private List<ItemReportModel> itemReport;
 
 

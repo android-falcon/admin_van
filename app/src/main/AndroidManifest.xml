@@ -14,12 +14,24 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
+            android:name=".RequstNotifaction"
+            android:exported="false" />
+        <activity
+            android:name=".Report.TargetReport"
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".addSalesmanTarget"
+            android:windowSoftInputMode="adjustPan|adjustResize"
+            android:exported="false" />
+        <activity
             android:name=".Report.RequstReport"
             android:exported="false" />
         <activity
             android:name=".view.Splash"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -115,6 +127,11 @@
             android:name=".ItemReport"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".ScanActivity"
+            android:screenOrientation="fullSensor"
+            android:stateNotNeeded="true"
+            android:windowSoftInputMode="stateAlwaysHidden" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

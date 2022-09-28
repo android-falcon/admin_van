@@ -9,7 +9,7 @@
     <color name="layer5">#C8C5D4DB</color>
     <color name="layer6">#CBECECEB</color>
     <color name="layer7">#F3F8F8F7</color>
-
+      <color name="colorBlack">#000000</color>
     <color name="peacockBlue">#E8C8E8F7</color>
     <color name="darkGray">#000000</color>
     <color name="darkOrange">#ffc34d</color>//E43C27

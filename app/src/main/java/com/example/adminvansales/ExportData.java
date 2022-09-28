@@ -16,6 +16,7 @@ import com.example.adminvansales.model.Plan_SalesMan_model;
 import com.example.adminvansales.model.Request;
 import com.example.adminvansales.model.SalesManInfo;
 import com.example.adminvansales.model.SettingModel;
+import com.example.adminvansales.model.TargetDetalis;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -49,9 +50,9 @@ import static com.example.adminvansales.LogIn.portSettings;
 import static com.example.adminvansales.Report.ListOfferReport.control;
 
 public class ExportData {
-    SweetAlertDialog pdRepRev;
-    private JSONArray jsonArraysalesman,jsonArrayadmins,passwordjsonArray,RequstsjsonArray,VanRequstsjsonArray,UpdateloadvanArray;
-    JSONObject addsalesmanobject,addadminsmanobject,passwordobject,Requstobject,VanRequstsjsonobject,Updateloadvanobject;
+    SweetAlertDialog pdRepRev,pdSweetAlertDialog,pdSweetAlertDialog2;
+    private JSONArray jsonArrayTarget,jsonArraysalesman,jsonArrayadmins,passwordjsonArray,RequstsjsonArray,VanRequstsjsonArray,UpdateloadvanArray;
+    JSONObject Targetobject,addsalesmanobject,addadminsmanobject,passwordobject,Requstobject,VanRequstsjsonobject,Updateloadvanobject;
     private DataBaseHandler databaseHandler;
     private JSONArray jsonArrayRequest;
     private String URL_TO_HIT ;
@@ -162,6 +163,39 @@ public class ExportData {
             e.printStackTrace();
         }
     }
+
+    private void  getAddTargetObject(List<TargetDetalis>targetDetalisList) {
+        jsonArrayTarget = new JSONArray();
+        for (int i = 0; i < targetDetalisList.size(); i++)
+        {
+
+            jsonArrayTarget.put(targetDetalisList.get(i).getJsonObject());
+
+        }
+        try {
+            Targetobject =new JSONObject();
+            Targetobject.put("JSN", jsonArrayTarget);
+            Log.e("Targetobject",""+ Targetobject.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+    private void  getAddTargetObject2(List<TargetDetalis>targetDetalisList) {
+        jsonArrayTarget = new JSONArray();
+        for (int i = 0; i < targetDetalisList.size(); i++)
+        {
+
+            jsonArrayTarget.put(targetDetalisList.get(i).getJsonObject2());
+
+        }
+        try {
+            Targetobject =new JSONObject();
+            Targetobject.put("JSN", jsonArrayTarget);
+            Log.e("Targetobject",""+ Targetobject.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
     private void  getAddPlanObject(List<Plan_SalesMan_model>salesManInfos) {
         jsonArraysalesman = new JSONArray();
         for (int i = 0; i < salesManInfos.size(); i++)
@@ -255,6 +289,24 @@ public class ExportData {
 
         new JSONTaskIIs_AddSales(context,salesManInfos).execute();
     }
+
+    public void SaveNetsaleTarget(List<TargetDetalis>targetDetalisList,Context context){
+        getCONO();
+
+
+        getAddTargetObject(targetDetalisList);
+
+        new JSONTask_AddTarget(context,targetDetalisList).execute();
+    }
+
+    public void SaveNetsaleTarget2(List<TargetDetalis>targetDetalisList,Context context){
+        getCONO();
+
+
+         getAddTargetObject2(targetDetalisList);
+        new JSONTask_AddTarget2(context,targetDetalisList).execute();
+    }
+
     public void IIs_AddPlan(List<Plan_SalesMan_model>salesManInfos, Context context){
         getCONO();
         getAddPlanObject(salesManInfos);
@@ -3177,6 +3229,267 @@ public class ExportData {
 
     }
 
+    private class JSONTask_AddTarget extends AsyncTask<String, String, String> {
+        Context  context;
+        List<SalesManInfo>salesManInfos=new ArrayList<>();
+        JSONObject jsonObject;
 
 
+
+        public JSONTask_AddTarget(   Context context, List<TargetDetalis> targetDetalisList) {
+            this.context = context;
+            this.salesManInfos = salesManInfos;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            String do_ = "my";
+            pdSweetAlertDialog2= new SweetAlertDialog(main_context, SweetAlertDialog.PROGRESS_TYPE);
+            pdSweetAlertDialog2.getProgressHelper().setBarColor(Color.parseColor("#FDD835"));
+            pdSweetAlertDialog2.setTitleText(main_context.getResources().getString(R.string.process));
+            pdSweetAlertDialog2.setCancelable(false);
+            pdSweetAlertDialog2.show();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+//            ipAddress = "";
+            try {
+
+
+                if (!ipAddress.equals("")) {
+                    http://localhost:8085/ADMAddSalesMan?CONO=295
+                    URL_TO_HIT = "http://" + ipAddress+":"+portSettings +  headerDll.trim() +"/SaveTaget";
+
+
+                    Log.e("URL_TO_HI",URL_TO_HIT);
+
+
+                }
+
+
+            } catch (Exception e) {
+                pdSweetAlertDialog2.dismiss();
+            }
+
+            try {
+
+                String JsonResponse = null;
+                HttpClient client = new DefaultHttpClient();
+                HttpPost request = new HttpPost();
+                try {
+                    request.setURI(new URI(URL_TO_HIT));
+                } catch (URISyntaxException e) {
+                    e.printStackTrace();
+                    pdSweetAlertDialog2.dismiss();
+                }
+
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+                nameValuePairs.add(new BasicNameValuePair("CONO", CONO));
+                nameValuePairs.add(new BasicNameValuePair("JSONSTR",Targetobject.toString().trim()));
+
+
+                request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+
+
+                HttpResponse response = client.execute(request);
+
+
+                BufferedReader in = new BufferedReader(new
+                        InputStreamReader(response.getEntity().getContent()));
+
+                StringBuffer sb = new StringBuffer("");
+                String line = "";
+
+                while ((line = in.readLine()) != null) {
+                    sb.append(line);
+                }
+
+                in.close();
+
+
+                JsonResponse = sb.toString();
+                Log.e("tag_requestState", "JsonResponse\t" + JsonResponse);
+
+                return JsonResponse;
+
+
+            }//org.apache.http.conn.HttpHostConnectException: Connection to http://10.0.0.115 refused
+            catch (HttpHostConnectException ex) {
+                ex.printStackTrace();
+                pdSweetAlertDialog2.dismiss();
+//                progressDialog.dismiss();
+
+                Handler h = new Handler(Looper.getMainLooper());
+                h.post(new Runnable() {
+                    public void run() {
+
+                        Toast.makeText(main_context, "Ip Connection Failed ", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
+                return null;
+            } catch (Exception e) {
+                e.printStackTrace();
+                pdSweetAlertDialog2.dismiss();
+//                progressDialog.dismiss();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            pdSweetAlertDialog2.dismiss();
+            Log.e("onPostExecute", "==\t" + s);
+            if (s != null) {
+                if (s.contains("Saved Successfully")) {
+                    GlobelFunction.showSweetDialog(context,1,context.getResources().getString(R.string.saveSuccessfuly),"");
+
+                }else{
+                    Toast.makeText(context, "not added", Toast.LENGTH_SHORT).show();
+
+                }
+//                progressDialog.dismiss();
+            }else{
+                Toast.makeText(context, "not added", Toast.LENGTH_SHORT).show();
+
+            }
+        }
+
+    }
+    private class JSONTask_AddTarget2 extends AsyncTask<String, String, String> {
+        Context  context;
+        List<SalesManInfo>salesManInfos=new ArrayList<>();
+        JSONObject jsonObject;
+
+
+
+        public JSONTask_AddTarget2(   Context context, List<TargetDetalis> targetDetalisList) {
+            this.context = context;
+            this.salesManInfos = salesManInfos;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            String do_ = "my";
+            pdSweetAlertDialog= new SweetAlertDialog(main_context, SweetAlertDialog.PROGRESS_TYPE);
+            pdSweetAlertDialog.getProgressHelper().setBarColor(Color.parseColor("#FDD835"));
+            pdSweetAlertDialog.setTitleText(main_context.getResources().getString(R.string.process));
+            pdSweetAlertDialog.setCancelable(false);
+            pdSweetAlertDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+//            ipAddress = "";
+            try {
+
+
+                if (!ipAddress.equals("")) {
+                    http://localhost:8085/ADMAddSalesMan?CONO=295
+                    URL_TO_HIT = "http://" + ipAddress+":"+portSettings +  headerDll.trim() +"/SaveItemsTarget";
+
+
+                    Log.e("URL_TO_HI",URL_TO_HIT);
+
+
+                }
+
+
+            } catch (Exception e) {
+                pdSweetAlertDialog.dismiss();
+            }
+
+            try {
+
+                String JsonResponse = null;
+                HttpClient client = new DefaultHttpClient();
+                HttpPost request = new HttpPost();
+                try {
+                    request.setURI(new URI(URL_TO_HIT));
+                } catch (URISyntaxException e) {
+                    pdSweetAlertDialog.dismiss();
+                    e.printStackTrace();
+                }
+
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+                nameValuePairs.add(new BasicNameValuePair("CONO", CONO));
+                nameValuePairs.add(new BasicNameValuePair("JSONSTR",Targetobject.toString().trim()));
+
+
+                request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+
+
+                HttpResponse response = client.execute(request);
+
+
+                BufferedReader in = new BufferedReader(new
+                        InputStreamReader(response.getEntity().getContent()));
+
+                StringBuffer sb = new StringBuffer("");
+                String line = "";
+
+                while ((line = in.readLine()) != null) {
+                    sb.append(line);
+                }
+
+                in.close();
+
+
+                JsonResponse = sb.toString();
+                Log.e("tag_requestState", "JsonResponse\t" + JsonResponse);
+
+                return JsonResponse;
+
+
+            }//org.apache.http.conn.HttpHostConnectException: Connection to http://10.0.0.115 refused
+            catch (HttpHostConnectException ex) {
+                ex.printStackTrace();
+//                progressDialog.dismiss();
+                pdSweetAlertDialog.dismiss();
+                Handler h = new Handler(Looper.getMainLooper());
+                h.post(new Runnable() {
+                    public void run() {
+
+                        Toast.makeText(main_context, "Ip Connection Failed ", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
+                return null;
+            } catch (Exception e) {
+                e.printStackTrace();
+                pdSweetAlertDialog.dismiss();
+//                progressDialog.dismiss();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            pdSweetAlertDialog.dismiss();
+            Log.e("onPostExecute", "==\t" + s);
+            if (s != null) {
+                if (s.contains("Saved Successfully")) {
+                    GlobelFunction.showSweetDialog(context,1,context.getResources().getString(R.string.saveSuccessfuly),"");
+
+                }else{
+                    Toast.makeText(context, "not added", Toast.LENGTH_SHORT).show();
+
+                }
+//                progressDialog.dismiss();
+            }else{
+                Toast.makeText(context, "not added", Toast.LENGTH_SHORT).show();
+
+            }
+        }
+
+    }
 }

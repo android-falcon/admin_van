@@ -56,11 +56,17 @@
     <string name="remark">ملاحظة</string>
     <string name="pay_method">طريقة الدفع</string>
     <string name="net_sales">الصافي</string>
+    <string name="net_sales2">صافي المبيعات</string>
+    <string name="items">المواد</string>
+    <string name="vlueoftarget">Vlue of Target</string>
+    <string name="target">الهدف</string>
+    <string name="NetsaleTarget">الهدف على صافي المبيعات</string>
     <string name="pay_date">تاريخ الدفع</string>
     <string name="check_number">رقم الشك</string>
     <string name="payment_details_report">تقرير تفاصيل المبيعات</string>
     <string name="cash_report">تقرير الكاش</string>
     <string name="date">التاريخ</string>
+    <string name="Month">الشهر</string>
     <string name="sales">Sales</string>
     <string name="app_creditCard">Credit Card</string>
     <string name="cash_sale">البيع كاش</string>
@@ -183,6 +189,17 @@
     <string name="locationtracker">تعقب الموقع</string>
     <string name="fillip">Fill Ip Setting</string>
     <string name="refresh">تحديث</string>
+    <string name="addtraget">إضافة هدف</string>
+    <string name="goalachievementrate">المبيعات</string>
+    <string name="Perceofunfulfilledgoal">النسبةالغير محققة للهدف</string>
+    <string name="TargetReport">تقرير الأهداف</string>
+    <string name="week_plan">خطة حسب اسم اليوم  </string>
+    <string name="month_plan"> خطة حسب التاريخ  </string>
+    <string name="selectsalman">أختر مندوب </string>
+    <string name="TARGET_NET_SALE">الهدف لصافي المبيعات</string>
+    <string name="REAL_NET_SALE">  صافي المبيعات المحقق</string>
+    <string name="PERC">النسبة المحققة</string>
+    <string name="fillthenetsaletarget"> لم يتم وضع الهدف لصافي المبيعات! </string>
     <string-array name="app_paymentTypeList">
         <!--        <item>All</item>-->
         <item>كاش</item>
@@ -201,5 +218,31 @@
         <item>price only</item>
         <item>offer</item>
         <!--        <item>replacement</item>-->
+    </string-array>
+
+    <string-array name="DaysOfWeek">
+        <item>السبت</item>
+        <item>الأحد</item>
+        <item>الأثنين</item>
+        <item>الثلاثاء</item>
+        <item>الاربعاء</item>
+        <item>الخميس</item>
+        <item>الجمعة</item>
+
+    </string-array>
+
+    <string-array name="month">
+        <item>1 January</item>
+        <item>2 February</item>
+        <item>3 March</item>
+        <item>4 April</item>
+        <item>5 May</item>
+        <item>6 June</item>
+        <item>7 July</item>
+        <item>8 August</item>
+        <item>9 September</item>
+        <item>10 October</item>
+        <item>11 November</item>
+        <item>12 December</item>
     </string-array>
 </resources>

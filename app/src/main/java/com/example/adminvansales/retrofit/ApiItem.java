@@ -2,6 +2,8 @@ package com.example.adminvansales.retrofit;
 
 import com.example.adminvansales.model.ErrorHandler;
 import com.example.adminvansales.model.ItemInfo;
+import com.example.adminvansales.model.ItemMaster;
+import com.example.adminvansales.model.ItemReportModel;
 
 import org.json.JSONObject;
 
@@ -30,5 +32,10 @@ public interface ApiItem {
     @FormUrlEncoded
     @POST("ADMAddITEM_VISIBILATY")
     Observable<ErrorHandler> addItemVisibleList(@Field("CONO") int com, @Field("JSONSTR")JSONObject jsonObject);
+
+     @GET("IrGetAllItems")
+    Call<List<ItemMaster>> gatItemInfoDetail(@Query("CONO") String ComNo);
+    @GET("ADMItemReport")
+    Call<List<ItemReportModel>> gatItemReport(@Query("CONO") String ComNo,@Query("SALESMANNO") String SALESMANNO,@Query("FROMDATE") String FROMDATE,@Query("TODATE") String TODATE);
 }
 

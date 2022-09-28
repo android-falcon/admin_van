@@ -20,6 +20,7 @@ import androidx.annotation.RequiresApi;
 
 import com.example.adminvansales.Report.PlansReport;
 import com.example.adminvansales.Report.RequstReport;
+import com.example.adminvansales.Report.TargetReport;
 import com.example.adminvansales.model.Account__Statment_Model;
 import com.example.adminvansales.model.AnalyzeAccountModel;
 import com.example.adminvansales.model.CashReportModel;
@@ -39,6 +40,7 @@ import com.example.adminvansales.model.Plan_SalesMan_model;
 import com.example.adminvansales.model.Request;
 import com.example.adminvansales.model.SalesManInfo;
 import com.example.adminvansales.model.SettingModel;
+import com.example.adminvansales.model.TargetDetalis;
 import com.example.adminvansales.model.UnCollect_Modell;
 import com.example.adminvansales.model.customerInfoModel;
 import com.example.adminvansales.Report.AnalyzeAccounts;
@@ -47,6 +49,8 @@ import com.example.adminvansales.Report.CustomerLogReport;
 import com.example.adminvansales.Report.ListOfferReport;
 import com.example.adminvansales.Report.LogHistoryReport;
 import com.example.adminvansales.Report.PaymentDetailsReport;
+import com.example.adminvansales.retrofit.ApiItem;
+import com.example.adminvansales.retrofit.RetrofitInstance;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -74,6 +78,9 @@ import java.util.List;
 import java.util.Set;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Retrofit;
 
 import static com.example.adminvansales.AccountStatment.getAccountList_text;
 import static com.example.adminvansales.EditSalesMan.AdminInfoList;
@@ -87,6 +94,7 @@ import static com.example.adminvansales.ItemReport.itemReportModelsList;
 import static com.example.adminvansales.ListOfferReportAdapter.controlText;
 import static com.example.adminvansales.GlobelFunction.adminId;
 import static com.example.adminvansales.GlobelFunction.adminName;
+import static com.example.adminvansales.LogIn.contextG;
 import static com.example.adminvansales.LogIn.ipAddress;
 import static com.example.adminvansales.LogIn.portSettings;
 import static com.example.adminvansales.MainActivity.Requstrespon;
@@ -114,17 +122,19 @@ import static com.example.adminvansales.ShowNotifications.showNotification;
 
 public class ImportData {
     private DataBaseHandler databaseHandler;
+    ApiItem myAPI;
     private String  CONO="";
     private String URL_TO_HIT="";
+
     public int typeCustomerList = 0;
-    SweetAlertDialog pdValidation, pdPayments, pdAnalyze, pdAccountStatment;
+    SweetAlertDialog pdValidation, pdPayments, pdAnalyze, pdAccountStatment,pdSweetAlertDialog;
     SweetAlertDialog pdValidationCustomer, pdValidationSerial, pdValidationItem, getPdValidationItemCard, getPdValidationLogHistory, pdAuthentication, getPdValidationItemReport;
     public static List<ItemsRequsts> itemsRequsts=new ArrayList<>();
     public static ArrayList<UnCollect_Modell> unCollectlList = new ArrayList<>();
     public static ArrayList<Payment> paymentChequesList = new ArrayList<>();
     Context main_context;
     public static ArrayList<Integer> listId;
-
+    public static ArrayList<ItemMaster> listAllItemReportModels = new ArrayList<>();
     public static ArrayList<Request> listRequest = new ArrayList<Request>();
     public static ArrayList<SalesManInfo> listSalesMan = new ArrayList<SalesManInfo>();
     public static ArrayList<Account__Statment_Model> listCustomerInfo = new ArrayList<Account__Statment_Model>();
@@ -132,7 +142,8 @@ public class ImportData {
     public static List<String> customername = new ArrayList<>();
     public  static Set<String> listAllArea=new HashSet<>();
 
-
+    public static ArrayList<TargetDetalis>salesGoalsList = new ArrayList<>();
+    public static ArrayList<TargetDetalis>ItemsGoalsList = new ArrayList<>();
     public static List<OfferGroupModel> offerGroupModels = new ArrayList<>();
     ProgressDialog progressDialog;
     GlobelFunction globelFunction;
@@ -140,12 +151,21 @@ public class ImportData {
    public  String headerDll="";
 
     public ImportData(Context context) {
-        databaseHandler = new DataBaseHandler(context);
-        this.main_context = context;
-        // globelFunction=new GlobelFunction(context);
-        listId = new ArrayList<>();
-        getCONO();
+        try {
 
+
+            databaseHandler = new DataBaseHandler(context);
+            this.main_context = context;
+            // globelFunction=new GlobelFunction(context);
+            listId = new ArrayList<>();
+            getCONO();
+            URL_TO_HIT = "http://" + ipAddress.trim() + ":" + portSettings.trim() + headerDll.trim();
+            Log.e("URL_TO_HIT", "" + URL_TO_HIT);
+            Retrofit retrofit = RetrofitInstance.getInstance(URL_TO_HIT);
+            myAPI = retrofit.create(ApiItem.class);
+        }catch (Exception e){
+
+        }
     }
 
     public void getUnCollectedCheques(String customerId) {
@@ -5943,6 +5963,443 @@ Log.e("URL_TO_HIT",URL_TO_HIT+"");
 //                progressDialog.dismiss();
             } else {
                 RequstReport.requstsRespon .setText("nodata");
+            }
+        }
+
+    }
+    public void fetchItemMaster() {
+        pdSweetAlertDialog= new SweetAlertDialog(main_context, SweetAlertDialog.PROGRESS_TYPE);
+        pdSweetAlertDialog.getProgressHelper().setBarColor(Color.parseColor("#FDD835"));
+        pdSweetAlertDialog.setTitleText(main_context.getResources().getString(R.string.process));
+        pdSweetAlertDialog.setCancelable(false);
+        pdSweetAlertDialog.show();
+        Call<List<ItemMaster>> myData = myAPI.gatItemInfoDetail(CONO);
+        listAllItemReportModels.clear();
+        myData.enqueue(new Callback<List<ItemMaster>>() {
+
+            @Override
+            public void onResponse(Call<List<ItemMaster>> call, retrofit2.Response<List<ItemMaster>> response) {
+
+                if (!response.isSuccessful()) {
+
+                    Log.e("fetchItemDetailDataonResponse", "not=" + response.message());
+                    pdSweetAlertDialog.dismiss();
+
+                } else {
+                    Log.e("fetchItemDetailDataonResponse", "onResponse=" + response.message());
+
+                    listAllItemReportModels.addAll(response.body());
+                    addSalesmanTarget.fillAdapter(contextG);
+                    pdSweetAlertDialog.dismiss();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ItemMaster>> call, Throwable t) {
+                Log.e("fetchItemDetailDataonFailure", "=" + t.getMessage());
+                pdSweetAlertDialog.dismiss();
+
+            }
+        });
+    }
+    public void fetchItemReport(Context context,String from, String to, String saleman) {
+        getPdValidationItemReport = new SweetAlertDialog((Context) context, SweetAlertDialog.PROGRESS_TYPE);
+        getPdValidationItemReport.getProgressHelper().setBarColor(Color.parseColor("#FDD835"));
+        getPdValidationItemReport.setTitleText(main_context.getResources().getString(R.string.getItemReport));
+        getPdValidationItemReport.setCancelable(false);
+        getPdValidationItemReport.show();
+
+        Call<List<ItemReportModel>> myData = myAPI.gatItemReport(CONO,from,to,saleman);
+        listAllItemReportModels.clear();
+        myData.enqueue(new Callback<List<ItemReportModel>>() {
+
+            @Override
+            public void onResponse(Call<List<ItemReportModel>> call, retrofit2.Response<List<ItemReportModel>> response) {
+
+                if (!response.isSuccessful()) {
+
+                    Log.e("fetchItemDetailDataonResponse", "not=" + response.message());
+                    itemReportModelsList.clear();
+//                    OfferPriceList offerPriceList = (OfferPriceList) context;
+//                    offerPriceList.fillItemCard();
+                    ItemReport itemReport = (ItemReport) context;
+                    itemReport.fillItemAdapter();
+                    itemReport.totalqty();
+                    getPdValidationItemReport.dismissWithAnimation();
+                    //Log.e("item_customer", "SalesManNo2");
+
+                } else {
+                    Log.e("fetchItemDetailDataonResponse", "onResponse=" + response.message());
+
+                    itemReportModelsList.addAll(response.body());
+                    ItemReport itemReport = (ItemReport) context;
+                    itemReport.fillItemAdapter();
+                    itemReport.totalqty();
+                    getPdValidationItemReport.dismissWithAnimation();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ItemReportModel>> call, Throwable t) {
+                Log.e("fetchItemDetailDataonFailure", "=" + t.getMessage());
+                itemReportModelsList.clear();
+//                    OfferPriceList offerPriceList = (OfferPriceList) context;
+//                    offerPriceList.fillItemCard();
+                ItemReport itemReport = (ItemReport) context;
+                itemReport.fillItemAdapter();
+                itemReport.totalqty();
+                getPdValidationItemReport.dismissWithAnimation();
+                //Log.e("item_customer", "SalesManNo2");
+            }
+        });
+    }
+
+    public void getSaleGoalItems(Context context,String salnum,String month) {
+
+        new JSONTask_GetSaleGoalItems(salnum,month,context).execute();
+    }
+
+    public void getSalesmanGoal(Context context,String salnum,String month) {
+
+        new JSONTask_GetSalesmanGoal(salnum,month,context).execute();
+    }
+    private class JSONTask_GetSalesmanGoal extends AsyncTask<String, String, String> {
+        String  SalesmanNum;
+        String date;
+Context context;
+
+        public JSONTask_GetSalesmanGoal(String salesmanNum, String date, Context context) {
+            SalesmanNum = salesmanNum;
+            this.date = date;
+            this.context = context;
+        }
+
+
+        @Override
+        protected void onPreExecute() {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(context);
+            progressDialog.setCancelable(false);
+            progressDialog.setMessage(context.getResources().getString(R.string.process));
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.setProgress(0);
+            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            try {
+                if (!ipAddress.equals("")) {
+
+                    // http://10.0.0.22:8085/ADMGetPlan?CONO=290&SALESNO=1&PDATE=17/01/2022
+                    URL_TO_HIT =
+                            "http://" + ipAddress + ":"+ portSettings.trim() + headerDll.trim() +"/GetGoal?CONO="+CONO.trim()+"&SALE_MAN_NUMBER="+SalesmanNum+"&SMONTH="+date;
+
+                    Log.e("link", "" +  URL_TO_HIT );
+                }
+            } catch (Exception e) {
+                progressDialog.dismiss();
+            }
+
+            try {
+
+                //*************************************
+
+                String JsonResponse = null;
+                HttpClient client = new DefaultHttpClient();
+                HttpGet request = new HttpGet();
+                request.setURI(new URI(URL_TO_HIT));
+
+//
+
+                HttpResponse response = client.execute(request);
+
+
+                BufferedReader in = new BufferedReader(new
+                        InputStreamReader(response.getEntity().getContent()));
+
+                StringBuffer sb = new StringBuffer("");
+                String line = "";
+                Log.e("finalJson***Import", sb.toString());
+
+                while ((line = in.readLine()) != null) {
+                    sb.append(line);
+                }
+
+                in.close();
+
+
+                // JsonResponse = sb.toString();
+
+                String finalJson = sb.toString();
+                Log.e("finalJson***Import", finalJson);
+
+
+
+
+                return finalJson;
+
+
+            }//org.apache.http.conn.HttpHostConnectException: Connection to http://10.0.0.115 refused
+            catch (HttpHostConnectException ex)
+
+            {
+                ex.printStackTrace();
+//                progressDialog.dismiss();
+                progressDialog.dismiss();
+                Handler h = new Handler(Looper.getMainLooper());
+                h.post(new Runnable() {
+                    public void run() {
+
+                        Toast.makeText(context, "Ip Connection Failed", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
+                return null;
+            }
+            catch (Exception e)
+
+            {
+                e.printStackTrace();
+                Log.e("Exception", "" + e.getMessage());
+//                progressDialog.dismiss();
+                progressDialog.dismiss();
+                return null;
+            }
+
+
+            //***************************
+
+        }
+
+
+        @Override
+        protected void onPostExecute(String array) {
+            super.onPostExecute(array);
+            progressDialog.dismiss();
+            JSONObject jsonObject1 = null;
+            if (array != null) {
+                if (array.contains("TARGET_NET_SALE")) {
+
+                    if (array.length() != 0) {
+                        try {
+                            JSONArray requestArray = null;
+                            requestArray = new JSONArray(array);
+                            salesGoalsList.clear();
+                            Log.e("requestArray==",""+requestArray.length());
+                            for (int i = 0; i < requestArray.length(); i++) {
+                                Log.e("sss===","sssss");
+                                TargetDetalis targetDetalis = new      TargetDetalis();
+                                jsonObject1 = requestArray.getJSONObject(i);
+
+
+                                targetDetalis.setTargetNetSale(jsonObject1.getString("TARGET_NET_SALE") );
+                                targetDetalis.setOrignalNetSale( jsonObject1.getString("REAL_NET_SALE"));
+                                targetDetalis.setSalManNo( jsonObject1.getString("SALE_MAN_NUMBER"));
+                                targetDetalis.setSalManName(jsonObject1.getString("SALE_MAN_NUMBER"));
+                                targetDetalis.setDate(jsonObject1.getString("SMONTH"));
+                                targetDetalis.setPERC(jsonObject1.getString("PERC"));
+                                salesGoalsList.add( targetDetalis);
+                                Log.e("targetDetalis==",""+targetDetalis.getTargetNetSale()+"  "+ targetDetalis.getOrignalNetSale());
+                            }
+
+                            Log.e("salesGoalsList==",""+salesGoalsList.size());
+
+
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+
+                    TargetReport. NetsalTargetRespon.setText("TARGET_NET_SALE");
+
+
+                }
+                else  if(array.contains("No Data Found")){
+                    Toast.makeText(context, "No Data", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+
+            }
+        }
+
+    }
+    private class JSONTask_GetSaleGoalItems extends AsyncTask<String, String, String> {
+        String  SalesmanNum;
+        String date;
+     Context   context;
+
+        public JSONTask_GetSaleGoalItems(String salesmanNum, String date, Context context) {
+            SalesmanNum = salesmanNum;
+            this.date = date;
+            this.context = context;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(context);
+            progressDialog.setCancelable(false);
+            progressDialog.setMessage(context.getResources().getString(R.string.process));
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.setProgress(0);
+            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            try {
+                if (!ipAddress.equals("")) {
+
+                    // http://10.0.0.22:8085/ADMGetPlan?CONO=290&SALESNO=1&PDATE=17/01/2022
+                    URL_TO_HIT =
+                            "http://" + ipAddress + ":"+ portSettings.trim() + headerDll.trim() +"/GetGoalItems?CONO="+CONO.trim()+"&SALE_MAN_NUMBER="+SalesmanNum+"&SMONTH="+date;
+
+                    Log.e("link", "" +  URL_TO_HIT );
+                }
+            } catch (Exception e) {
+                progressDialog.dismiss();
+            }
+
+            try {
+
+                //*************************************
+
+                String JsonResponse = null;
+                HttpClient client = new DefaultHttpClient();
+                HttpGet request = new HttpGet();
+                request.setURI(new URI(URL_TO_HIT));
+
+//
+
+                HttpResponse response = client.execute(request);
+
+
+                BufferedReader in = new BufferedReader(new
+                        InputStreamReader(response.getEntity().getContent()));
+
+                StringBuffer sb = new StringBuffer("");
+                String line = "";
+                Log.e("finalJson***Import", sb.toString());
+
+                while ((line = in.readLine()) != null) {
+                    sb.append(line);
+                }
+
+                in.close();
+
+
+                // JsonResponse = sb.toString();
+
+                String finalJson = sb.toString();
+                Log.e("finalJson***Import", finalJson);
+
+
+
+
+                return finalJson;
+
+
+            }//org.apache.http.conn.HttpHostConnectException: Connection to http://10.0.0.115 refused
+            catch (HttpHostConnectException ex)
+
+            {
+                ex.printStackTrace();
+//                progressDialog.dismiss();
+                progressDialog.dismiss();
+                Handler h = new Handler(Looper.getMainLooper());
+                h.post(new Runnable() {
+                    public void run() {
+
+                        Toast.makeText(context, "Ip Connection Failed", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
+                return null;
+            }
+            catch (Exception e)
+
+            {
+                e.printStackTrace();
+                Log.e("Exception", "" + e.getMessage());
+//                progressDialog.dismiss();
+                progressDialog.dismiss();
+                return null;
+            }
+
+
+            //***************************
+
+        }
+
+
+        @Override
+        protected void onPostExecute(String array) {
+            super.onPostExecute(array);
+            progressDialog.dismiss();
+            JSONObject jsonObject1 = null;
+            if (array != null) {
+                if (array.contains("SALE_MAN_NUMBER")) {
+
+                    if (array.length() != 0) {
+                        try {
+                            JSONArray requestArray = null;
+                            requestArray = new JSONArray(array);
+                            ItemsGoalsList.clear();
+                            Log.e("requestArray==",""+requestArray.length());
+                            for (int i = 0; i < requestArray.length(); i++) {
+                                Log.e("sss===","sssss");
+                                TargetDetalis targetDetalis = new      TargetDetalis();
+                                jsonObject1 = requestArray.getJSONObject(i);
+                                targetDetalis.setSalManName(  jsonObject1.getString("SALE_MAN_NAME"));
+                                targetDetalis.setSalManNo(jsonObject1.getString("SALE_MAN_NUMBER"));
+                                targetDetalis.setItemTarget(Double.parseDouble(jsonObject1.getString("ITEMTARGET")));
+                                targetDetalis.setItemName( jsonObject1.getString("ITEMNAME"));
+                                targetDetalis.setItemNo( jsonObject1.getString("ITEMOCODE"));
+                                targetDetalis.setItemNo( jsonObject1.getString("ITEMOCODE"));
+                                targetDetalis.setOrignalNetSale(jsonObject1.getString("REAL_NET_SALE"));
+                                targetDetalis.setPERC(jsonObject1.getString("PERC"));
+                                ItemsGoalsList.add(targetDetalis);
+                            }
+                            Log.e("salesGoalsList==",""+salesGoalsList.size());
+
+
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+
+                    TargetReport. itemTargetRespon.setText("ITEMTARGET");
+
+
+                }
+                else  if(array.contains("No Data Found")){
+                    Toast.makeText(context, "No Data", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+
             }
         }
 

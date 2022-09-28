@@ -7,8 +7,17 @@ public class SettingModel {
 
       String import_way;
     String Cono;
+int Plan_Type;
 
     private  int  locationtracker;
+
+    public int getPlan_Type() {
+        return Plan_Type;
+    }
+
+    public void setPlan_Type(int plan_Type) {
+        Plan_Type = plan_Type;
+    }
 
     public int getLocationtracker() {
         return locationtracker;

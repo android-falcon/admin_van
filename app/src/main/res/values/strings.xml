@@ -55,11 +55,18 @@
     <string name="remark">Remark</string>
     <string name="pay_method">Pay Method</string>
     <string name="net_sales">Net Sales</string>
+    <string name="net_sales2">Net Sales</string>
+    <string name="items">Items</string>
+    <string name="vlueoftarget">Vlue of Target</string>
+    <string name="target">Target</string>
+    <string name="NetsaleTarget">Netsale Target</string>
+
     <string name="pay_date">Pay Date</string>
     <string name="check_number">Cheque Number</string>
     <string name="payment_details_report">Payment details report</string>
     <string name="cash_report">Cash report</string>
     <string name="date">Date</string>
+    <string name="Month">Month</string>
     <string name="sales">Sales</string>
     <string name="app_creditCard">Credit Card</string>
     <string name="cash_sale">Cash Sale</string>
@@ -183,7 +190,20 @@
     <string name="locationtracker">location tracker</string>
     <string name="fillip">Fill Ip Setting</string>
     <string name="refresh">Refresh</string>
+    <string name="addtraget">add traget</string>
+    <string name="goalachievementrate">achievement Sale</string>
+    <string name="Perceofunfulfilledgoal">Perc of unfulfilled Target</string>
+    <string name="TargetReport">Target Report</string>
+    <string name="week_plan"> plan based on day of week </string>
+    <string name="month_plan"> plan based on Date </string>
+    <string name="selectsalman">Select Saleman </string>
+    <string name="filllist">fill The List with Items!!</string>
+    <string name="fillthenetsaletarget"> Fill The Netsale Target </string>
+    <string name="TARGET_NET_SALE">Target Net Sale</string>
+    <string name="REAL_NET_SALE">Real Net Sale</string>
+    <string name="PERC">achievement Perc</string>
     <string-array name="app_paymentTypeList">
+
         <!--        <item>All</item>-->
         <item>Cash</item>
         <item>Cheque</item>
@@ -201,5 +221,30 @@
         <item>price only</item>
         <item>offer</item>
         <!--        <item>replacement</item>-->
+    </string-array>
+
+    <string-array name="DaysOfWeek">
+        <item>Saturday</item>
+        <item>Sunday</item>
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+
+    </string-array>
+    <string-array name="montharray">
+        <item>1 January</item>
+        <item>2 February</item>
+        <item>3 March</item>
+        <item>4 April</item>
+        <item>5 May</item>
+        <item>6 June</item>
+        <item>7 July</item>
+        <item>8 August</item>
+        <item>9 September</item>
+        <item>10 October</item>
+        <item>11 November</item>
+        <item>12 December</item>
     </string-array>
 </resources>
