@@ -67,8 +67,7 @@ public class AccountStatment extends AppCompatActivity {
 //        importData.getCustomerInfo();
         initialView();
 
-        Log.e("customername", "" + customername.size());
-
+        importData.IIs_getCustomerInfo(1);
         preview_button_account.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -159,6 +158,7 @@ public class AccountStatment extends AppCompatActivity {
                         switch (item.getItemId()) {
 
                             case R.id.action_plan:
+                                finish();
                                 startActivity(new Intent(getApplicationContext(), PlanSalesMan.class));
                                 overridePendingTransition(0, 0);
 
@@ -173,13 +173,15 @@ public class AccountStatment extends AppCompatActivity {
 
                             case R.id.action_location:
 
-                                {   startActivity(new Intent(getApplicationContext(), SalesmanMapsActivity.class));
+                                {      finish();
+                                    startActivity(new Intent(getApplicationContext(), SalesmanMapsActivity.class));
                                     overridePendingTransition(0, 0);
                                 }
                                     return true;
 
                             case R.id.action_notifications:
 
+                                finish();
                                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
                                 overridePendingTransition(0, 0);
 
