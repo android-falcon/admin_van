@@ -82,7 +82,7 @@ public class LogIn extends AppCompatActivity {
     public  static    int getTotalBalanceInActivities=0;
     public  static    int voucherReturn_spreat=1;
     public  static   int  talaatLayoutAndPassowrd=0;
-    public static  int hidePlan=1;
+    public static  int hidePlan=0;
 
     public static Context contextG;
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
