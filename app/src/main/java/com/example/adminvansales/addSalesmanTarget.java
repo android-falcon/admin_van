@@ -33,6 +33,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.adminvansales.Adapters.TargetAdapter;
 import com.example.adminvansales.model.TargetDetalis;
@@ -72,7 +73,7 @@ public static    RecyclerView targetrec;
    GlobelFunction globelFunction;
    AppCompatButton saveButton;
     public static  EditText itemcodeedt;
-    public static   String SalmanNo;
+    public  String SalmanNo;
     TextView scanItemCode,writeitemno;
     String Month;
     ExportData exportData;
@@ -83,12 +84,14 @@ public static    RecyclerView targetrec;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_salesman_target);
+
         init();
         try {
             final Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
+                    importData = new ImportData(addSalesmanTarget.this);
                     importData.fetchItemMaster();
                 }
 
@@ -220,9 +223,7 @@ public static    RecyclerView targetrec;
                                 exportData.SaveNetsaleTarget2(targetList, addSalesmanTarget.this);
 
 
-                        targetList.clear();
-                        targetDetalisList.clear();
-                    fillAdapter(addSalesmanTarget.this);
+
 
                     } else       //netsal target
                     {
@@ -247,6 +248,11 @@ public static    RecyclerView targetrec;
 
                     }
                     NetsaleTargetEditText.setText("");
+
+                    targetList.clear();
+                    targetDetalisList.clear();
+                    fillAdapter(addSalesmanTarget.this);
+
                 } else {
                     salman_textInput.setError("");
                     globelFunction.showSweetDialog(addSalesmanTarget.this, 3, getResources().getString(R.string.selectsalman), "");
@@ -411,6 +417,7 @@ public static    RecyclerView targetrec;
 
     }
  public static void fillAdapter(Context context){
+     targetDetalisList.clear();
      for(int i=0;i<ImportData.listAllItemReportModels.size();i++) {
          TargetDetalis targetDetalis = new TargetDetalis();
          targetDetalis.setItemTarget(0);
