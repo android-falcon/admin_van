@@ -19,13 +19,16 @@ public class ItemMaster {
 //                    "ITEMHASSERIAL": "0",
 //                    "ITEMPICSPATH": null
 
+
+
+
 //    @SerializedName("ComapnyNo")
     private  String   ComapnyNo;
 
-    @SerializedName("ItemNo")
+    @SerializedName("ItemOCode")
     public   String   ItemNo;
 
-    @SerializedName("Name")
+    @SerializedName("ItemNameA")
     public   String   Name;
 
 //    @SerializedName("CateogryID")

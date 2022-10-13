@@ -167,13 +167,19 @@ public class HomeActivity extends AppCompatActivity
 
                             case R.id.action_notifications:
 
-                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                startActivity(new Intent(getApplicationContext(), RequstNotifaction.class));
                                 overridePendingTransition(0, 0);
 
                                 return true;
                             case R.id.RequestReport:
 
                                 startActivity(new Intent(getApplicationContext(), RequstReport.class));
+                                overridePendingTransition(0, 0);
+
+                                return true;
+                            case R.id.addtraget:
+
+                                startActivity(new Intent(getApplicationContext(), addSalesmanTarget.class));
                                 overridePendingTransition(0, 0);
 
                                 return true;

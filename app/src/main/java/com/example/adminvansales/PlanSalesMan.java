@@ -75,15 +75,17 @@ public class PlanSalesMan extends AppCompatActivity {
     public static ArrayList<Plan_SalesMan_model> listPlan = new ArrayList<>();
     RadioGroup orderd_typeGroup;
     ImportData importData;
+    Spinner mtrl_calendar_days_of_week;
     public ArrayList<CustomerInfo> listCustomer_filtered = new ArrayList<CustomerInfo>();
     public ArrayList<CustomerInfo> listSelectedCustomer = new ArrayList<CustomerInfo>();
     public ArrayList<CustomerInfo> listCustomer_SalesNo = new ArrayList<CustomerInfo>();
     public ArrayList<CustomerInfo> listCustomer_spair = new ArrayList<CustomerInfo>();
-
+    int NumOfDayWeek;
     public ArrayList<AreaModel> listOfArea = new ArrayList<>();
     public static int orderType = 0;
     public StringBuilder allAreaPlan;
     BottomNavigationView bottom_navigation;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,7 +101,17 @@ public class PlanSalesMan extends AppCompatActivity {
         fillMainList();
         orderType = getTypeOrder();
 
+        mtrl_calendar_days_of_week.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                NumOfDayWeek=i;
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
         bottom_navigation = findViewById(R.id.bottom_navigation);
 
         bottom_navigation.setOnNavigationItemSelectedListener(
@@ -161,6 +173,8 @@ public class PlanSalesMan extends AppCompatActivity {
         {
             linearMain.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         }
+        mtrl_calendar_days_of_week=findViewById(R.id.mtrl_calendar_days_of_week);
+
         importData = new ImportData(this);
         allAreaPlan = new StringBuilder("");
         salesNameSpinner = findViewById(R.id.salesNameSpinner);
@@ -305,6 +319,19 @@ public class PlanSalesMan extends AppCompatActivity {
                 fillSelectedRecycler();
             }
         });
+        fromDate.setVisibility(View.GONE);
+                mtrl_calendar_days_of_week.setVisibility(View.GONE);
+
+        Log.e("GET2PlanTYPE==",LogIn.PlanTYPE+"");
+        if(LogIn.PlanTYPE==1){
+            mtrl_calendar_days_of_week.setVisibility(View.VISIBLE);
+            fromDate.setVisibility(View.GONE);
+        }
+        else {
+            mtrl_calendar_days_of_week.setVisibility(View.GONE);
+            fromDate.setVisibility(View.VISIBLE);
+        }
+
     }
 
     private void fillAllCustomerList() {
@@ -580,7 +607,9 @@ public class PlanSalesMan extends AppCompatActivity {
         for (int i = 0; i < listSelectedCustomer.size(); i++) {
             if (listSelectedCustomer.get(i).getIsSelected() == 1) {
                 Plan_SalesMan_model plan = new Plan_SalesMan_model();
-                plan.setPlan_date(currentDate);
+            //    plan.setPlan_date(currentDate);
+                plan.setPlan_date(NumOfDayWeek+"");
+
                 plan.setCustomerName(listSelectedCustomer.get(i).getCustomerName());
                 plan.setCustomerNumber(listSelectedCustomer.get(i).getCustomerNumber());
                 Log.e("salesNameSpinner", i + "\t" + plan.getCustomerName());

@@ -122,6 +122,19 @@
             android:layout_marginTop="11dp"
             android:layout_marginBottom="40dp"/>
 
+        <TextView
+            android:id="@+id/TargetReport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/TargetReport"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:fontFamily="@font/alegreya_sans"
+            android:textColor="@color/colorblue1"
+            android:drawablePadding="5dp"
+            android:layout_marginTop="11dp"
+            android:layout_marginBottom="40dp"/>
 
 
 

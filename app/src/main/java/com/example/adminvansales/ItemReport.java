@@ -102,10 +102,11 @@ public class ItemReport extends AppCompatActivity {
             String no = globelFunction.getsalesmanNum(salesManSpinner.getSelectedItem().toString());
 
             if (settingModel.getImport_way().equals("0"))
-                importData.getItemReport(ItemReport.this, fromDate.getText().toString(), toDate.getText().toString(), "-1");
+            //    importData.getItemReport(ItemReport.this, fromDate.getText().toString(), toDate.getText().toString(), "-1");
+                importData.  fetchItemReport(ItemReport.this, fromDate.getText().toString(), toDate.getText().toString(), "-1");
             else if (settingModel.getImport_way().equals("1"))
-                importData.IIS_getItemReport(ItemReport.this, fromDate.getText().toString(), toDate.getText().toString(), no);
-
+            //    importData.IIS_getItemReport(ItemReport.this, fromDate.getText().toString(), toDate.getText().toString(), no);
+            importData.  fetchItemReport(ItemReport.this, fromDate.getText().toString(), toDate.getText().toString(), no);
         } catch (Exception e) {
         }
 

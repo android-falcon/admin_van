@@ -94,15 +94,6 @@
         android:orientation="horizontal">
 
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.3"
-            android:fontFamily="@font/alegreya_sans"
-            android:text="@string/Orderedby"
-            android:textColor="#103164"
-            android:textSize="18sp" />
-
         <RadioGroup
             android:id="@+id/orderRG"
             android:layout_width="0dp"
@@ -134,6 +125,15 @@
 
 
         </RadioGroup>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:fontFamily="@font/alegreya_sans"
+            android:text="@string/Orderedby"
+            android:textColor="#103164"
+            android:textSize="18sp" />
 
 
     </LinearLayout>
@@ -177,7 +177,17 @@
             android:background="@drawable/spinner_bg"
             android:gravity="center" />
 
-
+        <Spinner
+            android:id="@+id/mtrl_calendar_days_of_week"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="5dp"
+            android:visibility="gone"
+            android:entries="@array/DaysOfWeek"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="0.5"
+            android:background="@drawable/spinner_bg"
+            android:gravity="center" />
     </LinearLayout>
 
 

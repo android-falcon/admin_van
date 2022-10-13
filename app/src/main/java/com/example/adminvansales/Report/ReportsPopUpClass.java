@@ -45,7 +45,7 @@ public class ReportsPopUpClass {
         //Initialize the elements of our window, install the handler
 
         TextView paymentReport, customerLogReport, cashReport, unCollectedCheques,
-                itemsReport, plansReport,RequestReport;
+                itemsReport, plansReport,RequestReport,TargetReport;
 
         paymentReport = popupView.findViewById(R.id.paymentReport);
         customerLogReport = popupView.findViewById(R.id.customerLogReport);
@@ -53,6 +53,7 @@ public class ReportsPopUpClass {
         unCollectedCheques = popupView.findViewById(R.id.unCollectedChequesReport);
         itemsReport = popupView.findViewById(R.id.itemsReport);
         plansReport = popupView.findViewById(R.id.plansReport);
+        TargetReport= popupView.findViewById(R.id.TargetReport);
         RequestReport= popupView.findViewById(R.id.RequestReport);
         paymentReport.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,7 +138,14 @@ public class ReportsPopUpClass {
 
             }
         });
+        TargetReport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, TargetReport.class);
+                context.startActivity(intent);
 
+            }
+        });
         //Handler for clicking on the inactive zone of the window
         popupView.setOnTouchListener(new View.OnTouchListener() {
             @Override

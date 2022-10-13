@@ -125,6 +125,36 @@
                 android:textSize="18sp" />
 
         </LinearLayout>
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:id="@+id/plansetting"
+
+            android:orientation="vertical"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp">
+
+        <RadioButton
+            android:id="@+id/week_plan"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="14sp"
+            android:checked="true"
+android:textColor="#000"
+            android:gravity="center"
+            android:text="@string/week_plan"
+
+            />
+            <RadioButton
+                android:id="@+id/month_plan"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="14sp"
+                android:checked="true"
+                android:gravity="center"
+                android:textColor="#000"
+                android:text="@string/month_plan"
+                />
+        </RadioGroup>
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

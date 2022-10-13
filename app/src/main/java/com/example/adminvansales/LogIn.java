@@ -76,7 +76,7 @@ public class LogIn extends AppCompatActivity {
     public  static int rawahneh=0;// 1= EXPORT STOCK TABLES
     public  static int locationtrackerFlage=0;
     public  static    int getMaxVoucherServer=0;
-
+    public  static    int PlanTYPE;
     public  static  int passwordSettingAdmin=0;//0 ---> static password   1 ----->password from admin
     public  static  int makeOrders=0;// 1= just orders app
     public  static    int getTotalBalanceInActivities=0;
@@ -135,10 +135,13 @@ public class LogIn extends AppCompatActivity {
         settingModelList=new SettingModel();
         try {
             settingModelList = databaseHandler.getAllSetting();
+            PlanTYPE=settingModelList.getPlan_Type();
 //            Log.e("settingModelList",""+settingModelList.getIpAddress().trim().length());
             if(settingModelList.getIpAddress().trim().length()!=0)
             {
                 ipAddress = settingModelList.getIpAddress();
+
+                Log.e("GETPlanTYPE==",PlanTYPE+"");
             }else {
                 settingDialog();
             }
@@ -164,9 +167,13 @@ public class LogIn extends AppCompatActivity {
              if(typeimport==null){
                  typeimport="1";
              }
+
+
+
          }catch (Exception e)
          {
              typeimport="1";
+
          }
         typeimport="1";
         Log.e("importData","importData="+typeimport);
@@ -404,6 +411,7 @@ public class LogIn extends AppCompatActivity {
         }
     }
     public  void settingDialog(){
+        Log.e("settingDialogPlanTYPE==",PlanTYPE+"");
 //            new LocaleAppUtils().changeLayot(context);
         final Dialog dialog = new Dialog(LogIn.this, R.style.Theme_Dialog);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -422,6 +430,25 @@ public class LogIn extends AppCompatActivity {
         SwitchCompat   locationtracker= dialog.findViewById(R.id.locationtracker);
         final EditText editTextIp=dialog.findViewById(R.id.setindEditText);
         final EditText  portSetting=dialog.findViewById(R.id.portSetting);
+        RadioGroup plansetting=dialog.findViewById(R.id.plansetting);
+     RadioButton   week_plan=dialog.findViewById(R.id.week_plan);
+        RadioButton  month_plan=dialog.findViewById(R.id.month_plan);
+        plansetting.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int radioButtonID) {
+                switch(radioButtonID) {
+                    case R.id.week_plan:
+                        PlanTYPE=1;
+                        Log.e("week_plan,PlanTYPE==",PlanTYPE+"");
+                        break;
+                    case R.id.month_plan:
+                        PlanTYPE=0;
+                        Log.e("month_plan,PlanTYPE==",PlanTYPE+"");
+                        break;
+
+                }
+            }
+        });
 //RadioButton RB_mysql= dialog.findViewById(R.id.RB_mysql);
 //        RB_mysql.setChecked(true);
 //        RadioButton RB_iis= dialog.findViewById(R.id.RB_iis);
@@ -440,11 +467,19 @@ public class LogIn extends AppCompatActivity {
                 Cono=settingModels.getCono();
                 locationtracker.setChecked((settingModels.getLocationtracker() == 1));
                 locationtrackerFlage=settingModels.getLocationtracker();
+             if   (settingModels.getPlan_Type()==1 ){
+                 month_plan.setChecked(false );
+                 week_plan.setChecked(true );
+             }
+             else{   week_plan.setChecked(false );
+                 month_plan.setChecked(true );
+             }
 //                if(import_way.equals("0"))
 //                    RB_mysql.setChecked(true);
 //                else
 //                    RB_iis.setChecked(true);
                 editTextIp.setText(ipAddress);
+
                 portSetting.setText(portSettings);
 
                 CoNo.setText(Cono);
@@ -468,8 +503,8 @@ public class LogIn extends AppCompatActivity {
                     if(portSettings.trim().length()!=0) {
 
                         if(Cono.trim().length()!=0) {
-
-                            databaseHandler.addSetting(ipAddress,portSettings,"1",Cono,loc_trac);
+                            Log.e("PlanTYPE==",PlanTYPE+"");
+                            databaseHandler.addSetting(ipAddress,portSettings,"1",Cono,loc_trac,PlanTYPE);
                             dialog.dismiss();
                             locationtrackerFlage=loc_trac;
 

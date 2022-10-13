@@ -49,12 +49,24 @@
             android:gravity="center_vertical"
             android:inputType="date"
             android:padding="1dp"
+
             android:layout_weight="1"
             android:background="@drawable/white_and_blue"
             android:textColor="@color/colorblue_dark"
             android:textSize="14sp"
             android:drawableLeft="@drawable/ic_baseline_calendar_today_24" />
+        <Spinner
+            android:id="@+id/mtrl_calendar_days_of_week"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="5dp"
+            android:entries="@array/DaysOfWeek"
 
+            android:background="@drawable/spinner_bg"
+            android:gravity="center" />
         <TextView
             android:id="@+id/fillPlan"
             android:layout_width="match_parent"
@@ -168,6 +180,7 @@
 
         <RadioButton
             android:id="@+id/bySaleMan"
+
             android:visibility="visible"
             android:layout_width="match_parent"
             android:layout_weight="1"
