@@ -10,7 +10,6 @@ import android.os.Build;
 import android.os.IBinder;
 import android.provider.Settings;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -19,9 +18,7 @@ import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.adminvansales.DataBaseHandler;
-import com.example.adminvansales.GlobelFunction;
 import com.example.adminvansales.R;
-import com.example.adminvansales.RequstNotifaction;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -30,8 +27,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Timer;
 
 public class MyServicesForNotification  extends Service {
@@ -102,7 +97,7 @@ databaseReference = dbroot.getReference(RequstTest.class.getSimpleName()).child(
     @Override
     public void onDestroy() {
 
-        allTaskInFireBase();
+        allTaskInFireBasewithoutnotify();
         Log.e(TAG, "onCreated() , service stopped..."+id);
     }
 
@@ -139,6 +134,27 @@ databaseReference = dbroot.getReference(RequstTest.class.getSimpleName()).child(
 
 
     }
+    void allTaskInFireBasewithoutnotify() {
+        FirebaseDatabase dbroot = FirebaseDatabase.getInstance();
+        databaseReference = dbroot.getReference(RequstTest.class.getSimpleName()).child(Firebase_ipAddress);
+
+        ValueEventListener valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                    String key = ds.getKey();
+                    Log.e("key==",key+"");
+                    getlistofdatawithoutnotify(key);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        };
+        databaseReference.addListenerForSingleValueEvent(valueEventListener);
+
+
+    }
     private void getlistofdata(String key) {
         Log.e("getlistofdata==", "getlistofdata");
         ChildEventListener childEventListener = new ChildEventListener() {
@@ -154,6 +170,74 @@ databaseReference = dbroot.getReference(RequstTest.class.getSimpleName()).child(
                             String salmanname = requstTest.getSalesman_name();
 
                             displayNotification(MyServicesForNotification.this, "New Requst From " + salmanname, "");
+
+
+                        }
+                    }
+                }catch (Exception e){
+                    Log.e("Exception", "Exception:" + e.getMessage());
+                }
+
+                // ...
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String previousChildName) {
+                Log.e("onChildAdded", "onChildChanged:" + dataSnapshot.getKey());
+
+                // A comment has changed, use the key to determine if we are displaying this
+                // comment and if so displayed the changed comment.
+
+                // ...
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                Log.e("onChildAdded", "onChildRemoved:" + dataSnapshot.getKey());
+
+                // A comment has changed, use the key to determine if we are displaying this
+                // comment and if so remove it.
+
+
+                // ...
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String previousChildName) {
+                Log.e("onChildAdded", "onChildMoved:" + dataSnapshot.getKey());
+
+                // A comment has changed position, use the key to determine if we are
+                // displaying this comment and if so move it.
+//                RequstTest movedComment = dataSnapshot.getValue(RequstTest.class);
+//                String commentKey = dataSnapshot.getKey();
+//                requstsArrayAdapter.add(movedComment);
+//                filladapter();
+                // ...
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e("onChildAdded", "postComments:onCancelled", databaseError.toException());
+
+            }
+        };
+        databaseReference.child(key).addChildEventListener(childEventListener);
+    }
+    private void getlistofdatawithoutnotify(String key) {
+        Log.e("getlistofdata==", "getlistofdata");
+        ChildEventListener childEventListener = new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
+                Log.e("onChildAdded", "onChildAdded:" + dataSnapshot.getKey());
+
+                // A new comment has been added, add it to the displayed list
+                try {
+                    RequstTest requstTest = dataSnapshot.getValue(RequstTest.class);
+                    if(requstTest!=null) {
+                        if (requstTest.getStatus()!=null && requstTest.getStatus().equals("0")) {
+                            String salmanname = requstTest.getSalesman_name();
+
+                        //    displayNotification(MyServicesForNotification.this, "New Requst From " + salmanname, "");
 
 
                         }
