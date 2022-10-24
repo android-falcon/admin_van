@@ -40,7 +40,7 @@
                 android:fontFamily="@font/alegreya_sans"
                 android:text="@string/Month"
                 android:textColor="#103164"
-                android:textSize="18sp" />
+                android:textSize="14sp" />
 
             <Spinner
                 android:id="@+id/dateEdt"
@@ -75,7 +75,7 @@
                 android:fontFamily="@font/alegreya_sans"
                 android:text="@string/addtraget"
                 android:textColor="#103164"
-                android:textSize="18sp" />
+                android:textSize="14sp" />
 
             <RadioGroup
                 android:layout_width="wrap_content"
@@ -174,7 +174,7 @@
                 android:fontFamily="@font/alegreya_sans"
                 android:text="@string/NetsaleTarget"
                 android:textColor="#103164"
-                android:textSize="18sp" />
+                android:textSize="14sp" />
 
             <EditText
                 android:id="@+id/NetsaleTarget"
@@ -293,7 +293,7 @@ android:layout_weight="2"
                 android:fontFamily="@font/alegreya_sans"
                 android:text="@string/vlueoftarget"
                 android:textColor="#103164"
-                android:textSize="18sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/vlueoftarget"

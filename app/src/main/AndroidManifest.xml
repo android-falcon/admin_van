@@ -58,8 +58,9 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".addSalesmanTarget"
-            android:exported="false"
-            android:windowSoftInputMode="adjustPan|adjustResize" />
+            android:windowSoftInputMode="adjustPan|adjustResize"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:exported="false" />
         <activity
             android:name=".Report.RequstReport"
             android:exported="false" />
@@ -167,6 +168,7 @@
             android:screenOrientation="fullSensor"
             android:stateNotNeeded="true"
             android:windowSoftInputMode="stateAlwaysHidden" />
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="YOUR_API_KEY" />

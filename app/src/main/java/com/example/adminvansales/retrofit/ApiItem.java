@@ -22,8 +22,8 @@ public interface ApiItem {
     //    @GET("IrGetAllItems/{CONO}")
 //    Observable<List<ItemInfo>> gatItem(    @Query("CONO") int companyNo);
     @GET("IrGetAllItems")
-    Observable<List<ItemInfo>> gatItem(@Query("CONO") int ComNo);
-    @GET("IrGetAllItems")
+    Observable<List<ItemInfo>> gatItem(@Query("CONO") String  ComNo);
+    @GET("/IrGetAllItems")
     Call<List<ItemInfo>> gatItemInfo(@Query("CONO") int ComNo);
 //    @FormUrlEncoded
 //    @POST("ADMAddItem_Visibilty")

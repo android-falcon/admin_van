@@ -161,7 +161,7 @@ public class ImportData {
             getCONO();
             URL_TO_HIT = "http://" + ipAddress.trim() + ":" + portSettings.trim() + headerDll.trim()+ "/" ;
             Log.e("URL_TO_HIT", "" + URL_TO_HIT);
-            Retrofit retrofit = RetrofitInstance.getInstance(URL_TO_HIT);
+            Retrofit retrofit = RetrofitInstance.getInstance(URL_TO_HIT+"/");
             myAPI = retrofit.create(ApiItem.class);
             Log.e("ImportData", "myAPI=" + myAPI);
         }catch (Exception exception){
