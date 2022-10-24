@@ -18,39 +18,42 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class DaoRequsts {
-    private DatabaseReference databaseReference,databaseReference2;
+    private DatabaseReference databaseReference;
     Context context;
     DataBaseHandler mHandler;
-
+    FirebaseDatabase dbroot;
     String ipAddress="";
   public static String  Firebase_ipAddress;
     public DaoRequsts(Context context) {
         this.mHandler = new DataBaseHandler(context);
         this.context = context;
-        FirebaseDatabase dbroot = FirebaseDatabase.getInstance();
+        dbroot = FirebaseDatabase.getInstance();
 
 
 
         if(mHandler.getAllSetting()!= null) {
             ipAddress = mHandler.getAllSetting().getIpAddress();
             Firebase_ipAddress= ipAddress.replace(".", "_");
+            if(Firebase_ipAddress.contains(":"))    Firebase_ipAddress= Firebase_ipAddress.substring(0, Firebase_ipAddress.indexOf(":"));
             Log.e("ipAddress==",Firebase_ipAddress);
         }
 
-        databaseReference2 = dbroot.getReference(RequstTest.class.getSimpleName()).child(Firebase_ipAddress);
+        databaseReference = dbroot.getReference(RequstTest.class.getSimpleName()).child(Firebase_ipAddress);
 
 
 
 
-        Log.e("addRequst==","addRequst");
+
 
 
 
     }
-    public boolean ChildIsExists(String value) {
+    public boolean ChildIsExists(RequstTest requstTest,String value) {
+
         Log.e("ChildIsExists","ChildIsExists");
         final boolean[] flage = {false};
-        databaseReference2.child(Firebase_ipAddress).addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child(requstTest.getSalesman_no())
+.child(Firebase_ipAddress).child(requstTest.getSalesman_no()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.hasChild(value)) {
@@ -72,8 +75,12 @@ public class DaoRequsts {
         return flage[0];  }
 
     public void addRequst(RequstTest requsts){
-       if(!ChildIsExists(requsts.getKey_validation())) {
-           databaseReference2.child(requsts.getKey_validation()).setValue(requsts).addOnSuccessListener(new OnSuccessListener<Void>() {
+        Log.e("addRequst==", ""+requsts.getSalesman_no());
+        Log.e("databaseReference2==", databaseReference.getRoot()+"");
+       if(!ChildIsExists(requsts,requsts.getKey_validation())) {
+
+           databaseReference.child(requsts.getSalesman_no())
+.child(requsts.getKey_validation()).setValue(requsts).addOnSuccessListener(new OnSuccessListener<Void>() {
 
                @Override
                public void onSuccess(Void aVoid) {
@@ -81,7 +88,8 @@ public class DaoRequsts {
                    Log.e("onSuccess==", "add");
                }
            });
-           databaseReference2.child(requsts.getKey_validation()).setValue(requsts).addOnFailureListener(new OnFailureListener() {
+           databaseReference.child(requsts.getSalesman_no())
+.child(requsts.getKey_validation()).setValue(requsts).addOnFailureListener(new OnFailureListener() {
                @Override
                public void onFailure(@NonNull Exception e) {
                    Log.e("Exception==", e.getMessage() + "");

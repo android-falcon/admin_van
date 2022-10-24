@@ -36,4 +36,5 @@
         android:icon="@drawable/ic_baseline_add_task_24"
         android:iconTint="@color/white"
         android:title="@string/addtraget" />
+
 </menu>

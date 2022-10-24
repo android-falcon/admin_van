@@ -19,4 +19,26 @@
         android:id="@+id/itemvible"
         android:title="@string/itemvisble"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/setting"
+        android:title="@string/setting"
+        android:visible="false"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/flagesetting"
+        android:visible="false"
+        android:title="@string/flagesetting"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/addcompanyinfo"
+        android:title="@string/addcompanyinfo"
+        android:visible="false"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/AddCommissionTarget"
+
+        android:visible="false"
+        android:title="@string/AddCommissionTarget"
+        app:showAsAction="always" />
+
 </menu>

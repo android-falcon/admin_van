@@ -9,6 +9,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.adminvansales.Report.RequstReport;
+import com.example.adminvansales.model.CommissionTarget;
 import com.example.adminvansales.model.CustomerInfo;
 import com.example.adminvansales.model.ItemsRequsts;
 import com.example.adminvansales.model.Password;
@@ -51,8 +52,8 @@ import static com.example.adminvansales.Report.ListOfferReport.control;
 
 public class ExportData {
     SweetAlertDialog pdRepRev,pdSweetAlertDialog,pdSweetAlertDialog2;
-    private JSONArray jsonArrayTarget,jsonArraysalesman,jsonArrayadmins,passwordjsonArray,RequstsjsonArray,VanRequstsjsonArray,UpdateloadvanArray;
-    JSONObject Targetobject,addsalesmanobject,addadminsmanobject,passwordobject,Requstobject,VanRequstsjsonobject,Updateloadvanobject;
+    private JSONArray jsonArrayComm_Target,jsonArrayTarget,jsonArraysalesman,jsonArrayadmins,passwordjsonArray,RequstsjsonArray,VanRequstsjsonArray,UpdateloadvanArray;
+    JSONObject Comm_Targetobject,Targetobject,addsalesmanobject,addadminsmanobject,passwordobject,Requstobject,VanRequstsjsonobject,Updateloadvanobject;
     private DataBaseHandler databaseHandler;
     private JSONArray jsonArrayRequest;
     private String URL_TO_HIT ;
@@ -60,8 +61,8 @@ public class ExportData {
     GlobelFunction globelFunction;
     SweetAlertDialog pdValidationAdd;
     SweetAlertDialog pdValidationUpdate;
-    public  String headerDll="/Falcons/VAN.dll";
-// public  String headerDll="";
+   // public  String headerDll="/Falcons/VAN.dll";
+ public  String headerDll="";
     public  String CONO="";
     Context main_context;
     int flag=0;
@@ -196,6 +197,22 @@ public class ExportData {
             e.printStackTrace();
         }
     }
+    private void  getCommissionTargetObject(List<CommissionTarget>targetDetalisList) {
+        jsonArrayComm_Target = new JSONArray();
+        for (int i = 0; i < targetDetalisList.size(); i++)
+        {
+
+            jsonArrayComm_Target.put(targetDetalisList.get(i).getJsonObject2());
+
+        }
+        try {
+            Comm_Targetobject =new JSONObject();
+            Comm_Targetobject.put("JSN", jsonArrayComm_Target);
+            Log.e("Targetobject",""+ Comm_Targetobject.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
     private void  getAddPlanObject(List<Plan_SalesMan_model>salesManInfos) {
         jsonArraysalesman = new JSONArray();
         for (int i = 0; i < salesManInfos.size(); i++)
@@ -305,6 +322,13 @@ public class ExportData {
 
          getAddTargetObject2(targetDetalisList);
         new JSONTask_AddTarget2(context,targetDetalisList).execute();
+    }
+    public void getCommissionTarget(List<CommissionTarget>targetDetalisList,Context context){
+        getCONO();
+
+
+        getCommissionTargetObject(targetDetalisList);
+        new JSONTask_AddCommissionTarget(context,targetDetalisList).execute();
     }
 
     public void IIs_AddPlan(List<Plan_SalesMan_model>salesManInfos, Context context){
@@ -3421,6 +3445,137 @@ public class ExportData {
                 List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
                 nameValuePairs.add(new BasicNameValuePair("CONO", CONO));
                 nameValuePairs.add(new BasicNameValuePair("JSONSTR",Targetobject.toString().trim()));
+
+
+                request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+
+
+                HttpResponse response = client.execute(request);
+
+
+                BufferedReader in = new BufferedReader(new
+                        InputStreamReader(response.getEntity().getContent()));
+
+                StringBuffer sb = new StringBuffer("");
+                String line = "";
+
+                while ((line = in.readLine()) != null) {
+                    sb.append(line);
+                }
+
+                in.close();
+
+
+                JsonResponse = sb.toString();
+                Log.e("tag_requestState", "JsonResponse\t" + JsonResponse);
+
+                return JsonResponse;
+
+
+            }//org.apache.http.conn.HttpHostConnectException: Connection to http://10.0.0.115 refused
+            catch (HttpHostConnectException ex) {
+                ex.printStackTrace();
+//                progressDialog.dismiss();
+                pdSweetAlertDialog.dismiss();
+                Handler h = new Handler(Looper.getMainLooper());
+                h.post(new Runnable() {
+                    public void run() {
+
+                        Toast.makeText(main_context, "Ip Connection Failed ", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
+                return null;
+            } catch (Exception e) {
+                e.printStackTrace();
+                pdSweetAlertDialog.dismiss();
+//                progressDialog.dismiss();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            pdSweetAlertDialog.dismiss();
+            Log.e("onPostExecute", "==\t" + s);
+            if (s != null) {
+                if (s.contains("Saved Successfully")) {
+                    GlobelFunction.showSweetDialog(context,1,context.getResources().getString(R.string.saveSuccessfuly),"");
+
+                }else{
+                    Toast.makeText(context, "not added", Toast.LENGTH_SHORT).show();
+
+                }
+//                progressDialog.dismiss();
+            }else{
+                Toast.makeText(context, "not added", Toast.LENGTH_SHORT).show();
+
+            }
+        }
+
+    }
+    private class JSONTask_AddCommissionTarget extends AsyncTask<String, String, String> {
+        Context  context;
+        List<SalesManInfo>salesManInfos=new ArrayList<>();
+        JSONObject jsonObject;
+
+
+
+        public JSONTask_AddCommissionTarget(   Context context, List<CommissionTarget> targetDetalisList) {
+            this.context = context;
+            this.salesManInfos = salesManInfos;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            String do_ = "my";
+            pdSweetAlertDialog= new SweetAlertDialog(main_context, SweetAlertDialog.PROGRESS_TYPE);
+            pdSweetAlertDialog.getProgressHelper().setBarColor(Color.parseColor("#FDD835"));
+            pdSweetAlertDialog.setTitleText(main_context.getResources().getString(R.string.process));
+            pdSweetAlertDialog.setCancelable(false);
+            pdSweetAlertDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+//            ipAddress = "";
+            try {
+
+
+                if (!ipAddress.equals("")) {
+                    http://localhost:8085/ADMAddSalesMan?CONO=295
+                    URL_TO_HIT = "http://" + ipAddress+":"+portSettings +  headerDll.trim() +"/SaveItemsTarget";
+
+
+                    Log.e("URL_TO_HI",URL_TO_HIT);
+
+
+                }
+
+
+            } catch (Exception e) {
+                pdSweetAlertDialog.dismiss();
+            }
+
+            try {
+
+                String JsonResponse = null;
+                HttpClient client = new DefaultHttpClient();
+                HttpPost request = new HttpPost();
+                try {
+                    request.setURI(new URI(URL_TO_HIT));
+                } catch (URISyntaxException e) {
+                    pdSweetAlertDialog.dismiss();
+                    e.printStackTrace();
+                }
+
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+                nameValuePairs.add(new BasicNameValuePair("CONO", CONO));
+                nameValuePairs.add(new BasicNameValuePair("JSONSTR",Comm_Targetobject.toString().trim()));
 
 
                 request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));

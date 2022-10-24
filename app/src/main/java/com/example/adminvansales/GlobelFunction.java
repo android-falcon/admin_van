@@ -231,6 +231,16 @@ public String getsalesmanNum(String name){
 
         }}
     return "" ;  }
+    public String getsalesmanname(String num){
+
+        for(int i=0;i<salesManInfosList.size();i++){
+            if(salesManInfosList.get(i).getSalesManNo().equals(num)) {
+                Log.e("name===",salesManInfosList.get(i).getSalesName());
+                Log.e("num===",salesManInfosList.get(i).getSalesManNo());
+                return salesManInfosList.get(i).getSalesName();
+
+            }}
+        return "" ;  }
     public  String getDecimal(String number){
         double num=0;
         try {

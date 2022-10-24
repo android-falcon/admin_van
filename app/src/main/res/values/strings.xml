@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Admin Van</string>
+    <string name="setting">add Setting</string>
+
     <string name="logIn">Log In</string>
     <string name="Notification">Notifications</string>
     <string name="RequestDetail">Request Detail</string>
@@ -202,6 +204,118 @@
     <string name="TARGET_NET_SALE">Target Net Sale</string>
     <string name="REAL_NET_SALE">Real Net Sale</string>
     <string name="PERC">achievement Perc</string>
+    <string name="num_of_copy">Number Of Copy</string>
+    <string name="vouchers_serial">Vouchers Serial</string>
+    <string name="invoice_serial_from">invoice</string>
+    <string name="return_serial_from">return</string>
+    <string name="order_serial_from">order</string>
+    <string name="payments_serial_from">Payments Serial</string>
+
+    <string name="tax_calc_kind">Tax Calc Kind</string>
+    <string name="exclude">Exclude</string>
+    <string name="include">Include</string>
+    <string name="print_method">Print Method</string>
+    <string name="bluetooth">Bluetooth</string>
+    <string name="wifi">Wifi</string>
+    <string name="price_by_customer">Item Price By Customer</string>
+    <string name="use_weight_case">Use Weight Case</string>
+    <string name="allow_sale_with_minus">Allow Sale With Minus</string>
+    <string name="can_change_price">Can Change Price</string>
+    <string name="can_change_priceReturn">Can Change Price in Return Vochers</string>
+    <string name="get_salesman_customers_only">Get SalesMan Customers Only</string>
+    <string name="min_sale_price">Min Sale Price</string>
+    <string name="allow_cust_check_out_range">Validate customer location</string>
+    <!--    <string name="allow_cust_check_out_range">Allow Customer Check Out Of Range</string>-->
+    <string name="read_discount_from_offers">Read Discount From Offers</string>
+    <string name="work_online">Work Online</string>
+
+
+    <string name="app_cash_report">Cash Report</string>
+
+
+    <string name="bonus_not_allowed">Bonus not allowed</string>
+    <string name="no_offer_for_credit">No Offer For Credit Invoice</string>
+    <string name="CustomerAuthorize">Customer Authorized</string>
+    <string name="passowrddata">Password imp/exp Data</string>
+    <string name="hideQty">Hide Qty for salesMan</string>
+    <string name="lockcash">Lock Cash Report</string>
+    <string name="showpass">Show Passowrd</string>
+    <string name="preventNew">Prevent New Order</string>
+    <string name="requiredNote">Required Note</string>
+    <string name="preventTotaldisc">Prevent Total discount</string>
+    <string name="failUsers">Empty Database Enter as Master</string>
+    <string name="automatic_cheque">Automatic cheque</string>
+    <string name="tafqit">tafqit</string>
+    <string name="app_cheque_count">Cheque count</string>
+    <string name="preventPayMethod">Prevent change Pay Method</string>
+
+    <string name="app_cash">Cash   </string>
+    <string name="saveLocation">Save Location</string>
+    <string name="SetVochsPosted">Set Vochers Posted</string>
+
+    <string name="ShowCustomerList">Show Customer List</string>
+    <string name="pleaseSelectUser">Please Select User</string>
+    <string name="noReturnInvoice">No Return Invoice</string>
+    <string name="InvalidLocation">Invalid Customer Location</string>
+    <string name="duplicateddata">Can\'t Export Data For duplicated data</string>
+    <string name="duplicatedVoucherNo">Duplicated Voucher Number you can\'t complete </string>
+    <string name="customerHaveLocation">Customer Have Location</string>
+    <string name="succsesful">SUCCESSFUL</string>
+    <string name="LocationSaved">Location Saved</string>
+    <string name="workSerial">Work With Serial</string>
+    <string name="ShowItemImage">Show Item Image</string>
+    <string name="ApproveAdmin">Approve Admin</string>
+    <string name="youHaveRequestToAdmin">You Have Request To Admin</string>
+    <string name="saveOnly">Save Only</string>
+    <string name="showSolidQty">Show Solid Qty</string>
+    <string name="EndTripReport">not making any sale Report</string>
+    <string name="items_Unit">items Unit</string>
+    <string name="showCustomerLocation">Show Customer Location</string>
+    <string name="aqaba_tax_exemption">Aqaba Tax Exemption</string>
+    <string name="salesoffers">Offers just for sales</string>
+    <string name="checkqtyinorder">check qty in orders</string>
+    <string name="headerprint">dont print header in Orders</string>
+    <string name="continousReadingBarcod">Continous Reading Barcod</string>
+    <string name="dontShowTaxOnprinter">Dont Show Tax On Printer</string>
+    <string name="itemUnit">Item Unit</string>
+    <string name="sumCurrentQty">Sum Current Qty</string>
+    <string name="dontDuplicateItem">Dont Duplicate Item</string>
+    <string name="readOfferFromAdmin">Offer and price From Admin</string>
+    <string name="checkQtyServer">Check Qty Server</string>
+    <string name="paymethod_check">Cash Invoices</string>
+    <string name="max_discount">Max Discount Fpr credit</string>
+    <string name="enter_qty">Enter Qty</string>
+    <string name="SalsManPlan">SalsManPlan</string>
+    <string name="posActive">POS Active</string>
+    <string name="SalsManTrips">SalsMan Trips</string>
+    <string name="maxvochServer">Max Vocher From Server</string>
+    <string name="purchaseOrder">Purchase Order</string>
+    <string name="no_tax">No Tax</string>
+    <string name="explain_offer_cakeshop_bonus">On: (bonus * 1)   Of: (qty/bonusLimit ) * bonus</string>
+    <string name="qasion_explain_discount">On:(qty*discount)</string>
+    <string name="talaat_offer_discount">On:(qty/discountLimit)* discount</string>
+    <string name="flagesetting">Add Flage Setting For SalesMen</string>
+
+    <string name="company_name">Company Name: </string>
+    <string name="company_tel">Company Tel: </string>
+    <string name="tax_no">Tax No: </string>
+    <string name="logo">Logo: </string>
+    <string name="invoice_note">Invoice Note :</string>
+    <string name="noteposition">note position</string>
+    <string name="top">Top</string>
+    <string name="Bottom">Bottom</string>
+    <string name="action_company_info">Company Info</string>
+    <string name="national_id">National Id</string>
+    <string name="carNo">Car Number</string>
+    <string name="salesman_name">Sales man name</string>
+    <string name="addcompanyinfo">Add Company Info</string>
+    <string name="secondpassword">Second password</string>
+    <string name="mainpassword">Main password</string>
+    <string name="AddCommissionTarget">Add Commission Target</string>
+    <string name="Commissiontarget">Commission Target</string>
+    <string name="CommissionTargetReport">Commission Target Report </string>
+
+    <string name="title_activity_firebase_maps">FirebaseMapsActivity</string>
     <string-array name="app_paymentTypeList">
 
         <!--        <item>All</item>-->
@@ -216,13 +330,13 @@
         <item>offer</item>
         <!--        <item>replacement</item>-->
     </string-array>
+
     <string-array name="ListType">
         <item>price by customer</item>
         <item>price only</item>
         <item>offer</item>
         <!--        <item>replacement</item>-->
     </string-array>
-
     <string-array name="DaysOfWeek">
         <item>Saturday</item>
         <item>Sunday</item>

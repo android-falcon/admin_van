@@ -13,6 +13,7 @@ import android.os.Message;
 import android.util.Log;
 import android.view.View;
 
+import com.example.adminvansales.Interface.LocationDao;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -81,6 +82,9 @@ GlobelFunction globelFunction;
                   }
 
               }, 0, 10000);
+
+//              LocationDao locationDao=new LocationDao(SalesmanMapsActivity.this);
+//              locationDao.allTaskInFireBase();
           }else
           {
               if (flag) {

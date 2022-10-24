@@ -67,7 +67,11 @@ public class ScanActivity extends AppCompatActivity
                addSalesmanTarget. itemcodeedt.setText(valueBarcode.replaceAll("\\s+", "").trim());
 
                 break;
+            case "5":
 
+                AddCommissionTarget. itemcodeedt.setText(valueBarcode.replaceAll("\\s+", "").trim());
+
+                break;
         }
 
         onBackPressed();

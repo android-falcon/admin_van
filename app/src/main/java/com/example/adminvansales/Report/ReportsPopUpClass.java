@@ -45,7 +45,7 @@ public class ReportsPopUpClass {
         //Initialize the elements of our window, install the handler
 
         TextView paymentReport, customerLogReport, cashReport, unCollectedCheques,
-                itemsReport, plansReport,RequestReport,TargetReport;
+                itemsReport, plansReport,RequestReport,TargetReport,CommissionTargetReport;
 
         paymentReport = popupView.findViewById(R.id.paymentReport);
         customerLogReport = popupView.findViewById(R.id.customerLogReport);
@@ -55,6 +55,7 @@ public class ReportsPopUpClass {
         plansReport = popupView.findViewById(R.id.plansReport);
         TargetReport= popupView.findViewById(R.id.TargetReport);
         RequestReport= popupView.findViewById(R.id.RequestReport);
+        CommissionTargetReport= popupView.findViewById(R.id.CommissionTargetReport);
         paymentReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -156,7 +157,13 @@ public class ReportsPopUpClass {
                 return true;
             }
         });
-
+        CommissionTargetReport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent locationIntent = new Intent(context, com.example.adminvansales.Report.CommissionTargetReport.class);
+                context. startActivity(locationIntent);
+            }
+        });
     }
 
 

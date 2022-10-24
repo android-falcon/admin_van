@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 
 apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 android {
     compileSdkVersion 32
     defaultConfig{
@@ -8,7 +9,7 @@ android {
     }
     defaultConfig {
         applicationId "com.example.adminvansales"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 32
         versionCode 1
         versionName "1.0"
@@ -29,7 +30,10 @@ android {
             enabled=true
 
     }
+    buildFeatures {
+        viewBinding true
     }
+}
 
 
 dependencies {
@@ -69,6 +73,7 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxjava:2.1.7'
     implementation platform('com.google.firebase:firebase-bom:30.4.1')
     implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-database:20.1.0'
 //    def lifecycle_version = "2.5.0-alpha02"
 //    def arch_version = "2.1.0"
     // ViewModel

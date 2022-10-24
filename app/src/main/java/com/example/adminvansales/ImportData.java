@@ -147,8 +147,8 @@ public class ImportData {
     public static List<OfferGroupModel> offerGroupModels = new ArrayList<>();
     ProgressDialog progressDialog;
     GlobelFunction globelFunction;
- public  String headerDll="/Falcons/VAN.dll";
-//   public  String headerDll="";
+// public  String headerDll="/Falcons/VAN.dll";
+  public  String headerDll="";
 
     public ImportData(Context context) {
         try {
@@ -159,12 +159,13 @@ public class ImportData {
             // globelFunction=new GlobelFunction(context);
             listId = new ArrayList<>();
             getCONO();
-            URL_TO_HIT = "http://" + ipAddress.trim() + ":" + portSettings.trim() + headerDll.trim();
+            URL_TO_HIT = "http://" + ipAddress.trim() + ":" + portSettings.trim() + headerDll.trim()+ "/" ;
             Log.e("URL_TO_HIT", "" + URL_TO_HIT);
             Retrofit retrofit = RetrofitInstance.getInstance(URL_TO_HIT);
             myAPI = retrofit.create(ApiItem.class);
-        }catch (Exception e){
-
+            Log.e("ImportData", "myAPI=" + myAPI);
+        }catch (Exception exception){
+            Log.e("ImportData,Exception", "" + exception.getMessage());
         }
     }
 
@@ -5968,6 +5969,7 @@ Log.e("URL_TO_HIT",URL_TO_HIT+"");
 
     }
     public void fetchItemMaster() {
+        Log.e("fetchItemMaster", "myAPI=" + myAPI);
         pdSweetAlertDialog= new SweetAlertDialog(main_context, SweetAlertDialog.PROGRESS_TYPE);
         pdSweetAlertDialog.getProgressHelper().setBarColor(Color.parseColor("#FDD835"));
         pdSweetAlertDialog.setTitleText(main_context.getResources().getString(R.string.process));
@@ -5989,6 +5991,7 @@ Log.e("URL_TO_HIT",URL_TO_HIT+"");
                     Log.e("fetchItemDetailDataonResponse", "onResponse=" + response.message());
 
                     listAllItemReportModels.addAll(response.body());
+                    Log.e("contextG", "contextG=" +contextG);
                     addSalesmanTarget.fillAdapter(contextG);
                     pdSweetAlertDialog.dismiss();
                 }
@@ -6373,7 +6376,6 @@ Context context;
                                 targetDetalis.setSalManNo(jsonObject1.getString("SALE_MAN_NUMBER"));
                                 targetDetalis.setItemTarget(Double.parseDouble(jsonObject1.getString("ITEMTARGET")));
                                 targetDetalis.setItemName( jsonObject1.getString("ITEMNAME"));
-                                targetDetalis.setItemNo( jsonObject1.getString("ITEMOCODE"));
                                 targetDetalis.setItemNo( jsonObject1.getString("ITEMOCODE"));
                                 targetDetalis.setOrignalNetSale(jsonObject1.getString("REAL_NET_SALE"));
                                 targetDetalis.setPERC(jsonObject1.getString("PERC"));
