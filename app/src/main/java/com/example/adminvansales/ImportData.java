@@ -147,8 +147,8 @@ public class ImportData {
     public static List<OfferGroupModel> offerGroupModels = new ArrayList<>();
     ProgressDialog progressDialog;
     GlobelFunction globelFunction;
-// public  String headerDll="/Falcons/VAN.dll";
-  public  String headerDll="";
+ public  String headerDll="/Falcons/VAN.dll";
+//   public  String headerDll="";
 
     public ImportData(Context context) {
         try {
@@ -5969,7 +5969,6 @@ Log.e("URL_TO_HIT",URL_TO_HIT+"");
 
     }
     public void fetchItemMaster() {
-        Log.e("fetchItemMaster", "myAPI=" + myAPI);
         pdSweetAlertDialog= new SweetAlertDialog(main_context, SweetAlertDialog.PROGRESS_TYPE);
         pdSweetAlertDialog.getProgressHelper().setBarColor(Color.parseColor("#FDD835"));
         pdSweetAlertDialog.setTitleText(main_context.getResources().getString(R.string.process));
