@@ -1,5 +1,7 @@
 package com.example.adminvansales.RepositoryData;
 
+import static com.example.adminvansales.LogIn.portSettings;
+
 import android.app.Application;
 import android.graphics.Color;
 import android.util.Log;
@@ -12,6 +14,7 @@ import com.example.adminvansales.ItemVisibility;
 import com.example.adminvansales.R;
 import com.example.adminvansales.model.ErrorHandler;
 import com.example.adminvansales.model.ItemInfo;
+import com.example.adminvansales.model.SettingModel;
 import com.example.adminvansales.retrofit.ApiItem;
 import com.example.adminvansales.retrofit.RetrofitInstance;
 
@@ -30,7 +33,7 @@ import retrofit2.Retrofit;
 public class ItemVisibleRepository {
 
 //    String BASE_URL = "http://10.0.0.22/",port="";
-    String BASE_URL = "",port="";
+    String BASE_URL = "",port="",CONO;
 
     Retrofit retrofit = RetrofitInstance.getInstance(BASE_URL);
     ApiItem myAPI = retrofit.create(ApiItem.class);
@@ -38,16 +41,19 @@ public class ItemVisibleRepository {
     ErrorHandler itemInfoHandler=new ErrorHandler();
     DataBaseHandler dataBaseHandler;
 
+
     public ItemVisibleRepository(Application aplication ) {
         dataBaseHandler=new DataBaseHandler(aplication.getApplicationContext());
         BASE_URL=dataBaseHandler.getAllSetting().getIpAddress();
         port=dataBaseHandler.getAllSetting().getPort();
+        CONO = dataBaseHandler.getAllSetting().getCono();
         Log.e("ItemVisibleRepository",""+BASE_URL+"\t"+port);
     }
 
     public MutableLiveData<List<ItemInfo>> getItemInfoRepo() {
+
         final MutableLiveData<List<ItemInfo>> mutableLiveData = new MutableLiveData<>();
-        Observable<List<ItemInfo>> issueObservable = myAPI.gatItem(295);
+        Observable<List<ItemInfo>> issueObservable = myAPI.gatItem(CONO);
         issueObservable.subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(itemInfos -> itemInfos)    //get issues and map to issues list

@@ -161,7 +161,7 @@ public class ItemVisibility extends AppCompatActivity {
     }
 
     private void getRetrofitData() {
-        Observable<List<ItemInfo>> issueObservable = myAPI.gatItem(295);
+        Observable<List<ItemInfo>> issueObservable = myAPI.gatItem(295+"");
         issueObservable.subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(itemInfos -> itemInfos)    //get issues and map to issues list

@@ -147,8 +147,8 @@ public class ImportData {
     public static List<OfferGroupModel> offerGroupModels = new ArrayList<>();
     ProgressDialog progressDialog;
     GlobelFunction globelFunction;
-// public  String headerDll="/Falcons/VAN.dll";
-   public  String headerDll="";
+ public  String headerDll="/Falcons/VAN.dll";
+//   public  String headerDll="";
 
     public ImportData(Context context) {
         try {
@@ -161,7 +161,7 @@ public class ImportData {
             getCONO();
             URL_TO_HIT = "http://" + ipAddress.trim() + ":" + portSettings.trim() + headerDll.trim();
             Log.e("URL_TO_HIT", "" + URL_TO_HIT);
-            Retrofit retrofit = RetrofitInstance.getInstance(URL_TO_HIT);
+            Retrofit retrofit = RetrofitInstance.getInstance(URL_TO_HIT+"/");
             myAPI = retrofit.create(ApiItem.class);
         }catch (Exception e){
 

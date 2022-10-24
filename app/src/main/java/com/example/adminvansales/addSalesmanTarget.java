@@ -91,7 +91,7 @@ public static    RecyclerView targetrec;
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    importData = new ImportData(addSalesmanTarget.this);
+
                     importData.fetchItemMaster();
                 }
 
@@ -99,10 +99,12 @@ public static    RecyclerView targetrec;
 
 
         } catch (Exception e) {
+
         }
 
     }
     void init(){
+        importData = new ImportData(addSalesmanTarget.this);
         targetrec = findViewById(R.id.targetrec);
         NetsaleTargetEditText=findViewById(R.id. NetsaleTarget);
         exportData=new ExportData(addSalesmanTarget.this);
@@ -203,13 +205,19 @@ public static    RecyclerView targetrec;
             @Override
             public void onClick(View view) {
                 if (salman_selection != null && !salman_selection.equals("")) {
+                    Month=dateEdt.getSelectedItem().toString();
                     if (TargetType == 1) { //item target
                         for (int i = 0; i < targetList.size(); i++) {
                             Log.e("ItemTarget==", targetList.get(i).getItemTarget() + "");
 
                             targetList.get(i).setTargetType(TargetType);
                             targetList.get(i).setDate( Month.substring(0, Month.indexOf(" ")));
-                            targetList.get(i).setSalManNo(SalmanNo);
+                            try {
+                                targetList.get(i).setSalManNo(Integer.parseInt(SalmanNo)+"");
+                            }
+                            catch (Exception e){
+                                targetList.get(i).setSalManNo(SalmanNo);
+                            }
                             targetList.get(i).setSalManName(salman_selection);
 
                             Log.e("targetDetalisList==", targetList.size() + "");

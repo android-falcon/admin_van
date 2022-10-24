@@ -97,9 +97,9 @@
     <string name="voucherSerial">تسلسل الفاتورة</string>
     <string name="returnSerial">تسلسل المرتجع</string>
     <string name="paymentSerial">تسلسل المبيعات</string>
-    <string name="unCollectedCheques_report">Un collected cheques report</string>
+    <string name="unCollectedCheques_report">تقرير الشيكات برسم التحصيل</string>
     <string name="chaequeDate">التاريخ</string>
-    <string name="recivedAmount">Received Amount</string>
+    <string name="recivedAmount">الكمية المستلمة</string>
     <string name="PAIDAMT">Paid Amount</string>
     <string name="app_cheque">شيك</string>
     <string name="app_bank_name">اسم البنك</string>
@@ -138,7 +138,7 @@
     <string name="no">No</string>
     <string name="Plan">الخطة</string>
     <string name="Location">الموقع</string>
-    <string name="Notifications">Notifications</string>
+    <string name="Notifications">الاشعارات</string>
     <string name="Reports">التقارير</string>
     <string name="addcustomerlocation">Add Customer Location</string>
     <string name="itemvisble">Item Visble</string>
@@ -178,14 +178,14 @@
     <string name="SalesMenLocation"> موقع المندوبين</string>
 
     <string name="ALL">الكل</string>
-    <string name="Request_qty">Request Qty</string>
-    <string name="ApprovedQuantity">Approved Qty</string>
-    <string name="ApprovedStatus">Approved Status</string>
-    <string name="RequestReport">Request Report</string>
-    <string name="req_num">Request Num</string>
-    <string name="itemCount">Items Count</string>
+    <string name="Request_qty">الكمية</string>
+    <string name="ApprovedQuantity">الكمية الموتفق عليها</string>
+    <string name="ApprovedStatus">حالة الموافقة</string>
+    <string name="RequestReport">تقرير الطلبات</string>
+    <string name="req_num">رقم الطلب</string>
+    <string name="itemCount">عدد المواد</string>
     <string name="exits">هل أنت متأكد من الخروج</string>
-    <string name="saveSuccessfuly">Save Successfuly</string>
+    <string name="saveSuccessfuly">تم الحفظ</string>
     <string name="locationtracker">تعقب الموقع</string>
     <string name="fillip">Fill Ip Setting</string>
     <string name="refresh">تحديث</string>
