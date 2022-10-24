@@ -67,7 +67,7 @@ public class MyServicesForNotification  extends Service {
         FirebaseDatabase dbroot = FirebaseDatabase.getInstance();
 databaseReference = dbroot.getReference(RequstTest.class.getSimpleName()).child(Firebase_ipAddress);
 
-        allTaskInFireBase();
+        allTaskInFireBasewithoutnotify();
         Log.e(TAG, "onCreate() , service started..."+id);
 
     }
