@@ -1,14 +1,29 @@
 package com.example.adminvansales;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.Service;
+import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -32,42 +47,89 @@ public class RequstNotifaction extends AppCompatActivity {
     public static String  Firebase_ipAddress;
     public  static String ipAddress="";
     private DataBaseHandler databaseHandler;
+    public static final String NOTIFICATION_CHANNEL_ID = "NOTIFICATION_CHANNEL";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_requst_notifaction);
-        databaseHandler = new DataBaseHandler(RequstNotifaction.this);
-        SettingModel settingModel = new SettingModel();
-        settingModel = databaseHandler.getAllSetting();
-        ipAddress = settingModel.getIpAddress();
-        Firebase_ipAddress= ipAddress.replace(".", "_");
+     init();
+
+
+
        if(isNetworkAvailable(RequstNotifaction.this))
-           Log.e("NetworkAvailable","NetworkAvailable");
-       else     Log.e("NetworkAvailable","not NetworkAvailable");
+           Toast.makeText(this, "Network Available", Toast.LENGTH_SHORT).show();
+
+       else      Toast.makeText(this, "Network not Available", Toast.LENGTH_SHORT).show();
 
     reqrec=findViewById(R.id.reqrec);
     FirebaseDatabase dbroot = FirebaseDatabase.getInstance();
         Log.e("Firebase_ipAddress==", Firebase_ipAddress+"");
-    databaseReference = dbroot.getReference(RequstTest.class.getSimpleName()).child("10_0_0_22");
+    databaseReference = dbroot.getReference(RequstTest.class.getSimpleName()).child(Firebase_ipAddress);
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Get Post object and use the values to update the UI
+                RequstTest post = dataSnapshot.getValue(RequstTest.class);
+             //   Log.e("post",post.getKey_validation()+"");
+                // ..
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+                Log.e("databaseError", "loadPost:onCancelled", databaseError.toException());
+            }
+        };
+        databaseReference.child(Firebase_ipAddress).addValueEventListener(postListener);
         databaseReference.keepSynced(true);//Keeping Data Fresh
 
         Log.e("getRoot==", databaseReference.getRoot()+""+ databaseReference.getPath());
-  //getdata();
-    getlistofdata();
-        databaseReference.child("46523").addValueEventListener(new ValueEventListener() {
+
+
+
+
+
+        ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                RequstTest post = snapshot.getValue(RequstTest.class);
-                Log.e("post",post.getKey_validation()+"");
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                    String key = ds.getKey();
+                  Log.e("key==",key+"");
+                    getlistofdata(key);
+//                    DatabaseReference usersRef = rootRef.child("users").child(key);
+//                    ValueEventListener eventListener = new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(DataSnapshot dataSnapshot) {
+//                            for(DataSnapshot dSnapshot : dataSnapshot.getChildren()) {
+//                                String username = dSnapshot.child("username").getValue(String.class);
+//                                Log.d("TAG", username);
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onCancelled(DatabaseError databaseError) {}
+//                    };
+//                    usersRef.addListenerForSingleValueEvent(eventListener);
+                }
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+            public void onCancelled(DatabaseError databaseError) {}
+        };
+        databaseReference.addListenerForSingleValueEvent(valueEventListener);
 
-            }
-        });
-    //filladapter();
+
+
+
+
+
+}
+void init (){
+    databaseHandler = new DataBaseHandler(RequstNotifaction.this);
+    SettingModel settingModel = new SettingModel();
+    settingModel = databaseHandler.getAllSetting();
+    ipAddress = settingModel.getIpAddress();
+    Firebase_ipAddress= ipAddress.replace(".", "_");
 }
     private void getdata() {
         ValueEventListener postListener = new ValueEventListener() {
@@ -95,26 +157,32 @@ public class RequstNotifaction extends AppCompatActivity {
         reqrec.setAdapter(adapterrequst1);
 
     }
-    private void getlistofdata() {
+    private void getlistofdata(String key) {
         Log.e("getlistofdata==", "getlistofdata");
         ChildEventListener childEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
                 Log.e("onChildAdded", "onChildAdded:" + dataSnapshot.getKey());
-
                 // A new comment has been added, add it to the displayed list
-                RequstTest requstTest = dataSnapshot.getValue(RequstTest.class);
-                if(requstTest.getStatus().equals("0"))
-                requstsArrayAdapter.add(requstTest);
-                filladapter();
-//                NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(MainActivity.this);
-//
-//                mBuilder.setContentTitle("Notification Alert, Click Me!");
-//                mBuilder.setContentText("Hi, This is Android Notification Detail!");
-//                NotificationManager mNotificationManager = (NotificationManager) getSystemService(MainActivity.NOTIFICATION_SERVICE);
-//
-//// notificationID allows you to update the notification later on.
-//                mNotificationManager.notify(1, mBuilder.build());
+                try {
+
+                    RequstTest requstTest = dataSnapshot.getValue(RequstTest.class);
+                    if(requstTest!=null) {
+                        if (requstTest.getStatus()!=null && requstTest.getStatus().equals("0")) {
+                            requstsArrayAdapter.add(requstTest);
+                            filladapter();
+                            GlobelFunction globelFunction = new GlobelFunction(RequstNotifaction.this);
+                            String salmanname = requstTest.getSalesman_name();
+
+                            //displayNotification(RequstNotifaction.this, "New Requst From" + salmanname, "");
+
+
+                        }
+                    }
+                }catch (Exception e){
+                    Log.e("Exception", "Exception:" + e.getMessage());
+                }
+
                 // ...
             }
 
@@ -126,7 +194,10 @@ public class RequstNotifaction extends AppCompatActivity {
                 // comment and if so displayed the changed comment.
                 RequstTest requstTest = dataSnapshot.getValue(RequstTest.class);
                 String commentKey = dataSnapshot.getKey();
-                if(requstTest.getStatus().equals("0"))    requstsArrayAdapter.add(requstTest);
+                for(int i=0;i<requstsArrayAdapter.size();i++)
+                    if (requstsArrayAdapter.get(i).getKey_validation().equals(requstTest.getKey_validation()))
+                        requstsArrayAdapter.remove(i);
+
                 filladapter();
                 // ...
             }
@@ -137,13 +208,18 @@ public class RequstNotifaction extends AppCompatActivity {
 
                 // A comment has changed, use the key to determine if we are displaying this
                 // comment and if so remove it.
-                RequstTest requstTest = dataSnapshot.getValue(RequstTest.class);
-                String commentKey = dataSnapshot.getKey();
-                for(int i=0;i<requstsArrayAdapter.size();i++)
-                    if (requstsArrayAdapter.get(i).getKey_validation().equals(requstTest.getKey_validation()))
-                        requstsArrayAdapter.remove(i);
+                try {
+                    RequstTest requstTest = dataSnapshot.getValue(RequstTest.class);
+                    String commentKey = dataSnapshot.getKey();
+                    for(int i=0;i<requstsArrayAdapter.size();i++)
+                        if (requstsArrayAdapter.get(i).getKey_validation().equals(requstTest.getKey_validation()))
+                            requstsArrayAdapter.remove(i);
 
-                filladapter();
+                    filladapter();
+                }catch (Exception e){
+                    Log.e("onChildRemoved", "Exception:" + e.getMessage());
+                }
+
 
                 // ...
             }
@@ -168,7 +244,7 @@ public class RequstNotifaction extends AppCompatActivity {
 
             }
         };
-        databaseReference.addChildEventListener(childEventListener);
+        databaseReference.child(key).addChildEventListener(childEventListener);
     }
     public static boolean isNetworkAvailable(Context con) {
         try {
@@ -184,4 +260,25 @@ public class RequstNotifaction extends AppCompatActivity {
         }
         return false;
     }
+
+    //create channel for API >= 26
+    public static void displayNotification(Context context,String title,String body){
+
+
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context,NOTIFICATION_CHANNEL_ID)
+                .setColor(ContextCompat.getColor(context, R.color.colorblue_dark))
+                .setContentTitle(title)
+                .setSmallIcon(R.drawable.ic_notifications_black_24dp)
+                .setContentText(body)
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(body))
+
+                .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
+               // .setSound(Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE+ "://" +context.getPackageName()+"/"+R.raw.messege))
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+        NotificationManagerCompat managerCompat =  NotificationManagerCompat.from(context);
+        managerCompat.notify(1,mBuilder.build());
+    }
+
+
 }

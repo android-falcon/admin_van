@@ -198,7 +198,7 @@ public class ItemReport extends AppCompatActivity {
 
                             case R.id.action_notifications:
 
-                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                startActivity(new Intent(getApplicationContext(), RequstNotifaction.class));
                                 overridePendingTransition(0, 0);
 
                                 return true;

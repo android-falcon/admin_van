@@ -31,6 +31,7 @@ import com.example.adminvansales.ItemReport;
 import com.example.adminvansales.LogIn;
 import com.example.adminvansales.MainActivity;
 import com.example.adminvansales.PlanSalesMan;
+import com.example.adminvansales.RequstNotifaction;
 import com.example.adminvansales.model.CashReportModel;
 import com.example.adminvansales.PdfConverter;
 import com.example.adminvansales.R;
@@ -163,7 +164,7 @@ public class CashReport extends AppCompatActivity {
 
                             case R.id.action_notifications:
 
-                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                startActivity(new Intent(getApplicationContext(), RequstNotifaction.class));
                                 overridePendingTransition(0, 0);
 
                                 return true;

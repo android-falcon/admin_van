@@ -13,6 +13,41 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
+
+        <!--
+             TODO: Before you run your application, you need a Google Maps API key.
+
+             To get one, follow the directions here:
+
+                https://developers.google.com/maps/documentation/android-sdk/get-api-key
+
+             Once you have your API key (it starts with "AIza"), define a new property in your
+             project's local.properties file (e.g. MAPS_API_KEY=Aiza...), and replace the
+             "YOUR_API_KEY" string in this file with "${MAPS_API_KEY}".
+        -->
+
+        <activity
+            android:name=".Report.CommissionTargetReport"
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".AddCommissionTarget"
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".AddCompanyInfo"
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AddFlag_SettingssSaleMenApp"
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AddSettingForSalesMen"
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".RequstNotifaction"
             android:exported="false" />
@@ -70,6 +105,10 @@
         <activity
             android:name=".SalesmanMapsActivity"
             android:label="@string/title_activity_salesman_maps" />
+        <activity
+            android:name=".AccountStatment"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustNothing" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -78,10 +117,6 @@
              sign the APK for publishing.
              You can define the keys for the debug and release targets in src/debug/ and src/release/.
         -->
-        <activity
-            android:name=".AccountStatment"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name=".Report.UnCollectedData"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -136,7 +171,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
+            android:value="YOUR_API_KEY" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -150,6 +185,14 @@
 
         <service
             android:name=".LocationService"
+            android:stopWithTask="false" />
+        <service
+            android:name=".model.MyServicesForNotification"
+            android:enabled="true"
+            android:exported="false"
+            android:finishOnTaskLaunch="true"
+            android:foregroundServiceType="dataSync"
+            android:process=":MyServicesFireCaptain"
             android:stopWithTask="false" />
 
         <uses-library
@@ -169,6 +212,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 

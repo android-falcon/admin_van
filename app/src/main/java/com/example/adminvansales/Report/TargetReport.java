@@ -64,12 +64,15 @@ public class TargetReport extends AppCompatActivity {
                     {
                         if (TargetType == 0) {
                             importData.salesGoalsList.clear();
-                            fillAdapterNetsalTarget();
-                            importData.getSalesmanGoal(TargetReport.this, Integer.parseInt(SalmanNo)+"", Month.substring(0, Month.indexOf(" ")));
-
-                        } else {
                             importData.ItemsGoalsList.clear();
+                            fillAdapterNetsalTarget();
+                            itemtargetrec.setAdapter(new ItemsTargetAdapter(importData.ItemsGoalsList,TargetReport.this));
+                            importData.getSalesmanGoal(TargetReport.this, Integer.parseInt(SalmanNo)+"", Month.substring(0, Month.indexOf(" ")));
+                                     } else {
+                            importData.ItemsGoalsList.clear();
+                            importData.salesGoalsList.clear();
                             fillAdapterItemsTarget();
+                            NteSal_targetrec.setAdapter(new NetsaleTargetAdapter(importData.salesGoalsList,TargetReport.this));
                             importData.getSaleGoalItems(TargetReport.this, Integer.parseInt(SalmanNo)+"", Month.substring(0, Month.indexOf(" ")));
                         }
                     }

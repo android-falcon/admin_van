@@ -19,6 +19,7 @@
         android:padding="3dp"
         android:orientation="vertical"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:id="@+id/linear1"
             android:layout_weight="1"
@@ -178,6 +179,7 @@
             <EditText
                 android:id="@+id/NetsaleTarget"
                 android:layout_width="0dp"
+                android:inputType="number"
                 android:layout_height="35dp"
                 android:layout_marginStart="@dimen/padd_10"
                 android:layout_marginLeft="@dimen/padd_10"

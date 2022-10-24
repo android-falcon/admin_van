@@ -10,10 +10,14 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.adminvansales.Report.CommissionTargetReport;
 import com.example.adminvansales.Report.RequstReport;
 import com.example.adminvansales.model.LocaleAppUtils;
+
+import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -45,6 +49,7 @@ import com.example.adminvansales.Adapters.SalesManAdapter;
 import com.example.adminvansales.Report.OfferseReport;
 import com.example.adminvansales.Report.PlansReport;
 import com.example.adminvansales.Report.ReportsPopUpClass;
+import com.example.adminvansales.model.MyServicesForNotification;
 import com.example.adminvansales.model.Password;
 import com.example.adminvansales.model.SalesManInfo;
 import com.example.adminvansales.Report.AnalyzeAccounts;
@@ -79,9 +84,9 @@ public class HomeActivity extends AppCompatActivity
     GlobelFunction globelFunction;
     Button locationButton, ReportButton, offerButton,group_offerButton,addPlan_Sales_man;
     LinearLayout ReportLinear;
-    public static EditText editPassword;
+    public static EditText editPassword,secondpassowrd;
     TextView offersReport,customerLogReport, paymentReport, cashReport, offerReport,LogReport,unCollectedCheques,
-            analyzeAcountsReport,ItemReport, plansReport;
+            analyzeAcountsReport,ItemReport, plansReport,CommissionTargetReport;
     com.example.adminvansales.model.SettingModel settingModel;
     DataBaseHandler databaseHandler;
    BottomNavigationView bottom_navigation;
@@ -97,6 +102,7 @@ public class HomeActivity extends AppCompatActivity
         new LocaleAppUtils().changeLayot(HomeActivity.this);
         setContentView(R.layout.activity_home);
         initalView();
+        intentToMain();
         menuBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -177,6 +183,12 @@ public class HomeActivity extends AppCompatActivity
                                 overridePendingTransition(0, 0);
 
                                 return true;
+                            case R.id.setting:
+
+                                startActivity(new Intent(getApplicationContext(), AddSettingForSalesMen.class));
+                                overridePendingTransition(0, 0);
+
+                                return true;
                             case R.id.addtraget:
 
                                 startActivity(new Intent(getApplicationContext(), addSalesmanTarget.class));
@@ -227,9 +239,37 @@ public class HomeActivity extends AppCompatActivity
 
                 drawerLayout.closeDrawer(navigationView);
                 return true;
+
             }
 
+            case R.id.setting: {
+                startActivity(new Intent(HomeActivity.this,AddSettingForSalesMen.class));
 
+                drawerLayout.closeDrawer(navigationView);
+                return true;
+
+            }
+            case R.id.flagesetting: {
+                startActivity(new Intent(HomeActivity.this,AddFlag_SettingssSaleMenApp.class));
+
+                drawerLayout.closeDrawer(navigationView);
+                return true;
+
+            }
+            case R.id.addcompanyinfo: {
+                startActivity(new Intent(HomeActivity.this,AddCompanyInfo.class));
+
+                drawerLayout.closeDrawer(navigationView);
+                return true;
+
+            }
+            case R.id.AddCommissionTarget: {
+                startActivity(new Intent(HomeActivity.this,AddCommissionTarget.class));
+
+                drawerLayout.closeDrawer(navigationView);
+                return true;
+
+            }
 
         }
 
@@ -315,6 +355,10 @@ public class HomeActivity extends AppCompatActivity
         LogReport=findViewById(R.id.LogReport);
         ItemReport=findViewById(R.id.ItemReport);
         plansReport = findViewById(R.id.plansReport);
+
+
+
+
         if(hidePlan==1)
         plansReport.setVisibility(View.GONE);
         addPlan_Sales_man=findViewById(R.id.addPlan_Sales_man);
@@ -420,7 +464,6 @@ public class HomeActivity extends AppCompatActivity
                 startActivity(locationIntent);
             }
         });
-
 
         paymentReport.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -647,7 +690,7 @@ public class HomeActivity extends AppCompatActivity
 
         final Dialog dialog = new Dialog(HomeActivity.this, R.style.Theme_Dialog);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setCancelable(true);
+        dialog.setCancelable(false);
         dialog.setContentView(R.layout.password_setting);
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(dialog.getWindow().getAttributes());
@@ -658,16 +701,19 @@ public class HomeActivity extends AppCompatActivity
         TextView cancelButton = (TextView) dialog.findViewById(R.id.cancel);
 
         editPassword = (EditText) dialog.findViewById(R.id.passowrdEdit);
+        secondpassowrd = (EditText) dialog.findViewById(R.id.secondpassowrdEdit);
         getPassword();
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!editPassword.getText().toString().equals("")) {
-                    savePassowrdSetting(editPassword.getText().toString());
+                if (!editPassword.getText().toString().equals("")&&!secondpassowrd.getText().toString().equals("")) {
+                    savePassowrdSetting(editPassword.getText().toString(),secondpassowrd.getText().toString());
                     dialog.dismiss();
-                } else {
+                } else if(editPassword.getText().toString().equals("")) {
                     editPassword.setError("Required");
+                }else if(secondpassowrd.getText().toString().equals("")) {
+                    secondpassowrd.setError("Required");
                 }
 
 
@@ -699,12 +745,18 @@ public class HomeActivity extends AppCompatActivity
         editPassword.setText("303090");
     }
 
-    private void savePassowrdSetting(String passowrd) {
+    private void savePassowrdSetting(String passowrd,String secondpassword) {
         List <  Password>passwords=new ArrayList<>();
         Password password=new Password();
         password.setUSER_PASSWORD(passowrd);
         password.setPASSWORDTYPE("1");
+
+        Password password2=new Password();
+        password2.setUSER_PASSWORD(secondpassword);
+        password2.setPASSWORDTYPE("2");
+
         passwords.add(   password);
+        passwords.add(   password2);
         settingModel=databaseHandler.getAllSetting();
         ExportData exportData = new ExportData(HomeActivity.this);
         if(settingModel.getImport_way().equals("0"))
@@ -717,5 +769,25 @@ public class HomeActivity extends AppCompatActivity
     public void onBackPressed() {
         super.onBackPressed();
         drawerLayout.closeDrawer(navigationView);
+    }
+    public void intentToMain(){
+        Log.e("intentToMain","intentToMain");
+
+        if(!isMyServiceRunning(MyServicesForNotification.class)){
+            {
+                Log.e("isMyServiceRunning","no");
+                startService(new Intent(HomeActivity.this, MyServicesForNotification.class));
+            }
+        }
+
+    }
+    private boolean isMyServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
     }
 }

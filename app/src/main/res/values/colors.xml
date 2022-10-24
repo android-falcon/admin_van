@@ -2,8 +2,8 @@
 <resources>
     <color name="colorPrimary">#333333</color>
     <!--    <color name="colorAccent">#03DAC5</color>-->
-
-
+    <color name="totals_color">#FFFFFF</color>
+    <color name="text_view_color">#3D3C3A</color>
     <color name="layer3">#ECECEB</color>
     <color name="layer4">#F2B4C3CC</color>
     <color name="layer5">#C8C5D4DB</color>

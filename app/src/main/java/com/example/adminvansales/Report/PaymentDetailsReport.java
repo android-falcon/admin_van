@@ -29,6 +29,7 @@ import com.example.adminvansales.ImportData;
 import com.example.adminvansales.LogIn;
 import com.example.adminvansales.MainActivity;
 import com.example.adminvansales.PlanSalesMan;
+import com.example.adminvansales.RequstNotifaction;
 import com.example.adminvansales.model.PayMentReportModel;
 import com.example.adminvansales.Adapters.PayMentReportAdapter;
 import com.example.adminvansales.PdfConverter;
@@ -165,7 +166,7 @@ public class PaymentDetailsReport extends AppCompatActivity {
 
                             case R.id.action_notifications:
 
-                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                startActivity(new Intent(getApplicationContext(), RequstNotifaction.class));
                                 overridePendingTransition(0, 0);
 
                                 return true;

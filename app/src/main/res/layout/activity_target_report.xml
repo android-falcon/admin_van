@@ -51,7 +51,7 @@ android:id="@+id/linearMain"
 
 
             <TextView
-                android:id="@+id/from_tv"
+
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1.3"
@@ -88,7 +88,7 @@ android:id="@+id/linearMain"
 
 
             <TextView
-                android:id="@+id/from_tv"
+
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
