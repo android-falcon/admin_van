@@ -37,7 +37,7 @@ public  class CommissionTargetAdapter extends RecyclerView.Adapter<CommissionTar
     public CommissionTargetAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View view = LayoutInflater.from(context)
-                .inflate(R.layout.comm_targetrow, parent, false);
+                .inflate(R.layout.targetrow, parent, false);
 
         return new CommissionTargetAdapter.ViewHolder(view);
     }
@@ -46,7 +46,7 @@ public  class CommissionTargetAdapter extends RecyclerView.Adapter<CommissionTar
         holder.itemName.setText(list.get(position).getItemName());
         holder.itemNo.setText(list.get(position).getItemNo());
         holder.target.setText(list.get(position).getItemTarget() + "");
-        holder.   qty.setText(list.get(position).getQty() + "");
+//        holder.   qty.setText(list.get(position).getQty() + "");
         holder.target.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {

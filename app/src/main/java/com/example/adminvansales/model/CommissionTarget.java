@@ -12,6 +12,33 @@ public class CommissionTarget {
     String ItemName;
     double qty;
     double ItemTarget;
+    String TargetNetSale;
+    String OrignalNetSale;
+    String PERC;
+
+    public String getPERC() {
+        return PERC;
+    }
+
+    public void setPERC(String PERC) {
+        this.PERC = PERC;
+    }
+
+    public String getTargetNetSale() {
+        return TargetNetSale;
+    }
+
+    public void setTargetNetSale(String targetNetSale) {
+        TargetNetSale = targetNetSale;
+    }
+
+    public String getOrignalNetSale() {
+        return OrignalNetSale;
+    }
+
+    public void setOrignalNetSale(String orignalNetSale) {
+        OrignalNetSale = orignalNetSale;
+    }
 
     public double getQty() {
         return qty;

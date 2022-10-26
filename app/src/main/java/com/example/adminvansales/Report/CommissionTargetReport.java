@@ -18,6 +18,7 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.adminvansales.Adapters.CommTargetReportAdapter;
 import com.example.adminvansales.Adapters.ItemsTargetAdapter;
 import com.example.adminvansales.Adapters.NetsaleTargetAdapter;
 import com.example.adminvansales.GlobelFunction;
@@ -40,12 +41,12 @@ public class CommissionTargetReport extends AppCompatActivity {
     int salman_pos;
     String SalmanNo;
     ImportData importData;
-    public static TextView itemTargetRespon;
+    public static TextView COMMitemTargetRespon;
     ArrayAdapter<String> salesNameSpinnerAdapter;
     RecyclerView targetrec, targetItemsrec;
     GlobelFunction globelFunction;
     AppCompatButton previewButton;
-
+    public static TextView totalgoalachievementrate,totalCommissiontarget;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +62,7 @@ public class CommissionTargetReport extends AppCompatActivity {
 
 
 
-                             importData.getSaleGoalItems(CommissionTargetReport.this, Integer.parseInt(SalmanNo) + "", Month.substring(0, Month.indexOf(" ")));
+                             importData.getCommGoalItems(CommissionTargetReport.this, Integer.parseInt(SalmanNo) + "", Month.substring(0, Month.indexOf(" ")));
 
                     }
                 } else {
@@ -111,6 +112,8 @@ public class CommissionTargetReport extends AppCompatActivity {
             linearMain.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         }
         salman_textInput = findViewById(R.id.saleman_textInput);
+        totalgoalachievementrate= findViewById(R.id.totalgoalachievementrate);
+        totalCommissiontarget= findViewById(R.id.totalCommissiontarget);
         importData = new ImportData(CommissionTargetReport.this);
         targetrec = findViewById(R.id.targetrec);
         previewButton = findViewById(R.id.previewButton);
@@ -121,9 +124,9 @@ public class CommissionTargetReport extends AppCompatActivity {
         salmanTv = findViewById(R.id.salemanTv);
         dateEdt = findViewById(R.id.dateEdt);
 
-        itemTargetRespon = findViewById(R.id.itemTargetRespon);
+        COMMitemTargetRespon = findViewById(R.id.itemTargetRespon);
 
-        itemTargetRespon.addTextChangedListener(new TextWatcher() {
+        COMMitemTargetRespon.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -136,9 +139,15 @@ public class CommissionTargetReport extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
+
                 if (!editable.toString().trim().equals("")) {
+                    if(COMMitemTargetRespon.getText().toString().equals("NoData")){
+                        fillAdapterItemsTarget();
+                    }else
+
                     fillAdapterItemsTarget();
                 }
+
             }
         });
 
@@ -147,8 +156,16 @@ public class CommissionTargetReport extends AppCompatActivity {
 
     void fillAdapterItemsTarget() {
 
-        Log.e("fillAdapterItemsTarget", "fillAdapterItemsTarget" + ImportData.ItemsGoalsList.size());
-        itemtargetrec.setAdapter(new ItemsTargetAdapter(ImportData.ItemsGoalsList, CommissionTargetReport.this));
+        Log.e("fillAdapterItemsTarget", "fillAdapterItemsTarget" + ImportData.ItemsCommGoalsList.size());
+        itemtargetrec.setAdapter(new CommTargetReportAdapter(ImportData.ItemsCommGoalsList, CommissionTargetReport.this));
+        double total_goalachievementrate=0,total_Commissiontarget=0;
+       for(int i=0;i< ImportData.ItemsCommGoalsList.size();i++)
+       {
+           total_goalachievementrate+=Double.parseDouble(ImportData.ItemsCommGoalsList.get(i).getPERC());
 
+//                   total_Commissiontarget+=ImportData.ItemsCommGoalsList.get(i).getItemTarget();
+       }
+        totalgoalachievementrate.setText(total_goalachievementrate+"");
+       //         totalCommissiontarget.setText(total_Commissiontarget+"");
     }
 }

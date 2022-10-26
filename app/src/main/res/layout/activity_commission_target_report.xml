@@ -9,7 +9,7 @@
     tools:context=".Report.CommissionTargetReport">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_weight="9"
+        android:layout_weight="8"
         android:padding="3dp"
 
         android:orientation="vertical"
@@ -116,7 +116,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight=".8"
+            android:layout_weight="1"
             android:padding="3dp"
             android:orientation="horizontal">
             <com.google.android.material.textfield.TextInputLayout
@@ -178,6 +178,7 @@
         android:layout_weight="2"
         android:layout_marginBottom="4dp"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:id="@+id/valulinear3"
             android:layout_width="match_parent"
@@ -233,6 +234,7 @@
                         android:layout_weight="1"
                         android:fontFamily="@font/alegreya_sans_bold"
                         android:gravity="center"
+
                         android:text="@string/itemName"
                         android:textColor="@color/white"
                         android:textSize="15sp" />
@@ -256,22 +258,15 @@
                         android:text="@string/Commissiontarget"
                         android:textColor="@color/white"
                         android:textSize="15sp" />
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:id="@+id/NetsalTargetRespon"
-                        android:visibility="gone"
-                        android:layout_height="match_parent"/>
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:id="@+id/itemTargetRespon"
-                        android:visibility="gone"
-                        android:layout_height="match_parent">
-                    </TextView>
+
+
+
+
                     <TextView
                         android:layout_width="120dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-
+                        android:visibility="gone"
                         android:fontFamily="@font/alegreya_sans_bold"
                         android:gravity="center"
                         android:text="@string/qty"
@@ -290,10 +285,10 @@
                         android:layout_width="120dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:visibility="gone"
+
                         android:fontFamily="@font/alegreya_sans_bold"
                         android:gravity="center"
-                        android:text="@string/PERC"
+                        android:text="@string/AchivComm"
                         android:textColor="@color/white"
                         android:textSize="15sp" />
                 </LinearLayout>
@@ -301,10 +296,77 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:id="@+id/itemtargetrec"/>
+
             </LinearLayout>
 
         </LinearLayout>
 
     </LinearLayout>
+
 </HorizontalScrollView>
+    <LinearLayout
+        android:layout_width="match_parent"
+
+        android:layout_height="52dp"
+
+
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="12dp">
+
+
+
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/alegreya_sans_bold"
+            android:gravity="center"
+            android:visibility="gone"
+            android:text="@string/totalCommissiontarget"
+            android:textColor="@color/colorBlack"
+            android:textSize="15sp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/alegreya_sans_bold"
+            android:gravity="center"
+            android:id="@+id/totalCommissiontarget"
+            android:textColor="@color/colorBlack"
+            android:textSize="15sp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:id="@+id/NetsalTargetRespon"
+            android:visibility="gone"
+            android:layout_height="match_parent"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:id="@+id/itemTargetRespon"
+            android:visibility="gone"
+            android:layout_height="match_parent">
+        </TextView>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/alegreya_sans_bold"
+            android:gravity="center"
+            android:text="@string/totalgoalachievementrate"
+            android:textColor="@color/colorBlack"
+            android:textSize="17sp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/alegreya_sans_bold"
+            android:gravity="center"
+            android:id="@+id/totalgoalachievementrate"
+            android:textColor="@color/colorBlack"
+            android:textSize="17sp" />
+
+    </LinearLayout>
 </LinearLayout>

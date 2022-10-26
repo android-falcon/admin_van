@@ -190,9 +190,13 @@ public class HomeActivity extends AppCompatActivity
 
                                 return true;
                             case R.id.addtraget:
+                                      if(LogIn.goldenfalcon==1)
+                                      {   startActivity(new Intent(getApplicationContext(), AddCommissionTarget.class));
+                                overridePendingTransition(0, 0);}
+                                          else
 
-                                startActivity(new Intent(getApplicationContext(), addSalesmanTarget.class));
-                                overridePendingTransition(0, 0);
+                                      {  startActivity(new Intent(getApplicationContext(), addSalesmanTarget.class));
+                                overridePendingTransition(0, 0);}
 
                                 return true;
 
@@ -264,6 +268,7 @@ public class HomeActivity extends AppCompatActivity
 
             }
             case R.id.AddCommissionTarget: {
+
                 startActivity(new Intent(HomeActivity.this,AddCommissionTarget.class));
 
                 drawerLayout.closeDrawer(navigationView);
@@ -738,7 +743,7 @@ public class HomeActivity extends AppCompatActivity
         if(settingModel.getImport_way().equals("0"))
             exportData.getPassowrdSetting();
         else      if(settingModel.getImport_way().equals("1"))
-            exportData.   IIs_getPassowrdSetting();
+            exportData.   IIs_getPassowrdSetting(1);
     }
 
     private void getCurentPassowrd(EditText editPassword) {

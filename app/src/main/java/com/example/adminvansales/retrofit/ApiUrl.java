@@ -11,8 +11,8 @@ import com.example.adminvansales.model.SettingModel;
 
 public class ApiUrl {
     private DataBaseHandler databaseHandler;
-    public  String headerDll="/Falcons/VAN.dll/";
-
+// public  String headerDll="/Falcons/VAN.dll/";
+public  String headerDll="";
     private    String ipAddress="",portSettings="",import_way="",CONO="";
     private static  String BASE_URL = "";
     public Context main_context;

@@ -69,7 +69,7 @@ public class LogIn extends AppCompatActivity {
     String typeimport="0";
     List<Flag_Settingss> flag_settingsList;
     List<Flag_Settingss> flagsettingsList;
-
+    public static int goldenfalcon=1;
     com.example.adminvansales.model.SettingModel settingModel;
     public static int typaImport=1;//0---- mySql   1-----IIs
     public static int LANGUAGE=0;//0---- EN   1-----AR
