@@ -92,7 +92,7 @@ public static    RecyclerView targetrec;
                 @Override
                 public void run() {
 
-                    importData.fetchItemMaster();
+                    importData.fetchItemMaster(1);
                 }
 
             }, 100);

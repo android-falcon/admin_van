@@ -323,7 +323,7 @@ public class ExportData {
          getAddTargetObject2(targetDetalisList);
         new JSONTask_AddTarget2(context,targetDetalisList).execute();
     }
-    public void getCommissionTarget(List<CommissionTarget>targetDetalisList,Context context){
+    public void SaveCommissionTarget(List<CommissionTarget>targetDetalisList,Context context){
         getCONO();
 
 
@@ -413,9 +413,9 @@ public class ExportData {
     public void getPassowrdSetting() {
         new JSONTask_getPassword().execute();
     }
-    public void IIs_getPassowrdSetting() {
+    public void IIs_getPassowrdSetting(int type) {
         getCONO();
-        new JSONTask_IIsgetPassword().execute();
+        new JSONTask_IIsgetPassword(type).execute();
     }
 
     public void updateCustomerLocatio(String cusNumber, String latitude, String longtude) {
@@ -2847,6 +2847,10 @@ public class ExportData {
     private class JSONTask_IIsgetPassword extends AsyncTask<String, String, String> {
 
         public  String passwordValue="";
+     int   type=0;
+        public JSONTask_IIsgetPassword(int type) {
+            this.type = type;
+        }
 
         @Override
         protected void onPreExecute() {
@@ -2869,7 +2873,7 @@ public class ExportData {
                 settingModels =databaseHandler.getAllSetting();
                 ipAddress=settingModels.getIpAddress();
                 if(!ipAddress.equals(""))
-                {  URL_TO_HIT = "http://" + ipAddress+":"+portSettings +  headerDll.trim() +"/ADMGetPassword?CONO="+CONO+"&PASSWORDTYPE=1";
+                {  URL_TO_HIT = "http://" + ipAddress+":"+portSettings +  headerDll.trim() +"/ADMGetPassword?CONO="+CONO+"&PASSWORDTYPE="+type;
 
                    Log.e("URL_TO_HIT",URL_TO_HIT);
                 }
@@ -2965,7 +2969,12 @@ public class ExportData {
                             password.setPASSWORDTYPE(jsonObject1.getString("PASSWORDTYPE"));
                             password.setUSER_PASSWORD(jsonObject1.getString("PASSWORDKEY"));
 
-                            editPassword.setText(jsonObject1.get("PASSWORDKEY").toString());
+                    if(type==1)    {    editPassword.setText(jsonObject1.get("PASSWORDKEY").toString());
+                        new JSONTask_IIsgetPassword(2).execute();}
+                    else
+                    {
+                       HomeActivity. secondpassowrd.setText(jsonObject1.get("PASSWORDKEY").toString());
+                    }
                         /*
                         result = new JSONObject(s);
                         JSONArray notificationInfo = null;

@@ -312,8 +312,11 @@
     <string name="secondpassword">Second password</string>
     <string name="mainpassword">Main password</string>
     <string name="AddCommissionTarget">Add Commission Target</string>
-    <string name="Commissiontarget">Commission Target</string>
+    <string name="Commissiontarget">Commission </string>
     <string name="CommissionTargetReport">Commission Target Report </string>
+    <string name="totalCommissiontarget">Total Commission Target</string>
+    <string name="AchivComm">Comm_Achievement</string>
+    <string name="totalgoalachievementrate">Total goal achievement</string>
 
     <string name="title_activity_firebase_maps">FirebaseMapsActivity</string>
     <string-array name="app_paymentTypeList">

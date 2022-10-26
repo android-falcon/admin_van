@@ -54,6 +54,7 @@ public class AddCommissionTarget extends AppCompatActivity {
     public static RecyclerView targetrec;
     public static EditText itemcodeedt;
     public  String SalmanNo;
+    ExportData exportData;
     public static TextView colorlastrow, colorData;
     public static int highligtedItemPosition = -1;
     public static CommissionTargetAdapter targetAdapter;
@@ -86,7 +87,7 @@ public class AddCommissionTarget extends AppCompatActivity {
                 @Override
                 public void run() {
                     importData = new ImportData(AddCommissionTarget.this);
-                    importData.fetchItemMaster();
+                    importData.fetchItemMaster(2);
                 }
 
             }, 100);
@@ -96,6 +97,7 @@ public class AddCommissionTarget extends AppCompatActivity {
         }
     }
     void init(){
+        exportData=new ExportData(AddCommissionTarget.this);
         salman_textInput = findViewById(R.id.saleman_textInput);
         salmanTv = findViewById(R.id.salemanTv);
         dateEdt=findViewById(R.id.dateEdt);
@@ -160,13 +162,14 @@ public class AddCommissionTarget extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (salman_selection != null && !salman_selection.equals("")) {
+                    Month=dateEdt.getSelectedItem().toString();
                       //item target
                         for (int i = 0; i < targetList.size(); i++) {
                             Log.e("ItemTarget==", targetList.get(i).getItemTarget() + "");
 
                             targetList.get(i).setTargetType(1);
                             targetList.get(i).setDate( Month.substring(0, Month.indexOf(" ")));
-                            targetList.get(i).setSalManNo(SalmanNo);
+                            targetList.get(i).setSalManNo(Integer.parseInt(SalmanNo)+"");
                             targetList.get(i).setSalManName(salman_selection);
 
                             Log.e("targetDetalisList==", targetList.size() + "");
@@ -177,7 +180,7 @@ public class AddCommissionTarget extends AppCompatActivity {
 
                         else
 
-                      //      exportData.SaveNetsaleTarget2(targetList, AddCommissionTarget.this);
+                    exportData.SaveCommissionTarget(targetList, AddCommissionTarget.this);
 
 
 
@@ -247,6 +250,7 @@ public class AddCommissionTarget extends AppCompatActivity {
             targetDetalis.setItemTarget(0);
             targetDetalis.setItemNo(ImportData.listAllItemReportModels.get(i).getItemNo());
             targetDetalis.setItemName(ImportData.listAllItemReportModels.get(i).getName());
+
             targetDetalisList.add(targetDetalis);
         }
         targetAdapter=new CommissionTargetAdapter(targetDetalisList,context);
@@ -344,4 +348,5 @@ public class AddCommissionTarget extends AppCompatActivity {
 
 
     }
+
 }

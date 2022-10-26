@@ -12,10 +12,13 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.example.adminvansales.AddCommissionTarget;
 import com.example.adminvansales.GlobelFunction;
 import com.example.adminvansales.HomeActivity;
 import com.example.adminvansales.ItemReport;
+import com.example.adminvansales.LogIn;
 import com.example.adminvansales.R;
+import com.example.adminvansales.addSalesmanTarget;
 
 public class ReportsPopUpClass {
 
@@ -142,8 +145,17 @@ public class ReportsPopUpClass {
         TargetReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, TargetReport.class);
-                context.startActivity(intent);
+                if(LogIn.goldenfalcon==1)
+                {      Intent intent = new Intent(context, CommissionTargetReport.class);
+                    context.startActivity(intent);
+                }
+                else
+
+                {
+                    Intent intent = new Intent(context, TargetReport.class);
+                    context.startActivity(intent);
+                }
+
 
             }
         });

@@ -304,8 +304,12 @@
     <string name="secondpassword">الباسوورد الثاني</string>
     <string name="mainpassword">الباسوورد الرئيسي</string>
     <string name="AddCommissionTarget">إضافة الهدف للعمولات</string>
-    <string name="Commissiontarget">العمولة الهدف</string>
+    <string name="Commissiontarget">العمولة </string>
     <string name="CommissionTargetReport">تقرير العمولات الهدف </string>
+    <string name="totalCommissiontarget">مجموع العمولات الهدف</string>
+    <string name="AchivComm">العمولة المحققة</string>
+
+    <string name="totalgoalachievementrate">المجموع المحقق</string>
     <string name="talaat_offer_discount">
 
     تشغيل : (كمية المادة/  حد الكميات للعرض  )* الخصم على المادة
