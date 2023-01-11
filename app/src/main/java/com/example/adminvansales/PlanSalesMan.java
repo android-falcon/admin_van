@@ -607,10 +607,11 @@ public class PlanSalesMan extends AppCompatActivity {
         for (int i = 0; i < listSelectedCustomer.size(); i++) {
             if (listSelectedCustomer.get(i).getIsSelected() == 1) {
                 Plan_SalesMan_model plan = new Plan_SalesMan_model();
+                NumOfDayWeek=   mtrl_calendar_days_of_week.getSelectedItemPosition()+1;
                 if(LogIn.PlanTYPE==0)
              plan.setPlan_date(currentDate);
                 else  plan.setPlan_date(NumOfDayWeek+"");
-                NumOfDayWeek=   mtrl_calendar_days_of_week.getSelectedItemPosition()+1;
+
 
                 Log.e("NumOfDayWeek", i + "\t" + NumOfDayWeek);
                 plan.setCustomerName(listSelectedCustomer.get(i).getCustomerName());
