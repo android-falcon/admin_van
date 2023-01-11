@@ -338,14 +338,14 @@
     </string-array>
 
     <string-array name="DaysOfWeek">
-        <item>السبت</item>
+
         <item>الأحد</item>
         <item>الأثنين</item>
         <item>الثلاثاء</item>
         <item>الاربعاء</item>
         <item>الخميس</item>
         <item>الجمعة</item>
-
+        <item>السبت</item>
     </string-array>
 
     <string-array name="month">

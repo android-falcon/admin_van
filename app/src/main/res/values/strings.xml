@@ -341,14 +341,14 @@
         <!--        <item>replacement</item>-->
     </string-array>
     <string-array name="DaysOfWeek">
-        <item>Saturday</item>
+
         <item>Sunday</item>
         <item>Monday</item>
         <item>Tuesday</item>
         <item>Wednesday</item>
         <item>Thursday</item>
         <item>Friday</item>
-
+        <item>Saturday</item>
     </string-array>
     <string-array name="montharray">
         <item>1 January</item>
