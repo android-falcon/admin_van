@@ -4,7 +4,6 @@ import static com.example.adminvansales.GlobelFunction.salesManInfosList;
 import static com.example.adminvansales.GlobelFunction.salesManNameList;
 import static com.example.adminvansales.ImportData.listAllArea;
 import static com.example.adminvansales.ImportData.listCustomer;
-import static com.example.adminvansales.ImportData.listCustomerInfo;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
@@ -30,24 +29,19 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.adminvansales.Adapters.CustomerAdapter;
 import com.example.adminvansales.Adapters.SelectedCustomerAdapterPlan;
-import com.example.adminvansales.Report.CashReport;
 import com.example.adminvansales.Report.ReportsPopUpClass;
 import com.example.adminvansales.model.AreaModel;
 import com.example.adminvansales.model.CustomerInfo;
 import com.example.adminvansales.model.Plan_SalesMan_model;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -206,7 +206,8 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/alegreya_sans_bold"
                     android:gravity="center"
-                    android:text="ID"
+                    android:visibility="gone"
+                    android:text="@string/id"
                     android:textColor="@color/white"
                     android:textSize="15sp" />
 
@@ -215,7 +216,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/alegreya_sans_bold"
                     android:gravity="center"
-                    android:text="Name"
+                    android:text="@string/sales_man_name"
                     android:textColor="@color/white"
                     android:textSize="15sp" />
 
@@ -224,7 +225,8 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/alegreya_sans_bold"
                     android:gravity="center"
-                    android:text="Customer code"
+                   android:visibility="gone"
+                    android:text="@string/customerNo"
                     android:textColor="@color/white"
                     android:textSize="15sp" />
 
@@ -233,7 +235,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/alegreya_sans_bold"
                     android:gravity="center"
-                    android:text="Customer name"
+                    android:text="@string/customerName"
                     android:textColor="@color/white"
                     android:textSize="15sp" />
 
@@ -242,7 +244,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/alegreya_sans_bold"
                     android:gravity="center"
-                    android:text="Check in date"
+                    android:text="@string/CHECK_IN_DATE"
                     android:textColor="@color/white"
                     android:textSize="15sp" />
 
@@ -251,7 +253,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/alegreya_sans_bold"
                     android:gravity="center"
-                    android:text="Check in time"
+                    android:text="@string/CHECK_IN_TIME"
                     android:textColor="@color/white"
                     android:textSize="15sp" />
 
@@ -260,7 +262,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/alegreya_sans_bold"
                     android:gravity="center"
-                    android:text="Check out date"
+                    android:text="@string/CHECK_OUT_DATE"
                     android:textColor="@color/white"
                     android:textSize="15sp" />
 
@@ -269,7 +271,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/alegreya_sans_bold"
                     android:gravity="center"
-                    android:text="Check out time"
+                    android:text="@string/CHECK_OUT_TIME"
                     android:textColor="@color/white"
                     android:textSize="15sp" />
 

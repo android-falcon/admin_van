@@ -1,6 +1,7 @@
 package com.example.adminvansales.Adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -11,6 +12,8 @@ import com.example.adminvansales.R;
 import com.example.adminvansales.model.PayMentReportModel;
 
 import java.util.List;
+
+import static com.example.adminvansales.ImportData.listCustomer;
 
 
 public class PayMentReportAdapter extends BaseAdapter {
@@ -76,7 +79,11 @@ public class PayMentReportAdapter extends BaseAdapter {
 
         holder.voucherNo .setText(itemsList.get(i).getVouNo());
         holder.payDate .setText(itemsList.get(i).getPaymentDate());
-        holder.customerName .setText(itemsList.get(i).getCustomerNo());
+
+
+       ;
+       String name=getCusromerName(itemsList.get(i).getCustomerNo());
+        holder.customerName .setText( ""+name);
         holder.amount .setText(itemsList.get(i).getAmount());
         holder.remark  .setText(itemsList.get(i).getNotes());
         holder.sales  .setText(itemsList.get(i).getSalesmanNo());
@@ -100,5 +107,17 @@ public class PayMentReportAdapter extends BaseAdapter {
 
         return view;
     }
+    private String getCusromerName(String num) {
+Log.e("num==",num+"");
+        for (int i = 0; i < listCustomer.size(); i++){
 
+            if (num.equals(listCustomer.get(i).getCustomerNumber())) {
+
+                return listCustomer.get(i).getCustomerName();
+            }
+
+        }
+
+        return "";
+    }
 }

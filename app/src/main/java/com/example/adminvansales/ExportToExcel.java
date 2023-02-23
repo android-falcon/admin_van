@@ -21,6 +21,7 @@ import com.example.adminvansales.model.CustomerLogReportModel;
 import com.example.adminvansales.model.ListPriceOffer;
 import com.example.adminvansales.model.PayMentReportModel;
 import com.example.adminvansales.model.Payment;
+import com.itextpdf.text.BaseColor;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,6 +34,8 @@ import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
 import jxl.write.biff.RowsExceededException;
 
+import static com.itextpdf.text.Element.ALIGN_CENTER;
+
 
 public class ExportToExcel {
     private static ExportToExcel instance;
@@ -41,7 +44,7 @@ public class ExportToExcel {
     File file;
     WritableWorkbook workbook;
     Intent intent;
-
+  GlobelFunction  globelFunction;
     public static ExportToExcel getInstance() {
         if (instance == null)
             instance = new ExportToExcel();
@@ -57,6 +60,7 @@ public class ExportToExcel {
         //Saving file in external storage
         try {
             this.context=context;
+            globelFunction=new GlobelFunction(context);
             File sdCard = Environment.getExternalStorageDirectory();
 //
 //           ? File sdCard = Environment.getStorageDirectory();
@@ -292,7 +296,7 @@ public class ExportToExcel {
                 sheet.addCell(new Label(10, 0, context.getResources().getString(R.string.total_cash     )  ));
 
                 sheet.mergeCells(0,1, 1, 1);// col , row, to col , to row
-
+                double sum=0,nettotal=0;
                 for (int i = 0; i < list.size(); i++) {
                     sheet.addCell(new Label(0, i + 2, list.get(i).getSalesManNo()+""));
                     sheet.addCell(new Label(2, i + 2,      list.get(i).getSalesManName()));
@@ -307,8 +311,14 @@ public class ExportToExcel {
                     sheet.addCell(new Label(10, i + 2,  list.get(i).getNetCash()+""));
 
                     sheet.mergeCells(0,i + 2, 1, i + 2);// col , row, to col , to row
+                    sum += Double.parseDouble(list.get(i).getTotalCash()) + Double.parseDouble(list.get(i).getPtotalCash());
+
+                    nettotal+=Double.parseDouble(list.get(i).getPtotalCredite())+Double.parseDouble(list.get(i).getPtotalCash());
 
                 }
+                sheet.addCell(new Label(2,list.size()+2 ,  context.getResources().getString(R.string.net_sales  ) +"     :   "+globelFunction.convertToEnglish(String.  format("%.3f",sum))));
+                sheet.addCell(new Label(4, list.size()+2 , context.getResources().getString(R.string.total_cash      ) +"     :   "+globelFunction.convertToEnglish(String.  format("%.3f",(nettotal)))));
+
 
             } catch (RowsExceededException e) {
                 e.printStackTrace();
@@ -430,6 +440,12 @@ public class ExportToExcel {
 
                 }
 
+
+                String total=  globelFunction.convertToEnglish(String.  format("%.3f",(list.stream().map(PayMentReportModel::getAmount).mapToDouble(Double::parseDouble).sum())));
+
+                sheet.addCell(new Label(2, list.size()+2,context.getResources().getString(R.string.total  ) +"     :   "+ total     )); // column and row
+                sheet.addCell(new Label(4, list.size()+2, context.getResources().getString(R.string.Payments_count      ) +"     :   "+ list.size()   ) );
+
             } catch (RowsExceededException e) {
                 e.printStackTrace();
             } catch (WriteException e) {
@@ -473,6 +489,8 @@ public class ExportToExcel {
                     //sheet.mergeCells(0,i + 2, 1, i + 2);// col , row, to col , to row
 
                 }
+                String total=  globelFunction.convertToEnglish(String.  format("%.3f",(list.stream().map(Payment::getAmount).mapToDouble(Double::parseDouble).sum())));
+                sheet.addCell(new Label(2,list.size()+2, context.getResources().getString(R.string.total  ) +"     :   "+ total+""));
 
             } catch (RowsExceededException e) {
                 e.printStackTrace();

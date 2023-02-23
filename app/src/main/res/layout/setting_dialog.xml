@@ -125,6 +125,25 @@
                 android:textSize="18sp" />
 
         </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="35dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginTop="6dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:id="@+id/arabic_language"
+            android:fontFamily="@font/alegreya_sans"
+
+            android:textColor="#000"
+            android:textSize="18sp"
+            android:text="@string/arabic_language"
+            android:layout_height="wrap_content"
+            />
+    </LinearLayout>
         <RadioGroup
             android:layout_width="match_parent"
             android:id="@+id/plansetting"
@@ -178,7 +197,7 @@ android:textColor="#000"
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/more"
-                android:visibility="gone"
+
                 android:layout_width="104dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/borders_btn"
@@ -186,6 +205,7 @@ android:textColor="#000"
                 android:drawableRight="@android:drawable/arrow_down_float"
                 android:drawableTint="@color/colorblue1"
                 android:padding="@dimen/padd_10"
+                android:visibility="gone"
                 android:text="@string/more"
                 android:textAllCaps="false"
                 android:textColor="@color/colorblue1"

@@ -13,7 +13,7 @@ public class Payment {
     private String payDate;
     private String custNumber;
     private String custName;
-    private double amount;
+    private String amount;
     private String remark;
     private int saleManNumber;
     private int isPosted;
@@ -29,7 +29,7 @@ public class Payment {
 
     // constructor for payment
     public Payment(int companyNumber, int voucherNumber, int saleManNumber,
-                   String payDate, String remark, double amount, int isPosted, String custNumber ,
+                   String payDate, String remark, String amount, int isPosted, String custNumber ,
                    String custName, int payMethod , int year) {
         this.companyNumber = companyNumber;
         this.voucherNumber = voucherNumber;
@@ -46,7 +46,7 @@ public class Payment {
 
     // constructor for payment paper
     public Payment(int companyNumber, int voucherNumber, int checkNumber,
-                   String bank, String dueDate, double amount, int isPosted , int year) {
+                   String bank, String dueDate, String amount, int isPosted , int year) {
         this.companyNumber = companyNumber;
         this.voucherNumber = voucherNumber;
         this.checkNumber = checkNumber;
@@ -106,11 +106,11 @@ public class Payment {
         this.saleManNumber = saleManNumber;
     }
 
-    public double getAmount() {
+    public String getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(String amount) {
         this.amount = amount;
     }
 

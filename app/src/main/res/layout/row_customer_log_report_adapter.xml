@@ -17,6 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.9"
             android:gravity="center"
+            android:visibility="gone"
             android:text="@string/SALES_MAN_ID"
             android:textColor="@color/colorblue_dark"
             android:textSize="14sp" />
@@ -37,6 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.9"
             android:gravity="center"
+            android:visibility="gone"
             android:text="@string/CUS_CODE"
             android:textColor="@color/colorblue_dark"
             android:textSize="12sp" />

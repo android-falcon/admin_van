@@ -39,27 +39,31 @@ public class LocaleAppUtils {
     public static void changeLayot(Context context){
         mHandler = new DataBaseHandler(context);
         contextG=context;
-        if (mHandler.getFlagSettings().size() != 0) {
-            if (mHandler.getFlagSettings().get(0).getArabic_language() == 0) {
-                languagelocalApp="ar";
+        try {
+            if (mHandler.getAllSetting() != null) {
+                if (mHandler.getAllSetting().getArabic_language() == 1) {
+                    languagelocalApp = "ar";
+                    LocaleAppUtils.setLocale(new Locale("ar"));
+                    LocaleAppUtils.setConfigChange(context);
+
+                } else {
+                    languagelocalApp = "en";
+                    LocaleAppUtils.setLocale(new Locale("en"));
+                    LocaleAppUtils.setConfigChange(context);
+
+                }
+            } else {
+                languagelocalApp = "ar";
                 LocaleAppUtils.setLocale(new Locale("ar"));
                 LocaleAppUtils.setConfigChange(context);
 
-            } else {
-                languagelocalApp="en";
-                LocaleAppUtils.setLocale(new Locale("en"));
-                LocaleAppUtils.setConfigChange(context);
-
             }
-        }
-        else {
-            languagelocalApp="ar";
+
+        }catch (Exception e)
+        {
+            languagelocalApp = "ar";
             LocaleAppUtils.setLocale(new Locale("ar"));
             LocaleAppUtils.setConfigChange(context);
-
         }
-
-
-
     }
 }

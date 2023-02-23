@@ -22,7 +22,14 @@
             android:text="Voucher"
             android:textColor="@color/new_dark_blue"
             android:textSize="14sp" />
-
+        <TextView
+            android:id="@+id/customerName"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/customerName"
+            android:textColor="@color/new_dark_blue"
+            android:textSize="14sp" />
         <TextView
             android:id="@+id/salesManName"
             android:layout_width="120dp"
@@ -44,16 +51,7 @@
             android:textColor="@color/new_dark_blue"
             android:textSize="12sp" />
 
-        <TextView
-            android:id="@+id/customerName"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
 
-android:visibility="gone"
-            android:text="@string/customerName"
-            android:textColor="@color/new_dark_blue"
-            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/amount"

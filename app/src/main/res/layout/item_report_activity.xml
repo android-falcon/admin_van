@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:id="@+id/linearMain"
+    android:orientation="vertical"
     android:layout_height="match_parent">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="2.3"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal">
 
     <ImageButton
         android:id="@+id/backBtn"
@@ -14,34 +25,35 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="22dp"
         android:layout_marginLeft="22dp"
-        android:layout_marginTop="35dp"
+        android:layout_gravity="center"
         android:background="@drawable/back_arrow" />
 
     <TextView
         android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
+        android:layout_gravity="center"
         android:fontFamily="@font/quicksand_bold"
         android:gravity="center"
         android:text="@string/itemReport"
         android:textColor="@color/colorblue1"
         android:textSize="16sp" />
 
-
+    </LinearLayout>
 
 
     <LinearLayout
         android:id="@+id/linear1"
+        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@id/title"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_marginHorizontal="22dp"
-        android:layout_marginTop="50dp"
+
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -97,12 +109,12 @@
     <LinearLayout
         android:id="@+id/linear2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@id/linear1"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_marginHorizontal="22dp"
-        android:layout_marginTop="15dp"
+        android:layout_weight="1"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -143,7 +155,12 @@
             android:textSize="16sp" />
 
     </LinearLayout>
-
+</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="1">
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/totalQtyBox"
         android:layout_width="190dp"
@@ -151,6 +168,7 @@
         android:layout_below="@+id/linear2"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
+        android:layout_gravity="center"
         app:cardCornerRadius="15dp"
         android:layout_marginBottom="-15dp"
         app:cardBackgroundColor="@color/white"
@@ -163,13 +181,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
+            android:layout_gravity="center"
             android:gravity="top"
             android:padding="@dimen/padd_10">
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="totalqty"
+                android:text="@string/totalqty1"
                 android:textColor="@color/new_dark_blue"
                 android:layout_weight="1"/>
 
@@ -189,6 +208,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_weight="1"
         android:layout_above="@+id/bottom_navigation"
         android:layout_below="@+id/totalQtyBox"
         android:layout_alignParentStart="true"
@@ -213,7 +233,8 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/alegreya_sans_bold"
                 android:gravity="center"
-                android:text="Item no."
+                android:text="@string/itemNo"
+                android:visibility="gone"
                 android:textColor="@color/white"
                 android:textSize="15sp" />
 
@@ -223,7 +244,7 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/alegreya_sans_bold"
                 android:gravity="center"
-                android:text="Name"
+                android:text="@string/itemName"
                 android:textColor="@color/white"
                 android:textSize="15sp" />
 
@@ -233,7 +254,7 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/alegreya_sans_bold"
                 android:gravity="center"
-                android:text="Date"
+                android:text="@string/date"
                 android:textColor="@color/white"
                 android:textSize="15sp" />
 
@@ -243,7 +264,7 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/alegreya_sans_bold"
                 android:gravity="center"
-                android:text="Qty"
+                android:text="@string/qty"
                 android:textColor="@color/white"
                 android:textSize="15sp" />
 
@@ -253,7 +274,7 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/alegreya_sans_bold"
                 android:gravity="center"
-                android:text="Price"
+                android:text="@string/price"
                 android:textColor="@color/white"
                 android:textSize="15sp" />
 
@@ -263,7 +284,7 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/alegreya_sans_bold"
                 android:gravity="center"
-                android:text="Total"
+                android:text="@string/total"
                 android:textColor="@color/white"
                 android:textSize="15sp" />
 
@@ -276,7 +297,35 @@
             android:layout_height="match_parent" />
 
     </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:id="@+id/tot_lin"
+        android:layout_above="@id/bottom_navigation"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="12dp">
 
+        <TextView
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/alegreya_sans_bold"
+            android:gravity="center"
+            android:text="@string/total"
+            android:textColor="#103164"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/alegreya_sans_bold"
+            android:gravity="center"
+            android:id="@+id/total"
+
+            android:textColor="#103164"
+            android:textSize="15sp" />
+    </LinearLayout>
     <include
         android:id="@+id/bottom_navigation"
         layout="@layout/bottom_nav_bar"
@@ -289,7 +338,7 @@
         android:layout_marginBottom="30dp" />
 
 
-</RelativeLayout>
+</LinearLayout>
 
     <!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
     <!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->

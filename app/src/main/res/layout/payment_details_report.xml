@@ -1,219 +1,311 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:id="@+id/linearMain"
+    android:orientation="vertical"
     android:layout_height="match_parent">
 
-    <ImageButton
-        android:id="@+id/backBtn"
-        android:layout_width="27dp"
-        android:layout_height="27dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="22dp"
-        android:layout_marginLeft="22dp"
-        android:layout_marginTop="35dp"
-        android:background="@drawable/back_arrow" />
-
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
-        android:fontFamily="@font/quicksand_bold"
-        android:text="@string/payment_details_report"
-        android:textColor="@color/colorblue1"
-        android:textSize="16sp"
-        android:gravity="center"/>
-
-    <ImageButton
-        android:id="@+id/share"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="35dp"
-        android:layout_marginEnd="22dp"
-        android:layout_marginRight="22dp"
-        android:background="@drawable/share" />
-
-    <ImageButton
-        android:id="@+id/excelConvert"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="35dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginRight="12dp"
-        android:layout_toStartOf="@+id/share"
-        android:layout_toLeftOf="@+id/share"
-        android:background="@drawable/excel" />
-
-    <ImageButton
-        android:id="@+id/pdfConvert"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="35dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginRight="12dp"
-        android:layout_toStartOf="@+id/excelConvert"
-        android:layout_toLeftOf="@+id/excelConvert"
-        android:background="@drawable/pdf" />
-
     <LinearLayout
-        android:id="@+id/linear1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/title"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginHorizontal="22dp"
-        android:layout_marginTop="50dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:layout_weight="1.9"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="match_parent">
+            <ImageButton
+                android:id="@+id/backBtn"
+                android:layout_width="35dp"
+              android:layout_gravity="center"
+                android:layout_height="27dp"
 
 
-        <TextView
-            android:id="@+id/from_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/alegreya_sans"
-            android:text="@string/from_date"
-            android:textColor="#103164"
-            android:textSize="18sp" />
+                android:layout_marginTop="10dp"
+                android:background="@drawable/back_arrow" />
 
-        <TextView
-            android:id="@+id/from_date_r"
-            android:layout_width="0dp"
+
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_weight="1"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/quicksand_bold"
+                android:gravity="center"
+                android:text="@string/payment_details_report"
+                android:textColor="@color/colorblue1"
+                android:textSize="16sp" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_weight="2"
+                android:layout_height="match_parent">
+            <ImageButton
+                android:id="@+id/share"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingEnd="3dp"
+                android:background="@drawable/share" />
+                <TextView
+
+
+                    android:layout_width="20dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:paddingEnd="3dp"
+                    />
+            <ImageButton
+                android:id="@+id/excelConvert"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="3dp"
+                android:layout_alignParentTop="true"
+                android:layout_gravity="center"
+                android:background="@drawable/excel" />
+                <TextView
+
+
+                    android:layout_width="20dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:paddingEnd="3dp"
+                    />
+            <ImageButton
+                android:id="@+id/pdfConvert"
+                android:layout_width="wrap_content"
+                android:paddingEnd="3dp"
+                android:layout_height="wrap_content"
+android:layout_gravity="center"
+                android:background="@drawable/pdf" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear1"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="22dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:id="@+id/from_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/alegreya_sans"
+                android:text="@string/from_date"
+                android:textColor="#103164"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/from_date_r"
+                android:layout_width="0dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="@dimen/padd_10"
+                android:layout_marginLeft="@dimen/padd_10"
+                android:layout_weight="0.4"
+                android:background="@drawable/border_dark_blue"
+                android:gravity="center"
+                android:padding="8dp"
+                app:drawableEndCompat="@drawable/calendar"
+                app:drawableRightCompat="@drawable/calendar" />
+
+            <TextView
+                android:id="@+id/to_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:fontFamily="@font/alegreya_sans"
+                android:text="@string/to_date"
+                android:textColor="#103164"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/to_date_r"
+                android:layout_width="0dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="@dimen/padd_10"
+                android:layout_marginLeft="@dimen/padd_10"
+                android:layout_weight="0.4"
+                android:background="@drawable/border_dark_blue"
+                android:gravity="center"
+                android:padding="8dp"
+                app:drawableEndCompat="@drawable/calendar"
+                app:drawableRightCompat="@drawable/calendar" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:layout_weight="1"
+            android:layout_marginHorizontal="22dp"
+
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:fontFamily="@font/alegreya_sans"
+                android:text="@string/name"
+                android:textColor="#103164"
+                android:textSize="18sp" />
+            <Spinner
+                android:id="@+id/salesNameSpinner"
+                android:layout_width="0dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="@dimen/padd_10"
+                android:layout_marginLeft="@dimen/padd_10"
+                android:layout_weight="0.5"
+                android:background="@drawable/spinner_bg"
+                android:gravity="center"
+                android:padding="8dp"
+                android:textColor="@color/gray" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_weight="0.28"
+                android:fontFamily="@font/alegreya_sans"
+                android:gravity="center|start"
+                android:text="@string/pay_method"
+                android:textColor="#103164"
+                android:textSize="18sp" />
+            <Spinner
+                android:id="@+id/payKindSpinner"
+                android:layout_width="0dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_weight="0.5"
+                android:background="@drawable/spinner_bg"
+                android:entries="@array/app_paymentTypeList2"
+                android:gravity="center" />
+
+
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:layout_weight="1"
+            android:layout_marginHorizontal="22dp"
+
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+
+            <TextView
+
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:fontFamily="@font/alegreya_sans"
+                android:text="@string/customerName"
+                android:textColor="#103164"
+                android:textSize="18sp" />
+            <TextView
+                android:id="@+id/cust_select"
+                android:drawableEnd="@drawable/ic_search_blue_24dp"
+                android:layout_width="0dp"
+                android:text="@string/selectcust"
+                android:textColor="@color/colorBlack"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:layout_weight="1"
+
+                android:padding="2dp"/>
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/padd_10"
+                android:layout_marginLeft="@dimen/padd_10"
+                android:layout_weight="0.6"
+                android:gravity="center"
+                app:boxCornerRadiusBottomEnd="@dimen/padd_10"
+                app:boxCornerRadiusBottomStart="@dimen/padd_10"
+                app:boxCornerRadiusTopEnd="@dimen/padd_10"
+                app:boxCornerRadiusTopStart="@dimen/padd_10"
+                app:boxStrokeColor="@color/new_dark_blue"
+                app:boxStrokeWidth="1dp"
+                android:visibility="gone"
+                app:endIconMode="dropdown_menu"
+                app:endIconTint="@color/new_dark_blue"
+                android:textAlignment="center">
+
+                <AutoCompleteTextView
+                    android:id="@+id/customers_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+
+                    android:textAlignment="center"
+                    android:padding="2dp"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/previewButton"
+            android:layout_width="140dp"
+            android:layout_gravity="center"
             android:layout_height="35dp"
-            android:layout_marginStart="@dimen/padd_10"
-            android:layout_marginLeft="@dimen/padd_10"
-            android:layout_weight="0.4"
-            android:background="@drawable/border_dark_blue"
-            android:gravity="center"
-            android:padding="8dp"
-            app:drawableEndCompat="@drawable/calendar"
-            app:drawableRightCompat="@drawable/calendar" />
-
-        <TextView
-            android:id="@+id/to_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:fontFamily="@font/alegreya_sans"
-            android:text="@string/to_date"
-            android:textColor="#103164"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/to_date_r"
-            android:layout_width="0dp"
-            android:layout_height="35dp"
-            android:layout_marginStart="@dimen/padd_10"
-            android:layout_marginLeft="@dimen/padd_10"
-            android:layout_weight="0.4"
-            android:background="@drawable/border_dark_blue"
-            android:gravity="center"
-            android:padding="8dp"
-            app:drawableEndCompat="@drawable/calendar"
-            app:drawableRightCompat="@drawable/calendar" />
-
+            android:layout_below="@id/linear2"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/yellow_btn"
+            android:fontFamily="@font/alegreya_sans_bold"
+            android:text="@string/preview"
+            android:textAllCaps="false"
+            android:textColor="@color/new_dark_blue"
+            android:textSize="16sp" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/linear2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/linear1"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginHorizontal="22dp"
-        android:layout_marginTop="15dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/alegreya_sans"
-            android:text="@string/name"
-            android:textColor="#103164"
-            android:textSize="18sp"
-            android:layout_weight="0"/>
-
-        <Spinner
-            android:id="@+id/salesNameSpinner"
-            android:layout_width="0dp"
-            android:layout_height="35dp"
-            android:layout_marginStart="@dimen/padd_10"
-            android:layout_marginLeft="@dimen/padd_10"
-            android:layout_weight="0.5"
-            android:background="@drawable/spinner_bg"
-            android:gravity="center"
-            android:padding="8dp"
-            android:textColor="@color/gray" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_weight="0.28"
-            android:fontFamily="@font/alegreya_sans"
-            android:gravity="center|start"
-            android:text="@string/pay_method"
-            android:textColor="#103164"
-            android:textSize="18sp" />
-
-        <Spinner
-            android:id="@+id/payKindSpinner"
-            android:layout_width="0dp"
-            android:layout_height="35dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_weight="0.5"
-            android:background="@drawable/spinner_bg"
-            android:entries="@array/app_paymentTypeList"
-            android:gravity="center"
-            />
 
 
-    </LinearLayout>
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/previewButton"
-        android:layout_width="140dp"
-        android:layout_height="35dp"
-        android:layout_below="@id/linear2"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/yellow_btn"
-        android:fontFamily="@font/alegreya_sans_bold"
-        android:text="@string/preview"
-        android:textAllCaps="false"
-        android:textColor="@color/new_dark_blue"
-        android:textSize="16sp" />
+
 
     <HorizontalScrollView
         android:layout_width="match_parent"
+        android:id="@+id/hor_lin"
+        android:layout_weight="1.2"
+        android:fillViewport="true"
         android:layout_height="match_parent"
-        android:layout_above="@+id/bottom_navigation"
-        android:layout_below="@id/previewButton"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="5dp"
         >
 
         <LinearLayout
             android:layout_width="wrap_content"
+           android:id="@+id/lin"
+
             android:layout_height="match_parent"
             android:orientation="vertical">
 
@@ -231,7 +323,15 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/alegreya_sans_bold"
                     android:gravity="center"
-                    android:text="Voucher"
+                    android:text="@string/voucher_number"
+                    android:textColor="@color/white"
+                    android:textSize="15sp" />
+                <TextView
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/alegreya_sans_bold"
+                    android:gravity="center"
+                    android:text="@string/CUS_NAME"
                     android:textColor="@color/white"
                     android:textSize="15sp" />
 
@@ -240,7 +340,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/alegreya_sans_bold"
                     android:gravity="center"
-                    android:text="Name"
+                    android:text="@string/sales_man_name"
                     android:textColor="@color/white"
                     android:textSize="15sp" />
 
@@ -249,7 +349,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/alegreya_sans_bold"
                     android:gravity="center"
-                    android:text="Pay date"
+                    android:text="@string/pay_date"
                     android:textColor="@color/white"
                     android:textSize="15sp" />
 
@@ -258,7 +358,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/alegreya_sans_bold"
                     android:gravity="center"
-                    android:text="Amount"
+                    android:text="@string/app_amount"
                     android:textColor="@color/white"
                     android:textSize="15sp" />
 
@@ -267,7 +367,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/alegreya_sans_bold"
                     android:gravity="center"
-                    android:text="Remark"
+                    android:text="@string/remark"
                     android:textColor="@color/white"
                     android:textSize="15sp" />
 
@@ -276,7 +376,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/alegreya_sans_bold"
                     android:gravity="center"
-                    android:text="Sales"
+                    android:text="@string/sales_man_no"
                     android:textColor="@color/white"
                     android:textSize="15sp" />
 
@@ -285,7 +385,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/alegreya_sans_bold"
                     android:gravity="center"
-                    android:text="Pay"
+                    android:text="@string/pay"
                     android:textColor="@color/white"
                     android:textSize="15sp" />
 
@@ -301,6 +401,60 @@
 
     </HorizontalScrollView>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:id="@+id/tot_lin"
+        android:layout_above="@id/bottom_navigation"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="12dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/alegreya_sans_bold"
+            android:gravity="center"
+            android:text="@string/total"
+            android:textColor="#103164"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/alegreya_sans_bold"
+            android:gravity="center"
+            android:id="@+id/total"
+
+            android:textColor="#103164"
+            android:textSize="15sp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/alegreya_sans_bold"
+            android:gravity="center"
+            android:text="@string/Payments_count"
+            android:textColor="#103164"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/alegreya_sans_bold"
+            android:gravity="center"
+            android:id="@+id/Payments_count"
+
+            android:textColor="#103164"
+            android:textSize="15sp" />
+
+    </LinearLayout>
+
+
+
     <include
         android:id="@+id/bottom_navigation"
         layout="@layout/bottom_nav_bar"
@@ -310,11 +464,355 @@
         android:layout_centerHorizontal="true"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
-        android:layout_marginBottom="30dp" />
+        android:layout_marginBottom="10dp" />
+
+</LinearLayout>
 
 
-</RelativeLayout>
 
+
+
+<!--   5000-->
+<!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--android:layout_width="match_parent"-->
+<!--android:id="@+id/linearMain"-->
+<!--android:layout_height="match_parent">-->
+<!--<LinearLayout-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="52dp"-->
+<!--    android:id="@+id/tot_lin"-->
+<!--    android:layout_above="@id/bottom_navigation"-->
+<!--    android:gravity="center_vertical"-->
+<!--    android:orientation="horizontal"-->
+<!--    android:paddingHorizontal="12dp">-->
+
+<!--    <TextView-->
+<!--        android:layout_width="120dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:fontFamily="@font/alegreya_sans_bold"-->
+<!--        android:gravity="center"-->
+<!--        android:text="@string/total"-->
+<!--        android:textColor="#103164"-->
+<!--        android:textSize="15sp" />-->
+
+<!--    <TextView-->
+<!--        android:layout_width="120dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:fontFamily="@font/alegreya_sans_bold"-->
+<!--        android:gravity="center"-->
+<!--        android:id="@+id/total"-->
+
+<!--        android:textColor="#103164"-->
+<!--        android:textSize="15sp" />-->
+<!--</LinearLayout>-->
+<!--<ImageButton-->
+<!--    android:id="@+id/backBtn"-->
+<!--    android:layout_width="27dp"-->
+<!--    android:layout_height="27dp"-->
+<!--    android:layout_alignParentStart="true"-->
+<!--    android:layout_alignParentLeft="true"-->
+<!--    android:layout_alignParentTop="true"-->
+<!--    android:layout_marginStart="22dp"-->
+<!--    android:layout_marginLeft="22dp"-->
+<!--    android:layout_marginTop="35dp"-->
+<!--    android:background="@drawable/back_arrow" />-->
+
+<!--<TextView-->
+<!--    android:id="@+id/title"-->
+<!--    android:layout_width="150dp"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:layout_alignParentTop="true"-->
+<!--    android:layout_centerHorizontal="true"-->
+<!--    android:layout_marginTop="30dp"-->
+<!--    android:fontFamily="@font/quicksand_bold"-->
+<!--    android:text="@string/payment_details_report"-->
+<!--    android:textColor="@color/colorblue1"-->
+<!--    android:textSize="16sp"-->
+<!--    android:gravity="center"/>-->
+
+<!--<ImageButton-->
+<!--    android:id="@+id/share"-->
+<!--    android:layout_width="wrap_content"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:layout_alignParentTop="true"-->
+<!--    android:layout_alignParentEnd="true"-->
+<!--    android:layout_alignParentRight="true"-->
+<!--    android:layout_marginTop="35dp"-->
+<!--    android:layout_marginEnd="22dp"-->
+<!--    android:layout_marginRight="22dp"-->
+<!--    android:background="@drawable/share" />-->
+
+<!--<ImageButton-->
+<!--    android:id="@+id/excelConvert"-->
+<!--    android:layout_width="wrap_content"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:layout_alignParentTop="true"-->
+<!--    android:layout_marginTop="35dp"-->
+<!--    android:layout_marginEnd="12dp"-->
+<!--    android:layout_marginRight="12dp"-->
+<!--    android:layout_toStartOf="@+id/share"-->
+<!--    android:layout_toLeftOf="@+id/share"-->
+<!--    android:background="@drawable/excel" />-->
+
+<!--<ImageButton-->
+<!--    android:id="@+id/pdfConvert"-->
+<!--    android:layout_width="wrap_content"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:layout_alignParentTop="true"-->
+<!--    android:layout_marginTop="35dp"-->
+<!--    android:layout_marginEnd="12dp"-->
+<!--    android:layout_marginRight="12dp"-->
+<!--    android:layout_toStartOf="@+id/excelConvert"-->
+<!--    android:layout_toLeftOf="@+id/excelConvert"-->
+<!--    android:background="@drawable/pdf" />-->
+
+<!--<LinearLayout-->
+<!--    android:id="@+id/linear1"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:layout_below="@id/title"-->
+<!--    android:layout_alignParentStart="true"-->
+<!--    android:layout_alignParentLeft="true"-->
+<!--    android:layout_marginHorizontal="22dp"-->
+<!--    android:layout_marginTop="50dp"-->
+<!--    android:gravity="center_vertical"-->
+<!--    android:orientation="horizontal">-->
+
+
+<!--    <TextView-->
+<!--        android:id="@+id/from_tv"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:fontFamily="@font/alegreya_sans"-->
+<!--        android:text="@string/from_date"-->
+<!--        android:textColor="#103164"-->
+<!--        android:textSize="18sp" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/from_date_r"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="35dp"-->
+<!--        android:layout_marginStart="@dimen/padd_10"-->
+<!--        android:layout_marginLeft="@dimen/padd_10"-->
+<!--        android:layout_weight="0.4"-->
+<!--        android:background="@drawable/border_dark_blue"-->
+<!--        android:gravity="center"-->
+<!--        android:padding="8dp"-->
+<!--        app:drawableEndCompat="@drawable/calendar"-->
+<!--        app:drawableRightCompat="@drawable/calendar" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/to_tv"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="8dp"-->
+<!--        android:layout_marginLeft="8dp"-->
+<!--        android:fontFamily="@font/alegreya_sans"-->
+<!--        android:text="@string/to_date"-->
+<!--        android:textColor="#103164"-->
+<!--        android:textSize="18sp" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/to_date_r"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="35dp"-->
+<!--        android:layout_marginStart="@dimen/padd_10"-->
+<!--        android:layout_marginLeft="@dimen/padd_10"-->
+<!--        android:layout_weight="0.4"-->
+<!--        android:background="@drawable/border_dark_blue"-->
+<!--        android:gravity="center"-->
+<!--        android:padding="8dp"-->
+<!--        app:drawableEndCompat="@drawable/calendar"-->
+<!--        app:drawableRightCompat="@drawable/calendar" />-->
+
+<!--</LinearLayout>-->
+
+<!--<LinearLayout-->
+<!--    android:id="@+id/linear2"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:layout_below="@id/linear1"-->
+<!--    android:layout_alignParentStart="true"-->
+<!--    android:layout_alignParentLeft="true"-->
+<!--    android:layout_marginHorizontal="22dp"-->
+<!--    android:layout_marginTop="15dp"-->
+<!--    android:gravity="center_vertical"-->
+<!--    android:orientation="horizontal">-->
+
+<!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_weight="0"-->
+<!--        android:fontFamily="@font/alegreya_sans"-->
+<!--        android:text="@string/name"-->
+<!--        android:textColor="#103164"-->
+<!--        android:textSize="18sp" />-->
+<!--    <Spinner-->
+<!--        android:id="@+id/salesNameSpinner"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="35dp"-->
+<!--        android:layout_marginStart="@dimen/padd_10"-->
+<!--        android:layout_marginLeft="@dimen/padd_10"-->
+<!--        android:layout_weight="0.5"-->
+<!--        android:background="@drawable/spinner_bg"-->
+<!--        android:gravity="center"-->
+<!--        android:padding="8dp"-->
+<!--        android:textColor="@color/gray" />-->
+<!--    <TextView-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="8dp"-->
+<!--        android:layout_marginLeft="8dp"-->
+<!--        android:layout_weight="0.28"-->
+<!--        android:fontFamily="@font/alegreya_sans"-->
+<!--        android:gravity="center|start"-->
+<!--        android:text="@string/pay_method"-->
+<!--        android:textColor="#103164"-->
+<!--        android:textSize="18sp" />-->
+<!--    <Spinner-->
+<!--        android:id="@+id/payKindSpinner"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="35dp"-->
+<!--        android:layout_marginStart="8dp"-->
+<!--        android:layout_marginLeft="8dp"-->
+<!--        android:layout_weight="0.5"-->
+<!--        android:background="@drawable/spinner_bg"-->
+<!--        android:entries="@array/app_paymentTypeList"-->
+<!--        android:gravity="center" />-->
+
+
+
+
+
+
+<!--</LinearLayout>-->
+
+<!--<androidx.appcompat.widget.AppCompatButton-->
+<!--    android:id="@+id/previewButton"-->
+<!--    android:layout_width="140dp"-->
+<!--    android:layout_height="35dp"-->
+<!--    android:layout_below="@id/linear2"-->
+<!--    android:layout_centerHorizontal="true"-->
+<!--    android:layout_marginTop="15dp"-->
+<!--    android:background="@drawable/yellow_btn"-->
+<!--    android:fontFamily="@font/alegreya_sans_bold"-->
+<!--    android:text="@string/preview"-->
+<!--    android:textAllCaps="false"-->
+<!--    android:textColor="@color/new_dark_blue"-->
+<!--    android:textSize="16sp" />-->
+
+<!--<HorizontalScrollView-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:id="@+id/hor_lin"-->
+<!--    android:layout_height="match_parent"-->
+<!--    android:layout_above="@+id/bottom_navigation"-->
+<!--    android:layout_below="@id/previewButton"-->
+<!--    android:layout_alignParentStart="true"-->
+<!--    android:layout_alignParentLeft="true"-->
+<!--    android:layout_marginTop="5dp"-->
+<!--    >-->
+
+<!--    <LinearLayout-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:id="@+id/lin"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:orientation="vertical">-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="52dp"-->
+<!--            android:background="#76C4FF"-->
+<!--            android:gravity="center_vertical"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:paddingHorizontal="12dp">-->
+
+
+<!--            <TextView-->
+<!--                android:layout_width="120dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:fontFamily="@font/alegreya_sans_bold"-->
+<!--                android:gravity="center"-->
+<!--                android:text="@string/voucher_number"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:textSize="15sp" />-->
+
+<!--            <TextView-->
+<!--                android:layout_width="120dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:fontFamily="@font/alegreya_sans_bold"-->
+<!--                android:gravity="center"-->
+<!--                android:text="@string/sales_man_name"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:textSize="15sp" />-->
+
+<!--            <TextView-->
+<!--                android:layout_width="120dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:fontFamily="@font/alegreya_sans_bold"-->
+<!--                android:gravity="center"-->
+<!--                android:text="@string/pay_date"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:textSize="15sp" />-->
+
+<!--            <TextView-->
+<!--                android:layout_width="120dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:fontFamily="@font/alegreya_sans_bold"-->
+<!--                android:gravity="center"-->
+<!--                android:text="@string/app_amount"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:textSize="15sp" />-->
+
+<!--            <TextView-->
+<!--                android:layout_width="120dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:fontFamily="@font/alegreya_sans_bold"-->
+<!--                android:gravity="center"-->
+<!--                android:text="@string/remark"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:textSize="15sp" />-->
+
+<!--            <TextView-->
+<!--                android:layout_width="120dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:fontFamily="@font/alegreya_sans_bold"-->
+<!--                android:gravity="center"-->
+<!--                android:text="@string/sales"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:textSize="15sp" />-->
+
+<!--            <TextView-->
+<!--                android:layout_width="120dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:fontFamily="@font/alegreya_sans_bold"-->
+<!--                android:gravity="center"-->
+<!--                android:text="@string/pay"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:textSize="15sp" />-->
+
+
+<!--        </LinearLayout>-->
+
+<!--        <ListView-->
+<!--            android:id="@+id/listPaymentReport"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent" />-->
+
+<!--    </LinearLayout>-->
+
+<!--</HorizontalScrollView>-->
+
+
+
+
+
+
+
+<!--</RelativeLayout>-->
+
+
+    <!--5000-->
     <!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
     <!--    android:layout_width="match_parent"-->
     <!--    android:layout_height="match_parent"-->

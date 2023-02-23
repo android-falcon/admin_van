@@ -50,6 +50,7 @@ public class PdfConverter {
     //    PDFView pdfView;
     File pdfFileName;
     BaseFont base;
+  GlobelFunction  globelFunction;
     private int directionOfHeader = Element.ALIGN_RIGHT;
 
     {
@@ -68,6 +69,7 @@ public class PdfConverter {
 
     public PdfConverter(Context context) {
         this.context = context;
+        globelFunction=new GlobelFunction(context);
     }
 
     public File  exportListToPdf(List<?> list, String headerDate, String date, int report ) {
@@ -191,6 +193,7 @@ public class PdfConverter {
 
 
         pdfPTable.setHeaderRows(1);
+        double sum=0,nettotal=0;
         for (int i = 0; i < list.size(); i++) {
             insertCell(pdfPTable, String.valueOf(list.get(i).getSalesManNo() ) , ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
             insertCell(pdfPTable, String.valueOf(list.get(i).getSalesManName())       , ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
@@ -203,10 +206,26 @@ public class PdfConverter {
             insertCell(pdfPTable, String.valueOf(list.get(i)  .getPtotalCrediteCard() )               , ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
             insertCell(pdfPTable, String.valueOf(list.get(i)  .getNetCash() )               , ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
 
+            sum += Double.parseDouble(list.get(i).getTotalCash()) + Double.parseDouble(list.get(i).getPtotalCash());
+
+            nettotal+=Double.parseDouble(list.get(i).getPtotalCredite())+Double.parseDouble(list.get(i).getPtotalCash());
 
 
 
         }
+
+        insertCellNOborder(pdfPTable,context.getResources().getString(R.string.net_sales  ) +"     :   "+globelFunction.convertToEnglish(String.  format("%.3f",sum)), ALIGN_CENTER, 3, arabicFont, BaseColor.BLACK);
+        insertCellNOborder(pdfPTable,context.getResources().getString(R.string.total_cash      ) +"     :   "+globelFunction.convertToEnglish(String.  format("%.3f",(nettotal))), ALIGN_CENTER   , 4, arabicFont, BaseColor.BLACK);
+        insertCellNOborder(pdfPTable,"", ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+        insertCellNOborder(pdfPTable,"", ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+        insertCellNOborder(pdfPTable,"", ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+        insertCellNOborder(pdfPTable,"", ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+        insertCellNOborder(pdfPTable,"", ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+        insertCellNOborder(pdfPTable,"", ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+        insertCellNOborder(pdfPTable,"", ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+        insertCellNOborder(pdfPTable,"", ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+
+
         return pdfPTable;
 
     }
@@ -214,7 +233,7 @@ public class PdfConverter {
     private PdfPTable createPaymentReport(List<PayMentReportModel> list)
     {
         createPDF("Payment_Report" + ".pdf");
-        PdfPTable pdfPTable = new PdfPTable(8);
+        PdfPTable pdfPTable = new PdfPTable(7);
         pdfPTable.setWidthPercentage(100f);
         pdfPTable.setRunDirection(PdfWriter.RUN_DIRECTION_LTR);
         insertCell(pdfPTable,context.getString(R.string.voucher_number)                    , ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
@@ -251,8 +270,18 @@ public class PdfConverter {
             }
 
 
-
         }
+        String total=  globelFunction.convertToEnglish(String.  format("%.3f",(list.stream().map(PayMentReportModel::getAmount).mapToDouble(Double::parseDouble).sum())));
+
+        insertCellNOborder(pdfPTable,context.getResources().getString(R.string.total  ) +"     :   "+ total, ALIGN_CENTER, 2, arabicFont, BaseColor.BLACK);
+        insertCellNOborder(pdfPTable,context.getResources().getString(R.string.Payments_count      ) +"     :   "+ list.size(), ALIGN_CENTER   , 2, arabicFont, BaseColor.BLACK);
+        insertCellNOborder(pdfPTable,"", ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+        insertCellNOborder(pdfPTable,"", ALIGN_CENTER   , 1, arabicFont, BaseColor.BLACK);
+        insertCellNOborder(pdfPTable,"", ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+        insertCellNOborder(pdfPTable,"", ALIGN_CENTER   , 1, arabicFont, BaseColor.BLACK);
+        insertCellNOborder(pdfPTable,"", ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+
+
         return pdfPTable;
 
     }
@@ -361,6 +390,15 @@ public class PdfConverter {
 
 
         }
+        String total=  globelFunction.convertToEnglish(String.  format("%.3f",(list.stream().map(Payment::getAmount).mapToDouble(Double::parseDouble).sum())));
+
+        insertCellNOborder(pdfPTable,context.getResources().getString(R.string.total  ) +"     :   "+ total, ALIGN_CENTER, 2, arabicFont, BaseColor.BLACK);
+        insertCellNOborder(pdfPTable,"", ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+        insertCellNOborder(pdfPTable,"", ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+        insertCellNOborder(pdfPTable,"", ALIGN_CENTER   , 1, arabicFont, BaseColor.BLACK);
+
+
+
         return pdfPTable;
 
     }
@@ -431,7 +469,27 @@ public class PdfConverter {
         table.addCell(cell);
 
     }
+    public void insertCellNOborder(PdfPTable table, String text, int align, int colspan, Font font, BaseColor border) {
 
+        //create a new cell with the specified Text and Font
+        PdfPCell cell = new PdfPCell(new Phrase(text, font));
+        //set the cell alignment
+        cell.setHorizontalAlignment(align);
+        //set the cell column span in case you want to merge two or more cells
+        cell.setColspan(colspan);
+        cell.setBorder(0);
+        //in case there is no text and you wan to create an empty row
+        if (text.trim().equalsIgnoreCase("")) {
+            cell.setMinimumHeight(10f);
+        }
+
+        cell.setRunDirection(PdfWriter.RUN_DIRECTION_RTL); //for make arabic string from right to left ...
+
+//        cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
+        //add the call to the table
+        table.addCell(cell);
+
+    }
     void endDocPdf() {
 
         if (doc != null) {

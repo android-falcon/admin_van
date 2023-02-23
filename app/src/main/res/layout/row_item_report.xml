@@ -12,6 +12,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.9"
             android:gravity="center"
+            android:visibility="gone"
             android:textColor="@color/new_dark_blue"
 
             />

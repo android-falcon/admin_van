@@ -40,5 +40,11 @@
         android:visible="false"
         android:title="@string/AddCommissionTarget"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/group_offerButton"
+        android:orderInCategory="100"
 
+        android:visible="false"
+        app:showAsAction="collapseActionView"
+        android:title="Offer Group" />
 </menu>

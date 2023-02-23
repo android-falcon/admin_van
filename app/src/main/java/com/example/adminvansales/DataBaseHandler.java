@@ -17,7 +17,7 @@ import java.util.List;
 
 public class DataBaseHandler extends SQLiteOpenHelper {
 
-    private static final int VERSION =19;
+    private static final int VERSION =20;
     private static final String BD_NAME = "AdminVanSales_DB";
 
     // ********************************************************************
@@ -44,7 +44,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     private final String CONO = "COMPANYNUM";
     private final String SETTING_PORT = "SETTING_PORT";
     private final String PLAN_TYPE = "PLAN_TYPE";
-
+    private final String arabic_language = "arabic_language";
 
     //*********************************************************************
     private final String ACCOUNT_STATMENT_TABLE="ACCOUNT_STATMENT_TABLE";
@@ -72,7 +72,8 @@ public class DataBaseHandler extends SQLiteOpenHelper {
                     +IMPORT_WAY+ " TEXT ,"
                     +CONO+ " TEXT ,"
                     + locationtracker +" INTEGER DEFAULT 0 ,"
-           + PLAN_TYPE+" INTEGER DEFAULT 0 "
+           + PLAN_TYPE+" INTEGER DEFAULT 0 ,"
+                    + arabic_language+" INTEGER DEFAULT 0 "
                     + ")";
             sqLiteDatabase.execSQL(createTableSetting);
         }
@@ -222,8 +223,15 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         catch (Exception e){
 
         }
+        try{
+            db.execSQL("ALTER TABLE SETTING_TABLE ADD " + arabic_language + " INTEGER DEFAULT '0'");
+        }
+        catch (Exception e){
+
+        }
+
     }
-    public void addSetting(String settingIp,String port,String importway,String cono,int Locationtrack,int plantype) {
+    public void addSetting(String settingIp,String port,String importway,String cono,int Locationtrack,int plantype,int language) {
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(SETTING_IP, settingIp);
@@ -233,7 +241,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         contentValues.put(CONO, cono);
         contentValues.put(locationtracker, Locationtrack);
         contentValues.put(PLAN_TYPE, plantype);
-
+        contentValues.put( arabic_language, language);
         database.insert(SETTING_TABLE, null, contentValues);
         database.close();
 
@@ -263,6 +271,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
                 settingModel.setImport_way(cursor.getString(2));
                 settingModel.setLocationtracker(cursor.getInt(4));
                 settingModel.setPlan_Type(cursor.getInt(5));
+                settingModel.setArabic_language(cursor.getInt(6));
                 Log.e("setPlan_Type",settingModel.getPlan_Type()+"");
                 ip=settingModel;
             } while (cursor.moveToNext());

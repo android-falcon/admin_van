@@ -68,14 +68,14 @@
     <string name="cash_report">تقرير الكاش</string>
     <string name="date">التاريخ</string>
     <string name="Month">الشهر</string>
-    <string name="sales">Sales</string>
+    <string name="sales">المبيعات</string>
     <string name="app_creditCard">Credit Card</string>
     <string name="cash_sale">البيع كاش</string>
-    <string name="credit_sales">Credit Sale</string>
+    <string name="credit_sales">البيع ذمم</string>
     <string name="total_sales">مجموع المبيعات</string>
     <string name="cash">كاش</string>
     <string name="netpayment">صافي المبيعات</string>
-    <string name="credit_value">Credit Value</string>
+    <string name="credit_value">قيمة الذمم</string>
     <string name="total_cash">مجموع الكاش</string>
     <string name="pay">الدفع</string>
     <string name="paymentCash">الدفع كاش</string>
@@ -90,6 +90,8 @@
     <string name="otherDiscount">other Discount</string>
     <string name="cheackDate">check Date</string>
     <string name="update">Update</string>
+    <string name="update1">تعديل </string>
+    <string name="Add1">إضافة </string>
     <string name="ListNo">List No</string>
     <string name="ListName">List Name</string>
     <string name="ListType">List Type</string>
@@ -104,7 +106,7 @@
     <string name="PAIDAMT">Paid Amount</string>
     <string name="app_cheque">شيك</string>
     <string name="app_bank_name">اسم البنك</string>
-    <string name="app_amount">Amount</string>
+    <string name="app_amount">المجموع</string>
     <string name="AnalyzeCustomersAccount">Analyze Customer\'s Account</string>
     <string name="customerNo">رقم العميل</string>
     <string name="df">DF</string>
@@ -121,7 +123,11 @@
     <string name="Validity">Validity</string>
     <string name="user_no">رقم المستخدم</string>
     <string name="userName">اسم المستخدم</string>
-    <string name="log_history_report">Log History report</string>
+    <string name="log_history_report">تقرير تسجيلات الدخول </string>
+    <string name="Payments_count">عدد الدفعات </string>
+    <string name="app_cust_name">اسم العميل</string>
+    <string name="app_enter_cust_code">ادخل حساب العميل</string>
+    <string name="SearchByCustomerName">بحث بإسم العميل</string>
     <string name="itemReport">تقرير المواد</string>
     <string name="getItemReport">Get Item Report</string>
     <string name="discountType">نوع الخصم</string>
@@ -142,7 +148,7 @@
     <string name="Notifications">الاشعارات</string>
     <string name="Reports">التقارير</string>
     <string name="addcustomerlocation">Add Customer Location</string>
-    <string name="itemvisble">Item Visble</string>
+    <string name="itemvisble">إمكانية رؤية المواد</string>
     <string name="open_drawer">open drawer</string>
     <string name="close_drawer">close drawer</string>
     <string name="addnew">إضافة</string>
@@ -156,22 +162,24 @@
     <string name="noCustomerSelected">No Customer Selected !!!</string>
     <string name="addCustomerLocation">Add Customer Location</string>
     <string name="select_area">Select Area</string>
-    <string name="itemVisible">Item Visibility</string>
+    <string name="itemVisible">إمكانية رؤية المواد</string>
     <string name="changeItemVisible">Item Visible</string>
-    <string name="hide">Hide</string>
+    <string name="hide">إخفاء</string>
     <string name="haveDuplicateOrder">You Have Duplicate Order !!</string>
-    <string name="order">Order</string>
+    <string name="order">الترتيب</string>
     <string name="plans_report">تقرير الخطط</string>
     <string name="language">اللغة</string>
     <string name="addnew1">إضافة:</string>
     <string name="clear">مسح</string>
-    <string name="Add1">إضافة</string>
+
     <string name="Update">تحديث</string>
     <string name="Orderedby">الترتيب حسب:</string>
     <string name="Manually">يدوي</string>
-    <string name="Paidamount">Paid amount :</string>
-    <string name="Receivedamount">Received amount :</string>
+    <string name="Paidamount">
+المبلغ المدفوع :</string>
+    <string name="Receivedamount">المبلغ المستلم :</string>
     <string name="totalqty">مجموع الكمية:</string>
+    <string name="totalqty1">مجموع الكمية</string>
     <string name="AddSalesMen">إضافة مندوب</string>
     <string name="AccountReport">تقرير الحساب </string>
     <string name="MakeOffer">إضافة عرض</string>
@@ -183,6 +191,7 @@
     <string name="ApprovedQuantity">الكمية الموتفق عليها</string>
     <string name="ApprovedStatus">حالة الموافقة</string>
     <string name="RequestReport">تقرير الطلبات</string>
+    <string name="selectcust">انقر لاختيار عميل</string>
     <string name="req_num">رقم الطلب</string>
     <string name="itemCount">عدد المواد</string>
     <string name="exits">هل أنت متأكد من الخروج</string>
@@ -265,6 +274,7 @@
     <string name="duplicatedVoucherNo">رقم الفاتورة مكرر لايمكن اكمال العملية </string>
     <string name="customerHaveLocation">يوجد موقع للعميل</string>
     <string name="workSerial">تفعيل الرقم التسلسلي</string>
+    <string name="id">التسلسل</string>
     <string name="ShowItemImage">إظهار صور العناصر</string>
     <string name="ApproveAdmin">طلب موافقة الادمن</string>
     <string name="youHaveRequestToAdmin">يجب موافقة الادمن</string>
@@ -308,8 +318,11 @@
     <string name="CommissionTargetReport">تقرير العمولات الهدف </string>
     <string name="totalCommissiontarget">مجموع العمولات الهدف</string>
     <string name="AchivComm">العمولة المحققة</string>
-
+    <string name="arabic_language">لغة عربية</string>
+    <string name="Checkindate">تاريخ الدخول</string>
     <string name="totalgoalachievementrate">المجموع المحقق</string>
+    <string name="emptylist">Empty List!!</string>
+    <string name="total">المجموع</string>
     <string name="talaat_offer_discount">
 
     تشغيل : (كمية المادة/  حد الكميات للعرض  )* الخصم على المادة
@@ -323,6 +336,14 @@
         <item>شيك</item>
         <item>بطاقة إئتمان</item>
     </string-array>
+    <string-array name="app_paymentTypeList2">
+        <!--        <item>All</item>-->
+        <item>الكل</item>
+        <item>كاش</item>
+        <item>شيك</item>
+        <item>بطاقة إئتمان</item>
+    </string-array>
+
     <string-array name="ListTypeAll">
         <!--        <item>ALL</item>-->
         <item>price by customer</item>
@@ -361,5 +382,10 @@
         <item>10 October</item>
         <item>11 November</item>
         <item>12 December</item>
+    </string-array>
+    <string-array name="Items_vis">
+        <item>الكل</item>
+        <item>مرئي </item>
+        <item>مخفي</item>
     </string-array>
 </resources>

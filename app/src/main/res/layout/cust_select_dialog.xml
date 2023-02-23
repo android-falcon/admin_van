@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="@color/layer7"
+    android:layout_height="260dp">
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_marginStart="3dp"
+        android:orientation="horizontal"
+        >
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:text="@string/app_enter_cust_code"
+        android:textColor="@color/text_view_color"
+        android:textSize="18sp"
+
+        />
+    </LinearLayout>
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_marginStart="3dp"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+            android:id="@+id/customerAccountNo"
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textSize="18sp"
+android:padding="3dp"
+            android:background="@color/totals_color"
+            android:textColor="@color/text_view_color"
+            />
+
+        <ImageButton
+            android:id="@+id/find_img_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="8"
+            android:background="@drawable/ic_search_blue_24dp" />
+
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/checkInCustomerName"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_marginStart="3dp"
+        android:text="@string/app_cust_name"
+        android:textColor="@color/text_view_color"
+        android:textSize="18sp"
+
+        />
+    <TextView
+        android:id="@+id/customerAccountname"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="3dp"
+        android:layout_weight="1"
+        android:padding="3dp"
+        android:textColor="@color/text_view_color"
+        android:textSize="18sp"
+
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+       android:layout_weight="1"
+        android:layout_columnSpan="2"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/okButton"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+
+            android:layout_height="wrap_content"
+            android:background="@drawable/done_button3"
+            android:text="@string/ok"
+            android:textSize="16sp"
+
+            android:layout_marginHorizontal="20dp"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/cancelButton"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="25dp"
+            android:background="@drawable/yellow_btn"
+            android:text="@string/cancel"
+            android:textSize="16sp"
+
+            android:textColor="@color/colorBlack"
+            android:textStyle="bold" />
+    </LinearLayout>
+</LinearLayout>

@@ -24,6 +24,7 @@ import com.example.adminvansales.Report.ReportsPopUpClass;
 import com.example.adminvansales.Report.UnCollectedData;
 import com.example.adminvansales.model.ItemReportModel;
 import com.example.adminvansales.model.ItemsRequsts;
+import com.example.adminvansales.model.Payment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
@@ -39,7 +40,7 @@ public class ItemReport extends AppCompatActivity {
     Button previewButton;
     ListView listItemReport;
     public static List<ItemReportModel> itemReportModelsList;
-
+    TextView total;
     ItemReportAdapter itemReportAdapter;
     ImportData importData;
     GlobelFunction globelFunction;
@@ -62,7 +63,7 @@ public class ItemReport extends AppCompatActivity {
     }
 
     void initial() {
-        RelativeLayout linearMain=findViewById(R.id.linearMain);
+        LinearLayout linearMain=findViewById(R.id.linearMain);
         try{
             if(LogIn.languagelocalApp.equals("ar"))
             {
@@ -80,7 +81,7 @@ public class ItemReport extends AppCompatActivity {
         {
             linearMain.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         }
-
+        total=findViewById(R.id.total);
         total_item_qty = findViewById(R.id.total_itemqty_text);
 
         globelFunction = new GlobelFunction(ItemReport.this);
@@ -233,6 +234,9 @@ public class ItemReport extends AppCompatActivity {
         itemReportAdapter = new ItemReportAdapter(ItemReport.this, itemReportModelsList);
         listItemReport.setAdapter(itemReportAdapter);
 
+        total.setText(globelFunction.convertToEnglish(String.  format("%.3f",(itemReportModelsList.stream().map(ItemReportModel::getTotal).mapToDouble(Double::parseDouble).sum()))));
+
+
     }
 
 
@@ -247,7 +251,7 @@ public class ItemReport extends AppCompatActivity {
         total_item_qty.setText("0");
         int sum = 0;
         for (int i = 0; i < itemReportModelsList.size(); i++)
-            sum += Integer.parseInt(itemReportModelsList.get(i).getQty());
+            sum += Double.parseDouble(itemReportModelsList.get(i).getQty());
         total_item_qty.setText(sum + "");
 
     }

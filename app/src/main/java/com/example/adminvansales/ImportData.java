@@ -1499,7 +1499,7 @@ Log.e("URL_TO_HIT",URL_TO_HIT+"");
     private class JSONTaskIIS_GetPaymentReport extends AsyncTask<String, String, String> {
         Object context;
         int flag;
-        String SalesNo, fromDate, toDate, payKind;
+        String SalesNo, fromDate, toDate, payKind,Customernum;
 
         public JSONTaskIIS_GetPaymentReport(Object context, String SalesNo, String fromDate, String toDate, String payKind) {
 //            this.flag=flag;
@@ -1637,7 +1637,7 @@ Log.e("URL_TO_HIT",URL_TO_HIT+"");
                             model.setNotes(jsonObject1.getString("NOTES"));
                             model.setSalesmanNo(jsonObject1.getString("SALESMANNO"));
                             model.setISPOSTED(jsonObject1.getString("ISPOSTED"));
-
+                            model.setCustomerNo(jsonObject1.getString("CUSTOMERNO"));
                             model.setPAYKIND(jsonObject1.getString("PAYKIND"));
                             model.setSalesmanname(jsonObject1.getString("SALESMANNAME"));
 
@@ -5110,10 +5110,10 @@ Log.e("URL_TO_HIT",URL_TO_HIT+"");
                             requestDetail.setDueDate(infoDetail.get("DueDate").toString());
                             requestDetail.setBank("Jordan Bank");
                             try {
-                                requestDetail.setAmount(Double.parseDouble(infoDetail.get("CAmount").toString()));
+                                requestDetail.setAmount(infoDetail.get("CAmount").toString());
 
                             } catch (Exception e) {
-                                requestDetail.setAmount(0);
+                                requestDetail.setAmount("0");
                             }
 
 

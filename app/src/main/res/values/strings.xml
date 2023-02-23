@@ -91,6 +91,8 @@
     <string name="otherDiscount">other Discount</string>
     <string name="cheackDate">check Date</string>
     <string name="update">Update</string>
+    <string name="update1">Update</string>
+
     <string name="ListNo">List No</string>
     <string name="ListName">List Name</string>
     <string name="ListType">List Type</string>
@@ -123,6 +125,10 @@
     <string name="user_no">User No</string>
     <string name="userName">User Name</string>
     <string name="log_history_report">Log History report</string>
+    <string name="Payments_count">Pay_count</string>
+    <string name="app_cust_name">Customer Name</string>
+    <string name="app_enter_cust_code">Enter Customer Code</string>
+    <string name="SearchByCustomerName">Search By Customer Name</string>
     <string name="itemReport">Items Report</string>
     <string name="getItemReport">Get Item Report</string>
     <string name="discountType">Discount Type</string>
@@ -154,7 +160,7 @@
     <string name="manual">Manual</string>
     <string name="byLocation">By Location</string>
     <string name="bySaleMan">By SaleMan</string>
-
+    <string name="id">ID</string>
     <string name="noCustomerSelected">No Customer Selected !!!</string>
     <string name="addCustomerLocation">Add Customer Location</string>
     <string name="select_area">Select Area</string>
@@ -174,6 +180,7 @@
     <string name="Paidamount">Paid amount :</string>
     <string name="Receivedamount">Received amount :</string>
     <string name="totalqty">Total Qty:</string>
+    <string name="totalqty1">Total Qty</string>
     <string name="AddSalesMen">Add Sales Men</string>
 
     <string name="AccountReport">Account Report</string>
@@ -185,6 +192,8 @@
     <string name="ApprovedQuantity">Approved Qty</string>
     <string name="ApprovedStatus">Approved Status</string>
     <string name="RequestReport">Request Report</string>
+    <string name="selectcust">Click to Select Customer</string>
+
     <string name="req_num">Request Num</string>
     <string name="itemCount">Items Count</string>
     <string name="exits">Are you sure to Exit</string>
@@ -317,11 +326,22 @@
     <string name="totalCommissiontarget">Total Commission Target</string>
     <string name="AchivComm">Comm_Achievement</string>
     <string name="totalgoalachievementrate">Total goal achievement</string>
+    <string name="arabic_language">arabic language</string>
+    <string name="Checkindate">Check in date</string>
+    <string name="emptylist">Empty List!!</string>
 
-    <string name="title_activity_firebase_maps">FirebaseMapsActivity</string>
+    <string name="total">Total</string>
     <string-array name="app_paymentTypeList">
 
         <!--        <item>All</item>-->
+        <item>Cash</item>
+        <item>Cheque</item>
+        <item>Credit card</item>
+    </string-array>
+    <string-array name="app_paymentTypeList2">
+
+        <!--        <item>All</item>-->
+        <item>All</item>
         <item>Cash</item>
         <item>Cheque</item>
         <item>Credit card</item>
@@ -364,4 +384,11 @@
         <item>11 November</item>
         <item>12 December</item>
     </string-array>
+
+    <string-array name="Items_vis">
+    <item>All</item>
+    <item>Visible only</item>
+    <item>Hide</item>
+    </string-array>
+
 </resources>

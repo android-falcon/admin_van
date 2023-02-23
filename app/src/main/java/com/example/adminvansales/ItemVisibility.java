@@ -471,12 +471,13 @@ public class ItemVisibility extends AppCompatActivity {
     }
 
     private void fillItemVisibleSpinner() {
-        listItemVisib.add("All");//0
-        listItemVisib.add("Visible");
-        listItemVisib.add("Hide");
-        itemStateVisiAdapter = new ArrayAdapter<String>(this, R.layout.spinner_layout, listItemVisib);
-        itemStateVisiAdapter.setDropDownViewResource(R.layout.spinner_layout);
-        myBinding.visiblestateSpinner.setAdapter(itemStateVisiAdapter);
+//        listItemVisib.add("All");//0
+//        listItemVisib.add("Visible");
+//        listItemVisib.add("Hide");
+//        itemStateVisiAdapter = new ArrayAdapter<String>(this, R.layout.spinner_layout, listItemVisib);
+//        itemStateVisiAdapter.setDropDownViewResource(R.layout.spinner_layout);
+//        myBinding.visiblestateSpinner.setAdapter(itemStateVisiAdapter);
+
         myBinding.visiblestateSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

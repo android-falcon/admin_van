@@ -1,6 +1,9 @@
 package com.example.adminvansales.Report;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -10,13 +13,18 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TableLayout;
@@ -27,9 +35,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.content.ContextCompat;
 
 
+import com.example.adminvansales.Adapters.CustomersListAdapter;
 import com.example.adminvansales.ExportToExcel;
 import com.example.adminvansales.GlobelFunction;
 import com.example.adminvansales.ImportData;
@@ -37,6 +47,8 @@ import com.example.adminvansales.LogIn;
 import com.example.adminvansales.MainActivity;
 import com.example.adminvansales.PlanSalesMan;
 import com.example.adminvansales.RequstNotifaction;
+import com.example.adminvansales.model.CustomerInfo;
+import com.example.adminvansales.model.PayMentReportModel;
 import com.example.adminvansales.model.Payment;
 import com.example.adminvansales.PdfConverter;
 import com.example.adminvansales.R;
@@ -77,7 +89,9 @@ public class UnCollectedData extends AppCompatActivity {
     GlobelFunction globelFunction;
     String toDay;
     private AutoCompleteTextView customers_list;
-
+TextView total,cust_select;
+    public  static Dialog dialoglist,    dialog;
+    public static   TextView customerAccountNo,customerAccountname;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,7 +104,7 @@ public class UnCollectedData extends AppCompatActivity {
         preview_button_account.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                customerId = getCusromerNUM(customers_list.getText().toString());
+                customerId = getCusromerNUM(cust_select.getText().toString());
                 Log.e("customerId", customerId+"");
                 if (!customerId.equals("")) {
                     paymentChequesList.clear();
@@ -116,6 +130,7 @@ public class UnCollectedData extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 //    getCusromerNUM( customerSpinner.getSelectedItem().toString());
+                Log.e("onItemSelected",customers_list.getText().toString());
                 customerId=  getCusromerNUM( customers_list.getText().toString());
                 Log.e("onItemSelected",""+customerId);
             }
@@ -124,10 +139,15 @@ public class UnCollectedData extends AppCompatActivity {
     }
 
     private String getCusromerNUM(String name) {
-        for (int i = 0; i < listCustomer.size(); i++)
-            if (name.trim().equals(listCustomer.get(i).getCustomerName())) {
+
+        for (int i = 0; i < listCustomer.size(); i++){
+            Log.e("here",listCustomer.get(i).getCustomerName());
+            if (name.equals(listCustomer.get(i).getCustomerName())) {
+
                 return listCustomer.get(i).getCustomerNumber();
             }
+
+        }
 
         return "";
     }
@@ -194,7 +214,8 @@ public class UnCollectedData extends AppCompatActivity {
     }
 
     private void initialView() {
-        RelativeLayout linearMain=findViewById(R.id.linearMain);
+
+        LinearLayout linearMain=findViewById(R.id.linearMain);
         try{
             if(LogIn.languagelocalApp.equals("ar"))
             {
@@ -212,6 +233,9 @@ public class UnCollectedData extends AppCompatActivity {
         {
             linearMain.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         }
+        cust_select=findViewById(R.id.cust_select);
+        cust_select.setOnClickListener(onClick);
+        total=findViewById(R.id.total);
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
         builder.detectFileUriExposure();
@@ -374,13 +398,114 @@ public class UnCollectedData extends AppCompatActivity {
                 case R.id.share:
                     shareWhatsApp();
                     break;
-
+                case R.id.  cust_select:
+                    opencust_selectDailog();
+                    break;
             }
 
         }
     };
 
+    private void  opencust_selectDailog(){
+          dialog = new Dialog(UnCollectedData.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.cust_select_dialog);
 
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = (int) (getResources().getDisplayMetrics().widthPixels / 1.19);
+        dialog.getWindow().setAttributes(lp);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+         customerAccountNo = dialog.findViewById(R.id.customerAccountNo);
+         customerAccountname = dialog.findViewById(R.id.customerAccountname);
+        AppCompatButton ok= dialog.findViewById(R.id.okButton);
+        AppCompatButton    cancel= dialog.findViewById(R.id.cancelButton);
+        ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                if(!customerAccountname.getText().toString().equals(""))
+                    cust_select.setText(customerAccountname.getText());
+                else
+                {
+                    cust_select.setText(getResources().getString(R.string.selectcust));
+                }
+                dialog.dismiss();
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cust_select.setText(getResources().getString(R.string.selectcust));
+                dialog.dismiss();
+            }
+        });
+       ImageView find_img_button=dialog.findViewById(R.id.find_img_button);
+        find_img_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if(listCustomer.size()!=0)
+                {  dialoglist = new Dialog(UnCollectedData.this);
+                dialoglist.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialoglist.setCancelable(false);
+                dialoglist.setContentView(R.layout.customerlist_dailog);
+
+                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                lp.copyFrom(dialoglist.getWindow().getAttributes());
+                lp.width = (int) (getResources().getDisplayMetrics().widthPixels / 1.19);
+                dialoglist.getWindow().setAttributes(lp);
+                dialoglist.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+              EditText  customerNameTextView =dialoglist.findViewById(R.id.customerNameTextView);
+                ListView customersList =dialoglist.findViewById(R.id.customersList);
+                customerNameTextView.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable editable) {
+                            if(!editable.toString().equals(""))
+                            {
+                                 ArrayList<CustomerInfo> filterdlist = new ArrayList<CustomerInfo>();
+
+                                    for (int i=0;i<listCustomer.size();i++)
+                                    {
+                                        if(listCustomer.get(i).getCustomerName().contains(customerNameTextView.getText().toString())
+                                        ||listCustomer.get(i).getCustomerNumber().contains(customerNameTextView.getText().toString()) )
+
+                                            filterdlist.add(listCustomer.get(i));
+                                        customersList.setAdapter(new CustomersListAdapter(1,UnCollectedData.this,filterdlist));
+                                    }
+
+                            }else
+                            {
+                                customersList.setAdapter(new CustomersListAdapter(1,UnCollectedData.this,listCustomer));
+                            }
+                    }
+                });
+
+                customersList.setAdapter(new CustomersListAdapter(1,UnCollectedData.this,listCustomer));
+                dialoglist.show();
+
+            }else
+                {
+                    GlobelFunction.showSweetDialog(UnCollectedData.this,3,"",getResources().getString(R.string.emptylist));
+                }}
+
+        });
+        dialog.show();
+
+    }
     private void fillCustomerSpenner() {
         Collections.sort(customername, String.CASE_INSENSITIVE_ORDER);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
@@ -394,13 +519,13 @@ public class UnCollectedData extends AppCompatActivity {
         data.setBank("Arab Bank");
         data.setDueDate("13/02/2021");
         data.setCheckNumber(20210210);
-        data.setAmount(2500);
+        data.setAmount("2500");
 
         paymentArrayList.add(data);
         data.setBank("Arab Bank");
         data.setDueDate("13/02/2021");
         data.setCheckNumber(20210210);
-        data.setAmount(25200);
+        data.setAmount("25200");
         paymentArrayList.add(data);
         paymentArrayList.add(data);
         fillTable();
@@ -430,7 +555,8 @@ public class UnCollectedData extends AppCompatActivity {
             for (int i = 0; i < 4; i++) {
 
                 String[] record = {paymentArrayList.get(n).getBank(), (paymentArrayList.get(n).getCheckNumber() + ""),
-                        paymentArrayList.get(n).getDueDate(), (paymentArrayList.get(n).getAmount() + "")};
+                        paymentArrayList.get(n).getDueDate(),
+                        globelFunction.convertToEnglish(String. format("%.3f",Double.parseDouble((paymentArrayList.get(n).getAmount()))))};
 
                 TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
                 row.setLayoutParams(lp);
@@ -447,5 +573,8 @@ public class UnCollectedData extends AppCompatActivity {
             }
             tableCheckData.addView(row);
         }
+
+      total.setText(globelFunction.convertToEnglish(String.  format("%.3f",paymentArrayList.stream().map(Payment::getAmount).mapToDouble(Double::parseDouble).sum())));
     }
+
 }

@@ -35,6 +35,7 @@ import com.example.adminvansales.RequstNotifaction;
 import com.example.adminvansales.model.CashReportModel;
 import com.example.adminvansales.PdfConverter;
 import com.example.adminvansales.R;
+import com.example.adminvansales.model.Payment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.io.File;
@@ -60,7 +61,7 @@ public class CashReport extends AppCompatActivity {
     List<CashReportModel> TempReports;
     com.example.adminvansales.model.SettingModel SettingModel;
     DataBaseHandler databaseHandler;
-
+    TextView  total,cashtotal;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,7 +74,7 @@ public class CashReport extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
     private void initial() {
-        RelativeLayout linearMain=findViewById(R.id.linearMain);
+        LinearLayout linearMain=findViewById(R.id.linearMain);
         try{
             if(LogIn.languagelocalApp.equals("ar"))
             {
@@ -91,6 +92,8 @@ public class CashReport extends AppCompatActivity {
         {
             linearMain.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         }
+        total=findViewById(R.id.total);
+        cashtotal=findViewById(R.id.cashtotal);
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
         builder.detectFileUriExposure();
@@ -267,7 +270,7 @@ public class CashReport extends AppCompatActivity {
     }
 
     public void fillCashAdapter() {
-        try {
+//        try {
 
 
             int positionSales = salesNameSpinner.getSelectedItemPosition();
@@ -292,14 +295,27 @@ public class CashReport extends AppCompatActivity {
                     }
                 }
 
+
                 payMentReportAdapter = new CashReportAdapter(CashReport.this, TempReports);
                 listCashReport.setAdapter(payMentReportAdapter);
+
+       double sum=0,nettotal=0;
+           for(int i=0;i<TempReports.size();i++) {
+               sum += Double.parseDouble(TempReports.get(i).getTotalCash()) + Double.parseDouble(TempReports.get(i).getPtotalCash());
+
+               nettotal+=Double.parseDouble(TempReports.get(i).getPtotalCredite())+Double.parseDouble(TempReports.get(i).getPtotalCash());
+
+           }
+     Log.e("cash_rep==","pr,,"+"");
+                cashtotal.setText(globelFunction.convertToEnglish(String.  format("%.3f",sum)));
+                total.setText(globelFunction.convertToEnglish(String.  format("%.3f",(nettotal))));
 
             }
 
 
-        } catch (Exception exception) {
-        }
+//        } catch (Exception exception) {
+//            Log.e("exception==","pr,,"+exception.getMessage());
+//        }
     }
 
     @Override

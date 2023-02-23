@@ -275,7 +275,12 @@ public class HomeActivity extends AppCompatActivity
                 return true;
 
             }
+            case R.id. group_offerButton:{
+                startActivity(new Intent(HomeActivity.this,GroupOffer.class));
 
+                drawerLayout.closeDrawer(navigationView);
+                return true;
+            }
         }
 
         return true;

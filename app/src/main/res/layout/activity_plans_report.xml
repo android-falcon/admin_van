@@ -238,7 +238,7 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/alegreya_sans_bold"
                 android:gravity="center"
-                android:text="Order"
+                android:text="@string/order"
                 android:textColor="@color/white"
                 android:textSize="15sp" />
 

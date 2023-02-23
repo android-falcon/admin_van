@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -77,6 +78,7 @@ public class LogIn extends AppCompatActivity {
     public  static int locationtrackerFlage=0;
     public  static    int getMaxVoucherServer=0;
     public  static    int PlanTYPE=0;
+    public  static    int Arabic_Language=0;
     public  static  int passwordSettingAdmin=0;//0 ---> static password   1 ----->password from admin
     public  static  int makeOrders=0;// 1= just orders app
     public  static    int getTotalBalanceInActivities=0;
@@ -91,7 +93,7 @@ public class LogIn extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         new LocaleAppUtils().changeLayot(LogIn.this);
         setContentView(R.layout.activity_log_in);
-        Log.e("importDataMasaterrrr","importData;;;");
+        Log.e("importDataMasaterrrr","importData");
 
 
         settingModel=new com.example.adminvansales.model.SettingModel ();
@@ -136,6 +138,7 @@ public class LogIn extends AppCompatActivity {
         try {
             settingModelList = databaseHandler.getAllSetting();
             PlanTYPE=settingModelList.getPlan_Type();
+            Arabic_Language=settingModelList.getArabic_language();
 //            Log.e("settingModelList",""+settingModelList.getIpAddress().trim().length());
             if(settingModelList.getIpAddress().trim().length()!=0)
             {
@@ -168,19 +171,19 @@ public class LogIn extends AppCompatActivity {
                  typeimport="1";
              }
 
-
+             typeimport="1";
+             Log.e("importData","importData="+typeimport);
+             if (typeimport.equals("0"))
+                 importData.getCustomerInfo(0);
+             else if (typeimport.equals("1"))
+                 importData.IIs_getCustomerInfo(0);
 
          }catch (Exception e)
          {
              typeimport="1";
 
          }
-        typeimport="1";
-        Log.e("importData","importData="+typeimport);
-        if (typeimport.equals("0"))
-            importData.getCustomerInfo(0);
-        else if (typeimport.equals("1"))
-            importData.IIs_getCustomerInfo(0);
+
 
 
         globelFunction=new GlobelFunction(LogIn.this);
@@ -430,6 +433,8 @@ public class LogIn extends AppCompatActivity {
         SwitchCompat   locationtracker= dialog.findViewById(R.id.locationtracker);
         final EditText editTextIp=dialog.findViewById(R.id.setindEditText);
         final EditText  portSetting=dialog.findViewById(R.id.portSetting);
+        CheckBox arabic_language=dialog.findViewById(R.id.arabic_language);
+
         RadioGroup plansetting=dialog.findViewById(R.id.plansetting);
      RadioButton   week_plan=dialog.findViewById(R.id.week_plan);
         RadioButton  month_plan=dialog.findViewById(R.id.month_plan);
@@ -466,7 +471,11 @@ public class LogIn extends AppCompatActivity {
                 import_way=settingModels.getImport_way();
                 Cono=settingModels.getCono();
                 locationtracker.setChecked((settingModels.getLocationtracker() == 1));
+
                 locationtrackerFlage=settingModels.getLocationtracker();
+                if   (settingModels.getArabic_language()==1 )arabic_language.setChecked(true);
+                else arabic_language.setChecked(false);
+
              if   (settingModels.getPlan_Type()==1 ){
                  month_plan.setChecked(false );
                  week_plan.setChecked(true );
@@ -474,6 +483,16 @@ public class LogIn extends AppCompatActivity {
              else{   week_plan.setChecked(false );
                  month_plan.setChecked(true );
              }
+                if   (settingModels.getArabic_language()==1 ){
+                    Log.e("getArabic_language",settingModels.getArabic_language()+"");
+                    arabic_language.setChecked(true );
+
+                }
+                else{   arabic_language.setChecked(false );
+                    Log.e("else==",settingModels.getArabic_language()+"");
+                }
+
+
 //                if(import_way.equals("0"))
 //                    RB_mysql.setChecked(true);
 //                else
@@ -498,13 +517,16 @@ public class LogIn extends AppCompatActivity {
                 Cono=CoNo.getText().toString().trim();
                 int loc_trac=0;
                 if(locationtracker.isChecked())loc_trac=1;
+                if(arabic_language.isChecked())Arabic_Language=1;
+                else
+                    Arabic_Language=0;
                 if(ipAddress.trim().length()!=0)
                 {
                     if(portSettings.trim().length()!=0) {
 
                         if(Cono.trim().length()!=0) {
                             Log.e("PlanTYPE==",PlanTYPE+"");
-                            databaseHandler.addSetting(ipAddress,portSettings,"1",Cono,loc_trac,PlanTYPE);
+                            databaseHandler.addSetting(ipAddress,portSettings,"1",Cono,loc_trac,PlanTYPE,Arabic_Language);
                             dialog.dismiss();
                             locationtrackerFlage=loc_trac;
 
@@ -642,4 +664,6 @@ Log.e("gggggg","aaaaa");
 
         cancelBtn.setOnClickListener(v12 -> moreDialog.dismiss());
     }
+
+
 }

@@ -8,6 +8,15 @@ public class SettingModel {
       String import_way;
     String Cono;
 int Plan_Type;
+    private int arabic_language;
+
+    public int getArabic_language() {
+        return arabic_language;
+    }
+
+    public void setArabic_language(int arabic_language) {
+        this.arabic_language = arabic_language;
+    }
 
     private  int  locationtracker;
 
