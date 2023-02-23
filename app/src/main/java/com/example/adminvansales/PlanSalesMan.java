@@ -107,7 +107,7 @@ public class PlanSalesMan extends AppCompatActivity {
         mtrl_calendar_days_of_week.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                NumOfDayWeek=i;
+                //NumOfDayWeek=i;
             }
 
             @Override
@@ -618,9 +618,13 @@ public class PlanSalesMan extends AppCompatActivity {
         for (int i = 0; i < listSelectedCustomer.size(); i++) {
             if (listSelectedCustomer.get(i).getIsSelected() == 1) {
                 Plan_SalesMan_model plan = new Plan_SalesMan_model();
-            //    plan.setPlan_date(currentDate);
-                plan.setPlan_date(currentDate+"");
+                NumOfDayWeek=   mtrl_calendar_days_of_week.getSelectedItemPosition()+1;
+                if(LogIn.PlanTYPE==0)
+             plan.setPlan_date(currentDate);
+                else  plan.setPlan_date(NumOfDayWeek+"");
 
+
+                Log.e("NumOfDayWeek", i + "\t" + NumOfDayWeek);
                 plan.setCustomerName(listSelectedCustomer.get(i).getCustomerName());
                 plan.setCustomerNumber(listSelectedCustomer.get(i).getCustomerNumber());
                 Log.e("salesNameSpinner", i + "\t" + plan.getCustomerName());
@@ -638,7 +642,6 @@ public class PlanSalesMan extends AppCompatActivity {
             }
 
         }
-        Log.e("listPlan",""+listPlan.size());
         if (listPlan.size() != 0) {
             savePlan();
         } else {

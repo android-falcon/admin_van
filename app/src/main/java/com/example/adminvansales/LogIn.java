@@ -76,7 +76,7 @@ public class LogIn extends AppCompatActivity {
     public  static int rawahneh=0;// 1= EXPORT STOCK TABLES
     public  static int locationtrackerFlage=0;
     public  static    int getMaxVoucherServer=0;
-    public  static    int PlanTYPE;
+    public  static    int PlanTYPE=0;
     public  static  int passwordSettingAdmin=0;//0 ---> static password   1 ----->password from admin
     public  static  int makeOrders=0;// 1= just orders app
     public  static    int getTotalBalanceInActivities=0;
