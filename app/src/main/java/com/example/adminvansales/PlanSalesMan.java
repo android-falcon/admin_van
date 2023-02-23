@@ -4,6 +4,8 @@ import static com.example.adminvansales.GlobelFunction.salesManInfosList;
 import static com.example.adminvansales.GlobelFunction.salesManNameList;
 import static com.example.adminvansales.ImportData.listAllArea;
 import static com.example.adminvansales.ImportData.listCustomer;
+import static com.example.adminvansales.ImportData.listCustomerInfo;
+import static com.example.adminvansales.LogIn.hideRawahne;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
@@ -31,6 +33,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -79,6 +82,7 @@ public class PlanSalesMan extends AppCompatActivity {
     public static int orderType = 0;
     public StringBuilder allAreaPlan;
     BottomNavigationView bottom_navigation;
+    RadioButton byLocation_RadioButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -178,6 +182,7 @@ public class PlanSalesMan extends AppCompatActivity {
             sortData(listSelectedCustomer);
             fillSelectedRecycler();
         });
+        byLocation_RadioButton=findViewById(R.id.byLocation_RadioButton);
         globelFunction = new GlobelFunction(PlanSalesMan.this);
         toDay = globelFunction.DateInToday();
         fromDate.setText(toDay);
@@ -324,6 +329,10 @@ public class PlanSalesMan extends AppCompatActivity {
         else {
             mtrl_calendar_days_of_week.setVisibility(View.GONE);
             fromDate.setVisibility(View.VISIBLE);
+        }
+        if(hideRawahne==1){
+            byLocation_RadioButton.setVisibility(View.GONE);
+
         }
 
     }
@@ -590,7 +599,10 @@ public class PlanSalesMan extends AppCompatActivity {
     private void refreshOrderType() {
         if (orderType == 0)
             orderd_typeGroup.check(R.id.manual_RadioButton);
-        else orderd_typeGroup.check(R.id.byLocation_RadioButton);
+        else
+            if(orderType==1)
+            orderd_typeGroup.check(R.id.byLocation_RadioButton);
+            else   orderd_typeGroup.check(R.id.bySaleMan);//2
     }
 
     private void checkData() {

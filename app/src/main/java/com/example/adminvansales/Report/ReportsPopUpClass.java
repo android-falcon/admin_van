@@ -58,7 +58,10 @@ public class ReportsPopUpClass {
         plansReport = popupView.findViewById(R.id.plansReport);
         TargetReport= popupView.findViewById(R.id.TargetReport);
         RequestReport= popupView.findViewById(R.id.RequestReport);
+        RequestReport.setVisibility(View.GONE);
+        TargetReport.setVisibility(View.GONE);
         CommissionTargetReport= popupView.findViewById(R.id.CommissionTargetReport);
+        CommissionTargetReport.setVisibility(View.GONE);
         paymentReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

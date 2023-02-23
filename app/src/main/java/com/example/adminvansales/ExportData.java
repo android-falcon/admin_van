@@ -3016,11 +3016,17 @@ public class ExportData {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            pdValidation = new SweetAlertDialog(main_context, SweetAlertDialog.PROGRESS_TYPE);
-            pdValidation.getProgressHelper().setBarColor(Color.parseColor("#FDD835"));
-            pdValidation.setTitleText(main_context.getResources().getString(R.string.process));
-            pdValidation.setCancelable(false);
-            pdValidation.show();
+            Handler h = new Handler(Looper.getMainLooper());
+            h.post(new Runnable() {
+                public void run() {
+                    pdValidation = new SweetAlertDialog(main_context, SweetAlertDialog.PROGRESS_TYPE);
+                    pdValidation.getProgressHelper().setBarColor(Color.parseColor("#FDD835"));
+                    pdValidation.setTitleText(main_context.getResources().getString(R.string.process));
+                    pdValidation.setCancelable(false);
+                    pdValidation.show();
+                }
+            });
+
 
         }
 
@@ -3102,10 +3108,16 @@ public class ExportData {
             String impo = "";
             JSONObject result=null;
             JSONObject jsonObject1 = null;
-            pdValidation.dismissWithAnimation();
+            Handler h = new Handler(Looper.getMainLooper());
+            h.post(new Runnable() {
+                public void run() {
+                    pdValidation.dismissWithAnimation();
+                }
+            });
+
             if (respon!= null) {
                 Log.e("respon",respon);
-                if (respon.contains("PASSWORDTYPE")) {
+                if (respon.contains("Saved Successfully")) {
 
 
 
