@@ -1305,8 +1305,6 @@ Log.e("URL_TO_HIT",URL_TO_HIT+"");
                         //  LatLngListMarker.add(new LatLng(Double.parseDouble("31.9695379"),Double.parseDouble("35.9139073") ));
 
                         }
-
-                        Log.e("flag==",flag+"");
                         if (flag == 0) {
                             EditSalesMan editSalesMan = (EditSalesMan) context;
                             editSalesMan.searchSalesMan(1);

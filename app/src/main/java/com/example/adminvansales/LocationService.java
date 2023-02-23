@@ -51,10 +51,10 @@ public class LocationService extends Service {
         @Override
         public void onLocationChanged(Location location)
         {
-            Log.e(TAG, "onLocationChanged: " + location);
-            Log.e(TAG,"getLatitude"+location.getLatitude());
-            Log.e(TAG,"getLongitude"+location.getLongitude());
-            Toast.makeText(context, "getLatitude="+location.getLatitude()+"\tgetLongitude="+location.getLongitude(), Toast.LENGTH_SHORT).show();
+//            Log.e(TAG, "onLocationChanged: " + location);
+//            Log.e(TAG,"getLatitude"+location.getLatitude());
+//            Log.e(TAG,"getLongitude"+location.getLongitude());
+//            Toast.makeText(context, "getLatitude="+location.getLatitude()+"\tgetLongitude="+location.getLongitude(), Toast.LENGTH_SHORT).show();
 
 //            try
 //            {

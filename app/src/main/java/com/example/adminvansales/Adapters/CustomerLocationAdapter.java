@@ -120,6 +120,17 @@ public class CustomerLocationAdapter extends RecyclerView.Adapter<CustomerLocati
                 longtude_selected=inventorylist.get(getAdapterPosition()).getLong_customer();
                 latit_selected=inventorylist.get(getAdapterPosition()).getLatit_customer();
                 custNo_selected=inventorylist.get(getAdapterPosition()).getCustomerNumber();
+                try {
+                    if(longtude_selected.equals("0")||latit_selected.equals("0"))
+                    {
+                        latit_selected="31.9695985";
+                        longtude_selected="35.9138707";
+                    }
+                }catch (Exception e){
+                    latit_selected="31.9695985";
+                    longtude_selected="35.9138707";
+                }
+
                 Intent intent =new Intent(context, CustomerLocationSelect.class);
                 intent.putExtra("latit",latit_selected);
                 intent.putExtra("longtude",longtude_selected);

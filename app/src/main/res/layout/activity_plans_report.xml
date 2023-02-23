@@ -182,7 +182,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginStart="5dp"
-            android:visibility="gone"
+
             android:entries="@array/DaysOfWeek"
             android:layout_marginLeft="5dp"
             android:layout_weight="0.5"
