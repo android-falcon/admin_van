@@ -190,7 +190,7 @@
 
     <string name="ALL">الكل</string>
     <string name="Request_qty">الكمية</string>
-    <string name="ApprovedQuantity">الكمية الموتفق عليها</string>
+    <string name="ApprovedQuantity">الكمية المتفق عليها</string>
     <string name="ApprovedStatus">حالة الموافقة</string>
     <string name="RequestReport">تقرير الطلبات</string>
     <string name="selectcust">انقر لاختيار عميل</string>
@@ -329,6 +329,7 @@
 
     تشغيل : (كمية المادة/  حد الكميات للعرض  )* الخصم على المادة
     </string>
+    <string name="log_in_cus_outrange">تسجيل الدخول لعميل خارج النطاق</string>
     <string name="flagesetting">Add Flage Setting For SalesMen</string>
     <string name="no_tax">اعفاء ضريبي </string>
     <string name="app_cash">نقداً  </string>

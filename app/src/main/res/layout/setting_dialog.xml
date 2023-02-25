@@ -6,7 +6,9 @@
     app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="15dp"
     app:cardElevation="3dp">
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -221,7 +223,7 @@ android:textColor="#000"
 
     </LinearLayout>
 
-
+</ScrollView>
 </com.google.android.material.card.MaterialCardView><!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
     <!--    android:id="@+id/mainLinearAdapter"-->
     <!--    android:layout_width="match_parent"-->

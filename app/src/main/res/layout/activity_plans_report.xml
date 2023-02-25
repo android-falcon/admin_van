@@ -50,7 +50,7 @@
         android:layout_below="@id/title"
         android:layout_centerHorizontal="true"
         android:layout_marginHorizontal="22dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="10dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -92,7 +92,6 @@
         android:layout_marginTop="10dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
-
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -101,6 +100,8 @@
             android:text="@string/Orderedby"
             android:textColor="#103164"
             android:textSize="18sp" />
+
+
         <RadioGroup
             android:id="@+id/orderRG"
             android:layout_width="0dp"
@@ -158,22 +159,7 @@
         android:orientation="horizontal">
 
 
-        <EditText
-            android:id="@+id/custNameSearch"
-            android:layout_width="0dp"
-            android:layout_height="35dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_weight="0.5"
-            android:background="@drawable/border_dark_blue"
-            android:drawableEnd="@drawable/ic_baseline_search_24"
-            android:drawableRight="@drawable/ic_baseline_search_24"
-            android:fontFamily="@font/alegreya_sans"
-            android:gravity="start|center_vertical"
-            android:hint="@string/CUS_NAME"
-            android:padding="5dp"
-            android:textColor="#103164"
-            android:textSize="11sp" />
+
 
         <Spinner
             android:id="@+id/salesManSP"
@@ -191,19 +177,84 @@
             android:layout_height="match_parent"
             android:layout_marginStart="5dp"
 
-            android:entries="@array/DaysOfWeek"
             android:layout_marginLeft="5dp"
             android:layout_weight="0.5"
             android:background="@drawable/spinner_bg"
+            android:entries="@array/DaysOfWeek"
             android:gravity="center" />
     </LinearLayout>
 
+    <LinearLayout
 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lin3"
+        android:layout_below="@id/linear3"
+        android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="22dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/preview_button_account"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+android:layout_gravity="center"
+
+            android:gravity="center"
+            android:background="@drawable/btn_login"
+            android:text="@string/preview"
+            android:textColor="@color/colorblue_dark" />
+    </LinearLayout>
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+android:id="@+id/lin4"
+        android:visibility="gone"
+        android:layout_below="@id/lin3"
+        android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="22dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+
+        android:orientation="horizontal">
+
+
+        <EditText
+            android:id="@+id/custNameSearch"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="0.5"
+            android:background="@drawable/border_dark_blue"
+            android:drawableEnd="@drawable/ic_baseline_search_24"
+            android:drawableRight="@drawable/ic_baseline_search_24"
+            android:fontFamily="@font/alegreya_sans"
+            android:gravity="start|center_vertical"
+            android:hint="@string/CUS_NAME"
+            android:padding="5dp"
+            android:textColor="#103164"
+            android:textSize="11sp" />
+
+
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_below="@id/lin4"
+        android:layout_height="20dp"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/bottom_navigation"
-        android:layout_below="@+id/linear3"
+        android:layout_below="@+id/lin3"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentEnd="true"

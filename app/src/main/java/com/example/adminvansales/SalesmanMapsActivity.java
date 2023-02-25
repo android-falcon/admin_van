@@ -125,7 +125,7 @@ GlobelFunction globelFunction;
 
     public void location(int move) {
         if(move==1){
-            mMap.clear();
+if     ( mMap!=null)      mMap.clear();
         }
         existLocation=0;
         latit=31.9695985;
