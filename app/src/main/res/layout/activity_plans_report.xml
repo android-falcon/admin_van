@@ -93,7 +93,14 @@
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:fontFamily="@font/alegreya_sans"
+            android:text="@string/Orderedby"
+            android:textColor="#103164"
+            android:textSize="18sp" />
         <RadioGroup
             android:id="@+id/orderRG"
             android:layout_width="0dp"
@@ -122,18 +129,19 @@
                 android:enabled="false"
                 android:text="@string/Manually"
                 android:textColor="#D84C5C6C" />
+            <RadioButton
+                android:id="@+id/salesmanRBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="#CB04499F"
+                android:enabled="false"
+                android:text="@string/bySaleMan"
+                android:textColor="#D84C5C6C" />
 
 
         </RadioGroup>
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.3"
-            android:fontFamily="@font/alegreya_sans"
-            android:text="@string/Orderedby"
-            android:textColor="#103164"
-            android:textSize="18sp" />
+
 
 
     </LinearLayout>

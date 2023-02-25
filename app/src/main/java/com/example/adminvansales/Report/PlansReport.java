@@ -2,6 +2,7 @@ package com.example.adminvansales.Report;
 
 import static com.example.adminvansales.GlobelFunction.salesManInfosList;
 import static com.example.adminvansales.GlobelFunction.salesManNameList;
+import static com.example.adminvansales.LogIn.hideRawahne;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +20,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -48,6 +50,7 @@ public class PlansReport extends AppCompatActivity {
     EditText custNameSearch;
     RadioGroup orderRG;
     Spinner salesManSP;
+    RadioButton locationRBtn;
     RecyclerView plans_recycler;
     String currDate;
     GlobelFunction globelFunction;
@@ -88,7 +91,7 @@ public class PlansReport extends AppCompatActivity {
         }
         ImageButton backBtn = findViewById(R.id.backBtn);
         backBtn.setOnClickListener(v -> onBackPressed());
-
+        locationRBtn= findViewById(R.id.locationRBtn);
         BottomNavigationView bottom_navigation = findViewById(R.id.bottom_navigation);
 
         bottom_navigation.setSelectedItemId(R.id.action_reports);
@@ -204,6 +207,8 @@ public class PlansReport extends AppCompatActivity {
                         if (allPlans.get(0).getType_orderd() == 1)
                             orderRG.check(R.id.locationRBtn);
                         else
+                            if(allPlans.get(0).getType_orderd() == 0) orderRG.check(R.id.salesmanRBtn);
+                                else
                             orderRG.check(R.id.manualRBtn);
 
                         for (int p = 0; p < allPlans.size(); p++) {
@@ -342,6 +347,10 @@ public class PlansReport extends AppCompatActivity {
 
             }
         });
+        if(hideRawahne==1){
+            locationRBtn.setVisibility(View.GONE);
+
+        }
 
     }
 
