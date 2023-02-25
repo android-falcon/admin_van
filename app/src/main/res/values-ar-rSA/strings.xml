@@ -64,7 +64,7 @@
     <string name="NetsaleTarget">الهدف على صافي المبيعات</string>
     <string name="pay_date">تاريخ الدفع</string>
     <string name="check_number">رقم الشك</string>
-    <string name="payment_details_report">تقرير تفاصيل المبيعات</string>
+    <string name="payment_details_report">تقرير تفاصيل الدفعات</string>
     <string name="cash_report">تقرير الكاش</string>
     <string name="date">التاريخ</string>
     <string name="Month">الشهر</string>
@@ -165,6 +165,7 @@
     <string name="select_area">Select Area</string>
     <string name="itemVisible">إمكانية رؤية المواد</string>
     <string name="changeItemVisible">Item Visible</string>
+
     <string name="hide">إخفاء</string>
     <string name="haveDuplicateOrder">You Have Duplicate Order !!</string>
     <string name="order">الترتيب</string>
@@ -332,6 +333,7 @@
     <string name="flagesetting">Add Flage Setting For SalesMen</string>
     <string name="no_tax">اعفاء ضريبي </string>
     <string name="app_cash">نقداً  </string>
+    <string name="HOME">الرئيسية</string>
     <string-array name="app_paymentTypeList">
         <!--        <item>All</item>-->
         <item>كاش</item>

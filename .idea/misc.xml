@@ -3,76 +3,64 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Android_Studio_Projects/AdminVanSale/app/src/main/res/drawable-v24/btn_login.xml" value="0.1555" />
-        <entry key="..\:/Android_Studio_Projects/AdminVanSale/app/src/main/res/drawable/blue_btn.xml" value="0.1555" />
-        <entry key="..\:/Android_Studio_Projects/AdminVanSale/app/src/main/res/drawable/border_dark_blue.xml" value="0.1555" />
-        <entry key="..\:/Android_Studio_Projects/AdminVanSale/app/src/main/res/drawable/borders_btn.xml" value="0.1555" />
-        <entry key="..\:/Android_Studio_Projects/AdminVanSale/app/src/main/res/drawable/ic_baseline_calendar_today_24.xml" value="0.174" />
-        <entry key="..\:/Android_Studio_Projects/AdminVanSale/app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.174" />
-        <entry key="..\:/Android_Studio_Projects/AdminVanSale/app/src/main/res/drawable/ic_search_black_24dp.xml" value="0.2203125" />
-        <entry key="..\:/Android_Studio_Projects/AdminVanSale/app/src/main/res/drawable/spinner_bg.xml" value="0.1555" />
-        <entry key="..\:/Android_Studio_Projects/AdminVanSale/app/src/main/res/drawable/thumb.xml" value="0.1555" />
-        <entry key="..\:/Android_Studio_Projects/AdminVanSale/app/src/main/res/drawable/thumb_selector.xml" value="0.1555" />
-        <entry key="..\:/Android_Studio_Projects/AdminVanSale/app/src/main/res/drawable/thumb_switch_color.xml" value="0.1555" />
-        <entry key="..\:/Android_Studio_Projects/AdminVanSale/app/src/main/res/drawable/track.xml" value="0.1555" />
-        <entry key="..\:/Android_Studio_Projects/AdminVanSale/app/src/main/res/drawable/track_selector.xml" value="0.1555" />
-        <entry key="..\:/Android_Studio_Projects/AdminVanSale/app/src/main/res/drawable/yellow_btn.xml" value="0.1555" />
-        <entry key="..\:/Android_Studio_Projects/AdminVanSale/app/src/main/res/layout/account_row.xml" value="0.20416666666666666" />
-        <entry key="..\:/Android_Studio_Projects/AdminVanSale/app/src/main/res/layout/activity_account_statment.xml" value="0.33" />
-        <entry key="..\:/Android_Studio_Projects/AdminVanSale/app/src/main/res/layout/activity_add_customer_location.xml" value="0.20416666666666666" />
-        <entry key="..\:/Android_Studio_Projects/AdminVanSale/app/src/main/res/layout/activity_analyze_accounts.xml" value="0.33" />
-        <entry key="..\:/Android_Studio_Projects/AdminVanSale/app/src/main/res/layout/activity_edit_sales_man.xml" value="0.25" />
-        <entry key="..\:/Android_Studio_Projects/AdminVanSale/app/src/main/res/layout/activity_home.xml" value="0.22" />
-        <entry key="..\:/Android_Studio_Projects/AdminVanSale/app/src/main/res/layout/activity_log_in.xml" value="0.22" />
-        <entry key="..\:/Android_Studio_Projects/AdminVanSale/app/src/main/res/layout/activity_main.xml" value="0.20416666666666666" />
-        <entry key="..\:/Android_Studio_Projects/AdminVanSale/app/src/main/res/layout/activity_plan_sales_man.xml" value="0.25" />
-        <entry key="..\:/Android_Studio_Projects/AdminVanSale/app/src/main/res/layout/activity_plans_report.xml" value="0.25" />
-        <entry key="..\:/Android_Studio_Projects/AdminVanSale/app/src/main/res/layout/activity_salesman_maps.xml" value="0.20416666666666666" />
-        <entry key="..\:/Android_Studio_Projects/AdminVanSale/app/src/main/res/layout/activity_splash.xml" value="0.25" />
-        <entry key="..\:/Android_Studio_Projects/AdminVanSale/app/src/main/res/layout/activity_un_collected_data.xml" value="0.25" />
-        <entry key="..\:/Android_Studio_Projects/AdminVanSale/app/src/main/res/layout/bottom_nav_bar.xml" value="0.20416666666666666" />
-        <entry key="..\:/Android_Studio_Projects/AdminVanSale/app/src/main/res/layout/cash_report.xml" value="0.25" />
-        <entry key="..\:/Android_Studio_Projects/AdminVanSale/app/src/main/res/layout/customer_info.xml" value="0.16" />
-        <entry key="..\:/Android_Studio_Projects/AdminVanSale/app/src/main/res/layout/customer_log_report.xml" value="0.25" />
-        <entry key="..\:/Android_Studio_Projects/AdminVanSale/app/src/main/res/layout/item_report_activity.xml" value="0.22" />
-        <entry key="..\:/Android_Studio_Projects/AdminVanSale/app/src/main/res/layout/list_price_offer.xml" value="0.20416666666666666" />
-        <entry key="..\:/Android_Studio_Projects/AdminVanSale/app/src/main/res/layout/more_settings_dialog.xml" value="0.25" />
-        <entry key="..\:/Android_Studio_Projects/AdminVanSale/app/src/main/res/layout/payment_details_report.xml" value="0.25" />
-        <entry key="..\:/Android_Studio_Projects/AdminVanSale/app/src/main/res/layout/plans_report.xml" value="0.33" />
-        <entry key="..\:/Android_Studio_Projects/AdminVanSale/app/src/main/res/layout/reports_dialog_box.xml" value="0.33" />
-        <entry key="..\:/Android_Studio_Projects/AdminVanSale/app/src/main/res/layout/row_cash_report_adapter.xml" value="0.25" />
-        <entry key="..\:/Android_Studio_Projects/AdminVanSale/app/src/main/res/layout/row_customer_log_report_adapter.xml" value="0.33" />
-        <entry key="..\:/Android_Studio_Projects/AdminVanSale/app/src/main/res/layout/row_item_report.xml" value="0.20416666666666666" />
-        <entry key="..\:/Android_Studio_Projects/AdminVanSale/app/src/main/res/layout/row_payment_report_adapter.xml" value="0.20416666666666666" />
-        <entry key="..\:/Android_Studio_Projects/AdminVanSale/app/src/main/res/layout/sales_man_row.xml" value="0.20416666666666666" />
-        <entry key="..\:/Android_Studio_Projects/AdminVanSale/app/src/main/res/layout/select_location_customer.xml" value="0.19" />
-        <entry key="..\:/Android_Studio_Projects/AdminVanSale/app/src/main/res/layout/setting_dialog.xml" value="0.25" />
-        <entry key="..\:/Android_Studio_Projects/AdminVanSale/app/src/main/res/layout/spinner_item.xml" value="0.20416666666666666" />
-        <entry key="..\:/Android_Studio_Projects/AdminVanSale/app/src/main/res/layout/spinner_layout.xml" value="0.1" />
-        <entry key="..\:/Android_Studio_Projects/AdminVanSale/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.20416666666666666" />
-        <entry key="..\:/Android_Studio_Projects/AdminVanSale/app/src/main/res/menu/menu.xml" value="0.33" />
-        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/drawable-v24/cancel_button.xml" value="0.15185185185185185" />
-        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/drawable/bg_more_settings.xml" value="0.2212962962962963" />
-        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/drawable/can_btn.xml" value="0.15185185185185185" />
-        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/drawable/cancel_button.xml" value="0.11296296296296296" />
-        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/drawable/done_button.xml" value="0.11296296296296296" />
-        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/drawable/ic_more.xml" value="0.12314814814814815" />
-        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/drawable/settings_header.xml" value="0.2212962962962963" />
-        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/activity_log_in.xml" value="0.1" />
-        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/activity_main.xml" value="0.14918946301925026" />
-        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/delete_entry.xml" value="0.1" />
-        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/more_settings_dialog.xml" value="0.18" />
-        <entry key="..\:/Users/FALCONS_1/AndroidStudioProjects/AdminVanSale/app/src/main/res/layout/setting_dialog.xml" value="0.15450861195542046" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/drawable-v24/btn_login.xml" value="0.26145833333333335" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/drawable-v24/btn_sighn_up.xml" value="0.17109375" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/drawable/back_gray.xml" value="1.56875" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/drawable/blue_back.xml" value="0.27708333333333335" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/drawable/ic_add_to_photos_yelow_24dp.xml" value="0.16796875" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/drawable/ic_baseline_arrow_drop_down_circle_24.xml" value="0.20208333333333334" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/drawable/ic_baseline_filter_alt_24.xml" value="0.16796875" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/drawable/ic_baseline_swap_vert_24.xml" value="0.189453125" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/drawable/ic_person_black_24dp.xml" value="0.26145833333333335" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/drawable/ic_search_black_24dp.xml" value="0.19895833333333332" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/drawable/title_back.xml" value="0.27708333333333335" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/drawable/yellow_button.xml" value="0.16796875" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/font/font.xml" value="0.13125" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/account_row.xml" value="0.18489583333333334" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/activity_account_statment.xml" value="0.22" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/activity_add_customer_location.xml" value="0.2203125" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/activity_add_salesman_target.xml" value="0.25" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/activity_customer_location_select.xml" value="0.159375" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/activity_edit_sales_man.xml" value="0.2453125" />
         <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/activity_group_offer.xml" value="0.2609375" />
-        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/activity_home.xml" value="0.33" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/activity_home.xml" value="0.2" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/activity_item_visibility.xml" value="0.18" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/activity_log_in.xml" value="0.25" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/activity_main.xml" value="0.1734375" />
         <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/activity_offerse_report.xml" value="0.24183006535947713" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/activity_plan_sales_man.xml" value="0.2" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/activity_plans_report.xml" value="0.25" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/activity_salesman_maps.xml" value="0.18802083333333333" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/activity_splash.xml" value="0.25" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/activity_target_report.xml" value="0.13210773834972211" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/bottom_nav_bar.xml" value="0.23645833333333333" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/cash_report.xml" value="0.22" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/customer_info.xml" value="0.25" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/customer_info_order_plan.xml" value="0.18" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/delete_entry.xml" value="0.2609375" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/item_report_activity.xml" value="0.25" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/item_visibl_layout.xml" value="0.162109375" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/itemof_offersrecycle.xml" value="0.18177083333333333" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/items_report.xml" value="0.1109375" />
         <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/offersdetailrecycler.xml" value="0.2609375" />
         <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/offersgroupsrecycler.xml" value="0.2609375" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/password_setting.xml" value="0.155859375" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/payment_details_report.xml" value="0.23645833333333333" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/reports_dialog_box.xml" value="0.23645833333333333" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/request_detail.xml" value="0.18854166666666666" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/row_customer_selecte_adapter.xml" value="0.144921875" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/row_offer_list_adapter.xml" value="0.1" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/sales_man_row.xml" value="0.1734375" />
         <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/search_dialog_show_.xml" value="0.1453125" />
         <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/search_dialog_show_customer.xml" value="0.1453125" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/select_area_dialog.xml" value="0.155859375" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/select_location_customer.xml" value="0.18802083333333333" />
         <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/setting_dialog.xml" value="0.1453125" />
         <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/spinner_layout.xml" value="0.1453125" />
         <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/update_list_date_dialog.xml" value="0.1453125" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.23645833333333333" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/menu/main_menu.xml" value="0.23645833333333333" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/menu/menu.xml" value="0.2203125" />
       </map>
     </option>
   </component>

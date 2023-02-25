@@ -331,6 +331,7 @@
     <string name="emptylist">Empty List!!</string>
     <string name="log_in_cus_outrange">Log in Customer Out of range</string>
     <string name="total">Total</string>
+    <string name="HOME">HOME</string>
     <string-array name="app_paymentTypeList">
 
         <!--        <item>All</item>-->

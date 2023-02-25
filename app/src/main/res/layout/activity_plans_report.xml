@@ -130,9 +130,18 @@
                 android:enabled="false"
                 android:text="@string/Manually"
                 android:textColor="#D84C5C6C" />
+            <RadioButton
+                android:id="@+id/salesmanRBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="#CB04499F"
+                android:enabled="false"
+                android:text="@string/bySaleMan"
+                android:textColor="#D84C5C6C" />
 
 
         </RadioGroup>
+
 
 
 
