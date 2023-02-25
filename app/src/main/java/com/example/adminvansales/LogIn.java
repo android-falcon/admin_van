@@ -49,6 +49,7 @@ import java.util.TimerTask;
 
 import static com.example.adminvansales.GlobelFunction.adminId;
 import static com.example.adminvansales.GlobelFunction.adminName;
+import static com.example.adminvansales.ImportData.listCustomer;
 import static com.example.adminvansales.ImportData.listId;
 import com.example.adminvansales.model.LocaleAppUtils;
 
@@ -530,6 +531,8 @@ public class LogIn extends AppCompatActivity {
                             databaseHandler.addSetting(ipAddress,portSettings,"1",Cono,loc_trac,PlanTYPE,Arabic_Language);
                             dialog.dismiss();
                             locationtrackerFlage=loc_trac;
+                            if(listCustomer.size()==0)
+                                importData.IIs_getCustomerInfo(0);
 
                         }else {
                             CoNo.setError("*Required");

@@ -17,6 +17,7 @@ import com.example.adminvansales.GlobelFunction;
 import com.example.adminvansales.HomeActivity;
 import com.example.adminvansales.ItemReport;
 import com.example.adminvansales.LogIn;
+import com.example.adminvansales.MainActivity;
 import com.example.adminvansales.R;
 import com.example.adminvansales.addSalesmanTarget;
 
@@ -129,6 +130,8 @@ public class ReportsPopUpClass {
             }
         });
 
+        if(LogIn.hideRawahne==1)
+        {plansReport.setVisibility(View.GONE);}
         plansReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
