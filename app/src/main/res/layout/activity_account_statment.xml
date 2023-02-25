@@ -10,7 +10,7 @@
     android:padding="2dp">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_weight="2.5"
+        android:layout_weight="3"
         android:layout_height="match_parent"
         android:orientation="vertical">
     <LinearLayout
@@ -70,21 +70,32 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_margin="2dp"
-            android:layout_weight="2.9"
+            android:layout_weight="3"
             android:gravity="center"
             android:text="@string/customerName_"
             android:textColor="@color/darkGray"
             android:textSize="12sp" />
-        <Spinner
-            android:id="@+id/cat"
+
+        <TextView
+
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-
-            android:layout_weight="2.3"
-
             android:gravity="center"
+            android:id="@+id/cat"
+            android:layout_weight="2.3"
+            android:text="@string/selectcust"
+            android:drawableEnd="@drawable/ic_search_blue_24dp"
             android:padding="3dp" />
+        <TextView
+            android:id="@+id/cust_selectclear"
+            android:layout_width="30sp"
+            android:textColor="@color/colorBlack"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+
+            android:drawableStart="@drawable/ic_baseline_clear_24"
+            android:padding="2dp"/>
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/preview_button_account"
             android:layout_width="match_parent"
@@ -100,7 +111,7 @@
         android:layout_height="match_parent"
         android:layout_weight="8"
         android:layout_marginBottom="1dp"
-
+android:visibility="gone"
         android:orientation="horizontal"
         android:padding="2dp"
         >
@@ -127,7 +138,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="2dp"
-
+              android:visibility="gone"
             android:layout_weight="1"
             android:background="@drawable/searchbox"
             android:drawableLeft="@drawable/ic_search_black_24dp"

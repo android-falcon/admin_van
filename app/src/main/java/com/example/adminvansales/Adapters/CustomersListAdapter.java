@@ -7,6 +7,8 @@ import android.widget.BaseAdapter;
 import android.widget.Filterable;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.example.adminvansales.AccountStatment;
 import com.example.adminvansales.R;
 import com.example.adminvansales.Report.PaymentDetailsReport;
 import com.example.adminvansales.Report.UnCollectedData;
@@ -59,10 +61,16 @@ public class CustomersListAdapter  extends BaseAdapter {
                 {   UnCollectedData.customerAccountNo.setText(custList.get(i).getCustomerNumber());
                 UnCollectedData. customerAccountname.setText(custList.get(i).getCustomerName());
                 UnCollectedData.dialoglist.dismiss();}
-                else
+                else    if(activity==2)
                 {   PaymentDetailsReport.customerAccountNo.setText(custList.get(i).getCustomerNumber());
                     PaymentDetailsReport. customerAccountname.setText(custList.get(i).getCustomerName());
-                    PaymentDetailsReport.dialoglist.dismiss();}
+                    PaymentDetailsReport.dialoglist.dismiss();
+
+                }else    if(activity==3){
+                    AccountStatment.customerAccountNo.setText(custList.get(i).getCustomerNumber());
+                    AccountStatment. customerAccountname.setText(custList.get(i).getCustomerName());
+                    AccountStatment.dialoglist.dismiss();
+                }
             }
         });
         return view;

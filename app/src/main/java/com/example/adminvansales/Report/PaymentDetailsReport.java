@@ -93,8 +93,12 @@ public class PaymentDetailsReport extends AppCompatActivity {
         SettingModel=new com.example.adminvansales.model.SettingModel ();
         databaseHandler=new DataBaseHandler(PaymentDetailsReport.this);
         initial();
-
-
+        findViewById(R.id.cust_selectclear)  .setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cust_select.setText(getResources().getString(R.string.selectcust));
+            }
+        });
     }
 
     @Override

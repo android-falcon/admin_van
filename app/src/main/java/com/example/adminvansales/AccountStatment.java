@@ -2,27 +2,33 @@ package com.example.adminvansales;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
+import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.adminvansales.Adapters.AccountStatmentAdapter;
+import com.example.adminvansales.Adapters.CustomersListAdapter;
 import com.example.adminvansales.Report.ReportsPopUpClass;
 import com.example.adminvansales.model.Account__Statment_Model;
 import com.example.adminvansales.model.CustomerInfo;
@@ -47,7 +53,8 @@ public class AccountStatment extends AppCompatActivity {
     LinearLayoutManager layoutManager;
     public static TextView getAccountList_text;
     Button preview_button_account;
-    Spinner customerSpinner;
+    TextView cust_select;
+
     String customerId = "";
     public static TextView total_qty_text;
     public EditText listSearch;
@@ -56,7 +63,8 @@ public class AccountStatment extends AppCompatActivity {
     com.example.adminvansales.model.SettingModel SettingModel;
 
     BottomNavigationView bottom_navigation;
-
+    public static Dialog dialoglist,    dialog;
+    public  static   TextView customerAccountNo,customerAccountname;
     @SuppressLint("WrongConstant")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,21 +74,28 @@ public class AccountStatment extends AppCompatActivity {
         databaseHandler = new DataBaseHandler(AccountStatment.this);
 //        importData.getCustomerInfo();
         initialView();
-
+        findViewById(R.id.cust_selectclear)  .setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cust_select.setText(getResources().getString(R.string.selectcust));
+            }
+        });
         importData.IIs_getCustomerInfo(1);
         preview_button_account.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!customerId.equals("")) {
+
                     importData = new ImportData(AccountStatment.this);
 
-                    if (customerSpinner.getSelectedItemPosition() != -1) {
-                        customerId = getCusromerNUM(customerSpinner.getSelectedItem().toString());
-                        importData.getCustomerAccountStatment(customerId);
-                    }
 
+                        customerId = getCusromerNUM(cust_select.getText().toString());
+                if (!customerId.equals(""))    importData.getCustomerAccountStatment(customerId);
+                    else
 
-                }
+                    new SweetAlertDialog(AccountStatment.this, SweetAlertDialog.ERROR_TYPE)
+                            .setTitleText(getString(R.string.noCustomerSelected))
+                            .show();
+
 //
             }
         });
@@ -137,17 +152,17 @@ public class AccountStatment extends AppCompatActivity {
             }
         });
 
-        customerSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                customerId = listCustomer.get(position).getCustomerNumber();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+//        customerSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                customerId = listCustomer.get(position).getCustomerNumber();
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
 
         bottom_navigation = findViewById(R.id.bottom_navigation);
 
@@ -222,10 +237,11 @@ public class AccountStatment extends AppCompatActivity {
         {
             linearMain.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         }
+        cust_select=findViewById(R.id.cust_select);
         recyclerView_report = findViewById(R.id.recyclerView_report);
         getAccountList_text = findViewById(R.id.getAccountList_text);
         preview_button_account = findViewById(R.id.preview_button_account);
-        customerSpinner = (Spinner) findViewById(R.id.cat);
+        cust_select = findViewById(R.id.cat);
         importData = new ImportData(AccountStatment.this);
         listAccountBalance = new ArrayList<>();
 
@@ -234,28 +250,33 @@ public class AccountStatment extends AppCompatActivity {
         recyclerView_report.setLayoutManager(layoutManager);
         total_qty_text = findViewById(R.id.total_qty_text);
         listSearch = findViewById(R.id.listSearch);
-
-        listSearch.addTextChangedListener(new TextWatcher() {
+        cust_select.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                if (!s.toString().equals("")) {
-                    searchInSpinerCustomer();
-                }
-
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
+            public void onClick(View view) {
+                opencust_selectDailog();
             }
         });
+//        listSearch.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//
+//                if (!s.toString().equals("")) {
+//                    searchInSpinerCustomer();
+//                }
+//
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//
+//            }
+//        });
     }
 
     private void fillCustomerSpenner() {
@@ -263,7 +284,7 @@ public class AccountStatment extends AppCompatActivity {
         Log.e("fillCustomerSpenner", "fillCustomerSpenner");
         Collections.sort(customername, String.CASE_INSENSITIVE_ORDER);
         final ArrayAdapter<String> ad = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, customername);
-        customerSpinner.setAdapter(ad);
+//        customerSpinner.setAdapter(ad);
     }
 
     private void fillAdapter() {
@@ -278,7 +299,7 @@ public class AccountStatment extends AppCompatActivity {
             for (int i = 0; i < customername.size(); i++) {
                 if (customername.get(i).toUpperCase().contains(name) || customername.get(i).toLowerCase().contains(name)) {
                     customerId = listCustomer.get(i).getCustomerNumber();
-                    customerSpinner.setSelection(i);
+//                    customerSpinner.setSelection(i);
                 }
             }
         }
@@ -299,5 +320,103 @@ public class AccountStatment extends AppCompatActivity {
             }
 
         return "";
+    }
+    private void  opencust_selectDailog(){
+        dialog = new Dialog(AccountStatment.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.cust_select_dialog);
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = (int) (getResources().getDisplayMetrics().widthPixels / 1.19);
+        dialog.getWindow().setAttributes(lp);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        customerAccountNo = dialog.findViewById(R.id.customerAccountNo);
+        customerAccountname = dialog.findViewById(R.id.customerAccountname);
+        AppCompatButton ok= dialog.findViewById(R.id.okButton);
+        AppCompatButton    cancel= dialog.findViewById(R.id.cancelButton);
+        ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!customerAccountname.getText().toString().equals(""))
+                    cust_select.setText(customerAccountname.getText());
+                else
+                {
+                    cust_select.setText(getResources().getString(R.string.selectcust));
+                }
+                dialog.dismiss();
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cust_select.setText(getResources().getString(R.string.selectcust));
+                dialog.dismiss();
+            }
+        });
+        ImageView find_img_button=dialog.findViewById(R.id.find_img_button);
+        find_img_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(listCustomer.size()!=0)
+                {
+                    dialoglist = new Dialog(AccountStatment.this);
+                    dialoglist.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    dialoglist.setCancelable(false);
+                    dialoglist.setContentView(R.layout.customerlist_dailog);
+
+                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                    lp.copyFrom(dialoglist.getWindow().getAttributes());
+                    lp.width = (int) (getResources().getDisplayMetrics().widthPixels / 1.19);
+                    dialoglist.getWindow().setAttributes(lp);
+                    dialoglist.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    EditText customerNameTextView =dialoglist.findViewById(R.id.customerNameTextView);
+                    ListView customersList =dialoglist.findViewById(R.id.customersList);
+                    customerNameTextView.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable editable) {
+                            if(!editable.toString().equals(""))
+                            {
+                                ArrayList<CustomerInfo> filterdlist = new ArrayList<CustomerInfo>();
+
+                                for (int i=0;i<listCustomer.size();i++)
+                                {
+                                    if(listCustomer.get(i).getCustomerName().contains(customerNameTextView.getText().toString())
+                                            ||listCustomer.get(i).getCustomerNumber().contains(customerNameTextView.getText().toString()) )
+
+                                        filterdlist.add(listCustomer.get(i));
+                                    customersList.setAdapter(new CustomersListAdapter(3,AccountStatment.this,filterdlist));
+                                }
+
+                            }else
+                            {
+                                customersList.setAdapter(new CustomersListAdapter(3,AccountStatment.this,listCustomer));
+                            }
+                        }
+                    });
+
+                    customersList.setAdapter(new CustomersListAdapter(3,AccountStatment.this,listCustomer));
+                    dialoglist.show();
+
+                }else
+                {
+                    GlobelFunction.showSweetDialog(AccountStatment.this,3,"",getResources().getString(R.string.emptylist));
+                }
+            }
+        });
+        dialog.show();
+
     }
 }

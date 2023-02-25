@@ -135,6 +135,15 @@ android:layout_gravity="center"
             android:layout_weight="1"
             android:textAlignment="center"
             android:padding="2dp"/>
+        <TextView
+            android:id="@+id/cust_selectclear"
+            android:layout_width="30sp"
+            android:textColor="@color/colorBlack"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+
+            android:drawableStart="@drawable/ic_baseline_clear_24"
+            android:padding="2dp"/>
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"

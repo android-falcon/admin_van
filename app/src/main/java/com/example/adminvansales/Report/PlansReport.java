@@ -47,7 +47,7 @@ public class PlansReport extends AppCompatActivity {
     TextView dateEdt;
     EditText custNameSearch;
     RadioGroup orderRG;
-    Spinner salesManSP;
+    Spinner salesManSP,mtrl_calendar_days_of_week;
     RecyclerView plans_recycler;
     String currDate;
     GlobelFunction globelFunction;
@@ -55,7 +55,8 @@ public class PlansReport extends AppCompatActivity {
     List<Plan_SalesMan_model> searchPlanList;
     ImportData importData;
     PlansReportAdapter plansReportAdapter;
-
+ int   day=0;
+    String salesNum="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +65,27 @@ public class PlansReport extends AppCompatActivity {
         setTitle("Plans Report");
 
         init();
+        if(LogIn.PlanTYPE==0)
+        {
+            mtrl_calendar_days_of_week.setVisibility(View.GONE);
+
+
+        }else
+        {
+
+            mtrl_calendar_days_of_week.setVisibility(View.VISIBLE);
+
+
+        }
+        findViewById(R.id.preview_button_account).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if(LogIn.PlanTYPE==0) importData.getPlan(salesNum, dateEdt.getText().toString(), 1);
+                else
+                    importData.getPlan(salesNum, day+"", 1);
+            }
+        });
 
     }
 
@@ -132,6 +154,7 @@ public class PlansReport extends AppCompatActivity {
         custNameSearch = findViewById(R.id.custNameSearch);
         orderRG = findViewById(R.id.orderRG);
         salesManSP = findViewById(R.id.salesManSP);
+        mtrl_calendar_days_of_week=findViewById(R.id.mtrl_calendar_days_of_week);
         plans_recycler = findViewById(R.id.plans_recycler);
         fillPlan2 = findViewById(R.id.fillPlan2);
 
@@ -168,10 +191,10 @@ public class PlansReport extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
 
-                String salesNum = salesManInfosList.get(salesManSP.getSelectedItemPosition()).getSalesManNo();
+                 //salesNum = salesManInfosList.get(salesManSP.getSelectedItemPosition()).getSalesManNo();
 
                 Log.e("Date_Changed", "" + editable);
-                importData.getPlan(salesNum, editable.toString(), 1);
+//                importData.getPlan(salesNum, editable.toString(), 1);
 
             }
         });
@@ -324,16 +347,26 @@ public class PlansReport extends AppCompatActivity {
         salesManSP.setAdapter(salesManSpinnerAdapter);
         salesManSP.setSelection(0);
         Log.e("salesManNameList", salesManNameList.toString());
+        mtrl_calendar_days_of_week.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
+             day=i;
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
         salesManSP.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-                String salesNum = salesManInfosList.get(i).getSalesManNo();
+                salesNum = salesManInfosList.get(i).getSalesManNo();
 
                 Log.e("onItemSelected", "" + salesNum);
-                importData.getPlan(salesNum, dateEdt.getText().toString(), 1);
-
 
             }
 

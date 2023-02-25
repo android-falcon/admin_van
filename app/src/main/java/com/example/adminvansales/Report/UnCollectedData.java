@@ -92,13 +92,19 @@ public class UnCollectedData extends AppCompatActivity {
 TextView total,cust_select;
     public  static Dialog dialoglist,    dialog;
     public static   TextView customerAccountNo,customerAccountname;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         new LocaleAppUtils().changeLayot(UnCollectedData.this);
         setContentView(R.layout.activity_un_collected_data);
         initialView();
-
+      findViewById(R.id.cust_selectclear)  .setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+              cust_select.setText(getResources().getString(R.string.selectcust));
+          }
+      });
         importJason = new ImportData(UnCollectedData.this);
 
         preview_button_account.setOnClickListener(new View.OnClickListener() {
