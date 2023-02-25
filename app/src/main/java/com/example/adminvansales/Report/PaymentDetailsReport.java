@@ -305,10 +305,10 @@ else
         }
        else if(position==1||position==-1){
             payKind="1";
-        }else if(position==1){
+        }else if(position==2){
             payKind="0";
         }
-        else if(position==2){
+        else if(position==3){
             payKind="2";
         }
 
