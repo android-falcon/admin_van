@@ -343,7 +343,7 @@ public  String headerDll="";
         } else {
             typeCustomerList = 1;// from account statment
         }
-        Log.e("getCustomerInfo", "*****");
+        Log.e("getCustomerInfo", "*****"+type);
         new JSONTask_IIsCustomerInfo().execute();
     }
     public void getPaymentsReport(Context context, String SalesNo, String fromDate, String
