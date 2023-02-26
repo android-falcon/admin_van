@@ -89,7 +89,7 @@
     <string name="cashDiscount">cash Discount</string>
     <string name="otherDiscount">other Discount</string>
     <string name="cheackDate">check Date</string>
-    <string name="update">Update</string>
+    <string name="update">تعديل</string>
     <string name="update1">تعديل </string>
     <string name="Add1">إضافة </string>
     <string name="ListNo">List No</string>
@@ -334,6 +334,7 @@
     <string name="no_tax">اعفاء ضريبي </string>
     <string name="app_cash">نقداً  </string>
     <string name="HOME">الرئيسية</string>
+    <string name="discountReq">" طلب خصم             "</string>
     <string-array name="app_paymentTypeList">
         <!--        <item>All</item>-->
         <item>كاش</item>

@@ -32,6 +32,8 @@ import android.widget.Toast;
 
 import com.example.adminvansales.model.SalesManInfo;
 import com.example.adminvansales.model.SettingModel;
+import com.example.adminvansales.retrofit.ApiItem;
+import com.example.adminvansales.retrofit.RetrofitInstance;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
@@ -54,6 +56,7 @@ import static com.example.adminvansales.ImportData.listId;
 import com.example.adminvansales.model.LocaleAppUtils;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import retrofit2.Retrofit;
 
 public class LogIn extends AppCompatActivity {
     SliderLayout sliderLayout;
@@ -527,7 +530,7 @@ public class LogIn extends AppCompatActivity {
                     if(portSettings.trim().length()!=0) {
 
                         if(Cono.trim().length()!=0) {
-                            Log.e("PlanTYPE==",PlanTYPE+"");
+//                            Log.e("PlanTYPE==",PlanTYPE+"");
                             databaseHandler.addSetting(ipAddress,portSettings,"1",Cono,loc_trac,PlanTYPE,Arabic_Language);
                             dialog.dismiss();
                             locationtrackerFlage=loc_trac;
