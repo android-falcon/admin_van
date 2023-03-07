@@ -7,21 +7,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.adminvansales.Report.CommissionTargetReport;
 import com.example.adminvansales.Report.RequstReport;
 import com.example.adminvansales.model.LocaleAppUtils;
 
 import android.app.ActivityManager;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
@@ -35,16 +29,11 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.azoft.carousellayoutmanager.CarouselLayoutManager;
-import com.azoft.carousellayoutmanager.CarouselZoomPostLayoutListener;
-import com.azoft.carousellayoutmanager.CenterScrollListener;
 import com.example.adminvansales.Adapters.SalesManAdapter;
 import com.example.adminvansales.Report.OfferseReport;
 import com.example.adminvansales.Report.PlansReport;
@@ -64,8 +53,6 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import cn.pedant.SweetAlert.SweetAlertDialog;
 
 import static com.example.adminvansales.GlobelFunction.salesManInfoAdmin;
 import static com.example.adminvansales.GlobelFunction.salesManInfosList;
@@ -167,7 +154,7 @@ public class HomeActivity extends AppCompatActivity
                                 return true;
 
                             case R.id.action_location:
-                              startActivity(new Intent(getApplicationContext(), SalesmanMapsActivity.class));
+                              startActivity(new Intent(getApplicationContext(), SalesmanMaps_FirebaseActivity.class));
                                 overridePendingTransition(0, 0);
                                    return true;
 
@@ -414,7 +401,7 @@ public class HomeActivity extends AppCompatActivity
             public void onClick(View view) {
                 globelFunction.setValidation();
                 if(salesManInfoAdmin.getSalesManLocation()==1) {
-                    Intent locationIntent = new Intent(HomeActivity.this, SalesmanMapsActivity.class);
+                    Intent locationIntent = new Intent(HomeActivity.this, SalesmanMaps_FirebaseActivity.class);
                     startActivity(locationIntent);
                 }else {
                     globelFunction.AuthenticationMessage();

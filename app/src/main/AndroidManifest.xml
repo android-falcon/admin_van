@@ -13,7 +13,9 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-
+        <activity
+            android:name=".SalesmanMaps_FirebaseActivity"
+            android:exported="false" />
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
 
@@ -25,7 +27,6 @@
              project's local.properties file (e.g. MAPS_API_KEY=Aiza...), and replace the
              "YOUR_API_KEY" string in this file with "${MAPS_API_KEY}".
         -->
-
         <activity
             android:name=".Report.CommissionTargetReport"
             android:exported="false"
@@ -58,9 +59,9 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".addSalesmanTarget"
-            android:windowSoftInputMode="adjustPan|adjustResize"
+            android:exported="false"
             android:theme="@style/AppTheme.NoActionBar"
-            android:exported="false" />
+            android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".Report.RequstReport"
             android:exported="false" />
@@ -82,8 +83,8 @@
         <activity
             android:name=".ItemVisibility"
             android:exported="false"
-            android:windowSoftInputMode="adjustPan|adjustResize"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".CustomerLocationSelect"
             android:exported="false" />
@@ -200,6 +201,7 @@
             android:name="org.apache.http.legacy"
             android:required="false" />
     </application>
+
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -214,7 +216,6 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
@@ -236,11 +237,14 @@
     <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" tools:ignore="QueryAllPackagesPermission" />
-    <uses-sdk tools:overrideLibrary="com.google.zxing.client.android" />
-
+    <uses-permission
+        android:name="android.permission.QUERY_ALL_PACKAGES"
+        tools:ignore="QueryAllPackagesPermission" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
+
+    <uses-sdk tools:overrideLibrary="com.google.zxing.client.android" />
+
 </manifest>

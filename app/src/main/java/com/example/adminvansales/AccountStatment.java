@@ -189,7 +189,7 @@ public class AccountStatment extends AppCompatActivity {
                             case R.id.action_location:
 
                                 {      finish();
-                                    startActivity(new Intent(getApplicationContext(), SalesmanMapsActivity.class));
+                                    startActivity(new Intent(getApplicationContext(), SalesmanMaps_FirebaseActivity.class));
                                     overridePendingTransition(0, 0);
                                 }
                                     return true;

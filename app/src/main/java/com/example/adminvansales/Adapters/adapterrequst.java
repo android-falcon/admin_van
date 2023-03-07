@@ -67,6 +67,9 @@ public class adapterrequst extends RecyclerView.Adapter<adapterrequst.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+
+
+
         viewHolder.timeRequest.setText(requestList.get(i).getTime());
         viewHolder.date_request.setText(requestList.get(i).getDate());
         viewHolder.customerName.setText(requestList.get(i).getCustomer_name());
@@ -182,7 +185,7 @@ public class adapterrequst extends RecyclerView.Adapter<adapterrequst.ViewHolder
             dialog.setCancelable(true);
             dialog.setContentView(R.layout.request_detail);
             dialog.show();
-            LinearLayout linearresone,linear_buttons;
+            LinearLayout linearresone,linear_buttons,VouchernoLin,total_lin,amount_lin;
             LinearLayout linearLayout = dialog.findViewById(R.id.mainLinearDetail);
             linear_buttons  = dialog.findViewById(R.id.linearButtons);
             TextView textnote,textTime,textDate,total_voucher,voucherNo,textAmountNo,requestType,customer_name,Sales_name,titleNote;
@@ -190,9 +193,12 @@ public class adapterrequst extends RecyclerView.Adapter<adapterrequst.ViewHolder
             LinearLayout rowNote,rowcompany;
             textnote=dialog.findViewById(R.id.textnote);
             rowNote=dialog.findViewById(R.id.rowNote);
+            VouchernoLin=dialog.findViewById(R.id.VouchernoLin);
             textTime=dialog.findViewById(R.id.textTime);//
             textDate= dialog.findViewById(R.id.textDate);
             total_voucher=dialog.findViewById(R.id.total_voucher);
+            total_lin=dialog.findViewById(R.id.total_lin);
+            amount_lin= dialog.findViewById(R.id.amount_lin);
             voucherNo = dialog.findViewById(R.id.voucherNo);
             textAmountNo= dialog.findViewById(R.id.textAmountNo);
             requestType = dialog.findViewById(R.id.requestType);
@@ -201,6 +207,15 @@ public class adapterrequst extends RecyclerView.Adapter<adapterrequst.ViewHolder
             titleNote= dialog.findViewById(R.id.titleNote);
 
             //*************** fill Data *********************************************
+            if(requestList.get(row_index).getRequest_type().equals("5"))
+            {total_lin.setVisibility(View.GONE);
+                amount_lin.setVisibility(View.GONE);
+              requestType.setText(context.getResources().getString(R.string.log_in_cus_outrange));
+              VouchernoLin.setVisibility(View.GONE);
+                rowNote.setVisibility(View.GONE);
+            }
+
+
             Sales_name.setText(requestList.get(row_index).getSalesman_name());
             customer_name.setText(requestList.get(row_index).getCustomer_name());
             if(requestList.get(row_index).getRequest_type().equals("1"))

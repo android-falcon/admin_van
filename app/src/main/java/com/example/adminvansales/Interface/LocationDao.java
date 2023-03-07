@@ -8,8 +8,8 @@ import androidx.annotation.NonNull;
 
 
 import com.example.adminvansales.DataBaseHandler;
-import com.example.adminvansales.model.MyServicesForNotification;
-import com.example.adminvansales.model.RequstTest;
+import com.example.adminvansales.SalesmanMaps_FirebaseActivity;
+import com.example.adminvansales.model.SalesManInfo;
 import com.example.adminvansales.model.SalesMenLocation;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -22,11 +22,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import static com.example.adminvansales.GlobelFunction.LatLngListMarker;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LocationDao {
    private DatabaseReference databaseReference,databaseReference2;
    Context context;
+   public static List<SalesManInfo> salesManInfos=new ArrayList<>();
+
+   public static  List<LatLng>LatLngListMarker=new ArrayList<>();
    DataBaseHandler mHandler;
    String ipAddress="";
    public static String  Firebase_ipAddress;
@@ -111,8 +115,8 @@ public class LocationDao {
          public void onDataChange(DataSnapshot dataSnapshot) {
             for(DataSnapshot ds : dataSnapshot.getChildren()) {
                String key = ds.getKey();
-               Toast.makeText(context, "key=="+key, Toast.LENGTH_SHORT).show();
-               Log.e("key==",key+"");
+
+               Log.e("LocationDaokey==",key+"");
                getlistofdata(key);
             }
          }
@@ -125,35 +129,52 @@ public class LocationDao {
 
    }
    public void getlistofdata(String key) {
-      Log.e("getlistofdata==", "getlistofdata");
+      Log.e("LocationDaogetlistofdata==", "getlistofdata");
     ChildEventListener childEventListener = new ChildEventListener() {
          @Override
          public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
-            Log.e("onChildAdded", "onChildAdded:" + dataSnapshot.getKey());
+            Log.e("LocationDaoonChildAdded", "onChildAdded:" + dataSnapshot.getKey());
 
             // A new comment has been added, add it to the displayed list
-            try {
+
+
+
+
                SalesMenLocation salesMenLocation = dataSnapshot.getValue(SalesMenLocation.class);
                if(salesMenLocation!=null) {
-                  Log.e("salesMenLocation", "salesMenLocation:" + salesMenLocation.getSalesmanNo()+"  "+salesMenLocation.getLatitude()+" "+salesMenLocation.getLongitude());
-                       LatLngListMarker.add(new LatLng(Double.parseDouble(salesMenLocation.getLatitude()), Double.parseDouble(salesMenLocation.getLongitude())));
+                  Log.e("salesMenLocation", "salesMenLocation:" + salesMenLocation.getSalesmanName() + "  " + salesMenLocation.getLatitude() + " " + salesMenLocation.getLongitude());
+                  SalesManInfo salesManInfo = new SalesManInfo();
+                  salesManInfo.setSalesManNo(salesMenLocation.getSalesmanNo());
+                  salesManInfo.setSalesName(salesMenLocation.getSalesmanName());
+                  salesManInfo.setLatitudeLocation(salesMenLocation.getLatitude());
+                  salesManInfo.setLongitudeLocation(salesMenLocation.getLongitude());
+                  salesManInfos.add(salesManInfo);
+              //    LatLngListMarker.add(new LatLng(Double.parseDouble(salesMenLocation.getLatitude()), Double.parseDouble(salesMenLocation.getLongitude())));
+                  SalesmanMaps_FirebaseActivity salesmanMapsActivity = (SalesmanMaps_FirebaseActivity) context;
 
-                  Toast.makeText(context, "LatLngListMarker"+LatLngListMarker.size(), Toast.LENGTH_SHORT).show();
+               salesmanMapsActivity.location2();
+
 
                }
-            }catch (Exception e){
-               Log.e("Exception", "Exception:" + e.getMessage());
-            }
-
             // ...
          }
 
          @Override
          public void onChildChanged(DataSnapshot dataSnapshot, String previousChildName) {
-            Log.e("onChildAdded", "onChildChanged:" + dataSnapshot.getKey());
+            Log.e("LocationDao,onChildChanged", ":" + dataSnapshot.getKey());
 
+            SalesMenLocation salesMenLocation = dataSnapshot.getValue(SalesMenLocation.class);
+            if(salesMenLocation!=null) {
+               for (int i=0;i<salesManInfos.size();i++)
+                  if (salesManInfos.get(i).getSalesManNo().equals(salesMenLocation.getSalesmanNo())) {
+                     salesManInfos.get(i).setLongitudeLocation(salesMenLocation.getLongitude());
+                     salesManInfos.get(i).setLatitudeLocation(salesMenLocation.getLatitude());
+                    // LatLngListMarker.set(i, new LatLng(Double.parseDouble(salesMenLocation.getLatitude()), Double.parseDouble(salesMenLocation.getLongitude())));
+                  }
+            }
+            SalesmanMaps_FirebaseActivity salesmanMapsActivity = (SalesmanMaps_FirebaseActivity) context;
 
-
+           salesmanMapsActivity.location2();
          }
 
          @Override

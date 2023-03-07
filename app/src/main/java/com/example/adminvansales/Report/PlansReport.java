@@ -49,9 +49,9 @@ public class PlansReport extends AppCompatActivity {
     TextView dateEdt;
     EditText custNameSearch;
     RadioGroup orderRG;
-
+   Spinner salesManSP;
     RadioButton locationRBtn;
-    Spinner salesManSP,mtrl_calendar_days_of_week;
+    Spinner mtrl_calendar_days_of_week;
     RecyclerView plans_recycler;
     String currDate;
     GlobelFunction globelFunction;
