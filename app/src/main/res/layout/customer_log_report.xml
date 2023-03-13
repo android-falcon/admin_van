@@ -74,7 +74,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_marginHorizontal="22dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="25dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -126,12 +126,65 @@
             app:drawableRightCompat="@drawable/calendar" />
 
     </LinearLayout>
+    <LinearLayout
 
+
+        android:layout_below="@id/linear1"
+
+        android:id="@+id/lin3"
+
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginHorizontal="22dp"
+        android:layout_marginTop="25dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+
+        >
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
+            android:layout_weight="3.6"
+            android:gravity="center"
+            android:text="@string/customerName_"
+            android:textColor="#103164"
+            android:textSize="12sp" />
+
+        <TextView
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:id="@+id/cat"
+            android:layout_weight="2.3"
+            android:text="@string/selectcust"
+            android:drawableEnd="@drawable/ic_search_blue_24dp"
+            />
+        <TextView
+            android:id="@+id/cust_selectclear"
+            android:layout_width="30sp"
+            android:textColor="@color/colorBlack"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+
+            android:drawableStart="@drawable/ic_baseline_clear_24"
+            android:padding="2dp"/>
+
+    </LinearLayout>
     <LinearLayout
         android:id="@+id/linear2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/linear1"
+        android:layout_below="@id/lin3"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_marginHorizontal="22dp"
@@ -184,7 +237,7 @@
         android:layout_below="@id/linear2"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="15dp"
         >
 
         <LinearLayout

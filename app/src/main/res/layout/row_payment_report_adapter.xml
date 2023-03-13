@@ -80,7 +80,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
 
-
+            android:visibility="gone"
             android:text="@string/sales"
             android:textColor="@color/new_dark_blue"
             android:textSize="14sp" />

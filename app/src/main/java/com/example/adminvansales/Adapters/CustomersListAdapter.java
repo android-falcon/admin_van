@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.adminvansales.AccountStatment;
 import com.example.adminvansales.R;
+import com.example.adminvansales.Report.CustomerLogReport;
 import com.example.adminvansales.Report.PaymentDetailsReport;
 import com.example.adminvansales.Report.UnCollectedData;
 import com.example.adminvansales.model.CustomerInfo;
@@ -71,6 +72,12 @@ public class CustomersListAdapter  extends BaseAdapter {
                     AccountStatment. customerAccountname.setText(custList.get(i).getCustomerName());
                     AccountStatment.dialoglist.dismiss();
                 }
+                else    if(activity==4){
+                    CustomerLogReport.customerAccountNo.setText(custList.get(i).getCustomerNumber());
+                    CustomerLogReport. customerAccountname.setText(custList.get(i).getCustomerName());
+                    CustomerLogReport.dialoglist.dismiss();
+                }
+
             }
         });
         return view;

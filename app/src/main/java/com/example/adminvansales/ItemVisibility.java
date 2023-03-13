@@ -119,7 +119,7 @@ public class ItemVisibility extends AppCompatActivity {
 
                             case R.id.action_location:
 
-                                {   startActivity(new Intent(getApplicationContext(), SalesmanMaps_FirebaseActivity.class));
+                                {   startActivity(new Intent(getApplicationContext(), SalesmanMapsActivity.class));
                                     overridePendingTransition(0, 0);}
 
                                 return true;

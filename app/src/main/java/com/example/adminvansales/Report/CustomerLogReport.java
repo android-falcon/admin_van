@@ -9,6 +9,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -19,7 +21,9 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
@@ -32,8 +36,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
+import com.example.adminvansales.AccountStatment;
 import com.example.adminvansales.Adapters.CustomerLogReportAdapter;
+import com.example.adminvansales.Adapters.CustomersListAdapter;
 import com.example.adminvansales.DataBaseHandler;
 import com.example.adminvansales.ExportToExcel;
 import com.example.adminvansales.GlobelFunction;
@@ -45,6 +52,7 @@ import com.example.adminvansales.LogIn;
 import com.example.adminvansales.MainActivity;
 import com.example.adminvansales.PlanSalesMan;
 import com.example.adminvansales.RequstNotifaction;
+import com.example.adminvansales.model.CustomerInfo;
 import com.example.adminvansales.model.CustomerLogReportModel;
 import com.example.adminvansales.PdfConverter;
 import com.example.adminvansales.R;
@@ -58,6 +66,9 @@ import java.util.List;
 import static com.example.adminvansales.GlobelFunction.salesManInfoAdmin;
 import static com.example.adminvansales.GlobelFunction.salesManInfosList;
 import static com.example.adminvansales.GlobelFunction.salesManNameList;
+import static com.example.adminvansales.ImportData.listCustomer;
+import static com.example.adminvansales.ImportData.listCustomerInfo;
+
 import com.example.adminvansales.model.LocaleAppUtils;
 public class CustomerLogReport extends AppCompatActivity {
 
@@ -75,7 +86,10 @@ public class CustomerLogReport extends AppCompatActivity {
     com.example.adminvansales.model.SettingModel settingModel;
     DataBaseHandler databaseHandler;
     private BottomNavigationView bottom_navigation;
-
+    TextView cust_select;
+    public  static   TextView customerAccountNo,customerAccountname;
+    String customerId = "";
+    public static Dialog dialoglist,    dialog;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,7 +124,20 @@ public class CustomerLogReport extends AppCompatActivity {
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
         builder.detectFileUriExposure();
+        cust_select = findViewById(R.id.cat);
+        cust_select.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                opencust_selectDailog();
+            }
+        });
 
+        findViewById(R.id.cust_selectclear)  .setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cust_select.setText(getResources().getString(R.string.selectcust));
+            }
+        });
         fromDate = findViewById(R.id.from_date_r);
         toDate = findViewById(R.id.to_date_r);
         listCustomerLogReport = findViewById(R.id.listCustomerLogReport);
@@ -231,7 +258,104 @@ public class CustomerLogReport extends AppCompatActivity {
             Toast.makeText(this, "Storage Permission", Toast.LENGTH_SHORT).show();
         }
     }
+    private void  opencust_selectDailog(){
+        dialog = new Dialog(CustomerLogReport.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.cust_select_dialog);
 
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = (int) (getResources().getDisplayMetrics().widthPixels / 1.19);
+        dialog.getWindow().setAttributes(lp);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        customerAccountNo = dialog.findViewById(R.id.customerAccountNo);
+        customerAccountname = dialog.findViewById(R.id.customerAccountname);
+        AppCompatButton ok= dialog.findViewById(R.id.okButton);
+        AppCompatButton    cancel= dialog.findViewById(R.id.cancelButton);
+        ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!customerAccountname.getText().toString().equals(""))
+                    cust_select.setText(customerAccountname.getText());
+                else
+                {
+                    cust_select.setText(getResources().getString(R.string.selectcust));
+                }
+                dialog.dismiss();
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cust_select.setText(getResources().getString(R.string.selectcust));
+                dialog.dismiss();
+            }
+        });
+        ImageView find_img_button=dialog.findViewById(R.id.find_img_button);
+        find_img_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(listCustomer.size()!=0)
+                {
+                    dialoglist = new Dialog(CustomerLogReport.this);
+                    dialoglist.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    dialoglist.setCancelable(false);
+                    dialoglist.setContentView(R.layout.customerlist_dailog);
+
+                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                    lp.copyFrom(dialoglist.getWindow().getAttributes());
+                    lp.width = (int) (getResources().getDisplayMetrics().widthPixels / 1.19);
+                    dialoglist.getWindow().setAttributes(lp);
+                    dialoglist.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    EditText customerNameTextView =dialoglist.findViewById(R.id.customerNameTextView);
+                    ListView customersList =dialoglist.findViewById(R.id.customersList);
+                    customerNameTextView.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable editable) {
+                            if(!editable.toString().equals(""))
+                            {
+                                ArrayList<CustomerInfo> filterdlist = new ArrayList<CustomerInfo>();
+
+                                for (int i=0;i<listCustomer.size();i++)
+                                {
+                                    if(listCustomer.get(i).getCustomerName().contains(customerNameTextView.getText().toString())
+                                            ||listCustomer.get(i).getCustomerNumber().contains(customerNameTextView.getText().toString()) )
+
+                                        filterdlist.add(listCustomer.get(i));
+                                    customersList.setAdapter(new CustomersListAdapter(4,CustomerLogReport.this,filterdlist));
+                                }
+
+                            }else
+                            {
+                                customersList.setAdapter(new CustomersListAdapter(4,CustomerLogReport.this,listCustomer));
+                            }
+                        }
+                    });
+
+                    customersList.setAdapter(new CustomersListAdapter(4,CustomerLogReport.this,listCustomer));
+                    dialoglist.show();
+
+                }else
+                {
+                    GlobelFunction.showSweetDialog(CustomerLogReport.this,3,"",getResources().getString(R.string.emptylist));
+                }
+            }
+        });
+        dialog.show();
+
+    }
     private File convertToPdf() {
         File file = null;
         try {
@@ -295,8 +419,29 @@ public class CustomerLogReport extends AppCompatActivity {
     }
 
     public void fillCustomerLogReport() {
+
+        if(!cust_select.getText().toString().equals(getResources().getString(R.string.selectcust)))
+        {for (int i=0;i<customerLogReportList.size();i++)
+        {
+
+            try {
+
+
+                if (!customerLogReportList.get(i).getCUS_NAME().equals(cust_select.getText().toString())) {
+                    customerLogReportList.remove(i);
+                    i--;
+
+                }
+            }catch (Exception e){
+                Log.e("Exception=",e.getMessage());
+            }
+        }}
+
+
         customerLogReportAdapter = new CustomerLogReportAdapter(CustomerLogReport.this, customerLogReportList);
         listCustomerLogReport.setAdapter(customerLogReportAdapter);
+
+
 
     }
 

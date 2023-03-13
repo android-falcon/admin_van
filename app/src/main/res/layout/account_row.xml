@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
 
     android:orientation="horizontal"
@@ -9,7 +10,7 @@
 
     <TextView
         android:id="@+id/voucherNo"
-        android:layout_width="0dp"
+        android:layout_width="70dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
@@ -22,7 +23,7 @@
 
     <TextView
         android:id="@+id/transeName"
-        android:layout_width="0dp"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
@@ -34,7 +35,7 @@
 
     <TextView
         android:id="@+id/date_transe"
-        android:layout_width="0dp"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:textSize="14sp"
@@ -45,7 +46,7 @@
         android:textColorLink="@color/colorPrimary" />
     <TextView
         android:id="@+id/debit"
-        android:layout_width="0dp"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
@@ -56,7 +57,7 @@
         android:textColorLink="@color/colorPrimary" />
     <TextView
         android:id="@+id/credit"
-        android:layout_width="0dp"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
@@ -67,7 +68,7 @@
         android:textColorLink="@color/colorPrimary" />
     <TextView
         android:id="@+id/balance"
-        android:layout_width="0dp"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"

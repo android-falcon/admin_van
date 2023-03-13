@@ -19,24 +19,32 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.adminvansales.Adapters.AccountStatmentAdapter;
 import com.example.adminvansales.Adapters.CustomersListAdapter;
+import com.example.adminvansales.Report.CashReport;
 import com.example.adminvansales.Report.ReportsPopUpClass;
 import com.example.adminvansales.model.Account__Statment_Model;
 import com.example.adminvansales.model.CustomerInfo;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.stream.Collectors;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -64,7 +72,13 @@ public class AccountStatment extends AppCompatActivity {
 
     BottomNavigationView bottom_navigation;
     public static Dialog dialoglist,    dialog;
+    TextView fromDate, toDate;
+    String toDay;
+    GlobelFunction globelFunction;
+   Spinner itemKindspinner;
     public  static   TextView customerAccountNo,customerAccountname;
+    List<Account__Statment_Model> matchingObjects=new ArrayList<>();
+
     @SuppressLint("WrongConstant")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -189,7 +203,7 @@ public class AccountStatment extends AppCompatActivity {
                             case R.id.action_location:
 
                                 {      finish();
-                                    startActivity(new Intent(getApplicationContext(), SalesmanMaps_FirebaseActivity.class));
+                                    startActivity(new Intent(getApplicationContext(), SalesmanMapsActivity.class));
                                     overridePendingTransition(0, 0);
                                 }
                                     return true;
@@ -237,7 +251,41 @@ public class AccountStatment extends AppCompatActivity {
         {
             linearMain.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         }
-        cust_select=findViewById(R.id.cust_select);
+        fromDate = findViewById(R.id.from_date_r);
+        toDate = findViewById(R.id.to_date_r);
+        globelFunction = new GlobelFunction(AccountStatment.this);
+        itemKindspinner= findViewById(R.id.itemKindspinner);
+
+
+        itemKindspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+              if(i!=0)
+              {     matchingObjects = ImportData.listCustomerInfo.stream().
+                        filter(Account__Statment_Model -> Account__Statment_Model.getTranseNmae().equals(itemKindspinner.getSelectedItem().toString())).
+                        collect(Collectors.toList());
+                AccountStatmentAdapter adapter = new AccountStatmentAdapter(matchingObjects, AccountStatment.this);
+                recyclerView_report.setAdapter(adapter);}
+              else
+              {
+                  AccountStatmentAdapter adapter = new AccountStatmentAdapter(ImportData.listCustomerInfo, AccountStatment.this);
+                  recyclerView_report.setAdapter(adapter);
+              }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        toDay = globelFunction.DateInToday();
+
+        fromDate.setText(toDay);
+        toDate.setText(toDay);
+
+        fromDate.setOnClickListener(onClick);
+        toDate.setOnClickListener(onClick);
+  //  cust_select=findViewById(R.id.cust_select);
         recyclerView_report = findViewById(R.id.recyclerView_report);
         getAccountList_text = findViewById(R.id.getAccountList_text);
         preview_button_account = findViewById(R.id.preview_button_account);
@@ -288,10 +336,50 @@ public class AccountStatment extends AppCompatActivity {
     }
 
     private void fillAdapter() {
+        String fromDates=  fromDate.getText().toString();
+        String  toDates=toDate.getText().toString();
+        String fdate="";
         AccountStatmentAdapter adapter = new AccountStatmentAdapter(listCustomerInfo, AccountStatment.this);
         recyclerView_report.setAdapter(adapter);
+for (int i=0;i<listCustomerInfo.size();i++)
+{
+     fdate=listCustomerInfo.get(i).getDate_voucher();
+     try {
+
+
+         if ((formatDate(fdate).after(formatDate(fromDates)) || formatDate(fdate).equals(formatDate(fromDates))) &&
+                 (formatDate(fdate).before(formatDate(toDates)) || formatDate(fdate).equals(formatDate(toDates)))) {
+
+
+         } else {
+             listCustomerInfo.remove(i);
+             i--;
+         }
+     }catch (Exception e){
+         Log.e("Exception=",e.getMessage());
+     }
     }
 
+
+
+
+        ArrayList <String>list=new ArrayList<>();
+        list.add(getString(R.string.ALL));
+        for(int i=0;i<ImportData.listCustomerInfo.size();i++)
+            if(!list.contains(ImportData.listCustomerInfo.get(i).getTranseNmae()))
+            list.add(ImportData.listCustomerInfo.get(i).getTranseNmae());
+
+        itemKindspinner.setAdapter(new ArrayAdapter<String>(
+                AccountStatment. this, android.R.layout.simple_spinner_item, list));
+
+    }
+    public Date formatDate(String date) throws ParseException {
+
+        String myFormat = "dd/MM/yyyy"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        Date d = sdf.parse(date);
+        return d;
+    }
     private void searchInSpinerCustomer() {
         String name = "";
         if (!listSearch.getText().toString().equals("")) {
@@ -419,4 +507,27 @@ public class AccountStatment extends AppCompatActivity {
         dialog.show();
 
     }
+    View.OnClickListener onClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+
+
+            switch (view.getId()) {
+
+
+                case R.id.from_date_r:
+                    globelFunction.DateClick(fromDate);
+                    break;
+
+                case R.id.to_date_r:
+                    globelFunction.DateClick(toDate);
+                    break;
+
+
+            }
+
+        }
+    };
+
+
 }

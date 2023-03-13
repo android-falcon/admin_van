@@ -133,8 +133,8 @@ if     ( mMap!=null)      mMap.clear();
         // Add a marker in Sydney and move the camera
         Log.e("mmmmmm", "locationCall");
         LatLng sydney = null;
-//        Log.e("salesManInfosList==",salesManInfosList.size()+"");
-//        Log.e("LatLngListMarker==",LatLngListMarker.size()+"");
+        Log.e("salesManInfosList==",salesManInfosList.size()+"");
+      Log.e("LatLngListMarker==",LatLngListMarker.size()+"");
         if(salesManInfosList.size()!=0)
         {
 

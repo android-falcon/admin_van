@@ -154,7 +154,7 @@ public class HomeActivity extends AppCompatActivity
                                 return true;
 
                             case R.id.action_location:
-                              startActivity(new Intent(getApplicationContext(), SalesmanMaps_FirebaseActivity.class));
+                              startActivity(new Intent(getApplicationContext(), SalesmanMapsActivity.class));
                                 overridePendingTransition(0, 0);
                                    return true;
 
@@ -401,7 +401,7 @@ public class HomeActivity extends AppCompatActivity
             public void onClick(View view) {
                 globelFunction.setValidation();
                 if(salesManInfoAdmin.getSalesManLocation()==1) {
-                    Intent locationIntent = new Intent(HomeActivity.this, SalesmanMaps_FirebaseActivity.class);
+                    Intent locationIntent = new Intent(HomeActivity.this, SalesmanMapsActivity.class);
                     startActivity(locationIntent);
                 }else {
                     globelFunction.AuthenticationMessage();
