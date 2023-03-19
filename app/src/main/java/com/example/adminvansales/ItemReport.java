@@ -99,9 +99,13 @@ public class ItemReport extends AppCompatActivity {
         if(salesManNameList.size()==0)    globelFunction. getSalesManInfo (ItemReport.this,9);
 
         fillSalesManSpinner();
-        try {
-            String no = globelFunction.getsalesmanNum(salesManSpinner.getSelectedItem().toString());
-
+        try {   String no="";
+            if (salesManSpinner.getSelectedItem()!=null)
+             no = globelFunction.getsalesmanNum(salesManSpinner.getSelectedItem().toString());
+else
+            {
+                no ="9999999999";
+            }
             if (settingModel.getImport_way().equals("0"))
             //    importData.getItemReport(ItemReport.this, fromDate.getText().toString(), toDate.getText().toString(), "-1");
                 importData.  fetchItemReport(ItemReport.this, fromDate.getText().toString(), toDate.getText().toString(), "-1");
