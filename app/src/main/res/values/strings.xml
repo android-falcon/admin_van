@@ -193,6 +193,7 @@
     <string name="ApprovedStatus">Approved Status</string>
     <string name="RequestReport">Request Report</string>
     <string name="selectcust">Click to Select Customer</string>
+    <string name="selectcust2">All</string>
 
     <string name="req_num">Request Num</string>
     <string name="itemCount">Items Count</string>

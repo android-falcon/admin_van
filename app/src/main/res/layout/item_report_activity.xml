@@ -287,7 +287,15 @@
                 android:text="@string/total"
                 android:textColor="@color/white"
                 android:textSize="15sp" />
-
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/alegreya_sans_bold"
+                android:gravity="center"
+                android:text="@string/sales_man_name"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
 
         </LinearLayout>
 

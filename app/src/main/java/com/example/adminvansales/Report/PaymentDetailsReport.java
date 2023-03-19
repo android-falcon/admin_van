@@ -324,7 +324,10 @@ else
             }
 
         if (positionSales != -1) {
-            String no = globelFunction.getsalesmanNum(salesNameSpinner.getSelectedItem().toString());
+            String no;
+            if (positionSales != 0)
+             no = globelFunction.getsalesmanNum(salesNameSpinner.getSelectedItem().toString());
+else  no = "9999999999";
 
             if (SettingModel.getImport_way().equals("0"))
                 importData.getPaymentsReport(PaymentDetailsReport.this, "-1", fromDate.getText().toString(), toDate.getText().toString(), payKind);
@@ -339,7 +342,14 @@ else
     }
 
     public void fillSalesManSpinner(){
-         salesNameSpinnerAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, salesManNameList);
+
+        List<String> salesManNameListWithAll=new ArrayList<>();
+
+        salesManNameListWithAll.addAll(salesManNameList);
+        salesManNameListWithAll.add(0,getResources().getString(R.string.ALL));
+
+
+         salesNameSpinnerAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, salesManNameListWithAll);
         salesNameSpinner.setAdapter(salesNameSpinnerAdapter);
 
     }

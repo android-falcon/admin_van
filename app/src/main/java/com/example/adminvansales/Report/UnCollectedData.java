@@ -102,7 +102,7 @@ TextView total,cust_select;
       findViewById(R.id.cust_selectclear)  .setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View view) {
-              cust_select.setText(getResources().getString(R.string.selectcust));
+              cust_select.setText(getResources().getString(R.string.selectcust2));
           }
       });
         importJason = new ImportData(UnCollectedData.this);
@@ -120,10 +120,11 @@ TextView total,cust_select;
                     importJason.getUnCollectedCheques(customerId);
                     importJason.getAllcheques(customerId);
                 } else {
-                    new SweetAlertDialog(UnCollectedData.this, SweetAlertDialog.WARNING_TYPE)
-                            .setTitleText("Select Customer")
-                            .setContentText("")
-                            .show();
+                    paymentChequesList.clear();
+                    paymentArrayList.clear();
+                    Log.e(" paymentArrayList3===", paymentArrayList.size() + "");
+                    Log.e(" paymentChequesList===", paymentChequesList.size() + "");
+                    importJason.getAllcheques("9999999999");
                 }
 //
             }
@@ -437,7 +438,7 @@ TextView total,cust_select;
                     cust_select.setText(customerAccountname.getText());
                 else
                 {
-                    cust_select.setText(getResources().getString(R.string.selectcust));
+                    cust_select.setText(getResources().getString(R.string.selectcust2));
                 }
                 dialog.dismiss();
             }
@@ -445,7 +446,7 @@ TextView total,cust_select;
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cust_select.setText(getResources().getString(R.string.selectcust));
+                cust_select.setText(getResources().getString(R.string.selectcust2));
                 dialog.dismiss();
             }
         });

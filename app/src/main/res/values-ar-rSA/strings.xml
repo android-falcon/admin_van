@@ -194,6 +194,7 @@
     <string name="ApprovedStatus">حالة الموافقة</string>
     <string name="RequestReport">تقرير الطلبات</string>
     <string name="selectcust">انقر لاختيار عميل</string>
+    <string name="selectcust2">الكل</string>
     <string name="req_num">رقم الطلب</string>
     <string name="itemCount">عدد المواد</string>
     <string name="exits">هل أنت متأكد من الخروج</string>

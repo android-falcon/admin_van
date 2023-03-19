@@ -249,7 +249,9 @@ public class CashReport extends AppCompatActivity {
         int positionSales = salesNameSpinner.getSelectedItemPosition();
         String no = "";
         if (salesNameSpinner.getSelectedItem() != null) {
-            no = globelFunction.getsalesmanNum(salesNameSpinner.getSelectedItem().toString());
+            if (salesNameSpinner.getSelectedItem().equals(getResources().getString(R.string.ALL)))
+                no ="9999999999";
+           else no = globelFunction.getsalesmanNum(salesNameSpinner.getSelectedItem().toString());
             if (SettingModel.getImport_way().equals("0"))
                 importData.getCashReport(CashReport.this, fromDate.getText().toString(), toDate.getText().toString());
             else if (SettingModel.getImport_way().equals("1"))
@@ -263,7 +265,13 @@ public class CashReport extends AppCompatActivity {
 
     public void fillSalesManSpinner() {
 
-        salesNameSpinnerAdapter = new ArrayAdapter<String>(this, R.layout.spinner_layout, salesManNameList);
+          List<String> salesManNameListWithAll=new ArrayList<>();
+
+        salesManNameListWithAll.addAll(salesManNameList);
+        salesManNameListWithAll.add(0,getResources().getString(R.string.ALL));
+
+
+        salesNameSpinnerAdapter = new ArrayAdapter<String>(this, R.layout.spinner_layout, salesManNameListWithAll);
         salesNameSpinnerAdapter.setDropDownViewResource(R.layout.spinner_layout);
         salesNameSpinner.setAdapter(salesNameSpinnerAdapter);
 
@@ -286,15 +294,19 @@ public class CashReport extends AppCompatActivity {
 //        }
             // else
             {
-                salesNo = salesManInfosList.get(positionSales).getSalesManNo();
-                Log.e("salesNo", "" + salesNo + "   name ===> " + salesManInfosList.get(positionSales).getSalesName() + "    " + positionSales);
-                for (int i = 0; i < cashReportList.size(); i++) {
-                    if (cashReportList.get(i).getSalesManNo().equals(salesNo)) {
-                        TempReports.add(cashReportList.get(i));
-                        break;
+              if(positionSales!=0)
+                {   salesNo = salesManInfosList.get(positionSales).getSalesManNo();
+                    Log.e("salesNo", "" + salesNo + "   name ===> " + salesManInfosList.get(positionSales).getSalesName() + "    " + positionSales);
+                    for (int i = 0; i < cashReportList.size(); i++) {
+                        if (cashReportList.get(i).getSalesManNo().equals(salesNo)) {
+                            TempReports.add(cashReportList.get(i));
+                            break;
+                        }
                     }
-                }
-
+                }else
+              {
+                  TempReports.addAll(cashReportList);
+              }
 
                 payMentReportAdapter = new CashReportAdapter(CashReport.this, TempReports);
                 listCashReport.setAdapter(payMentReportAdapter);

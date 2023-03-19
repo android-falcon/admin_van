@@ -235,9 +235,11 @@ public String getsalesmanNum(String name){
     public String getsalesmanname(String num){
 
         for(int i=0;i<salesManInfosList.size();i++){
-            if(salesManInfosList.get(i).getSalesManNo().equals(num)) {
-                Log.e("name===",salesManInfosList.get(i).getSalesName());
-                Log.e("num===",salesManInfosList.get(i).getSalesManNo());
+
+            Log.e("ManNo===",salesManInfosList.get(i).getSalesManNo()+"   num==="+num);
+            if(salesManInfosList.get(i).getSalesManNo().trim().equals(num.trim())) {
+                Log.e("name2===",salesManInfosList.get(i).getSalesName());
+                Log.e("num3===",salesManInfosList.get(i).getSalesManNo());
                 return salesManInfosList.get(i).getSalesName();
 
             }}

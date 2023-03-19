@@ -84,18 +84,18 @@ public class LocationDao {
 
    }
    public boolean ChildIsExists(String value) {
-      Log.e("ChildIsExists","ChildIsExists");
+   //   Log.e("ChildIsExists","ChildIsExists");
       final boolean[] flage = {false};
       databaseReference.child(Firebase_ipAddress).addListenerForSingleValueEvent(new ValueEventListener() {
          @Override
          public void onDataChange(@NonNull DataSnapshot snapshot) {
             if (snapshot.hasChild(value)) {
                {
-                  Log.e("true","true");
+               //   Log.e("true","true");
                   flage[0] =true;
                }
             } else {
-               Log.e("false","false");
+          //     Log.e("false","false");
                flage[0] =false;
             }
          }
@@ -116,7 +116,7 @@ public class LocationDao {
             for(DataSnapshot ds : dataSnapshot.getChildren()) {
                String key = ds.getKey();
 
-               Log.e("LocationDaokey==",key+"");
+             //  Log.e("LocationDaokey==",key+"");
                getlistofdata(key);
             }
          }
@@ -129,11 +129,11 @@ public class LocationDao {
 
    }
    public void getlistofdata(String key) {
-      Log.e("LocationDaogetlistofdata==", "getlistofdata");
+    //  Log.e("LocationDaogetlistofdata==", "getlistofdata");
     ChildEventListener childEventListener = new ChildEventListener() {
          @Override
          public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
-            Log.e("LocationDaoonChildAdded", "onChildAdded:" + dataSnapshot.getKey());
+      //      Log.e("LocationDaoonChildAdded", "onChildAdded:" + dataSnapshot.getKey());
 
             // A new comment has been added, add it to the displayed list
 
@@ -142,7 +142,7 @@ public class LocationDao {
 
                SalesMenLocation salesMenLocation = dataSnapshot.getValue(SalesMenLocation.class);
                if(salesMenLocation!=null) {
-                  Log.e("salesMenLocation", "salesMenLocation:" + salesMenLocation.getSalesmanName() + "  " + salesMenLocation.getLatitude() + " " + salesMenLocation.getLongitude());
+                //  Log.e("salesMenLocation", "salesMenLocation:" + salesMenLocation.getSalesmanName() + "  " + salesMenLocation.getLatitude() + " " + salesMenLocation.getLongitude());
                   SalesManInfo salesManInfo = new SalesManInfo();
                   salesManInfo.setSalesManNo(salesMenLocation.getSalesmanNo());
                   salesManInfo.setSalesName(salesMenLocation.getSalesmanName());
@@ -161,7 +161,7 @@ public class LocationDao {
 
          @Override
          public void onChildChanged(DataSnapshot dataSnapshot, String previousChildName) {
-            Log.e("LocationDao,onChildChanged", ":" + dataSnapshot.getKey());
+         //   Log.e("LocationDao,onChildChanged", ":" + dataSnapshot.getKey());
 
             SalesMenLocation salesMenLocation = dataSnapshot.getValue(SalesMenLocation.class);
             if(salesMenLocation!=null) {

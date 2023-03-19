@@ -61,7 +61,7 @@ public class ItemReportAdapter extends BaseAdapter {
     }
 
     private class ViewHolder {
-        TextView adminNo, itemName, salesName, date, qty,price,total,itemNo;
+        TextView adminNo, itemName, salesName, date, qty,price,total,itemNo,saleman;
         TableRow tableRow;
 
 
@@ -82,14 +82,15 @@ public class ItemReportAdapter extends BaseAdapter {
         holder.total=view.findViewById(R.id.total);
         holder.itemNo =view.findViewById(R.id.itemNo);
 
-
+        holder.saleman=view.findViewById(R.id.saleman);
         holder.itemName .setText(""+itemsList.get(i).getName());
         holder.date .setText(""+itemsList.get(i).getVoucherDate());
 //        holder.salesName .setText(""+itemsList.get(i).getSalesName());
         holder.qty .setText(""+itemsList.get(i).getQty());
         holder.price .setText(globelFunction.convertToEnglish((String.  format("%.3f",Double.parseDouble(itemsList.get(i).getUnitPrice())))));
         holder.total.setText(""+globelFunction.convertToEnglish(String.  format("%.3f",Double.parseDouble(itemsList.get(i).getTotal()))));
-
+      // String salesmanname=globelFunction.getsalesmanname(itemsList.get(i).getSalesManNo());
+        holder. saleman.setText(""+itemsList.get(i).getSalesName());
         holder.itemNo.setText(""+itemsList.get(i).getItemNo());
 
 

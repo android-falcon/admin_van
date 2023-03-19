@@ -107,7 +107,8 @@ public class ItemReport extends AppCompatActivity {
                 importData.  fetchItemReport(ItemReport.this, fromDate.getText().toString(), toDate.getText().toString(), "-1");
             else if (settingModel.getImport_way().equals("1"))
             //    importData.IIS_getItemReport(ItemReport.this, fromDate.getText().toString(), toDate.getText().toString(), no);
-            importData.  fetchItemReport(ItemReport.this, fromDate.getText().toString(), toDate.getText().toString(), no);
+
+                importData.  fetchItemReport(ItemReport.this, fromDate.getText().toString(), toDate.getText().toString(), "9999999999");
         } catch (Exception e) {
         }
 
@@ -141,11 +142,12 @@ public class ItemReport extends AppCompatActivity {
                 if (positionSales != -1) {
 
                     salesNo = salesManInfosList.get(positionSales).getSalesManNo();
+
                     // Log.e("salesNo", "" + salesNo + "   name ===> " + salesManInfosList.get(positionSales).getSalesName() + "    " + positionSales);
-
-
-                    String no = globelFunction.getsalesmanNum(salesManSpinner.getSelectedItem().toString());
-
+                    String no;
+                    if(positionSales!=0)
+                     no = globelFunction.getsalesmanNum(salesManSpinner.getSelectedItem().toString());
+                    else no="9999999999";
                     if (settingModel.getImport_way().equals("0"))
                         importData.getItemReport(ItemReport.this, fromDate.getText().toString(), toDate.getText().toString(), salesNo);
                     else if (settingModel.getImport_way().equals("1"))
@@ -241,7 +243,13 @@ public class ItemReport extends AppCompatActivity {
 
 
     public void fillSalesManSpinner() {
-         salesNameSpinnerAdapter = new ArrayAdapter<String>(this, R.layout.spinner_layout, salesManNameList);
+        List<String> salesManNameListWithAll=new ArrayList<>();
+
+        salesManNameListWithAll.addAll(salesManNameList);
+        salesManNameListWithAll.add(0,getResources().getString(R.string.ALL));
+
+
+         salesNameSpinnerAdapter = new ArrayAdapter<String>(this, R.layout.spinner_layout, salesManNameListWithAll);
         salesNameSpinnerAdapter.setDropDownViewResource(R.layout.spinner_layout);
         salesManSpinner.setAdapter(salesNameSpinnerAdapter);
 
