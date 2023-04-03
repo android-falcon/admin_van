@@ -22,6 +22,7 @@ import com.example.adminvansales.model.ListPriceOffer;
 import com.example.adminvansales.model.PayMentReportModel;
 import com.example.adminvansales.model.Payment;
 import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.pdf.PdfWriter;
 
 import java.io.File;
 import java.io.IOException;
@@ -288,15 +289,15 @@ public class ExportToExcel {
                 sheet.addCell(new Label(2, 0, context.getString(R.string.sales_man_name   )                          )  );
                 sheet.addCell(new Label(3, 0, context.getResources().getString(R.string.cash_sale  )  ) );
                 sheet.addCell(new Label(4, 0, context.getResources().getString(R.string.credit_sales )   ));
-                sheet.addCell(new Label(5, 0, context.getResources().getString(R.string.total_sales     )  ));
-                sheet.addCell(new Label(6, 0, context.getResources().getString(R.string.cash     )  ));
-                sheet.addCell(new Label(7, 0, context.getResources().getString(R.string.app_cheque     )  ));
+                sheet.addCell(new Label(5, 0, context.getResources().getString(R.string.net_sales3     )  ));
+                sheet.addCell(new Label(6, 0, context.getResources().getString(R.string.paymentCash     )  ));
+                sheet.addCell(new Label(7, 0, context.getResources().getString(R.string.paymentCheque     )  ));
                 sheet.addCell(new Label(8, 0, context.getResources().getString(R.string.netpayment     )  ));
-                sheet.addCell(new Label(9, 0, context.getResources().getString(R.string.app_creditCard     )  ));
+                sheet.addCell(new Label(9, 0, context.getResources().getString(R.string.credit_value     )  ));
                 sheet.addCell(new Label(10, 0, context.getResources().getString(R.string.total_cash     )  ));
 
                 sheet.mergeCells(0,1, 1, 1);// col , row, to col , to row
-                double sum=0,nettotal=0;
+                double sum=0,nettotal=0,TOTAL_net_salesVal=0,TOTAL_netpaymentVal=0,TOTAL_total_cashVal=0;
                 for (int i = 0; i < list.size(); i++) {
                     sheet.addCell(new Label(0, i + 2, list.get(i).getSalesManNo()+""));
                     sheet.addCell(new Label(2, i + 2,      list.get(i).getSalesManName()));
@@ -311,13 +312,23 @@ public class ExportToExcel {
                     sheet.addCell(new Label(10, i + 2,  list.get(i).getNetCash()+""));
 
                     sheet.mergeCells(0,i + 2, 1, i + 2);// col , row, to col , to row
-                    sum += Double.parseDouble(list.get(i).getTotalCash()) + Double.parseDouble(list.get(i).getPtotalCash());
-
                     nettotal+=Double.parseDouble(list.get(i).getPtotalCredite())+Double.parseDouble(list.get(i).getPtotalCash());
+                    TOTAL_net_salesVal+=Double.parseDouble(list.get(i).getTotalCash()) +Double.parseDouble(list.get(i).getTotalCredite());
+                    TOTAL_netpaymentVal += Double.parseDouble(list.get(i).getPtotalCash())  +Double.parseDouble(list.get(i).getPtotalCredite());
+                    TOTAL_total_cashVal  +=  Double.parseDouble(list.get(i).getTotalCash())+  Double.parseDouble(list.get(i).getPtotalCash());
 
                 }
-                sheet.addCell(new Label(2,list.size()+2 ,  context.getResources().getString(R.string.net_sales  ) +"     :   "+globelFunction.convertToEnglish(String.  format("%.3f",sum))));
-                sheet.addCell(new Label(4, list.size()+2 , context.getResources().getString(R.string.total_cash      ) +"     :   "+globelFunction.convertToEnglish(String.  format("%.3f",(nettotal)))));
+                sheet.addCell(new Label(0,list.size()+2 ,  ""));
+                sheet.addCell(new Label(2, list.size()+2 ,""));
+                sheet.addCell(new Label(3,list.size()+2 ,globelFunction.convertToEnglish(String.  format("%.3f",(list.stream().map(CashReportModel::getTotalCash).mapToDouble(Double::parseDouble).sum())))));
+                sheet.addCell(new Label(4, list.size()+2 , globelFunction.convertToEnglish(String.  format("%.3f",(list.stream().map(CashReportModel::getTotalCredite).mapToDouble(Double::parseDouble).sum())))));
+                sheet.addCell(new Label(5,list.size()+2 ,globelFunction.convertToEnglish(String.  format("%.3f",( TOTAL_net_salesVal)))) );
+                sheet.addCell(new Label(6, list.size()+2 ,globelFunction.convertToEnglish(String.  format("%.3f",( TOTAL_net_salesVal)))));
+                sheet.addCell(new Label(7,list.size()+2 ,  globelFunction.convertToEnglish(String.  format("%.3f",(list.stream().map(CashReportModel::getPtotalCredite).mapToDouble(Double::parseDouble).sum()))) ));
+                sheet.addCell(new Label(8, list.size()+2 , globelFunction.convertToEnglish(String.  format("%.3f",(TOTAL_netpaymentVal)))));
+                sheet.addCell(new Label(9,list.size()+2 , globelFunction.convertToEnglish(String.  format("%.3f",(list.stream().map(CashReportModel::getPtotalCrediteCard).mapToDouble(Double::parseDouble).sum()))))  );
+                sheet.addCell(new Label(10, list.size()+2 , globelFunction.convertToEnglish(String.  format("%.3f",TOTAL_total_cashVal))) );
+
 
 
             } catch (RowsExceededException e) {

@@ -30,7 +30,7 @@ public class ItemMaster {
 
     @SerializedName("ItemNameA")
     public   String   Name;
-
+    public   String    ItemG;
 //    @SerializedName("CateogryID")
     private  String   CateogryID;
 
@@ -176,5 +176,13 @@ public class ItemMaster {
 
     public void setPrice(String price) {
         this.price = price;
+    }
+
+    public String getItemG() {
+        return ItemG;
+    }
+
+    public void setItemG(String itemG) {
+        ItemG = itemG;
     }
 }

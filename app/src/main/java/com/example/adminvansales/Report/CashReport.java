@@ -62,6 +62,8 @@ public class CashReport extends AppCompatActivity {
     com.example.adminvansales.model.SettingModel SettingModel;
     DataBaseHandler databaseHandler;
     TextView  total,cashtotal;
+    TextView  TOTAL_cash_sale,TOTAL_credit_sales,TOTAL_net_sales,TOTAL_paymentCash,TOTAL_paymentCheque,TOTAL_netpayment,
+            TOTAL_credit_value,TOTAL_total_cash;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -127,6 +129,19 @@ public class CashReport extends AppCompatActivity {
         } catch (Exception e) {
 
         }
+        //
+        TOTAL_cash_sale=findViewById(R.id.TOTAL_cash_sale);
+        TOTAL_credit_sales=findViewById(R.id.TOTAL_credit_sales);
+        TOTAL_net_sales=findViewById(R.id.TOTAL_net_sales);
+        TOTAL_paymentCash=findViewById(R.id.TOTAL_paymentCash);
+        TOTAL_paymentCheque=findViewById(R.id.TOTAL_paymentCheque);
+        TOTAL_netpayment =findViewById(R.id.TOTAL_netpayment);
+         TOTAL_credit_value=findViewById(R.id.TOTAL_credit_value);
+        TOTAL_total_cash=findViewById(R.id.TOTAL_total_cash);
+        //
+
+
+        //
         previewButton.setOnClickListener(onClick);
         fromDate.setOnClickListener(onClick);
         toDate.setOnClickListener(onClick);
@@ -214,14 +229,14 @@ public class CashReport extends AppCompatActivity {
 
     private File convertToPdf() {
         PdfConverter pdf = new PdfConverter(CashReport.this);
-        File file = pdf.exportListToPdf(TempReports, "Cash Report", toDay, 2);
+        File file = pdf.exportListToPdf(cashReportList, "Cash Report", toDay, 2);
         return file;
     }
 
     private void convertToExcel() {
 
         ExportToExcel exportToExcel = new ExportToExcel();
-        exportToExcel.createExcelFile(CashReport.this, "CashReport.xls", 3, TempReports);
+        exportToExcel.createExcelFile(CashReport.this, "CashReport.xls", 3, cashReportList);
         // return file;
     }
 
@@ -293,36 +308,53 @@ public class CashReport extends AppCompatActivity {
 //            listCashReport.setAdapter(payMentReportAdapter);
 //        }
             // else
-            {
-              if(positionSales!=0)
-                {   salesNo = salesManInfosList.get(positionSales).getSalesManNo();
-                    Log.e("salesNo", "" + salesNo + "   name ===> " + salesManInfosList.get(positionSales).getSalesName() + "    " + positionSales);
-                    for (int i = 0; i < cashReportList.size(); i++) {
-                        if (cashReportList.get(i).getSalesManNo().equals(salesNo)) {
-                            TempReports.add(cashReportList.get(i));
-                            break;
-                        }
-                    }
-                }else
-              {
-                  TempReports.addAll(cashReportList);
-              }
+        {
+//              if(positionSales!=0)
+//                {   salesNo = salesManInfosList.get(positionSales).getSalesManNo();
+//                    Log.e("salesNo", "" + salesNo + "   name ===> " + salesManInfosList.get(positionSales).getSalesName() + "    " + positionSales);
+//                    for (int i = 0; i < cashReportList.size(); i++) {
+//                        if (cashReportList.get(i).getSalesManNo().equals(salesNo)) {
+//                            TempReports.add(cashReportList.get(i));
+//                            break;
+//                        }
+//                    }
+//                }else
+//              {
+//                  TempReports.addAll(cashReportList);
+//              }
 
-                payMentReportAdapter = new CashReportAdapter(CashReport.this, TempReports);
-                listCashReport.setAdapter(payMentReportAdapter);
+            payMentReportAdapter = new CashReportAdapter(CashReport.this, cashReportList);
+            listCashReport.setAdapter(payMentReportAdapter);
+            try {
 
-       double sum=0,nettotal=0;
-           for(int i=0;i<TempReports.size();i++) {
-               sum += Double.parseDouble(TempReports.get(i).getTotalCash()) + Double.parseDouble(TempReports.get(i).getPtotalCash());
 
-               nettotal+=Double.parseDouble(TempReports.get(i).getPtotalCredite())+Double.parseDouble(TempReports.get(i).getPtotalCash());
+                double sum = 0, nettotal = 0, TOTAL_net_salesVal = 0, TOTAL_netpaymentVal = 0, TOTAL_total_cashVal = 0;
+                for (int i = 0; i < cashReportList.size(); i++) {
+                    sum += Double.parseDouble(cashReportList.get(i).getTotalCash()) + Double.parseDouble(cashReportList.get(i).getPtotalCash());
 
-           }
-     Log.e("cash_rep==","pr,,"+"");
-                cashtotal.setText(globelFunction.convertToEnglish(String.  format("%.3f",sum)));
-                total.setText(globelFunction.convertToEnglish(String.  format("%.3f",(nettotal))));
+                    nettotal += Double.parseDouble(cashReportList.get(i).getPtotalCredite()) + Double.parseDouble(cashReportList.get(i).getPtotalCash());
+                    TOTAL_net_salesVal += Double.parseDouble(cashReportList.get(i).getTotalCash()) + Double.parseDouble(cashReportList.get(i).getTotalCredite());
+                    TOTAL_netpaymentVal += Double.parseDouble(cashReportList.get(i).getPtotalCash()) + Double.parseDouble(cashReportList.get(i).getPtotalCredite());
+                    TOTAL_total_cashVal += Double.parseDouble(cashReportList.get(i).getTotalCash()) + Double.parseDouble(cashReportList.get(i).getPtotalCash());
+                }
+
+                cashtotal.setText(globelFunction.convertToEnglish(String.format("%.3f", sum)));
+                total.setText(globelFunction.convertToEnglish(String.format("%.3f", (nettotal))));
+
+                //
+                TOTAL_cash_sale.setText(globelFunction.convertToEnglish(String.format("%.3f", (cashReportList.stream().map(CashReportModel::getTotalCash).mapToDouble(Double::parseDouble).sum()))));
+                TOTAL_credit_sales.setText(globelFunction.convertToEnglish(String.format("%.3f", (cashReportList.stream().map(CashReportModel::getTotalCredite).mapToDouble(Double::parseDouble).sum()))));
+                TOTAL_net_sales.setText(globelFunction.convertToEnglish(String.format("%.3f", (TOTAL_net_salesVal))));
+                TOTAL_paymentCash.setText(globelFunction.convertToEnglish(String.format("%.3f", (cashReportList.stream().map(CashReportModel::getPtotalCash).mapToDouble(Double::parseDouble).sum()))));
+                TOTAL_paymentCheque.setText(globelFunction.convertToEnglish(String.format("%.3f", (cashReportList.stream().map(CashReportModel::getPtotalCredite).mapToDouble(Double::parseDouble).sum()))));
+                TOTAL_netpayment.setText(globelFunction.convertToEnglish(String.format("%.3f", (TOTAL_netpaymentVal))));
+                TOTAL_credit_value.setText(globelFunction.convertToEnglish(String.format("%.3f", (cashReportList.stream().map(CashReportModel::getPtotalCrediteCard).mapToDouble(Double::parseDouble).sum()))));
+                TOTAL_total_cash.setText(globelFunction.convertToEnglish(String.format("%.3f", TOTAL_total_cashVal)));
+
+            }catch (Exception exception){
 
             }
+        }
 
 
 //        } catch (Exception exception) {

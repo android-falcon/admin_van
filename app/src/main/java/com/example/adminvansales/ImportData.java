@@ -1977,7 +1977,7 @@ Log.e("URL_TO_HIT",URL_TO_HIT+"");
 
                  //   http://localhost:8085/ADMCashReport?CONO=295&SALESMANNO=00001&FROMDATE=01/01/2021&TODATE=31/12/2021
 
-                    URL_TO_HIT = "http://" + ipAddress +":" +portSettings + headerDll.trim() +"/ADMCashReport?CONO="+CONO+"&SALESMANNO="+SalesNo+"&FROMDATE="+fromDate+"&TODATE="+toDate;;
+                    URL_TO_HIT = "http://" + ipAddress +":" +portSettings + headerDll.trim() +"/ADMCashReport?CONO="+CONO+"&SALESMANNO="+SalesNo+"&FROMDATE="+fromDate+"&TODATE="+toDate;
              Log.e("URL_TO_HIT", URL_TO_HIT+"");
                 }
             } catch (Exception e) {
@@ -5445,7 +5445,7 @@ Log.e("URL_TO_HIT",URL_TO_HIT+"");
                     //Log.e("LOG_DETAIL", "LOG_DETAIL"+itemReportModelsList.size());
                     ItemReport itemReport = (ItemReport) context;
                     itemReport.fillItemAdapter();
-                    itemReport.totalqty();
+                  //  itemReport.totalqty();
                     getPdValidationItemReport.dismissWithAnimation();
 
 
@@ -5455,7 +5455,7 @@ Log.e("URL_TO_HIT",URL_TO_HIT+"");
 //                    offerPriceList.fillItemCard();
                     ItemReport itemReport = (ItemReport) context;
                     itemReport.fillItemAdapter();
-                    itemReport.totalqty();
+              //      itemReport.totalqty();
                     getPdValidationItemReport.dismissWithAnimation();
                     //Log.e("item_customer", "SalesManNo2");
 
@@ -5662,7 +5662,7 @@ Log.e("URL_TO_HIT",URL_TO_HIT+"");
                     //Log.e("LOG_DETAIL", "LOG_DETAIL"+itemReportModelsList.size());
                     ItemReport itemReport = (ItemReport) context;
                     itemReport.fillItemAdapter();
-                    itemReport.totalqty();
+                  //  itemReport.totalqty();
                     getPdValidationItemReport.dismissWithAnimation();
 
 
@@ -5672,7 +5672,7 @@ Log.e("URL_TO_HIT",URL_TO_HIT+"");
 //                    offerPriceList.fillItemCard();
                     ItemReport itemReport = (ItemReport) context;
                     itemReport.fillItemAdapter();
-                    itemReport.totalqty();
+                  //  itemReport.totalqty();
                     getPdValidationItemReport.dismissWithAnimation();
                     //Log.e("item_customer", "SalesManNo2");
 
@@ -5993,6 +5993,7 @@ Log.e("URL_TO_HIT",URL_TO_HIT+"");
                     listAllItemReportModels.addAll(response.body());
                     Log.e("listAllItemReportModels", "listAllItemReportModels=" +listAllItemReportModels.size());
                 if(n==1)    addSalesmanTarget.fillAdapter(contextG);
+                else   if(n==3)    ItemReport.fillItemFilterSpin(contextG);
                     else   AddCommissionTarget.fillAdapter(contextG);
                     pdSweetAlertDialog.dismiss();
                 }
@@ -6014,7 +6015,7 @@ Log.e("URL_TO_HIT",URL_TO_HIT+"");
         getPdValidationItemReport.show();
 
         Call<List<ItemReportModel>> myData = myAPI.gatItemReport(CONO,from,to,saleman);
-        listAllItemReportModels.clear();
+       // listAllItemReportModels.clear();
         myData.enqueue(new Callback<List<ItemReportModel>>() {
 
             @Override
@@ -6028,7 +6029,7 @@ Log.e("URL_TO_HIT",URL_TO_HIT+"");
 //                    offerPriceList.fillItemCard();
                     ItemReport itemReport = (ItemReport) context;
                     itemReport.fillItemAdapter();
-                    itemReport.totalqty();
+                  //  itemReport.totalqty();
                     getPdValidationItemReport.dismissWithAnimation();
                     //Log.e("item_customer", "SalesManNo2");
 
@@ -6038,7 +6039,7 @@ Log.e("URL_TO_HIT",URL_TO_HIT+"");
                     itemReportModelsList.addAll(response.body());
                     ItemReport itemReport = (ItemReport) context;
                     itemReport.fillItemAdapter();
-                    itemReport.totalqty();
+            //        itemReport.totalqty();
                     getPdValidationItemReport.dismissWithAnimation();
                 }
             }
@@ -6051,7 +6052,7 @@ Log.e("URL_TO_HIT",URL_TO_HIT+"");
 //                    offerPriceList.fillItemCard();
                 ItemReport itemReport = (ItemReport) context;
                 itemReport.fillItemAdapter();
-                itemReport.totalqty();
+
                 getPdValidationItemReport.dismissWithAnimation();
                 //Log.e("item_customer", "SalesManNo2");
             }

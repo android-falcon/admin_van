@@ -47,8 +47,8 @@
     <string name="CHECK_IN_TIME">وقت تسجيل الدخول</string>
     <string name="CHECK_OUT_DATE">تاريخ تسجيل الخروج</string>
     <string name="CHECK_OUT_TIME">وقت تسجيل الخروج</string>
-    <string name="from_date">من تاريخ</string>
-    <string name="to_date">إلى تاريخ</string>
+    <string name="from_date">من</string>
+    <string name="to_date">إلى </string>
     <string name="app_paymentType">طريقة الدفع</string>
 
     <string name="voucher_number">رقم الفاتورة</string>
@@ -58,6 +58,8 @@
     <string name="pay_method">طريقة الدفع</string>
     <string name="net_sales">الصافي</string>
     <string name="net_sales2">صافي المبيعات</string>
+    <string name="net_sales3">م. المبيعات</string>
+
     <string name="items">المواد</string>
     <string name="vlueoftarget">Vlue of Target</string>
     <string name="target">الهدف</string>
@@ -74,12 +76,12 @@
     <string name="credit_sales">البيع ذمم</string>
     <string name="total_sales">مجموع المبيعات</string>
     <string name="cash">كاش</string>
-    <string name="netpayment">صافي المبيعات</string>
-    <string name="credit_value">قيمة الذمم</string>
-    <string name="total_cash">مجموع الكاش</string>
+    <string name="netpayment">م. الدفعات </string>
+    <string name="credit_value">Credit Card</string>
+    <string name="total_cash">م. النقد </string>
     <string name="pay">الدفع</string>
-    <string name="paymentCash">الدفع كاش</string>
-    <string name="paymentCheque">شيك</string>
+    <string name="paymentCash">م.دفعات نقدية</string>
+    <string name="paymentCheque">م.دفعات شيكات</string>
     <string name="export_to_pdf">Export To Pdf</string>
     <string name="itemName">اسم المادة</string>
     <string name="price">السعر</string>
@@ -107,6 +109,7 @@
     <string name="app_cheque">شيك</string>
     <string name="app_bank_name">اسم البنك</string>
     <string name="app_amount">المجموع</string>
+    <string name="app_amount2">المبلغ</string>
     <string name="AnalyzeCustomersAccount">Analyze Customer\'s Account</string>
     <string name="customerNo">رقم العميل</string>
     <string name="df">DF</string>
@@ -179,7 +182,7 @@
     <string name="Manually">يدوي</string>
     <string name="Paidamount">
 المبلغ المدفوع :</string>
-    <string name="Receivedamount">المبلغ المستلم :</string>
+    <string name="Receivedamount">المبلغ المطلوب :</string>
     <string name="totalqty">مجموع الكمية:</string>
     <string name="totalqty1">مجموع الكمية</string>
     <string name="AddSalesMen">إضافة مندوب</string>
@@ -326,6 +329,8 @@
     <string name="totalgoalachievementrate">المجموع المحقق</string>
     <string name="emptylist">Empty List!!</string>
     <string name="total">المجموع</string>
+    <string name="kind_item">النوع</string>
+    <string name="category">الفئة</string>
     <string name="talaat_offer_discount">
 
     تشغيل : (كمية المادة/  حد الكميات للعرض  )* الخصم على المادة

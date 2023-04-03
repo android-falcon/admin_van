@@ -135,7 +135,7 @@ public class CustomerLogReport extends AppCompatActivity {
         findViewById(R.id.cust_selectclear)  .setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cust_select.setText(getResources().getString(R.string.selectcust));
+                cust_select.setText(getResources().getString(R.string.selectcust2));
             }
         });
         fromDate = findViewById(R.id.from_date_r);
@@ -281,7 +281,7 @@ public class CustomerLogReport extends AppCompatActivity {
                     cust_select.setText(customerAccountname.getText());
                 else
                 {
-                    cust_select.setText(getResources().getString(R.string.selectcust));
+                    cust_select.setText(getResources().getString(R.string.selectcust2));
                 }
                 dialog.dismiss();
             }
@@ -289,7 +289,7 @@ public class CustomerLogReport extends AppCompatActivity {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cust_select.setText(getResources().getString(R.string.selectcust));
+                cust_select.setText(getResources().getString(R.string.selectcust2));
                 dialog.dismiss();
             }
         });
@@ -397,8 +397,10 @@ public class CustomerLogReport extends AppCompatActivity {
             salesNo = salesManInfosList.get(positionSales - 1).getSalesManNo();
 //            Log.e("salesNo", "" + salesNo + "   name ===> " + salesManInfosList.get(positionSales - 1).getSalesName() + "    " + positionSales);
         }
+        String no="";
         if (positionSales != -1) {
-            String no = globelFunction.getsalesmanNum(salesNameSpinner.getSelectedItem().toString());
+            if (positionSales ==0)no ="9999999999";
+             else no = globelFunction.getsalesmanNum(salesNameSpinner.getSelectedItem().toString());
             if (settingModel.getImport_way().equals("0"))
                 importData.getCustomerLogReport(CustomerLogReport.this, salesNo, fromDate.getText().toString(), toDate.getText().toString());
             else if (settingModel.getImport_way().equals("1"))
@@ -411,8 +413,14 @@ public class CustomerLogReport extends AppCompatActivity {
     }
 
     public void fillSalesManSpinner() {
+        List<String> salesManNameListWithAll=new ArrayList<>();
 
-        salesNameSpinnerAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item, salesManNameList);
+        salesManNameListWithAll.addAll(salesManNameList);
+        salesManNameListWithAll.add(0,getResources().getString(R.string.ALL));
+
+
+
+        salesNameSpinnerAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item, salesManNameListWithAll);
         salesNameSpinner.setAdapter(salesNameSpinnerAdapter);
         salesNameSpinner.setSelection(0);
 
@@ -420,7 +428,7 @@ public class CustomerLogReport extends AppCompatActivity {
 
     public void fillCustomerLogReport() {
 
-        if(!cust_select.getText().toString().equals(getResources().getString(R.string.selectcust)))
+        if(!cust_select.getText().toString().equals(getResources().getString(R.string.selectcust2)))
         {for (int i=0;i<customerLogReportList.size();i++)
         {
 

@@ -61,8 +61,12 @@ import com.nightonke.boommenu.ButtonEnum;
 import com.nightonke.boommenu.Piece.PiecePlaceEnum;
 
 import java.io.File;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
+import java.util.Locale;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -92,13 +96,14 @@ public class UnCollectedData extends AppCompatActivity {
 TextView total,cust_select;
     public  static Dialog dialoglist,    dialog;
     public static   TextView customerAccountNo,customerAccountname;
-
+    TextView fromDate, toDate;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         new LocaleAppUtils().changeLayot(UnCollectedData.this);
         setContentView(R.layout.activity_un_collected_data);
         initialView();
+   //  getPayment(); just to test
       findViewById(R.id.cust_selectclear)  .setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View view) {
@@ -240,6 +245,13 @@ TextView total,cust_select;
         {
             linearMain.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         }
+        globelFunction = new GlobelFunction(UnCollectedData.this);
+        fromDate = findViewById(R.id.from_date_r);
+        toDate = findViewById(R.id.to_date_r);
+        fromDate.setText(globelFunction.DateInToday());
+        toDate.setText(globelFunction.DateInToday());
+        fromDate.setOnClickListener(onClick);
+        toDate.setOnClickListener(onClick);
         cust_select=findViewById(R.id.cust_select);
         cust_select.setOnClickListener(onClick);
         total=findViewById(R.id.total);
@@ -289,7 +301,7 @@ TextView total,cust_select;
         // getPayment();
         preview_button_account = findViewById(R.id.preview_button_account);
 //        customerSpinner = (Spinner) findViewById(R.id.cat);
-        globelFunction = new GlobelFunction(UnCollectedData.this);
+
         toDay = globelFunction.DateInToday();
         excelConvert = findViewById(R.id.excelConvert);
         pdfConvert = findViewById(R.id.pdfConvert);
@@ -408,6 +420,13 @@ TextView total,cust_select;
                 case R.id.  cust_select:
                     opencust_selectDailog();
                     break;
+                case R.id.from_date_r:
+                    globelFunction.DateClick(fromDate);
+                    break;
+                case R.id.to_date_r:
+                    globelFunction.DateClick(toDate);
+                    break;
+
             }
 
         }
@@ -524,13 +543,13 @@ TextView total,cust_select;
     private void getPayment() {
         Payment data = new Payment();
         data.setBank("Arab Bank");
-        data.setDueDate("13/02/2021");
+        data.setDueDate("13/02/2023");
         data.setCheckNumber(20210210);
         data.setAmount("2500");
 
         paymentArrayList.add(data);
         data.setBank("Arab Bank");
-        data.setDueDate("13/02/2021");
+        data.setDueDate("13/03/2023");
         data.setCheckNumber(20210210);
         data.setAmount("25200");
         paymentArrayList.add(data);
@@ -550,6 +569,25 @@ TextView total,cust_select;
         TableRow row = null;
         tableCheckData.removeAllViews();
         //     tableCheckData.removeAllViewsInLayout();
+     String fromdate=fromDate.getText().toString();
+        String todate=toDate.getText().toString();
+        Log.e(" fillTable", "paymentArrayList=="+paymentArrayList.size()+"");
+        try {
+            for (int x = 0; x < paymentArrayList.size(); x++){
+                String  date=paymentArrayList.get(x).getDueDate();
+                if(      (formatDate(date).after(formatDate(fromdate)) || formatDate(date).equals(formatDate(fromdate)))
+                        &&
+                        (formatDate(date).before(formatDate(todate)) || formatDate(date).equals(formatDate(todate))))
+                {}
+                else {
+                    paymentArrayList.remove(x);
+                }
+            }
+        }catch (Exception exception){
+
+        }
+
+        Log.e(" fillTable22", "paymentArrayList=="+paymentArrayList.size()+"");
         for (int n = 0; n < paymentArrayList.size(); n++) {
             row = new TableRow(this);
             row.setPadding(12, 5, 12, 5);
@@ -583,5 +621,11 @@ TextView total,cust_select;
 
       total.setText(globelFunction.convertToEnglish(String.  format("%.3f",paymentArrayList.stream().map(Payment::getAmount).mapToDouble(Double::parseDouble).sum())));
     }
+    public Date formatDate(String date) throws ParseException {
 
+        String myFormat = "dd/MM/yyyy"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        Date d = sdf.parse(date);
+        return d;
+    }
 }

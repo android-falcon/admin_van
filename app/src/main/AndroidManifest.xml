@@ -164,7 +164,7 @@
         <activity
             android:name=".ItemReport"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="adjustResize|adjustPan" />
         <activity
             android:name=".ScanActivity"
             android:screenOrientation="fullSensor"

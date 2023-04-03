@@ -184,16 +184,16 @@ public class PdfConverter {
         insertCell(pdfPTable,context.getString(R.string.cash_sale      )                        , ALIGN_CENTER   , 1, arabicFont, BaseColor.BLACK);
         insertCell(pdfPTable,context.getResources().getString(R.string.credit_sales   )   , ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
 
-        insertCell(pdfPTable,context.getResources().getString(R.string.total_sales  )  , ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
-        insertCell(pdfPTable,context.getResources().getString(R.string.cash      ) , ALIGN_CENTER   , 1, arabicFont, BaseColor.BLACK);
-        insertCell(pdfPTable,context.getResources().getString(R.string.credit) , ALIGN_CENTER   , 1, arabicFont, BaseColor.BLACK);
+        insertCell(pdfPTable,context.getResources().getString(R.string.net_sales3  )  , ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+        insertCell(pdfPTable,context.getResources().getString(R.string.paymentCash      ) , ALIGN_CENTER   , 1, arabicFont, BaseColor.BLACK);
+        insertCell(pdfPTable,context.getResources().getString(R.string.paymentCheque) , ALIGN_CENTER   , 1, arabicFont, BaseColor.BLACK);
         insertCell(pdfPTable,context.getResources().getString(R.string.netpayment) , ALIGN_CENTER   , 1, arabicFont, BaseColor.BLACK);
-        insertCell(pdfPTable,context.getResources().getString(R.string.app_creditCard) , ALIGN_CENTER   , 1, arabicFont, BaseColor.BLACK);
+        insertCell(pdfPTable,context.getResources().getString(R.string.credit_value) , ALIGN_CENTER   , 1, arabicFont, BaseColor.BLACK);
         insertCell(pdfPTable,context.getResources().getString(R.string.total_cash) , ALIGN_CENTER   , 1, arabicFont, BaseColor.BLACK);
 
 
         pdfPTable.setHeaderRows(1);
-        double sum=0,nettotal=0;
+        double sum=0,nettotal=0,TOTAL_net_salesVal=0,TOTAL_netpaymentVal=0,TOTAL_total_cashVal=0;
         for (int i = 0; i < list.size(); i++) {
             insertCell(pdfPTable, String.valueOf(list.get(i).getSalesManNo() ) , ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
             insertCell(pdfPTable, String.valueOf(list.get(i).getSalesManName())       , ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
@@ -206,24 +206,25 @@ public class PdfConverter {
             insertCell(pdfPTable, String.valueOf(list.get(i)  .getPtotalCrediteCard() )               , ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
             insertCell(pdfPTable, String.valueOf(list.get(i)  .getNetCash() )               , ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
 
-            sum += Double.parseDouble(list.get(i).getTotalCash()) + Double.parseDouble(list.get(i).getPtotalCash());
 
             nettotal+=Double.parseDouble(list.get(i).getPtotalCredite())+Double.parseDouble(list.get(i).getPtotalCash());
-
+            TOTAL_net_salesVal+=Double.parseDouble(list.get(i).getTotalCash()) +Double.parseDouble(list.get(i).getTotalCredite());
+            TOTAL_netpaymentVal += Double.parseDouble(list.get(i).getPtotalCash())  +Double.parseDouble(list.get(i).getPtotalCredite());
+            TOTAL_total_cashVal  +=  Double.parseDouble(list.get(i).getTotalCash())+  Double.parseDouble(list.get(i).getPtotalCash());
 
 
         }
+        insertCellNOborder(pdfPTable,"", ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+        insertCellNOborder(pdfPTable,"", ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+        insertCellNOborder(pdfPTable, globelFunction.convertToEnglish(String.  format("%.3f",(list.stream().map(CashReportModel::getTotalCash).mapToDouble(Double::parseDouble).sum()))), ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+        insertCellNOborder(pdfPTable, globelFunction.convertToEnglish(String.  format("%.3f",(list.stream().map(CashReportModel::getTotalCredite).mapToDouble(Double::parseDouble).sum()))), ALIGN_CENTER   , 1, arabicFont, BaseColor.BLACK);
+        insertCellNOborder(pdfPTable,globelFunction.convertToEnglish(String.  format("%.3f",( TOTAL_net_salesVal))), ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+        insertCellNOborder(pdfPTable, globelFunction.convertToEnglish(String.  format("%.3f",(list.stream().map(CashReportModel::getPtotalCash).mapToDouble(Double::parseDouble).sum()))), ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+        insertCellNOborder(pdfPTable, globelFunction.convertToEnglish(String.  format("%.3f",(list.stream().map(CashReportModel::getPtotalCredite).mapToDouble(Double::parseDouble).sum()))), ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+        insertCellNOborder(pdfPTable,globelFunction.convertToEnglish(String.  format("%.3f",(TOTAL_netpaymentVal))), ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+        insertCellNOborder(pdfPTable,   globelFunction.convertToEnglish(String.  format("%.3f",(list.stream().map(CashReportModel::getPtotalCrediteCard).mapToDouble(Double::parseDouble).sum()))), ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+        insertCellNOborder(pdfPTable, globelFunction.convertToEnglish(String.  format("%.3f",TOTAL_total_cashVal)), ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
 
-        insertCellNOborder(pdfPTable,context.getResources().getString(R.string.net_sales  ) +"     :   "+globelFunction.convertToEnglish(String.  format("%.3f",sum)), ALIGN_CENTER, 3, arabicFont, BaseColor.BLACK);
-        insertCellNOborder(pdfPTable,context.getResources().getString(R.string.total_cash      ) +"     :   "+globelFunction.convertToEnglish(String.  format("%.3f",(nettotal))), ALIGN_CENTER   , 4, arabicFont, BaseColor.BLACK);
-        insertCellNOborder(pdfPTable,"", ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
-        insertCellNOborder(pdfPTable,"", ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
-        insertCellNOborder(pdfPTable,"", ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
-        insertCellNOborder(pdfPTable,"", ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
-        insertCellNOborder(pdfPTable,"", ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
-        insertCellNOborder(pdfPTable,"", ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
-        insertCellNOborder(pdfPTable,"", ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
-        insertCellNOborder(pdfPTable,"", ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
 
 
         return pdfPTable;
