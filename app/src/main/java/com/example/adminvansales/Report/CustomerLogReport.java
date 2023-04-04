@@ -411,7 +411,7 @@ public class CustomerLogReport extends AppCompatActivity {
 
         }
     }
-
+//
     public void fillSalesManSpinner() {
         List<String> salesManNameListWithAll=new ArrayList<>();
 
