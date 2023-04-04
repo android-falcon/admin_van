@@ -418,6 +418,25 @@
         android:orientation="horizontal"
         android:paddingHorizontal="12dp">
 
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#103164"
+            android:gravity="center"
+            android:textSize="15sp"
+            android:text="@string/totalqty1"
+            android:fontFamily="@font/alegreya_sans_bold"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/total_itemqty_text"
+            android:layout_width="match_parent"
+            android:textSize="15sp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="#103164"
+            android:gravity="center"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -437,24 +456,6 @@
             android:layout_weight="1"
             android:textColor="#103164"
             android:textSize="15sp" />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="#103164"
-            android:gravity="center"
-            android:textSize="15sp"
-            android:text="@string/totalqty1"
-            android:fontFamily="@font/alegreya_sans_bold"
-            android:layout_weight="1"/>
-
-        <TextView
-            android:id="@+id/total_itemqty_text"
-            android:layout_width="match_parent"
-            android:textSize="15sp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textColor="#103164"
-            android:gravity="center"/>
 
     </LinearLayout>
     <include
