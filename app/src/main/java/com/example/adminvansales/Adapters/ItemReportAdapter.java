@@ -93,10 +93,6 @@ public class ItemReportAdapter extends BaseAdapter {
         holder. saleman.setText(""+itemsList.get(i).getSalesName());
         holder.itemNo.setText(""+itemsList.get(i).getItemNo());
 
-
-
-
-
         return view;
     }
 
