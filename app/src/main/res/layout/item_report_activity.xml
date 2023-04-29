@@ -23,8 +23,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="22dp"
-        android:layout_marginLeft="22dp"
+
         android:layout_gravity="center"
         android:background="@drawable/back_arrow" />
 
@@ -34,13 +33,41 @@
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:layout_weight="1"
         android:layout_gravity="center"
         android:fontFamily="@font/quicksand_bold"
         android:gravity="center"
         android:text="@string/itemReport"
+
         android:textColor="@color/colorblue1"
         android:textSize="16sp" />
+        <ImageButton
+            android:id="@+id/excelConvert"
 
+            android:layout_toStartOf="@+id/share"
+            android:layout_toLeftOf="@+id/share"
+            android:background="@drawable/excel"
+            android:layout_width="20dp"
+            android:layout_height="30dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="22dp"
+            android:layout_marginEnd="22dp"
+            android:layout_gravity="center"
+
+            />
+
+        <ImageButton
+            android:id="@+id/pdfConvert"
+            android:layout_width="20dp"
+            android:layout_height="30dp"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="center"
+            android:layout_marginEnd="22dp"
+            android:layout_toStartOf="@+id/excelConvert"
+            android:layout_toLeftOf="@+id/excelConvert"
+            android:background="@drawable/pdf" />
     </LinearLayout>
 
 
@@ -307,7 +334,10 @@
         </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>
-
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -320,6 +350,7 @@
         android:layout_alignParentRight="true"
         android:orientation="vertical"
         android:translationZ="@dimen/padd_10">
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -342,7 +373,7 @@
                 android:textSize="15sp" />
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/alegreya_sans_bold"
@@ -352,7 +383,7 @@
                 android:textSize="15sp" />
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/alegreya_sans_bold"
@@ -362,7 +393,7 @@
                 android:textSize="15sp" />
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/alegreya_sans_bold"
@@ -372,7 +403,7 @@
                 android:textSize="15sp" />
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/alegreya_sans_bold"
@@ -382,7 +413,7 @@
                 android:textSize="15sp" />
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/alegreya_sans_bold"
@@ -391,7 +422,7 @@
                 android:textColor="@color/white"
                 android:textSize="15sp" />
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/alegreya_sans_bold"
@@ -401,13 +432,15 @@
                 android:textSize="15sp" />
 
         </LinearLayout>
+            <ListView
+                android:id="@+id/listItemReport"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
-        <ListView
-            android:id="@+id/listItemReport"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+
 
     </LinearLayout>
+        </HorizontalScrollView>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"

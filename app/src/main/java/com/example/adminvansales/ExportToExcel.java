@@ -15,9 +15,11 @@ import android.widget.Toast;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 
+import com.example.adminvansales.model.Account__Statment_Model;
 import com.example.adminvansales.model.AnalyzeAccountModel;
 import com.example.adminvansales.model.CashReportModel;
 import com.example.adminvansales.model.CustomerLogReportModel;
+import com.example.adminvansales.model.ItemReportModel;
 import com.example.adminvansales.model.ListPriceOffer;
 import com.example.adminvansales.model.PayMentReportModel;
 import com.example.adminvansales.model.Payment;
@@ -119,6 +121,12 @@ public class ExportToExcel {
                     break;
                 case 6:
                     workbook = analyzeAccountReport(workbook , (List<AnalyzeAccountModel>) list );
+                    break;
+                case 7:
+                    workbook = AccountStatmentReport(workbook , (List<Account__Statment_Model>) list );
+                    break;
+                case 8:
+                    workbook =ItemsReport(workbook , (List<ItemReportModel>) list );
                     break;
             }
 
@@ -579,4 +587,109 @@ public class ExportToExcel {
         return workbook;
 
     }
+    WritableWorkbook AccountStatmentReport(WritableWorkbook workbook, List<Account__Statment_Model> list) {
+
+        try {
+            WritableSheet sheet = workbook.createSheet("Sheet1", 0);//Excel sheet name. 0 represents first sheet
+
+            try {
+
+
+                sheet.addCell(new Label(0, 0, context.getString( R.string.voucherNo   )            )); // column and row
+                sheet.addCell(new Label(1, 0, context.getString( R.string.transName   )) );
+
+                sheet.addCell(new Label(2, 0, context.getString( R.string.date_voucher        ) ));
+                sheet.addCell(new Label(3, 0, context.getString((R.string.debit       )) ));
+                sheet.addCell(new Label(4, 0, context.getString((R.string.credit           )) ));
+                sheet.addCell(new Label(5, 0, context.getString((R.string.balance           )) ));
+
+
+                sheet.mergeCells(0,1, 9, 1);// col , row, to col , to row=
+                for (int i = 0; i < list.size(); i++) {
+                    sheet.addCell(new Label(0, i + 2, list.get(i).getVoucherNo()+""));
+                    sheet.addCell(new Label(1, i + 2,      list.get(i).getTranseNmae()+""));
+                    sheet.addCell(new Label(2, i + 2,  list.get(i).getDate_voucher()+""));
+                    sheet.addCell(new Label(3, i + 2,  list.get(i).getDebit()+""));
+                    sheet.addCell(new Label(4, i + 2,  list.get(i).getCredit()+""));
+                    sheet.addCell(new Label(5, i + 2,  list.get(i).getBalance()+""));
+
+
+
+
+                    //sheet.mergeCells(0,i + 2, 1, i + 2);// col , row, to col , to row
+
+                }
+
+            } catch (RowsExceededException e) {
+                e.printStackTrace();
+            } catch (WriteException e) {
+                e.printStackTrace();
+            }
+            workbook.write();
+            Toast.makeText(context, "Exported To Excel ", Toast.LENGTH_SHORT).show();
+            try {
+                workbook.close();
+            } catch (WriteException e) {
+                e.printStackTrace();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return workbook;
+
+    }
+    WritableWorkbook ItemsReport(WritableWorkbook workbook, List<ItemReportModel> list) {
+
+        try {
+            WritableSheet sheet = workbook.createSheet("Sheet1", 0);//Excel sheet name. 0 represents first sheet
+
+            try {
+
+
+                sheet.addCell(new Label(0, 0, context.getString( R.string.itemName   )            )); // column and row
+                sheet.addCell(new Label(1, 0, context.getString( R.string.date   )) );
+
+                sheet.addCell(new Label(2, 0, context.getString( R.string.qty        ) ));
+                sheet.addCell(new Label(3, 0, context.getString((R.string.price       )) ));
+                sheet.addCell(new Label(4, 0, context.getString((R.string.total           )) ));
+                sheet.addCell(new Label(5, 0, context.getString((R.string.sales_man_name           )) ));
+
+
+                sheet.mergeCells(0,1, 9, 1);// col , row, to col , to row=
+                for (int i = 0; i < list.size(); i++) {
+                    sheet.addCell(new Label(0, i + 2, list.get(i).getName()+""));
+                    sheet.addCell(new Label(1, i + 2,      list.get(i).getVoucherDate()+""));
+                    sheet.addCell(new Label(2, i + 2,  list.get(i).getQty()+""));
+                    sheet.addCell(new Label(3, i + 2,  list.get(i).getUnitPrice()+""));
+                    sheet.addCell(new Label(4, i + 2,  list.get(i).getTotal()+""));
+                    sheet.addCell(new Label(5, i + 2,  list.get(i).getSalesName()+""));
+
+
+
+
+                    //sheet.mergeCells(0,i + 2, 1, i + 2);// col , row, to col , to row
+
+                }
+
+            } catch (RowsExceededException e) {
+                e.printStackTrace();
+            } catch (WriteException e) {
+                e.printStackTrace();
+            }
+            workbook.write();
+            Toast.makeText(context, "Exported To Excel ", Toast.LENGTH_SHORT).show();
+            try {
+                workbook.close();
+            } catch (WriteException e) {
+                e.printStackTrace();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return workbook;
+
+    }
+
+
+
 }

@@ -36,9 +36,9 @@ public class LocaleAppUtils {
             ctx.getResources().updateConfiguration(configuration, displayMetrics);
         }
     }
-    public static void changeLayot(Context context){
+    public static void changeLayot(Context context) {
         mHandler = new DataBaseHandler(context);
-        contextG=context;
+        contextG = context;
         try {
             if (mHandler.getAllSetting() != null) {
                 if (mHandler.getAllSetting().getArabic_language() == 1) {
@@ -59,11 +59,18 @@ public class LocaleAppUtils {
 
             }
 
-        }catch (Exception e)
-        {
-            languagelocalApp = "ar";
-            LocaleAppUtils.setLocale(new Locale("ar"));
-            LocaleAppUtils.setConfigChange(context);
+        } catch (Exception e) {
+            if (!Locale.getDefault().getLanguage().equals("ar")) {
+
+                LocaleAppUtils.setLocale(new Locale("ar"));
+                LocaleAppUtils.setConfigChange(context);
+
+            } else {
+
+                LocaleAppUtils.setLocale(new Locale("en"));
+                LocaleAppUtils.setConfigChange(context);
+
+            }
         }
     }
 }

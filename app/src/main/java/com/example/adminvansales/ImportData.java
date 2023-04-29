@@ -5014,7 +5014,7 @@ Log.e("URL_TO_HIT",URL_TO_HIT+"");
                     //Log.e("URL_TO_HIT","account="+URL_TO_HIT);
 
 
-                    URL_TO_HIT = "http://" + ipAddress.trim() + ":" + portSettings.trim() + "/GetAllTheCheques?ACCNO=" + custId+"&CONO="+CONO.trim();
+                    URL_TO_HIT = "http://" + ipAddress.trim() + ":" + portSettings.trim() +headerDll.trim() +"/GetAllTheCheques?ACCNO=" + custId+"&CONO="+CONO.trim();
              Log.e(  " URL_TO_HIT", URL_TO_HIT);
                 }
             } catch (Exception e) {

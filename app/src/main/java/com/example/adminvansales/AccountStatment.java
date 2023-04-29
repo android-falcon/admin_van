@@ -37,6 +37,7 @@ import com.example.adminvansales.model.Account__Statment_Model;
 import com.example.adminvansales.model.CustomerInfo;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -88,6 +89,20 @@ public class AccountStatment extends AppCompatActivity {
         databaseHandler = new DataBaseHandler(AccountStatment.this);
 //        importData.getCustomerInfo();
         initialView();
+
+        findViewById(R.id.excelConvert)  .setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                convertToExcel();
+            }
+        });
+
+        findViewById(R.id.pdfConvert)  .setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                convertToPdf();
+            }
+        });
         findViewById(R.id.cust_selectclear)  .setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -98,7 +113,7 @@ public class AccountStatment extends AppCompatActivity {
         preview_button_account.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                matchingObjects.clear();
                     importData = new ImportData(AccountStatment.this);
 
 
@@ -219,6 +234,8 @@ public class AccountStatment extends AppCompatActivity {
                         return false;
                     }
                 });
+
+
 
 
     }
@@ -529,5 +546,23 @@ for (int i=0;i<listCustomerInfo.size();i++)
         }
     };
 
+    private File convertToPdf() {
+        PdfConverter pdf = new PdfConverter(AccountStatment.this);
+        File file;
+        if(matchingObjects.size()!=0)
+         file = pdf.exportListToPdf(matchingObjects, "AccountStatmentReport", toDay, 7);
+        else
+            file = pdf.exportListToPdf(listCustomerInfo, "AccountStatmentReport", toDay, 7);
 
+        return file;
+    }
+
+    private void convertToExcel() {
+
+        ExportToExcel exportToExcel = new ExportToExcel();
+        if(matchingObjects.size()!=0)  exportToExcel.createExcelFile(AccountStatment.this, "AccountStatment.xls", 7, matchingObjects);
+             else
+            exportToExcel.createExcelFile(AccountStatment.this, "AccountStatment.xls", 7, listCustomerInfo);
+        // return file;
+    }
 }

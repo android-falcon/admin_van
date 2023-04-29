@@ -33,15 +33,18 @@ import com.example.adminvansales.model.ItemsRequsts;
 import com.example.adminvansales.model.Payment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 import static com.example.adminvansales.GlobelFunction.salesManInfosList;
 import static com.example.adminvansales.GlobelFunction.salesManNameList;
+import static com.example.adminvansales.ImportData.listCustomerInfo;
+
 import com.example.adminvansales.model.LocaleAppUtils;
 public class ItemReport extends AppCompatActivity {
-
+    String Today="";
     TextView fromDate, toDate;
     Spinner salesManSpinner;
     Button previewButton;
@@ -71,7 +74,19 @@ public class ItemReport extends AppCompatActivity {
         databaseHandler = new DataBaseHandler(ItemReport.this);
 
         initial();
+        findViewById(R.id.excelConvert)  .setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                convertToExcel();
+            }
+        });
 
+        findViewById(R.id.pdfConvert)  .setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                convertToPdf();
+            }
+        });
         importData = new ImportData(ItemReport.this);
         try {
 
@@ -269,7 +284,7 @@ Log.e("spinner_catg_item",x+"");
         salesManSpinner = findViewById(R.id.salesManSpinner);
         previewButton = findViewById(R.id.previewButton);
         listItemReport = findViewById(R.id.listItemReport);
-
+       Today= globelFunction.DateInToday();
         fromDate.setText(globelFunction.DateInToday());
         toDate.setText(globelFunction.DateInToday());
         importData = new ImportData(ItemReport.this);
@@ -478,6 +493,31 @@ Log.e("Exception==",exception.getMessage()+"");
     public void onRestart() {
         super.onRestart();
         finish();
+    }
+    private File convertToPdf() {
+
+        PdfConverter pdf = new PdfConverter(ItemReport.this);
+        File file;
+    if(Searched_itemReportList.size()!=0)
+         file = pdf.exportListToPdf(Searched_itemReportList, "ItemsReport", Today, 8);
+    else      if(Filterd_itemReportList.size()!=0)      file = pdf.exportListToPdf(Filterd_itemReportList, "ItemsReport", Today, 8);
+       else
+        file = pdf.exportListToPdf(itemReportModelsList, "ItemsReport", Today, 8);
+        return file;
+    }
+
+    private void convertToExcel() {
+
+        ExportToExcel exportToExcel = new ExportToExcel();
+        if(Searched_itemReportList.size()!=0)
+            exportToExcel.createExcelFile(ItemReport.this, "ItemsReport.xls", 8, Searched_itemReportList);
+
+        else      if(Filterd_itemReportList.size()!=0)
+            exportToExcel.createExcelFile(ItemReport.this, "ItemsReport.xls", 8, Filterd_itemReportList);
+
+        else
+            exportToExcel.createExcelFile(ItemReport.this, "ItemsReport.xls", 8, itemReportModelsList);
+        // return file;
     }
 
 }
