@@ -145,7 +145,7 @@ public class ImportData {
     public  static Set<String> listAllArea=new HashSet<>();
 
     public static ArrayList<TargetDetalis>salesGoalsList = new ArrayList<>();
-    public static ArrayList<TargetDetalis>ItemsGoalsList = new ArrayList<>();
+    public static ArrayList<TargetDetalicozs>ItemsGoalsList = new ArrayList<>();
     public static ArrayList<CommissionTarget>ItemsCommGoalsList = new ArrayList<>();
     public static List<OfferGroupModel> offerGroupModels = new ArrayList<>();
     ProgressDialog progressDialog;

@@ -18,9 +18,14 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.maps.android.ui.IconGenerator;
 
 import java.util.Timer;
+
+import static com.example.adminvansales.GlobelFunction.LatLngListMarker;
+import static com.example.adminvansales.GlobelFunction.salesManInfosList;
 
 public class SalesmanMaps_FirebaseActivity extends FragmentActivity implements OnMapReadyCallback {
     private GoogleMap mMap;
@@ -52,7 +57,13 @@ public class SalesmanMaps_FirebaseActivity extends FragmentActivity implements O
         LocationDao.salesManInfos.clear();
             LocationDao locationDao=new LocationDao(SalesmanMaps_FirebaseActivity.this);
             locationDao.allTaskInFireBase();
-    }
+
+
+        if(LocationDao.LatLngListMarker.size()!=0) {
+
+            fillCurentLocation();
+        }
+        }
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
@@ -136,10 +147,24 @@ public class SalesmanMaps_FirebaseActivity extends FragmentActivity implements O
             sydney = new LatLng(Double.parseDouble(LocationDao.salesManInfos.get(i).getLatitudeLocation())
                     ,(Double.parseDouble(LocationDao.salesManInfos.get(i).getLongitudeLocation()))) ;
 
-            mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(iconSize())).position(sydney).title(LocationDao.salesManInfos.get(i).getSalesName()));
+      //      mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(iconSize())).position(sydney).title(LocationDao.salesManInfos.get(i).getSalesName()));
+            ///builder.include(sydney);
+
+
+            Marker marker =    mMap.addMarker(new MarkerOptions() .icon(BitmapDescriptorFactory.fromBitmap(iconSize())).position(sydney).title(LocationDao.salesManInfos.get(i).getLatitudeLocation()+LocationDao.salesManInfos.get(i).getLongitudeLocation()));;
+            //  marker.showInfoWindow();
+
+            IconGenerator iconFactory = new IconGenerator(this);
+            Marker   mMarkerA = mMap.addMarker(new MarkerOptions().position(sydney));
+            mMarkerA.setIcon(BitmapDescriptorFactory.fromBitmap(iconFactory.makeIcon(LocationDao.salesManInfos.get(i).getSalesName())));
+
+
             builder.include(sydney);
         }
+        if(LocationDao.LatLngListMarker.size()==0) {
 
+            fillCurentLocation();
+        }
 
         if(LocationDao.salesManInfos.size()!=0) {
 
@@ -153,14 +178,16 @@ public class SalesmanMaps_FirebaseActivity extends FragmentActivity implements O
 
     }
     private void fillCurentLocation() {
+     latit=31.96960599;
+       longtud=35.91464715;
         Log.e("fillCurentLocation",latit+" "+longtud);
         mMap.addMarker(new MarkerOptions()
-                .position(new LatLng(-33.852, 151.211))
+                .position(new LatLng(latit, longtud))
                 .title("cool place")
 
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE)));
 
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-33.852, 151.211), 15f));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latit, longtud), 15f));
     }
 
     Bitmap iconSize(){

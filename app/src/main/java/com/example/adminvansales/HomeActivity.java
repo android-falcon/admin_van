@@ -154,7 +154,7 @@ public class HomeActivity extends AppCompatActivity
                                 return true;
 
                             case R.id.action_location:
-                              startActivity(new Intent(getApplicationContext(), SalesmanMapsActivity.class));
+                              startActivity(new Intent(getApplicationContext(), SalesmanMaps_FirebaseActivity.class));
                                 overridePendingTransition(0, 0);
                                    return true;
 

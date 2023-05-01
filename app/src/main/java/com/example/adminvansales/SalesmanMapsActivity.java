@@ -7,11 +7,13 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.adminvansales.Interface.LocationDao;
 import com.google.android.gms.maps.CameraUpdate;
@@ -25,6 +27,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.maps.android.ui.IconGenerator;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -59,8 +62,7 @@ GlobelFunction globelFunction;
         setContentView(R.layout.activity_salesman_maps);
        // if(LogIn.locationtrackerFlage==1)
         try {
-
-        findViewById(R.id.refresh) .setOnClickListener(new View.OnClickListener() {
+            findViewById(R.id.refresh) .setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 globelFunction.getSalesManInfo(SalesmanMapsActivity.this, 2);
@@ -99,6 +101,7 @@ GlobelFunction globelFunction;
     }catch (Exception e){
             Log.e("mapException",e.getMessage());
         }
+
 
 
     }
@@ -144,8 +147,30 @@ if     ( mMap!=null)      mMap.clear();
                 existLocation++;
                 sydney = LatLngListMarker.get(i);
 
-                mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(iconSize())).position(sydney).title(salesManInfosList.get(i).getSalesName()+salesManInfosList.get(i).getLatitudeLocation()+salesManInfosList.get(i).getLongitudeLocation()));
-                builder.include(sydney);
+                Marker marker =    mMap.addMarker(new MarkerOptions() .icon(BitmapDescriptorFactory.fromBitmap(iconSize())).position(sydney).title(salesManInfosList.get(i).getLatitudeLocation()+salesManInfosList.get(i).getLongitudeLocation()));;
+              //  marker.showInfoWindow();
+
+                IconGenerator iconFactory = new IconGenerator(this);
+                Marker   mMarkerA = mMap.addMarker(new MarkerOptions().position(LatLngListMarker.get(i)));
+                mMarkerA.setIcon(BitmapDescriptorFactory.fromBitmap(iconFactory.makeIcon(salesManInfosList.get(i).getSalesName())));
+
+
+            builder.include(sydney);
+
+
+                ///
+//                IconGenerator generator = new IconGenerator(this);
+//              LatLng latLng = LatLngListMarker.get(i);
+////
+//                TextView text = new TextView(SalesmanMapsActivity.this);
+//                text.setText(salesManInfosList.get(i).getSalesName()+salesManInfosList.get(i).getLatitudeLocation()+salesManInfosList.get(i).getLongitudeLocation());
+////                generator.setBackground(BitmapDescriptorFactory.fromBitmap(iconSize()));
+//                generator.setContentView(text);
+//                Bitmap icon = generator.makeIcon();
+//                marker.setIcon(BitmapDescriptorFactory.fromBitmap(iconFactory.makeIcon("Marker B")));
+//                MarkerOptions tp = new MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromBitmap(iconSize()));
+//                googleMap.addMarker(tp);
+                /////
             }
         }
         }else {

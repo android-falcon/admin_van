@@ -401,7 +401,7 @@ Log.e("Exception==",exception.getMessage()+"");
 
                             case R.id.action_location:
 
-                                {   startActivity(new Intent(getApplicationContext(), SalesmanMapsActivity.class));
+                                {   startActivity(new Intent(getApplicationContext(), SalesmanMaps_FirebaseActivity.class));
                                     overridePendingTransition(0, 0);}
 
                                 return true;
