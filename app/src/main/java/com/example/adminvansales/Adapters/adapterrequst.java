@@ -114,6 +114,9 @@ public class adapterrequst extends RecyclerView.Adapter<adapterrequst.ViewHolder
             viewHolder.requestType.setText(context.getResources().getString(R.string.OverflowDebtlimit));
             viewHolder.requestType.setTextColor(context.getResources().getColor(R.color.light_red));
             viewHolder.amountValue.setText( context.getResources().getString(R.string.limit)+"\t"+requestList.get(i).getAmount_value() +"\tJD");
+        }else if (requestList.get(i).getRequest_type().equals("506")) {
+            viewHolder.requestType.setText(context.getResources().getString(R.string.returnvoch_per));
+
         }
 
 
@@ -214,7 +217,13 @@ public class adapterrequst extends RecyclerView.Adapter<adapterrequst.ViewHolder
               VouchernoLin.setVisibility(View.GONE);
                 rowNote.setVisibility(View.GONE);
             }
-
+            if(requestList.get(row_index).getRequest_type().equals("506"))
+            {total_lin.setVisibility(View.GONE);
+                amount_lin.setVisibility(View.GONE);
+                requestType.setText(context.getResources().getString(R.string.returnvoch_per));
+                VouchernoLin.setVisibility(View.GONE);
+                rowNote.setVisibility(View.GONE);
+            }
 
             Sales_name.setText(requestList.get(row_index).getSalesman_name());
             customer_name.setText(requestList.get(row_index).getCustomer_name());
@@ -273,7 +282,10 @@ public class adapterrequst extends RecyclerView.Adapter<adapterrequst.ViewHolder
                 titleNote.setText(context.getResources().getString(R.string.Note));
             }
 
+            else if (requestList.get(row_index).getRequest_type().equals("506")) {
+                requestType.setText(context.getResources().getString(R.string.returnvoch_per));
 
+            }
 
             voucherNo.setText(requestList.get(row_index).getVoucher_no());
             Log.e("total_voucher",""+requestList.get(row_index).getTotal_voucher());

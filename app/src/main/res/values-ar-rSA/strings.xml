@@ -341,6 +341,7 @@
     <string name="app_cash">نقداً  </string>
     <string name="HOME">الرئيسية</string>
     <string name="discountReq">" طلب خصم             "</string>
+    <string name="returnvoch_per"> عمل فاتورة مرتجعة</string>
     <string-array name="app_paymentTypeList">
         <!--        <item>All</item>-->
         <item>كاش</item>
