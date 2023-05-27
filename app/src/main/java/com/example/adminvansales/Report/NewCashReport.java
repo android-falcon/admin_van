@@ -133,7 +133,7 @@ public class NewCashReport extends AppCompatActivity {
         }
     };
     public void previewFunction() {
-
+        Log.e("previewFunction,==","previewFunction");
 
     //    importData.IIS_getCashReport(NewCashReport.this, date_editReport_cash.getText().toString(),date_editReport_cash.getText().toString() , info.getSalesManNo(),2);
         try {
