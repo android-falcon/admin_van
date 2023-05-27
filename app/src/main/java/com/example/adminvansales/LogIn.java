@@ -78,7 +78,7 @@ public class LogIn extends AppCompatActivity {
     com.example.adminvansales.model.SettingModel settingModel;
     public static int typaImport=1;//0---- mySql   1-----IIs
     public static int LANGUAGE=0;//0---- EN   1-----AR
-    public  static int rawahneh=0;// 1= EXPORT STOCK TABLES
+    public  static int rawahneh=1;// 1= EXPORT STOCK TABLES
     public  static int locationtrackerFlage=0;
     public  static    int getMaxVoucherServer=0;
     public  static    int PlanTYPE=0;
