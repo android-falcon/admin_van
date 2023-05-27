@@ -143,8 +143,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="3"
                 android:padding="1dp"
-                android:gravity="center"
-                android:textColor="@color/text_view_color"
+                android:gravity="start"
+                android:textColor="@color/colorBlack"
                 android:textSize="12sp"
                 android:textStyle="bold" />
         </TableRow>
@@ -170,8 +170,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="3"
                 android:padding="1dp"
-                android:gravity="center"
-                android:textColor="@color/text_view_color"
+                android:gravity="start"
+                android:textColor="@color/colorBlack"
                 android:textSize="12sp"
                 android:textStyle="bold" />
         </TableRow>
@@ -197,8 +197,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="3"
                 android:padding="1dp"
-                android:gravity="center"
-                android:textColor="@color/text_view_color"
+                android:gravity="start"
+                android:textColor="@color/colorBlack"
                 android:textSize="12sp"
                 android:textStyle="bold" />
 
@@ -225,8 +225,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="3"
                 android:padding="1dp"
-                android:gravity="center"
-                android:textColor="@color/text_view_color"
+                android:gravity="start"
+                android:textColor="@color/colorBlack"
                 android:textSize="12sp"
                 android:textStyle="bold" />
 
@@ -253,8 +253,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="3"
                 android:padding="1dp"
-                android:gravity="center"
-                android:textColor="@color/text_view_color"
+                android:gravity="start"
+                android:textColor="@color/colorBlack"
                 android:textSize="12sp"
                 android:textStyle="bold" />
         </TableRow>
@@ -297,8 +297,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="3"
                 android:padding="1dp"
-                android:gravity="center"
-                android:textColor="@color/text_view_color"
+                android:gravity="start"
+                android:textColor="@color/colorBlack"
                 android:textSize="12sp"
                 android:textStyle="bold" />
         </TableRow>
@@ -324,9 +324,9 @@
                 android:layout_height="match_parent"
                 android:layout_weight="3"
                 android:padding="1dp"
-                android:textColor="@color/text_view_color"
+                android:textColor="@color/colorBlack"
                 android:textSize="12sp"
-                android:gravity="center"
+                android:gravity="start"
                 android:textStyle="bold" />
         </TableRow>
 
@@ -351,8 +351,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="3"
                 android:padding="1dp"
-                android:gravity="center"
-                android:textColor="@color/text_view_color"
+                android:gravity="start"
+                android:textColor="@color/colorBlack"
                 android:textSize="12sp"
                 android:textStyle="bold" />
         </TableRow>
@@ -395,8 +395,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="3"
                 android:padding="1dp"
-                android:gravity="center"
-                android:textColor="@color/text_view_color"
+                android:gravity="start"
+                android:textColor="@color/colorBlack"
                 android:textSize="12sp"
                 android:textStyle="bold" />
         </TableRow>
@@ -422,8 +422,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="3"
                 android:padding="1dp"
-                android:gravity="center"
-                android:textColor="@color/text_view_color"
+                android:gravity="start"
+                android:textColor="@color/colorBlack"
                 android:textSize="12sp"
                 android:textStyle="bold" />
         </TableRow>
