@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.adminvansales.EditSalesMan;
 import com.example.adminvansales.GlobelFunction;
 import com.example.adminvansales.R;
+import com.example.adminvansales.Report.NewCashReport;
 import com.example.adminvansales.model.SalesManInfo;
 
 import java.util.List;
@@ -66,7 +67,30 @@ cViewHolder.setIsRecyclable(false);
             @Override
             public void onClick(View v) {
                 globelFunction.setValidation();
-               if(salesManInfoAdmin.getAddSalesMen()==1)
+                if(salesManInfoAdmin.getAddSalesMen()==1)
+                {
+                    Intent LogHistoryIntent = new Intent(context, NewCashReport.class);
+                    LogHistoryIntent.putExtra("FillData", "FillData");
+                    LogHistoryIntent.putExtra("SalesManInfoL", list.get(i));
+                    context.startActivity(LogHistoryIntent);
+                }else {
+                    globelFunction.AuthenticationMessage();
+                }
+
+                //
+
+//                if(i==(list.size()-1)){
+//                    context.startActivity(new Intent(context,EditSalesMan.class));
+//                }
+            }
+
+
+        });
+        cViewHolder.layBar.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                globelFunction.setValidation();
+                if(salesManInfoAdmin.getAddSalesMen()==1)
                 {
                     Intent LogHistoryIntent = new Intent(context, EditSalesMan.class);
                     LogHistoryIntent.putExtra("FillData", "FillData");
@@ -75,14 +99,9 @@ cViewHolder.setIsRecyclable(false);
                 }else {
                     globelFunction.AuthenticationMessage();
                 }
-//                if(i==(list.size()-1)){
-//                    context.startActivity(new Intent(context,EditSalesMan.class));
-//                }
+                return false;
             }
-
-
         });
-
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 //        cViewHolder.layBar.setOnLongClickListener(new View.OnLongClickListener() {

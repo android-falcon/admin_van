@@ -34,6 +34,16 @@ public class CustomerLogReportModel {
 
     @SerializedName("CustomerLog")
     List<CustomerLogReportModel>CustomerLog;
+  String  VOUCHERCOUNT ;
+
+    public String getVOUCHERCOUNT() {
+        return VOUCHERCOUNT;
+    }
+
+    public void setVOUCHERCOUNT(String VOUCHERCOUNT) {
+        this.VOUCHERCOUNT = VOUCHERCOUNT;
+    }
+
     public CustomerLogReportModel(){}
     public CustomerLogReportModel(String SALES_MAN_ID, String CUS_CODE,
                                   String CUS_NAME, String CHECK_IN_DATE, String CHECK_IN_TIME, String CHECK_OUT_DATE, String CHECK_OUT_TIME) {

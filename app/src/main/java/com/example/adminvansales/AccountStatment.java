@@ -469,7 +469,7 @@ for (int i=0;i<listCustomerInfo.size();i++)
                 {
                     dialoglist = new Dialog(AccountStatment.this);
                     dialoglist.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                    dialoglist.setCancelable(false);
+                    dialoglist.setCancelable(true);
                     dialoglist.setContentView(R.layout.customerlist_dailog);
 
                     WindowManager.LayoutParams lp = new WindowManager.LayoutParams();

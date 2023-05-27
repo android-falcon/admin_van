@@ -301,7 +301,7 @@ public class CustomerLogReport extends AppCompatActivity {
                 {
                     dialoglist = new Dialog(CustomerLogReport.this);
                     dialoglist.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                    dialoglist.setCancelable(false);
+                    dialoglist.setCancelable(true);
                     dialoglist.setContentView(R.layout.customerlist_dailog);
 
                     WindowManager.LayoutParams lp = new WindowManager.LayoutParams();

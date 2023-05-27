@@ -19,6 +19,7 @@ import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 
 import com.example.adminvansales.Report.CommissionTargetReport;
+import com.example.adminvansales.Report.NewCashReport;
 import com.example.adminvansales.Report.PlansReport;
 import com.example.adminvansales.Report.RequstReport;
 import com.example.adminvansales.Report.TargetReport;
@@ -27,6 +28,7 @@ import com.example.adminvansales.model.AnalyzeAccountModel;
 import com.example.adminvansales.model.CashReportModel;
 import com.example.adminvansales.model.CommissionTarget;
 import com.example.adminvansales.model.CustomerLogReportModel;
+import com.example.adminvansales.model.ItemInfo;
 import com.example.adminvansales.model.ItemMaster;
 import com.example.adminvansales.model.ItemReportModel;
 import com.example.adminvansales.model.ItemsRequsts;
@@ -71,9 +73,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
+import java.net.MalformedURLException;
 import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -107,7 +114,7 @@ import static com.example.adminvansales.OfferPriceList.customerListFoundInOtherL
 import static com.example.adminvansales.PlanSalesMan.fillPlan;
 import static com.example.adminvansales.PlanSalesMan.listPlan;
 import static com.example.adminvansales.Report.AnalyzeAccounts.analyzeAccountModelArrayList;
-import static com.example.adminvansales.Report.CashReport.cashReportList;
+import static com.example.adminvansales.ImportData.cashReportList;
 import static com.example.adminvansales.Report.CustomerLogReport.customerLogReportList;
 import static com.example.adminvansales.Report.ListOfferReport.control;
 import static com.example.adminvansales.Report.ListOfferReport.listPriceOffers;
@@ -126,8 +133,9 @@ public class ImportData {
     private DataBaseHandler databaseHandler;
     ApiItem myAPI;
     private String  CONO="";
+    public static List<CashReportModel> cashReportList  = new ArrayList<>();;
     private String URL_TO_HIT="";
-
+    public static List<ItemInfo> itemVisiblelsList = new ArrayList<>();
     public int typeCustomerList = 0;
     SweetAlertDialog pdValidation, pdPayments, pdAnalyze, pdAccountStatment,pdSweetAlertDialog;
     SweetAlertDialog pdValidationCustomer, pdValidationSerial, pdValidationItem, getPdValidationItemCard, getPdValidationLogHistory, pdAuthentication, getPdValidationItemReport;
@@ -368,9 +376,9 @@ public  String headerDll="/Falcons/VAN.dll";
     public void getCashReport(Context context, String fromDate, String toDate) {
         new JSONTaskGetCashReport(context, fromDate, toDate).execute();
     }
-    public void IIS_getCashReport(Context context, String fromDate, String toDate,String  SalesNo  ) {
+    public void IIS_getCashReport(Context context, String fromDate, String toDate,String  SalesNo,int activity  ) {
         getCONO();
-        new JSONTaskIIS_GetCashReport(context, fromDate, toDate,SalesNo ).execute();
+        new JSONTaskIIS_GetCashReport(context, fromDate, toDate,SalesNo, activity ).execute();
     }
     public void getAnalyzeReport(Context context, String fromDate, String toDate) {
         try {
@@ -1945,13 +1953,14 @@ Log.e("URL_TO_HIT",URL_TO_HIT+"");
         Object context;
         int flag;
         String fromDate, toDate,SalesNo;
-
-        public  JSONTaskIIS_GetCashReport(Object context, String fromDate, String toDate,String SalesNo) {
+        int  activity;
+        public  JSONTaskIIS_GetCashReport(Object context, String fromDate, String toDate,String SalesNo,int activity) {
 //            this.flag=flag;
-            this.context = (CashReport) context;
+            this.context =  context;
             this.fromDate = fromDate;
           this. toDate = toDate;
             this. SalesNo =  SalesNo;
+            this.   activity=activity;
         }
 
         @Override
@@ -1981,7 +1990,7 @@ Log.e("URL_TO_HIT",URL_TO_HIT+"");
              Log.e("URL_TO_HIT", URL_TO_HIT+"");
                 }
             } catch (Exception e) {
-
+                pdValidation.dismissWithAnimation();
             }
 
             try {
@@ -2027,7 +2036,7 @@ Log.e("URL_TO_HIT",URL_TO_HIT+"");
             }//org.apache.http.conn.HttpHostConnectException: Connection to http://10.0.0.115 refused
             catch (HttpHostConnectException ex) {
                 ex.printStackTrace();
-//                progressDialog.dismiss();
+                pdValidation.dismissWithAnimation();
 
                 Handler h = new Handler(Looper.getMainLooper());
                 h.post(new Runnable() {
@@ -2041,7 +2050,7 @@ Log.e("URL_TO_HIT",URL_TO_HIT+"");
                 return null;
             } catch (Exception e) {
                 e.printStackTrace();
-//                progressDialog.dismiss();
+                pdValidation.dismissWithAnimation();
                 return null;
             }
         }
@@ -2049,7 +2058,7 @@ Log.e("URL_TO_HIT",URL_TO_HIT+"");
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-
+            pdValidation.dismissWithAnimation();
             JSONObject jsonObject1;
             if (s != null) {
                 if (s.contains("SALESMANNO")) {
@@ -2077,7 +2086,8 @@ Log.e("URL_TO_HIT",URL_TO_HIT+"");
                             allItems.setPtotalCash(jsonObject1.getString("PTOTALCASH"));
                             allItems.setPtotalCredite(jsonObject1.getString("PTOTALCREDITE"));
                             allItems.setPtotalCrediteCard(jsonObject1.getString("PTOTALCREDITECARD"));
-
+                            allItems.setRETURNDCASH(jsonObject1.getString("RETURNDCASH"));
+                            allItems.setRETURNDCREDITE(jsonObject1.getString("RETURNDCREDITE"));
                             cashReportList.add(allItems);
                         }
 
@@ -2087,14 +2097,23 @@ Log.e("URL_TO_HIT",URL_TO_HIT+"");
 
                 //    cashReportList.addAll(gsonObj.getCASHREPORT());
                     Log.e("totalCashs", "SalesManNo");
-                    CashReport cashReport = (CashReport) context;
-                    cashReport.fillCashAdapter();
+                    if(activity==1)
+                    {    CashReport cashReport = (CashReport) context;
+                    cashReport.fillCashAdapter();}
+                    else    if(activity==2){
+                    NewCashReport. Respons.setText("fill");
+                    }
+
                     pdValidation.dismissWithAnimation();
 
                 } else {
                     cashReportList.clear();
-                    CashReport cashReport = (CashReport) context;
-                    cashReport.fillCashAdapter();
+                    if(activity==1) {
+                        CashReport cashReport = (CashReport) context;
+                        cashReport.fillCashAdapter();
+                    } else    if(activity==2){
+                        NewCashReport. Respons.setText("not");
+                    }
                     pdValidation.dismissWithAnimation();
                     Log.e("totalCashs", "SalesManNo2");
 
@@ -2500,7 +2519,7 @@ Log.e("URL_TO_HIT",URL_TO_HIT+"");
                             allItems.setCUS_NAME(jsonObject1.getString("CUS_NAME"));
                             allItems.setCHECK_IN_DATE(jsonObject1.getString("CHECK_IN_DATE2"));
                             allItems.setCHECK_IN_TIME(jsonObject1.getString("CHECK_IN_TIME2"));
-
+                            allItems.setVOUCHERCOUNT(jsonObject1.getString("VOUCHERCOUNT"));
                             allItems.setCHECK_OUT_TIME (jsonObject1.getString("CHECK_OUT_TIME2"));
                             if(jsonObject1.getString("CHECK_OUT_DATE2").contains("19999"))
                                 allItems.setCHECK_OUT_DATE("");
@@ -2772,7 +2791,7 @@ Log.e("URL_TO_HIT",URL_TO_HIT+"");
         protected String doInBackground(String... params) {
 
             try {
-
+                //{"ITEM_VISIBILATY":[]}
                 SettingModel settingModel = new SettingModel();
                 settingModel = databaseHandler.getAllSetting();
                 ipAddress = settingModel.getIpAddress();
@@ -6582,6 +6601,215 @@ Context context;
         }
 
     }
+
+public  void getItemvisabilty(Context context,String salnum){
+    itemVisiblelsList.clear();
+     new JSONTaskDelphi( salnum,context).execute();
+}
+    private class JSONTaskDelphi extends AsyncTask<String, String, List<ItemInfo>> {
+
+        public String salesNo = "";
+     Context   context;
+
+        public JSONTaskDelphi(String salesNo, Context context) {
+            this.salesNo = salesNo;
+            this.context = context;
+            Log.e("JSONTask", "salesNo" + salesNo);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(context);
+            progressDialog.setCancelable(false);
+            progressDialog.setMessage("Loading...");
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.setProgress(0);
+            progressDialog.show();
+        }
+
+        @Override
+        protected List<ItemInfo> doInBackground(String... params) {
+            URLConnection connection = null;
+            BufferedReader reader = null;
+
+            try {
+
+                try {
+
+                    //+custId
+
+                    if (!ipAddress.equals("")) {
+
+
+
+                            URL_TO_HIT = "http://"  + ipAddress + ":"+ portSettings.trim() + headerDll.trim() + "/GetVanAllData?STRNO=" + salesNo + "&CONO=" + CONO;
+
+
+
+                        Log.e("URL_TO_HIT", "" + URL_TO_HIT);
+                    }
+                } catch (Exception e) {
+
+                }
+
+
+                String link = URL_TO_HIT;
+                URL url = new URL(link);
+
+                //*************************************
+
+                String JsonResponse = null;
+                StringBuffer sb = new StringBuffer("");
+                HttpClient client = new DefaultHttpClient();
+                HttpGet request = new HttpGet();
+                request.setURI(new URI(URL_TO_HIT));
+
+
+                HttpResponse response = null;
+
+                try {
+                    response = client.execute(request);
+                } catch (Exception e) {
+                    // Log.e("response",""+response.toString());
+                    Handler h = new Handler(Looper.getMainLooper());
+                    h.post(new Runnable() {
+                        public void run() {
+                            progressDialog.dismiss();
+
+                        }
+                    });
+                }
+
+
+                try {
+                    BufferedReader in = new BufferedReader(new
+                            InputStreamReader(response.getEntity().getContent()));
+
+
+                    String line = "";
+                    // Log.e("finalJson***Import", sb.toString());
+
+                    while ((line = in.readLine()) != null) {
+                        sb.append(line);
+                    }
+
+                    in.close();
+                } catch (Exception e) {
+                    Handler h = new Handler(Looper.getMainLooper());
+                    h.post(new Runnable() {
+                        public void run() {
+                            progressDialog.dismiss();
+
+                        }
+                    });
+                }
+
+
+                // JsonResponse = sb.toString();
+
+                String finalJson = sb.toString();
+//                 Log.e("finalJson***Import", finalJson);
+                int sales_Man = Integer.parseInt(salesNo);
+                String rate_customer = "";
+                String HideVal = "";
+                JSONObject parentObject = new JSONObject(finalJson);
+                try {
+                    JSONArray parentArrayItem_Visibility = parentObject.getJSONArray("ITEM_VISIBILATY");
+                    itemVisiblelsList.clear();
+                    for (int i = 0; i < parentArrayItem_Visibility.length(); i++) {
+                        JSONObject finalObject = parentArrayItem_Visibility.getJSONObject(i);
+
+                        ItemInfo item = new ItemInfo();
+
+
+
+
+                            item.setItemOcode(finalObject.getString("ITEMOCODE"));
+                            try {
+                                item.setVISIBLE(finalObject.getInt("VISIBLE"));
+                            } catch (Exception e) {
+                                item.setVISIBLE(0);
+                            }
+                        try {
+
+                     if(finalObject.getInt("SALESMANNO")==Integer.parseInt(salesNo))
+
+                            itemVisiblelsList.add(item);
+                        } catch (Exception e) {
+
+                        }
+
+                    }
+                } catch (JSONException e) {
+                    Log.e("Import Data", e.getMessage().toString());
+                }
+
+
+
+            } catch (MalformedURLException e) {
+                Log.e("ItemVisabilty", "********ex1");
+                progressDialog.dismiss();
+                e.printStackTrace();
+            } catch (IOException e) {
+                Log.e("ItemVisabiltyIOException", e.getMessage().toString());
+                progressDialog.dismiss();
+//                Toast.makeText(context, "check Connection", Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
+
+            } catch (JSONException e) {
+                Log.e("ItemVisabilty", "********ex3  " + e.toString());
+                e.printStackTrace();
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            } finally {
+                Log.e("ItemVisabilty", "********finally");
+                progressDialog.dismiss();
+                Handler h = new Handler(Looper.getMainLooper());
+                h.post(new Runnable() {
+                    public void run() {
+                        if (itemVisiblelsList.size() == 0) {
+                            Toast.makeText(context, "No data found for items Visibility ", Toast.LENGTH_SHORT).show();
+
+                        }
+
+
+                    }
+                });
+
+                try {
+                    if (reader != null) {
+                        reader.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    progressDialog.dismiss();
+                }
+            }
+            return itemVisiblelsList;
+        }
+
+
+        @Override
+        protected void onPostExecute(final List<ItemInfo> result) {
+            super.onPostExecute(result);
+            progressDialog.dismiss();
+
+            if (result != null && result.size() != 0) {
+                Log.e("itemVisiblelsList", "*****************" + itemVisiblelsList.size());
+               ItemVisibility. itemVisiblelsList_Respon.setText("fill");
+            } else {
+                ItemVisibility. itemVisiblelsList_Respon.setText("nodata");
+
+            }
+        }
+    }
+
 }
    /* @Override
     protected void onPostExecute(String array) {

@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.example.adminvansales.GlobelFunction;
 import com.example.adminvansales.R;
 import com.example.adminvansales.model.PayMentReportModel;
 
@@ -84,7 +85,8 @@ public class PayMentReportAdapter extends BaseAdapter {
        ;
        String name=getCusromerName(itemsList.get(i).getCustomerNo());
         holder.customerName .setText( ""+name);
-        holder.amount .setText(itemsList.get(i).getAmount());
+        holder.amount .setText(GlobelFunction.convertToEnglish(String.format("%.3f",Double.parseDouble( itemsList.get(i).getAmount()))));
+
         holder.remark  .setText(itemsList.get(i).getNotes());
         holder.sales  .setText(itemsList.get(i).getSalesmanNo());
         if(itemsList.get(i).getPAYKIND().equals("1")){

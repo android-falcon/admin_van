@@ -14,6 +14,9 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
+            android:name=".Report.NewCashReport"
+            android:exported="false" />
+        <activity
             android:name=".SalesmanMaps_FirebaseActivity"
             android:exported="false" />
         <!--
@@ -200,15 +203,6 @@
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
-<!--        <provider-->
-<!--            android:name="android.support.v4.content.FileProvider"-->
-<!--            android:authorities="${applicationId}.fileprovider"-->
-<!--            android:grantUriPermissions="true"-->
-<!--            android:exported="false">-->
-<!--            <meta-data-->
-<!--                android:name="android.support.FILE_PROVIDER_PATHS"-->
-<!--                android:resource="@xml/filepaths" />-->
-<!--        </provider>-->
     </application>
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />

@@ -9,15 +9,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.Adapter;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.adminvansales.DataBaseHandler;
+import com.example.adminvansales.EditSalesMan;
 import com.example.adminvansales.ExportData;
 import com.example.adminvansales.Interface.DaoRequsts;
 import com.example.adminvansales.R;
@@ -28,6 +33,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -50,11 +56,12 @@ public class adapterrequst extends RecyclerView.Adapter<adapterrequst.ViewHolder
     public static String languagelocalApp = "";
     public static String acc = "", bankN = "", branch = "", mobileNo = "";
     int typeDiscountItem=0;
-
+    public static   List<String> Pricelist;
 
     public adapterrequst(List<RequstTest> itemsList, Context context) {
         this.requestList = itemsList;
         this.context = context;
+
     }
 
     @NonNull
@@ -188,10 +195,10 @@ public class adapterrequst extends RecyclerView.Adapter<adapterrequst.ViewHolder
             dialog.setCancelable(true);
             dialog.setContentView(R.layout.request_detail);
             dialog.show();
-            LinearLayout linearresone,linear_buttons,VouchernoLin,total_lin,amount_lin;
+            LinearLayout linearresone,linear_buttons,VouchernoLin,total_lin,amount_lin,showitemsLin;
             LinearLayout linearLayout = dialog.findViewById(R.id.mainLinearDetail);
             linear_buttons  = dialog.findViewById(R.id.linearButtons);
-            TextView textnote,textTime,textDate,total_voucher,voucherNo,textAmountNo,requestType,customer_name,Sales_name,titleNote;
+            TextView showitems,textnote,textTime,textDate,total_voucher,voucherNo,textAmountNo,requestType,customer_name,Sales_name,titleNote;
 
             LinearLayout rowNote,rowcompany;
             textnote=dialog.findViewById(R.id.textnote);
@@ -208,7 +215,8 @@ public class adapterrequst extends RecyclerView.Adapter<adapterrequst.ViewHolder
             customer_name = dialog.findViewById(R.id.customer_name);
             Sales_name= dialog.findViewById(R.id.Sales_name);
             titleNote= dialog.findViewById(R.id.titleNote);
-
+            showitems= dialog.findViewById(R.id.showitems);
+            showitemsLin= dialog.findViewById(R.id.showitemsLin);
             //*************** fill Data *********************************************
             if(requestList.get(row_index).getRequest_type().equals("5"))
             {total_lin.setVisibility(View.GONE);
@@ -304,8 +312,41 @@ public class adapterrequst extends RecyclerView.Adapter<adapterrequst.ViewHolder
             else {
                 textnote.setText(requestList.get(row_index).getNote());
             }
+            if(requestList.get(row_index).getRequest_type().equals("506"))showitemsLin.setVisibility(View.VISIBLE);
+       else showitemsLin.setVisibility(View.GONE);
+
+            showitems.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    final Dialog dialog = new Dialog(context, R.style.Theme_Dialog);
+                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    dialog.setCancelable(true);
+                    dialog.setContentView(R.layout.showitemsdailog);
+                    dialog.show();
+                   ListView rec= dialog.findViewById(R.id.rec);
+
+                    String[] splited = requestList.get(row_index).getNote().split(";");
+                    List<String> list = Arrays.asList(splited);
+
+                    List<String> Itemsnamelist =new ArrayList<>();
+                 Pricelist =new ArrayList<>();
+
+                    for(int i=0;i<list.size();i++) {
+                        if(i%2==0)
+                        Itemsnamelist.add(list.get(i) + "");
+                        else
+                        Pricelist.add(list.get(i) + "");
 
 
+                    }
+                    for(int i=0;i<Itemsnamelist.size();i++)
+                    Log.e("Pricelist==",Pricelist.get(i)+" , "+Itemsnamelist.get(i));
+
+                    ReturnItemsAdapter itemsAdapter  = new ReturnItemsAdapter(context, Itemsnamelist);
+
+                    rec.setAdapter(itemsAdapter);
+                }
+            });
 
             final Button reject = (Button) dialog.findViewById(R.id.RejectButton);
             final Button accept = (Button) dialog.findViewById(R.id.AcceptButton);

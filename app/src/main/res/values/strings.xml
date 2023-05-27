@@ -59,6 +59,7 @@
     <string name="net_sales">Net Sales</string>
     <string name="net_sales2">Net Sales</string>
     <string name="net_sales3">Net Sales</string>
+    <string name="showitems">  <u>Show Items</u></string>
     <string name="items">Items</string>
     <string name="vlueoftarget">Vlue of Target</string>
     <string name="target">Target</string>
@@ -339,6 +340,15 @@
     <string name="returnvoch_per"> عمل فاتورة مرتجعة</string>
     <string name="kind_item">Kind</string>
     <string name="category">Category</string>
+    <string name="returncridt">Return Credit </string>
+    <string name="returncash">Return Cash</string>
+    <string name="payment">Payment</string>
+    <string name="transactions">Transactions</string>
+    <string name="transwithvouch">#Transactions With Vouchers</string>
+    <string name="transwithoutvouch">#Transactions Without Vouchers</string>
+    <string name="duration">duration</string>
+    <string name="VOUCHERCOUNT">Voucher Count</string>
+
     <string-array name="app_paymentTypeList">
 
         <!--        <item>All</item>-->

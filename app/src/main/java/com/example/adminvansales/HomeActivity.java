@@ -9,7 +9,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.adminvansales.Report.CommissionTargetReport;
 import com.example.adminvansales.Report.RequstReport;
+import com.example.adminvansales.Report.TargetReport;
 import com.example.adminvansales.model.LocaleAppUtils;
 
 import android.app.ActivityManager;
@@ -266,6 +268,55 @@ public class HomeActivity extends AppCompatActivity
                 drawerLayout.closeDrawer(navigationView);
                 return true;
             }
+            case R.id. paymentReport:{
+                startActivity(new Intent(HomeActivity.this,PaymentDetailsReport.class));
+
+                drawerLayout.closeDrawer(navigationView);
+                return true;
+            }
+            case R.id. customerLogReport:{
+                startActivity(new Intent(HomeActivity.this,CustomerLogReport.class));
+
+                drawerLayout.closeDrawer(navigationView);
+                return true;
+            }
+            case R.id. cashReport:{
+                startActivity(new Intent(HomeActivity.this,CashReport.class));
+
+                drawerLayout.closeDrawer(navigationView);
+                return true;
+            }
+            case R.id. unCollectedChequesReport:{
+                startActivity(new Intent(HomeActivity.this,UnCollectedData.class));
+
+                drawerLayout.closeDrawer(navigationView);
+                return true;
+            }
+            case R.id. itemsReport:{
+                startActivity(new Intent(HomeActivity.this,ItemReport.class));
+
+                drawerLayout.closeDrawer(navigationView);
+                return true;
+            }
+            case R.id. RequestReport:{
+                startActivity(new Intent(HomeActivity.this,RequstReport.class));
+
+                drawerLayout.closeDrawer(navigationView);
+                return true;
+            }
+            case R.id. TargetReport:{
+                startActivity(new Intent(HomeActivity.this, TargetReport.class));
+
+                drawerLayout.closeDrawer(navigationView);
+                return true;
+            }
+            case R.id. CommissionTargetReport:{
+                startActivity(new Intent(HomeActivity.this, com.example.adminvansales.Report.CommissionTargetReport.class));
+
+                drawerLayout.closeDrawer(navigationView);
+                return true;
+            }
+
         }
 
         return true;

@@ -7,11 +7,8 @@ import static com.example.adminvansales.ImportData.listCustomer;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Application;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -22,19 +19,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.adminvansales.Adapters.CustomerAdapter;
 import com.example.adminvansales.Adapters.ItemVisibleAdapter;
 import com.example.adminvansales.Report.ReportsPopUpClass;
 import com.example.adminvansales.databinding.ActivityItemVisibilityBinding;
 import com.example.adminvansales.model.ErrorHandler;
 import com.example.adminvansales.model.ItemInfo;
-import com.example.adminvansales.model.Plan_SalesMan_model;
 import com.example.adminvansales.modelView.ItemVisibleViewModel;
 import com.example.adminvansales.retrofit.ApiItem;
 import com.example.adminvansales.retrofit.ApiUrl;
@@ -44,11 +36,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.reactivestreams.Subscriber;
-import org.reactivestreams.Subscription;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import io.reactivex.Observable;
@@ -68,16 +59,18 @@ public class ItemVisibility extends AppCompatActivity {
     ApiUrl apiUrl;
     String url = "";
     ApiItem myAPI;
-
+ImportData importData;
     CompositeDisposable compositeDisposable = new CompositeDisposable();
     SweetAlertDialog pdValidation;
-
+    String salesNum;
     ArrayAdapter<String> salesNameSpinnerAdapter, itemStateVisiAdapter;
     List<ItemInfo> listFilterItem, allItemsList, listSelectItems;
     List<String> listItemVisib = new ArrayList<>();
     public int stateFilterVisibl = 0;
     ActivityItemVisibilityBinding myBinding;
     public ItemVisibleViewModel itemVisibleViewModel;
+    public static   TextView itemVisiblelsList_Respon;
+
     BottomNavigationView bottom_navigation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,12 +82,34 @@ public class ItemVisibility extends AppCompatActivity {
         myBinding.setLifecycleOwner(this);
         myBinding.executePendingBindings();
 
+        importData=new ImportData(ItemVisibility.this);
 
         inititView();
+        itemVisiblelsList_Respon=findViewById(R.id.itemVisiblelsList_Respon);
+        itemVisiblelsList_Respon.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                 if(editable.length()!=0){
+                     if(itemVisiblelsList_Respon.getText().toString().equals("fill")){
+                         displayData(allItemsList);
+                     }else
+                         if(itemVisiblelsList_Respon.getText().toString().equals("nodata"))
+                             displayData(allItemsList);
+                 }
+            }
+        });
 //      fetchCallData();
         fetchData();
-
 
         bottom_navigation = findViewById(R.id.bottom_navigation);
 
@@ -350,7 +365,7 @@ public class ItemVisibility extends AppCompatActivity {
                         if (itemInfos.getErrorDics().contains("Saved")) {
                             clearSelected();
                         }
-
+                    importData.    getItemvisabilty(ItemVisibility.this,salesNum);
 
                     }
                 });
@@ -360,9 +375,7 @@ public class ItemVisibility extends AppCompatActivity {
 
     private void clearSelected() {
         for (int i = 0; i < allItemsList.size(); i++) {
-            allItemsList.get(i).setSelect(0);
-
-
+            allItemsList.get(i).setVISIBLE(0);
         }
         displayData(allItemsList);
     }
@@ -380,7 +393,7 @@ public class ItemVisibility extends AppCompatActivity {
 
         jsonArraysalesman = new JSONArray();
         for (int i = 0; i < allItemsList.size(); i++) {
-            if(allItemsList.get(i).getSelect()==1)
+            if(allItemsList.get(i).getVISIBLE()==1)
             {
                 Log.e("allItemsList",""+allItemsList.get(i).getItemOcode());
             }
@@ -391,7 +404,7 @@ public class ItemVisibility extends AppCompatActivity {
         try {
             addsalesmanobject = new JSONObject();
             addsalesmanobject.put("JSN", jsonArraysalesman);
-//            Log.e("Object", "getAddPlanObject==" + salesNo + "\t" + addsalesmanobject.toString());
+            Log.e("Object", "getAddPlanObject==" + salesNo + "\t" + addsalesmanobject.toString());
             return addsalesmanobject;
         } catch (JSONException e) {
             e.printStackTrace();
@@ -400,20 +413,20 @@ public class ItemVisibility extends AppCompatActivity {
     }
 
     private void filterListcustomer(String name) {
-//        Log.e("filterListcustomer", "stateFilterVisibl=" + stateFilterVisibl+"\t"+allItemsList.size());
+        Log.e("filterListcustomer", "stateFilterVisibl=" + stateFilterVisibl+"\t"+allItemsList.size());
         listFilterItem.clear();
         for (int i = 0; i < allItemsList.size(); i++) {
             if (name.length() == 0)// search by visible
             {
                 if (stateFilterVisibl == 1)// visible
                 {
-//                    Log.e("filterListcustomer", "stateFilterVisibl=" + allItemsList.get(i).getSelect() );
-                    if (allItemsList.get(i).getSelect() == 0) {
+                    Log.e("filterListcustomer", "stateFilterVisibl=" + allItemsList.get(i).getVISIBLE() );
+                    if (allItemsList.get(i).getVISIBLE() == 0) {
                         listFilterItem.add(allItemsList.get(i));
                     }
                 } else if (stateFilterVisibl == 2)// visible
                 {
-                    if (allItemsList.get(i).getSelect() == 1) {
+                    if (allItemsList.get(i).getVISIBLE() == 1) {
                         listFilterItem.add(allItemsList.get(i));
                     }
                 } else listFilterItem.addAll(allItemsList);
@@ -421,13 +434,13 @@ public class ItemVisibility extends AppCompatActivity {
             } else {
                 if (stateFilterVisibl == 1)
                     if (allItemsList.get(i).getItemNameA().toString().toLowerCase().contains(name.toLowerCase()) &&
-                            allItemsList.get(i).getSelect() == 0) {
+                            allItemsList.get(i).getVISIBLE() == 0) {
                         listFilterItem.add(allItemsList.get(i));
                     }
 
                 if (stateFilterVisibl == 2)
                     if (allItemsList.get(i).getItemNameA().toString().toLowerCase().contains(name.toLowerCase()) &&
-                            allItemsList.get(i).getSelect() == 1) {
+                            allItemsList.get(i).getVISIBLE() == 1) {
                         listFilterItem.add(allItemsList.get(i));
                     }
                 if (stateFilterVisibl == 0)
@@ -456,6 +469,9 @@ public class ItemVisibility extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
+                 salesNum = salesManInfosList.get(position).getSalesManNo();
+                Log.e("onItemSelected", "" + salesNum);
+                importData.getItemvisabilty(ItemVisibility.this ,salesNum);
                 String salesNum = salesManInfosList.get(position).getSalesManNo();
 //                Log.e("onItemSelected", "" + salesNum);
 
@@ -483,7 +499,7 @@ public class ItemVisibility extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 stateFilterVisibl = position;
                 filterListcustomer("");
-//                Log.e("fillItemVisibleSpinner", "" + stateFilterVisibl);
+                Log.e("fillItemVisibleSpinner", "" + stateFilterVisibl);
 
             }
 
@@ -495,5 +511,7 @@ public class ItemVisibility extends AppCompatActivity {
 
 
     }
+
+
 
 }

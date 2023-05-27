@@ -41,6 +41,24 @@ public class CashReportModel {
 
 //    @SerializedName("SalesManNo")
     private String netCash;
+    private String   RETURNDCASH;
+    private String  RETURNDCREDITE;
+
+    public String getRETURNDCASH() {
+        return RETURNDCASH;
+    }
+
+    public void setRETURNDCASH(String RETURNDCASH) {
+        this.RETURNDCASH = RETURNDCASH;
+    }
+
+    public String getRETURNDCREDITE() {
+        return RETURNDCREDITE;
+    }
+
+    public void setRETURNDCREDITE(String RETURNDCREDITE) {
+        this.RETURNDCREDITE = RETURNDCREDITE;
+    }
 
     @SerializedName("CASHREPORT")
     List<CashReportModel>CASHREPORT;
