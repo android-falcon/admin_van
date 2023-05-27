@@ -5984,11 +5984,11 @@ Log.e("URL_TO_HIT",URL_TO_HIT+"");
 
                 if (!response.isSuccessful()) {
 
-                    Log.e("fetchItemDetailDataonResponse", "not=" + response.message());
+                    Log.e("fetchItemDetail", "not=" + response.message());
                     pdSweetAlertDialog.dismiss();
 
                 } else {
-                    Log.e("fetchItemDetailDataonResponse", "onResponse=" + response.message());
+                    Log.e("fetchItemDetail", "onResponse=" + response.message());
 
                     listAllItemReportModels.addAll(response.body());
                     Log.e("listAllItemReportModels", "listAllItemReportModels=" +listAllItemReportModels.size());
@@ -6001,7 +6001,7 @@ Log.e("URL_TO_HIT",URL_TO_HIT+"");
 
             @Override
             public void onFailure(Call<List<ItemMaster>> call, Throwable t) {
-                Log.e("fetchItemDetailDataonFailure", "=" + t.getMessage());
+                Log.e("fetchItemDetail", "=" + t.getMessage());
                 pdSweetAlertDialog.dismiss();
 
             }
@@ -6023,7 +6023,7 @@ Log.e("URL_TO_HIT",URL_TO_HIT+"");
 
                 if (!response.isSuccessful()) {
 
-                    Log.e("fetchItemDetailDataonResponse", "not=" + response.message());
+                    Log.e("fetchIt", "not=" + response.message());
                     itemReportModelsList.clear();
 //                    OfferPriceList offerPriceList = (OfferPriceList) context;
 //                    offerPriceList.fillItemCard();
@@ -6034,7 +6034,7 @@ Log.e("URL_TO_HIT",URL_TO_HIT+"");
                     //Log.e("item_customer", "SalesManNo2");
 
                 } else {
-                    Log.e("fetchItemDetailDataonResponse", "onResponse=" + response.message());
+                    Log.e("fetchItemDetail", "onResponse=" + response.message());
 
                     itemReportModelsList.addAll(response.body());
                     ItemReport itemReport = (ItemReport) context;
@@ -6046,7 +6046,7 @@ Log.e("URL_TO_HIT",URL_TO_HIT+"");
 
             @Override
             public void onFailure(Call<List<ItemReportModel>> call, Throwable t) {
-                Log.e("fetchItemDetailDataonFailure", "=" + t.getMessage());
+                Log.e("fetchItemDetail", "=" + t.getMessage());
                 itemReportModelsList.clear();
 //                    OfferPriceList offerPriceList = (OfferPriceList) context;
 //                    offerPriceList.fillItemCard();

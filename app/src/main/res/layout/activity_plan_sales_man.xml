@@ -175,6 +175,7 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="1dp"
             android:gravity="center"
+            android:visibility="gone"
             android:text="@string/byLocation"
             android:textColor="@color/darkGray"
             android:textSize="15sp" />

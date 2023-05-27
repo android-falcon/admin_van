@@ -195,7 +195,6 @@ public class HomeActivity extends AppCompatActivity
     }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        Log.e("onOptionsItemSelected " ,"onOptionsItemSelected");
         if (toggle.onOptionsItemSelected(item)) {
             Log.e("iditem", "onOptionsItemSelected " + item.getItemId());
             return true;
@@ -209,7 +208,6 @@ public class HomeActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
         int id = item.getItemId();
-        Log.e("id", "onNavigationItemSelected " + id);
         switch (id) {
 
             case R.id.pass_setting: {
@@ -278,7 +276,6 @@ public class HomeActivity extends AppCompatActivity
     }
 
     private void initalView() {
-        Log.e("initalView", "initalView " );
         drawerLayout = findViewById(R.id.main_drawerLayout);
     //    LinearLayout linearMain=findViewById(R.id.main_drawerLayout);
         try{
@@ -381,11 +378,7 @@ public class HomeActivity extends AppCompatActivity
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.toString().equals("1")) {
-
-               Log.e(" salesManInfosList==", salesManInfosList.size()+"");
-
                     if (  salesManInfosList.size() != 0) {
-                        Log.e(" salesManInfosList2==", salesManInfosList.size()+"");
                         showAllSalesManData(salesManInfosList);
                     }
                   /*  if (listSalesMan.size() != 0) {
@@ -768,11 +761,8 @@ public class HomeActivity extends AppCompatActivity
         drawerLayout.closeDrawer(navigationView);
     }
     public void intentToMain(){
-        Log.e("intentToMain","intentToMain");
-
         if(!isMyServiceRunning(MyServicesForNotification.class)){
             {
-                Log.e("isMyServiceRunning","no");
                 startService(new Intent(HomeActivity.this, MyServicesForNotification.class));
             }
         }

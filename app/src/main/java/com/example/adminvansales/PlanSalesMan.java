@@ -252,7 +252,6 @@ public class PlanSalesMan extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.toString().length() != 0) {
-                    Log.e("afterTextChanged", "rew" + s.toString());
                     if (s.toString().equals("fill")) {
                         fillAllCustomerList();
                         setSelectedDefault();
@@ -320,8 +319,6 @@ public class PlanSalesMan extends AppCompatActivity {
         });
         fromDate.setVisibility(View.GONE);
                 mtrl_calendar_days_of_week.setVisibility(View.GONE);
-
-        Log.e("GET2PlanTYPE==",LogIn.PlanTYPE+"");
         if(LogIn.PlanTYPE==1){
             mtrl_calendar_days_of_week.setVisibility(View.VISIBLE);
             fromDate.setVisibility(View.GONE);
@@ -479,17 +476,16 @@ public class PlanSalesMan extends AppCompatActivity {
             }
 
         }
-        Log.e("listSelectedArea=","1="+listSelectedArea.size());
 
         for (int i = 0; i < listSelectedArea.size(); i++) {
 //            map
             String area = listSelectedArea.get(i);
             List<CustomerInfo> listCustomerLoc = map.get(area);
-            Log.e("listSelectedArea=","listCustomerLoc="+listCustomerLoc.size());
-            Log.e("listSelectedArea=","map2="+map.toString());
+//            Log.e("listSelectedArea=","listCustomerLoc="+listCustomerLoc.size());
+//            Log.e("listSelectedArea=","map2="+map.toString());
             listCustomer_filtered.addAll(listCustomerLoc);
         }
-        Log.e("listSelectedArea=","2="+listCustomer_filtered.size()+"\tlistCustomer="+listCustomer.size());
+//        Log.e("listSelectedArea=","2="+listCustomer_filtered.size()+"\tlistCustomer="+listCustomer.size());
         if (listCustomer_filtered.size() != 0)
             fillRecyclerCustomer(listCustomer_filtered);
         else fillRecyclerCustomer(listCustomer);
@@ -588,7 +584,7 @@ public class PlanSalesMan extends AppCompatActivity {
                 }
             }
         }
-        Log.e("fillCustomerList",""+listCustomer.size());
+//        Log.e("fillCustomerList",""+listCustomer.size());
         filterbySalesNo();
 //        fillRecyclerCustomer(listCustomer);
         refreshOrderType();
@@ -619,10 +615,10 @@ public class PlanSalesMan extends AppCompatActivity {
                 else  plan.setPlan_date(NumOfDayWeek+"");
 
 
-                Log.e("NumOfDayWeek", i + "\t" + NumOfDayWeek);
+//                Log.e("NumOfDayWeek", i + "\t" + NumOfDayWeek);
                 plan.setCustomerName(listSelectedCustomer.get(i).getCustomerName());
                 plan.setCustomerNumber(listSelectedCustomer.get(i).getCustomerNumber());
-                Log.e("salesNameSpinner", i + "\t" + plan.getCustomerName());
+//                Log.e("salesNameSpinner", i + "\t" + plan.getCustomerName());
                 String sales = salesManInfosList.get((int) salesNameSpinner.getSelectedItemId()).getSalesManNo();
                 plan.setSalesNo(sales);
                 plan.setOrderd(listSelectedCustomer.get(i).getOrder() + 1);
@@ -656,9 +652,7 @@ public class PlanSalesMan extends AppCompatActivity {
                 .show();
     }
 
-    private void savePlan() {
-        Log.e("savePlan","1-");
-        ExportData exportData = new ExportData(this);
+    private void savePlan() { ExportData exportData = new ExportData(this);
         exportData.IIs_AddPlan(listPlan, this);
         clearData();
     }
@@ -714,8 +708,6 @@ public class PlanSalesMan extends AppCompatActivity {
 
             replaceShortListCustomer();
 
-        Log.e("listCustomer_SalesNo",""+listCustomer_SalesNo.size()+"\t"+listCustomer.size());
-
     }
 
     private void replaceShortListCustomer() {
@@ -743,7 +735,6 @@ public class PlanSalesMan extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String salesNum = salesManInfosList.get(position).getSalesManNo();
-                Log.e("onItemSelected",""+salesNum);
                 importData.getPlan(salesNum, fromDate.getText().toString(),0);
 
             }

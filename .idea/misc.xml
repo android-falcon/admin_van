@@ -23,7 +23,7 @@
         <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/activity_customer_location_select.xml" value="0.159375" />
         <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/activity_edit_sales_man.xml" value="0.2453125" />
         <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/activity_group_offer.xml" value="0.2609375" />
-        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/activity_home.xml" value="0.2" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/activity_home.xml" value="0.18" />
         <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/activity_item_visibility.xml" value="0.18" />
         <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/activity_log_in.xml" value="0.25" />
         <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/activity_main.xml" value="0.1734375" />
@@ -48,7 +48,9 @@
         <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/payment_details_report.xml" value="0.23645833333333333" />
         <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/reports_dialog_box.xml" value="0.23645833333333333" />
         <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/request_detail.xml" value="0.18854166666666666" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/requstdetailsrow.xml" value="0.18469431380932022" />
         <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/row_customer_selecte_adapter.xml" value="0.144921875" />
+        <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/row_for_request.xml" value="0.25" />
         <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/row_offer_list_adapter.xml" value="0.1" />
         <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/sales_man_row.xml" value="0.1734375" />
         <entry key="..\:/Users/dell54/Desktop/flutterFolder/AdminVanSales/app/src/main/res/layout/search_dialog_show_.xml" value="0.1453125" />

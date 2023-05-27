@@ -391,7 +391,7 @@ public class ItemVisibility extends AppCompatActivity {
         try {
             addsalesmanobject = new JSONObject();
             addsalesmanobject.put("JSN", jsonArraysalesman);
-            Log.e("Object", "getAddPlanObject==" + salesNo + "\t" + addsalesmanobject.toString());
+//            Log.e("Object", "getAddPlanObject==" + salesNo + "\t" + addsalesmanobject.toString());
             return addsalesmanobject;
         } catch (JSONException e) {
             e.printStackTrace();
@@ -400,14 +400,14 @@ public class ItemVisibility extends AppCompatActivity {
     }
 
     private void filterListcustomer(String name) {
-        Log.e("filterListcustomer", "stateFilterVisibl=" + stateFilterVisibl+"\t"+allItemsList.size());
+//        Log.e("filterListcustomer", "stateFilterVisibl=" + stateFilterVisibl+"\t"+allItemsList.size());
         listFilterItem.clear();
         for (int i = 0; i < allItemsList.size(); i++) {
             if (name.length() == 0)// search by visible
             {
                 if (stateFilterVisibl == 1)// visible
                 {
-                    Log.e("filterListcustomer", "stateFilterVisibl=" + allItemsList.get(i).getSelect() );
+//                    Log.e("filterListcustomer", "stateFilterVisibl=" + allItemsList.get(i).getSelect() );
                     if (allItemsList.get(i).getSelect() == 0) {
                         listFilterItem.add(allItemsList.get(i));
                     }
@@ -438,7 +438,7 @@ public class ItemVisibility extends AppCompatActivity {
 
 
         }
-        Log.e("listCustomer_filtered", "" + listFilterItem.size());
+//        Log.e("listCustomer_filtered", "" + listFilterItem.size());
         if (listFilterItem.size() != 0) {
             displayData(listFilterItem);
 
@@ -457,7 +457,7 @@ public class ItemVisibility extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 String salesNum = salesManInfosList.get(position).getSalesManNo();
-                Log.e("onItemSelected", "" + salesNum);
+//                Log.e("onItemSelected", "" + salesNum);
 
             }
 
@@ -483,7 +483,7 @@ public class ItemVisibility extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 stateFilterVisibl = position;
                 filterListcustomer("");
-                Log.e("fillItemVisibleSpinner", "" + stateFilterVisibl);
+//                Log.e("fillItemVisibleSpinner", "" + stateFilterVisibl);
 
             }
 

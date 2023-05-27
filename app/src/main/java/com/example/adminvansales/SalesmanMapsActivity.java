@@ -134,10 +134,7 @@ if     ( mMap!=null)      mMap.clear();
         latit=31.9695985;
         longtud=35.9138707;
         // Add a marker in Sydney and move the camera
-        Log.e("mmmmmm", "locationCall");
         LatLng sydney = null;
-        Log.e("salesManInfosList==",salesManInfosList.size()+"");
-      Log.e("LatLngListMarker==",LatLngListMarker.size()+"");
         if(salesManInfosList.size()!=0)
         {
 
