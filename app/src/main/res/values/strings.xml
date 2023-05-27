@@ -336,6 +336,7 @@
     <string name="total">Total</string>
     <string name="HOME">HOME</string>
     <string name="discountReq">" Discount  Request              "</string>
+    <string name="returnvoch_per"> عمل فاتورة مرتجعة</string>
     <string name="kind_item">Kind</string>
     <string name="category">Category</string>
     <string-array name="app_paymentTypeList">
