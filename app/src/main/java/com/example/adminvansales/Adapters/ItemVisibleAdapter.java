@@ -1,23 +1,18 @@
 package com.example.adminvansales.Adapters;
 
 import android.content.Context;
+import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.adminvansales.ItemVisibility;
+import com.example.adminvansales.ImportData;
 import com.example.adminvansales.R;
 import com.example.adminvansales.databinding.ItemVisiblLayoutBinding;
-import com.example.adminvansales.databinding.RowOfferListAdapterBinding;
-import com.example.adminvansales.model.CustomerInfo;
 import com.example.adminvansales.model.ItemInfo;
 
 import java.text.DecimalFormat;
@@ -50,22 +45,36 @@ public class ItemVisibleAdapter extends RecyclerView.Adapter<ItemVisibleAdapter.
     public void onBindViewHolder(ItemVisibleAdapter.ViewHolder holder, int position) {
 
         holder.setIsRecyclable(false);
+        if  (  inventorylist.get(holder.getAdapterPosition()).getVISIBLE()==1)
+            holder.itemInfoBinding.selectCustomerCheckbox.setChecked(true);
+        else  if (  inventorylist.get(holder.getAdapterPosition()).getVISIBLE()==0)
+            holder.itemInfoBinding.selectCustomerCheckbox.setChecked(false);
+
         holder.itemInfoBinding.setItemInfoModel(inventorylist.get(position));
 
+        if(ImportData.itemVisiblelsList.size()!=0) {
+            if (ifvisabil(inventorylist.get(position).getItemOcode()) == true)
+                holder.itemInfoBinding.selectCustomerCheckbox.setChecked(false);
+            else
+
+                holder.itemInfoBinding.selectCustomerCheckbox.setChecked(true);
+
+        }
 //        holder.select_customer_checkbox.setVisibility(View.VISIBLE);
-        if  (  inventorylist.get(holder.getAdapterPosition()).getSelect()==1)
-            holder.itemInfoBinding.selectCustomerCheckbox.setChecked(true);
-        else  if (  inventorylist.get(holder.getAdapterPosition()).getSelect()==0)
-            holder.itemInfoBinding.selectCustomerCheckbox.setChecked(false);
+
+
+
+
+
         holder.itemInfoBinding.selectCustomerCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 Log.e("onCheckedChanged",""+b);
                 if(b)
                 {
-                    inventorylist.get(holder.getAdapterPosition()).setSelect(1);
+                    inventorylist.get(holder.getAdapterPosition()).setVISIBLE(1);
                 }else {
-                    inventorylist.get(holder.getAdapterPosition()).setSelect(0);
+                    inventorylist.get(holder.getAdapterPosition()).setVISIBLE(0);
                 }
 //                holder.itemInfoBinding.setItemInfoModel(inventorylist.get(holder.getAdapterPosition()));
             }
@@ -92,7 +101,35 @@ public class ItemVisibleAdapter extends RecyclerView.Adapter<ItemVisibleAdapter.
 
         }
     }
+    boolean ifvisabil(String Itemnu)
+    {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//
+//            try { //using stream
+//
+//                ItemInfo info = ImportData.itemVisiblelsList.stream()
+//                        .filter(ItemInfo -> Itemnu.equals(ItemInfo.getItemOcode()))
+//                        .findAny()
+//                        .orElse(null);
+//                if (info != null)
+//                    return info.getVISIBLE() == 0;
+//                else return false;
+//            } catch (Exception e) {
+//                return false;
+//            }
+//        }else {
+            for(int i=0;i<  ImportData.itemVisiblelsList.size();i++)
 
-}
+                if( ImportData.itemVisiblelsList.get(i).getItemOcode().equals(Itemnu))
+                {
+                    if (ImportData.itemVisiblelsList.get(i) != null)
+                        return ImportData.itemVisiblelsList.get(i).getVISIBLE() == 0;
+                    else return false;
+                }
+
+            return false;
+        }
+    }
+
 
 

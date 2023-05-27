@@ -37,6 +37,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.adminvansales.Adapters.CustomerAdapter;
 import com.example.adminvansales.Adapters.SelectedCustomerAdapterPlan;
@@ -208,12 +209,14 @@ public class PlanSalesMan extends AppCompatActivity {
         });
         customer_recycler = findViewById(R.id.customer_recycler);
         selectedCustomer_recycler = findViewById(R.id.customer_recycler_toOrderd);
+        Log.e("listCustomer11","listCustomer"+listCustomer.size());
         if (listCustomer.size() != 0)
         {
             listCustomer_spair.clear();
             listCustomer_spair.addAll(listCustomer);
             if(salesManInfosList.size()!=0)
             filterbySalesNo();
+            Log.e("listCustomer","listCustomer"+listCustomer.size());
             fillRecyclerCustomer(listCustomer);
         }
         else {
@@ -299,8 +302,9 @@ public class PlanSalesMan extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 if (s.toString().length() != 0) {
                     if (!s.toString().equals("")) {
-                        filterListcustomer(s.toString());
+                    filterListcustomer(s.toString());
                     } else {
+                        Log.e("listCustomer22","listCustomer"+listCustomer.size());
                         fillRecyclerCustomer(listCustomer);
                     }
                 }
@@ -341,6 +345,7 @@ public class PlanSalesMan extends AppCompatActivity {
         listCustomer.clear();
         listCustomer.addAll(listCustomer_spair);
     }
+    private void show(){ Toast.makeText(this, "listCustomer11"+listCustomer.size(), Toast.LENGTH_SHORT).show();}
 
     private void chechOrder() {
         Set<Integer> set = new HashSet<Integer>();
@@ -620,6 +625,7 @@ public class PlanSalesMan extends AppCompatActivity {
 
 
                 Log.e("NumOfDayWeek", i + "\t" + NumOfDayWeek);
+                Toast.makeText(this, NumOfDayWeek+"", Toast.LENGTH_SHORT).show();
                 plan.setCustomerName(listSelectedCustomer.get(i).getCustomerName());
                 plan.setCustomerNumber(listSelectedCustomer.get(i).getCustomerNumber());
                 Log.e("salesNameSpinner", i + "\t" + plan.getCustomerName());
@@ -712,7 +718,7 @@ public class PlanSalesMan extends AppCompatActivity {
             }
         }
 
-            replaceShortListCustomer();
+            //replaceShortListCustomer();
 
         Log.e("listCustomer_SalesNo",""+listCustomer_SalesNo.size()+"\t"+listCustomer.size());
 

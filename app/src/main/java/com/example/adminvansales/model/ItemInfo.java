@@ -16,14 +16,14 @@ public class ItemInfo {
     private   String itemNameA;
     @SerializedName("ItemNCode")
     private   String itemNcode;
-    private   int select=0;
+    private   int VISIBLE =0;
 
-    public int getSelect() {
-        return select;
+    public int getVISIBLE() {
+        return VISIBLE;
     }
 
-    public void setSelect(int select) {
-        this.select = select;
+    public void setVISIBLE(int VISIBLE) {
+        this.VISIBLE = VISIBLE;
     }
 
     public ItemInfo() {
@@ -68,7 +68,7 @@ public class ItemInfo {
         try {
             jsonObject.put("ITEMOCODE", itemOcode);
             jsonObject.put("SALESMANNO", salesNo);
-            jsonObject.put("VISIBLE", select);
+            jsonObject.put("VISIBLE", VISIBLE);
             jsonObject.put("DEVICEID", "123");
 
 

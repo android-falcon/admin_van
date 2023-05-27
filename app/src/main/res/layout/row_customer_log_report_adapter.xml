@@ -92,6 +92,25 @@
             android:text="@string/CHECK_OUT_TIME"
             android:textColor="@color/colorblue_dark"
             android:textSize="14sp" />
+        <TextView
+            android:id="@+id/duration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.9"
+            android:gravity="center"
+            android:text="@string/duration"
+            android:textColor="@color/colorblue_dark"
+            android:textSize="14sp" />
+        <TextView
+            android:id="@+id/VOUCHERCOUNT"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.9"
+            android:gravity="center"
+
+            android:textColor="@color/colorblue_dark"
+            android:textSize="14sp" />
+
 
     </TableRow>
 

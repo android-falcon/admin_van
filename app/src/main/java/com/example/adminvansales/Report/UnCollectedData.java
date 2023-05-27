@@ -477,7 +477,7 @@ TextView total,cust_select;
                 if(listCustomer.size()!=0)
                 {  dialoglist = new Dialog(UnCollectedData.this);
                 dialoglist.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                dialoglist.setCancelable(false);
+                dialoglist.setCancelable(true);
                 dialoglist.setContentView(R.layout.customerlist_dailog);
 
                 WindowManager.LayoutParams lp = new WindowManager.LayoutParams();

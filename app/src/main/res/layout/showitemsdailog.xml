@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bule3"
+        android:gravity="center"
+        android:padding="1dp"
+
+        >
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.9"
+        android:gravity="center"
+
+        android:text="@string/itemName"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+
+        />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.9"
+            android:gravity="center"
+
+            android:text="@string/price"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+
+            />
+    </TableRow>
+    <ListView
+        android:layout_width="match_parent"
+        android:id="@+id/rec"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

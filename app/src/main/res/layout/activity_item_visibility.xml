@@ -25,8 +25,11 @@
         android:id="@+id/linearMain"
         android:orientation="vertical"
         tools:context=".ItemVisibility">
-
-
+<TextView
+    android:layout_width="match_parent"
+    android:id="@+id/itemVisiblelsList_Respon"
+    android:layout_height="match_parent"
+android:visibility="gone"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"

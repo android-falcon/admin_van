@@ -47,4 +47,52 @@
         android:visible="false"
         app:showAsAction="collapseActionView"
         android:title="Offer Group" />
+
+    <item android:title="@string/Reports"
+        >
+        <menu>
+
+    <item
+        android:id="@+id/paymentReport"
+        android:title="@string/payment_details_report"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/customerLogReport"
+        android:title="@string/customer_log_report"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/cashReport"
+        android:title="@string/cash_report"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/unCollectedChequesReport"
+        android:title="@string/unCollectedCheques_report"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/itemsReport"
+        android:title="@string/itemReport"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/plansReport"
+        android:title="@string/plans_report"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/RequestReport"
+        android:title="@string/RequestReport"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/TargetReport"
+        android:title="@string/TargetReport"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/CommissionTargetReport"
+        android:title="@string/CommissionTargetReport"
+        app:showAsAction="always" />
+        </menu>
+    </item>
 </menu>

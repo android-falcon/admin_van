@@ -1,11 +1,20 @@
 package com.example.adminvansales.model;
 
+import android.util.Log;
+
 import com.google.gson.annotations.SerializedName;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
-public class PayMentReportModel {
+public class PayMentReportModel implements Comparable {
 
+    public static DateFormat primaryFormat = new SimpleDateFormat("h:mm a");
+    public static DateFormat secondaryFormat = new SimpleDateFormat("H:mm");
     @SerializedName("ComapnyNo")
     private String ComapnyNo;
 
@@ -152,4 +161,54 @@ public class PayMentReportModel {
     public void setPaymentsTable(List<PayMentReportModel> paymentsTable) {
         PaymentsTable = paymentsTable;
     }
+    public  static Comparator<PayMentReportModel> comparedate=new Comparator<PayMentReportModel>() {
+        @Override
+        public int compare(PayMentReportModel model, PayMentReportModel t1) {
+            Log.e("comparedate","comparedate");
+            return (dateInMillis(model.getPaymentDate()) - dateInMillis(t1.getPaymentDate()));
+        }
+    };
+
+    @Override
+    public int compareTo(Object o) {
+        return 0;
+    }
+    public static  int dateInMillis(String time){
+        return dateInMillis(time, primaryFormat);
+    }
+    private static int dateInMillis(String time, DateFormat format) {
+        // you may need more advanced logic here when parsing the time if some times have am/pm and others don't.
+        try{
+            Date date=new SimpleDateFormat("dd/MM/yyyy").parse(time);
+            //Date date = format.parse(time);
+            return (int)date.getDate();
+        }catch(ParseException e){
+            try{
+                if(format != secondaryFormat){
+                    return timeInMillis(time, secondaryFormat);
+                }else{
+                    throw e;
+                }
+            }catch(ParseException ce){
+
+
+                Log.e("ParseException","ParseException"+ce.getMessage());
+            }
+        }
+        return 1;}
+    private static int timeInMillis(String time, DateFormat format) {
+        // you may need more advanced logic here when parsing the time if some times have am/pm and others don't.
+        try{
+            Date date = format.parse(time);
+            return (int)date.getTime();
+        }catch(ParseException e){
+            try{
+                if(format != secondaryFormat){
+                    return timeInMillis(time, secondaryFormat);
+                }else{
+                    throw e;
+                }
+            }catch(ParseException ce){}
+        }
+        return 1;}
 }

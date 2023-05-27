@@ -59,6 +59,7 @@
     <string name="net_sales">الصافي</string>
     <string name="net_sales2">صافي المبيعات</string>
     <string name="net_sales3">م. المبيعات</string>
+    <string name="showitems">  <u>عرض المواد</u></string>
 
     <string name="items">المواد</string>
     <string name="vlueoftarget">Vlue of Target</string>
@@ -331,6 +332,8 @@
     <string name="total">المجموع</string>
     <string name="kind_item">النوع</string>
     <string name="category">الفئة</string>
+    <string name="returncridt">المرتجع ذمم</string>
+    <string name="returncash">المرتجع نقدا</string>
     <string name="talaat_offer_discount">
 
     تشغيل : (كمية المادة/  حد الكميات للعرض  )* الخصم على المادة
@@ -342,6 +345,12 @@
     <string name="HOME">الرئيسية</string>
     <string name="discountReq">" طلب خصم             "</string>
     <string name="returnvoch_per"> عمل فاتورة مرتجعة</string>
+    <string name="payment">التحصيل</string>
+    <string name="transactions">الحركات</string>
+    <string name="transwithvouch">#الحركات مع  إجراء فواتير</string>
+    <string name="transwithoutvouch">#الحركات دون إجراء فواتير</string>
+    <string name="duration">المدة</string>
+    <string name="VOUCHERCOUNT"> عدد الفواتير</string>
     <string-array name="app_paymentTypeList">
         <!--        <item>All</item>-->
         <item>كاش</item>

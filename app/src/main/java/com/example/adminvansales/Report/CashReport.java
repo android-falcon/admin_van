@@ -44,6 +44,8 @@ import java.util.List;
 
 import static com.example.adminvansales.GlobelFunction.salesManInfosList;
 import static com.example.adminvansales.GlobelFunction.salesManNameList;
+import static com.example.adminvansales.ImportData.cashReportList;
+
 import com.example.adminvansales.model.LocaleAppUtils;
 public class CashReport extends AppCompatActivity {
 
@@ -53,7 +55,7 @@ public class CashReport extends AppCompatActivity {
     String toDay;
     CashReportAdapter payMentReportAdapter;
     ListView listCashReport;
-    public static List<CashReportModel> cashReportList;
+
     ImportData importData;
     Button previewButton;
     Spinner salesNameSpinner;
@@ -111,7 +113,7 @@ public class CashReport extends AppCompatActivity {
         toDay = globelFunction.DateInToday();
         fromDate.setText(toDay);
         toDate.setText(toDay);
-        cashReportList = new ArrayList<>();
+
         TempReports = new ArrayList<>();
         importData = new ImportData(CashReport.this);
         databaseHandler = new DataBaseHandler(CashReport.this);
@@ -125,7 +127,7 @@ public class CashReport extends AppCompatActivity {
             if (SettingModel.getImport_way().equals("0"))
                 importData.getCashReport(CashReport.this, toDay, toDay);
             else if (SettingModel.getImport_way().equals("1"))
-                importData.IIS_getCashReport(CashReport.this, toDay, toDay, no);
+                importData.IIS_getCashReport(CashReport.this, toDay, toDay, no,1);
         } catch (Exception e) {
 
         }
@@ -270,7 +272,7 @@ public class CashReport extends AppCompatActivity {
             if (SettingModel.getImport_way().equals("0"))
                 importData.getCashReport(CashReport.this, fromDate.getText().toString(), toDate.getText().toString());
             else if (SettingModel.getImport_way().equals("1"))
-                importData.IIS_getCashReport(CashReport.this, fromDate.getText().toString(), toDate.getText().toString(), no);
+                importData.IIS_getCashReport(CashReport.this, fromDate.getText().toString(), toDate.getText().toString(), no,1);
         } else {
 
             Toast.makeText(CashReport.this, "No SalesMan Selected", Toast.LENGTH_SHORT).show();

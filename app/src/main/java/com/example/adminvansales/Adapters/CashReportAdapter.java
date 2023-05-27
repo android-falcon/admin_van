@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.example.adminvansales.GlobelFunction;
 import com.example.adminvansales.R;
 import com.example.adminvansales.model.CashReportModel;
 
@@ -135,23 +136,24 @@ public class CashReportAdapter extends BaseAdapter {
 
 
 
-        holder.cashSales .setText(totalCash);
-        holder.creditSale .setText(totalCredit);
+        holder.cashSales .setText(GlobelFunction.convertToEnglish(String.format("%.3f",Double.parseDouble(totalCash))));
+        holder.creditSale .setText(GlobelFunction.convertToEnglish(String.format("%.3f",Double.parseDouble(totalCredit))));
 
         double netSalesT=Double.parseDouble(totalCash) + Double.parseDouble(totalCredit);
         Log.e("netSalesT",""+netSalesT);
-        holder.netSales.setText("" +netSalesT);
+        holder.netSales.setText("" +GlobelFunction.convertToEnglish(String.format("%.3f",netSalesT)));
         itemsList.get(i).setNetSale(""+netSalesT);
-        holder.paymentCash  .setText(totalPCash);
-        holder.sales  .setText(totalPCredit);
-        holder.net  .setText(""+(Double.parseDouble(totalPCash)+Double.parseDouble(totalPCredit)));
+        holder.paymentCash  .setText(GlobelFunction.convertToEnglish(String.format("%.3f",Double.parseDouble(totalPCash))));
+        holder.sales  .setText(GlobelFunction.convertToEnglish(String.format("%.3f",Double.parseDouble(totalPCredit))));
+        holder.net  .setText(GlobelFunction.convertToEnglish(String.format("%.3f",(Double.parseDouble(totalPCash)+Double.parseDouble(totalPCredit)))));
         itemsList.get(i).setNetPay(""+(Double.parseDouble(totalPCash)+Double.parseDouble(totalPCredit)));
-        holder.credit  .setText(totalPCreditCard);
+        holder.credit  .setText(GlobelFunction.convertToEnglish(String.format("%.3f",Double.parseDouble(totalPCreditCard))));
        // double netTotalCash=Double.parseDouble(totalPCreditCard)+Double.parseDouble(totalCash)+Double.parseDouble(totalPCash);
 
         double netTotalCash=Double.parseDouble(totalCash)+Double.parseDouble(totalPCash);
+       // holder.amount .setText(GlobelFunction.convertToEnglish(String.format("%.3f",Double.parseDouble( itemsList.get(i).getAmount()))));
 
-        holder.netCash  .setText(""+netTotalCash);
+        holder.netCash  .setText(""+GlobelFunction.convertToEnglish(String.format("%.3f",netTotalCash)));
         itemsList.get(i).setNetCash(""+netTotalCash);
 //        holder.tableRow.setOnClickListener(new View.OnClickListener() {
 //            @Override

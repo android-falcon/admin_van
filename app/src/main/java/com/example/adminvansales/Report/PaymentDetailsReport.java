@@ -63,7 +63,7 @@ import com.example.adminvansales.model.LocaleAppUtils;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
-public class PaymentDetailsReport extends AppCompatActivity {
+public class PaymentDetailsReport extends AppCompatActivity  {
     TextView fromDate,toDate;
     ImageButton excelConvert,pdfConvert,share, backBtn;
     GlobelFunction globelFunction;
@@ -265,6 +265,8 @@ public class PaymentDetailsReport extends AppCompatActivity {
     private File convertToPdf() {
         File file=null;
         try {
+            Collections.sort(FilterdpayMentReportList,PayMentReportModel.comparedate);
+            Collections.sort(payMentReportList,PayMentReportModel.comparedate);
             PdfConverter pdf = new PdfConverter(PaymentDetailsReport.this);
             if(FilterdpayMentReportList.size()!=0)   file = pdf.exportListToPdf(FilterdpayMentReportList, "Payment Report", toDay, 3);
         else     file = pdf.exportListToPdf(payMentReportList, "Payment Report", toDay, 3);
@@ -279,6 +281,9 @@ public class PaymentDetailsReport extends AppCompatActivity {
 
     private void convertToExcel() {
         try {
+            Collections.sort(FilterdpayMentReportList,PayMentReportModel.comparedate);
+            Collections.sort(payMentReportList,PayMentReportModel.comparedate);
+
             ExportToExcel exportToExcel = new ExportToExcel();
             if(FilterdpayMentReportList.size()!=0)      exportToExcel.createExcelFile(PaymentDetailsReport.this, "PaymentReport.xls", 2, FilterdpayMentReportList);
 else
@@ -367,6 +372,7 @@ else  no = "9999999999";
                     FilterdpayMentReportList.add(payMentReportList.get(i));
 
 Log.e("case1","case");
+                Collections.sort(FilterdpayMentReportList,PayMentReportModel.comparedate);
             payMentReportAdapter = new PayMentReportAdapter(PaymentDetailsReport.this, FilterdpayMentReportList);
             listPaymentReport.setAdapter(payMentReportAdapter);
 
@@ -374,7 +380,7 @@ Log.e("case1","case");
             Payments_count.setText(globelFunction.convertToEnglish(FilterdpayMentReportList.size() + ""));
         }
         else {
-
+                Collections.sort(payMentReportList,PayMentReportModel.comparedate);
             payMentReportAdapter = new PayMentReportAdapter(PaymentDetailsReport.this, payMentReportList);
             listPaymentReport.setAdapter(payMentReportAdapter);
 
@@ -382,7 +388,7 @@ Log.e("case1","case");
             Payments_count.setText(globelFunction.convertToEnglish(payMentReportList.size() + ""));
         }  }else
         {
-
+            Collections.sort(payMentReportList,PayMentReportModel.comparedate);
             payMentReportAdapter = new PayMentReportAdapter(PaymentDetailsReport.this, payMentReportList);
             listPaymentReport.setAdapter(payMentReportAdapter);
 
@@ -434,7 +440,7 @@ Log.e("case1","case");
                 {
                     dialoglist = new Dialog(PaymentDetailsReport.this);
                 dialoglist.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                dialoglist.setCancelable(false);
+                dialoglist.setCancelable(true);
                 dialoglist.setContentView(R.layout.customerlist_dailog);
 
                 WindowManager.LayoutParams lp = new WindowManager.LayoutParams();

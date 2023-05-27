@@ -328,7 +328,22 @@
                     android:textColor="@color/white"
                     android:textSize="15sp" />
 
-
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/alegreya_sans_bold"
+                    android:gravity="center"
+                    android:text="@string/duration"
+                    android:textColor="@color/white"
+                    android:textSize="15sp" />
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/alegreya_sans_bold"
+                    android:gravity="center"
+                    android:text="@string/VOUCHERCOUNT"
+                    android:textColor="@color/white"
+                    android:textSize="15sp" />
             </LinearLayout>
 
             <ListView
