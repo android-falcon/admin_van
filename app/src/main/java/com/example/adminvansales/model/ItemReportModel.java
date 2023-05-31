@@ -1,10 +1,17 @@
 package com.example.adminvansales.model;
 
+import android.util.Log;
+
 import com.google.gson.annotations.SerializedName;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
-public class ItemReportModel {
+public class ItemReportModel implements Comparable{
 //            "ComapnyNo": "0",
 //            "VoucherYear": "2021",
 //            "VoucherNo": "1650228",
@@ -29,6 +36,8 @@ public class ItemReportModel {
 //            "salesName": "AHMADq",
 //            "VoucherDate": "02/01/2021"
 
+    public static DateFormat primaryFormat = new SimpleDateFormat("h:mm a");
+    public static DateFormat secondaryFormat = new SimpleDateFormat("H:mm");
     @SerializedName("COMAPNYNO")
     private String ComapnyNo;
     @SerializedName("VOUCHERYEAR")
@@ -310,4 +319,73 @@ public class ItemReportModel {
     public void setItemReport(List<ItemReportModel> itemReport) {
         this.itemReport = itemReport;
     }
+    public  static Comparator<ItemReportModel> comparedate=new Comparator<ItemReportModel>() {
+        @Override
+        public int compare(ItemReportModel model, ItemReportModel t1) {
+            Log.e("comparedate","comparedate");
+            return (dateInMillis(model.getVoucherDate()) - dateInMillis(t1.getVoucherDate()));
+        }
+    };
+    public  static Comparator<ItemReportModel> compareSaleManName=new Comparator<ItemReportModel>() {
+        @Override
+        public int compare(ItemReportModel model, ItemReportModel t1) {
+            Log.e("comparedate","comparedate");
+            return ((model.getSalesName()).compareTo( t1.getSalesName()));
+        }
+    };
+    public  static Comparator<ItemReportModel> compareITEMNAME=new Comparator<ItemReportModel>() {
+        @Override
+        public int compare(ItemReportModel model, ItemReportModel t1) {
+            Log.e("comparedate","comparedate");
+            return ((model.getName()).compareTo( t1.getName()));
+        }
+    };
+
+    @Override
+    public int compareTo(Object o) {
+        return 0;
+    }
+    public static  int dateInMillis(String time){
+        return dateInMillis(time, primaryFormat);
+    }
+    private static int dateInMillis(String time, DateFormat format) {
+        // you may need more advanced logic here when parsing the time if some times have am/pm and others don't.
+        try{
+            Date date=new SimpleDateFormat("dd/MM/yyyy").parse(time);
+            //Date date = format.parse(time);
+            return (int)date.getDate();
+        }catch(ParseException e){
+            try{
+                if(format != secondaryFormat){
+                    return timeInMillis(time, secondaryFormat);
+                }else{
+                    throw e;
+                }
+            }catch(ParseException ce){
+
+
+                Log.e("ParseException","ParseException"+ce.getMessage());
+            }
+        }
+        return 1;}
+    private static int timeInMillis(String time, DateFormat format) {
+        // you may need more advanced logic here when parsing the time if some times have am/pm and others don't.
+        try{
+            Date date = format.parse(time);
+            return (int)date.getTime();
+        }catch(ParseException e){
+            try{
+                if(format != secondaryFormat){
+                    return timeInMillis(time, secondaryFormat);
+                }else{
+                    throw e;
+                }
+            }catch(ParseException ce){}
+        }
+        return 1;}
+
+    Comparator<ItemReportModel> compareBy
+            = Comparator.comparing(ItemReportModel::getVoucherDate)
+            .thenComparing(ItemReportModel::getSalesName)
+            .thenComparing(ItemReportModel::getName);
 }

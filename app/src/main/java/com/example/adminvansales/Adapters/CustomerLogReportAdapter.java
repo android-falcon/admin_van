@@ -92,16 +92,36 @@ try {
     date2=new SimpleDateFormat("hh:mm").parse(itemsList.get(i).getCHECK_OUT_TIME());
 
 
-
     long difference = date2.getTime() - date1.getTime();
+    Log.e("======= difference"," :: "+difference);
+
 int    days = (int) (difference / (1000*60*60*24));
     int    hours = (int) ((difference - (1000*60*60*24*days)) / (1000*60*60));
+
     int  min = (int) (difference - (1000*60*60*24*days) - (1000*60*60*hours)) / (1000*60);
+
+    if((itemsList.get(i).getCHECK_IN_TIME().contains("12:")&& !itemsList.get(i).getCHECK_OUT_TIME().contains("12:"))
+    || ( !itemsList.get(i).getCHECK_IN_TIME().contains("12:")&&itemsList.get(i).getCHECK_OUT_TIME().contains("12:"))) {
+        Log.e("here =======  "," :: "+"here");
+        if(hours<12) {
+            hours =12 % hours;
+                    Log.e("here ======= Hours", " :: " + 12 % hours);
+        }
+        else {
+            hours = hours % 12;
+            Log.e("here ======= Hours", " :: " + hours % 12);
+        }
+    }
+
+
+
     hours = (hours < 0 ? -hours : hours);
+
 if (hours==0)
-    holder.duration.setText(min +" min");
+    holder.duration.setText(Math.abs(min) +" min");
 else
-    holder.duration.setText(hours+" hours"+ "  "+min +" min");
+    holder.duration.setText(Math.abs(hours)+" hours"+ "  "+Math.abs(min) +" min");
+
 
     Log.e("======= Hours"," :: "+hours);
     Log.e("======= min",min+"");
@@ -109,6 +129,7 @@ else
        dateTime1=convertToEnglish(dateCurent);
 }catch (Exception exception){
     Log.e("exception",exception.getMessage());
+    holder.duration.setText("");
 }
 
 

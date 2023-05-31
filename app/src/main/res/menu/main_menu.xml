@@ -77,20 +77,24 @@
         app:showAsAction="always" />
     <item
         android:id="@+id/plansReport"
+        android:visible="false"
         android:title="@string/plans_report"
         app:showAsAction="always" />
 
     <item
         android:id="@+id/RequestReport"
+        android:visible="false"
         android:title="@string/RequestReport"
         app:showAsAction="always" />
 
     <item
         android:id="@+id/TargetReport"
+        android:visible="false"
         android:title="@string/TargetReport"
         app:showAsAction="always" />
     <item
         android:id="@+id/CommissionTargetReport"
+        android:visible="false"
         android:title="@string/CommissionTargetReport"
         app:showAsAction="always" />
         </menu>

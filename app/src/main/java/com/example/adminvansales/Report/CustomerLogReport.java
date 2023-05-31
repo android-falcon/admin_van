@@ -56,11 +56,13 @@ import com.example.adminvansales.model.CustomerInfo;
 import com.example.adminvansales.model.CustomerLogReportModel;
 import com.example.adminvansales.PdfConverter;
 import com.example.adminvansales.R;
+import com.example.adminvansales.model.ItemReportModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import static com.example.adminvansales.GlobelFunction.salesManInfoAdmin;
@@ -90,6 +92,7 @@ public class CustomerLogReport extends AppCompatActivity {
     public  static   TextView customerAccountNo,customerAccountname;
     String customerId = "";
     public static Dialog dialoglist,    dialog;
+    Comparator<CustomerLogReportModel> compareBy;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,6 +102,12 @@ public class CustomerLogReport extends AppCompatActivity {
         databaseHandler = new DataBaseHandler(CustomerLogReport.this);
 
         initial();
+
+        compareBy
+                = Comparator.comparing(CustomerLogReportModel::getCHECK_IN_DATE)
+                .thenComparing(CustomerLogReportModel::getSalesmanname)
+                .thenComparing(CustomerLogReportModel::getCUS_NAME);
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
@@ -359,7 +368,7 @@ public class CustomerLogReport extends AppCompatActivity {
     private File convertToPdf() {
         File file = null;
         try {
-
+            customerLogReportList.sort(compareBy);
             PdfConverter pdf = new PdfConverter(CustomerLogReport.this);
             file = pdf.exportListToPdf(customerLogReportList, "Customer Log Report", toDay, 1);
         } catch (Exception e) {
@@ -370,6 +379,7 @@ public class CustomerLogReport extends AppCompatActivity {
 
     private void convertToExcel() {
         try {
+            customerLogReportList.sort(compareBy);
             ExportToExcel exportToExcel = new ExportToExcel();
             exportToExcel.createExcelFile(CustomerLogReport.this, "CustomerLogReport.xls", 1, customerLogReportList);
         } catch (Exception e) {
@@ -445,7 +455,7 @@ public class CustomerLogReport extends AppCompatActivity {
             }
         }}
 
-
+        customerLogReportList.sort(compareBy);
         customerLogReportAdapter = new CustomerLogReportAdapter(CustomerLogReport.this, customerLogReportList);
         listCustomerLogReport.setAdapter(customerLogReportAdapter);
 

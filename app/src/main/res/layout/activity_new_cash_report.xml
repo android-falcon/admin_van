@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -7,23 +6,50 @@
         android:layout_width="match_parent"
         android:background="@color/white"
         android:textDirection="locale"
-    android:orientation="vertical"
         android:id="@+id/mainLayout"
+    android:orientation="vertical"
        tools:context=".Report.NewCashReport"
         android:layout_height="match_parent">
 
 
-    <TableLayout
+    <LinearLayout
         android:id="@+id/TableSalesReport"
         android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
         android:layout_height="match_parent"
-        android:layout_weight="1">
-        <TableRow
+        >
 
+        <LinearLayout
+ android:layout_width="match_parent"
+            android:orientation="horizontal"
             android:background="@color/white"
             android:gravity="center"
-            android:layout_gravity="center">
+            android:layout_height="60dp"
 
+            android:layout_gravity="center">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_weight="3">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:id="@+id/salesman_name"
+                android:gravity="center"
+                android:text="@string/sales_man_name"
+                android:textColor="@color/red"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_weight="3">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -35,12 +61,54 @@
                 android:textColor="@color/colorblue_dark"
                 android:textSize="20sp"
                 android:textStyle="bold" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+              android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_weight="3">
 
-        </TableRow>
+            <ImageButton
+                android:id="@+id/excelConvert"
+                android:layout_width="30dp"
+                android:layout_height="40dp"
+                android:layout_alignParentTop="true"
+                android:layout_gravity="center"
 
-    <TableRow
+                android:background="@drawable/excel" />
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="12dp"
+                    android:layout_marginRight="12dp"
+                   />
+            <ImageButton
+                android:id="@+id/pdfConvert"
+                android:layout_width="30dp"
+                android:layout_height="40dp"
+                android:layout_alignParentTop="true"
+                android:layout_gravity="center"
+                android:layout_marginEnd="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_toStartOf="@+id/excelConvert"
+                android:layout_toLeftOf="@+id/excelConvert"
+                android:background="@drawable/pdf" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+    <LinearLayout
 
         android:background="@color/white"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
         android:layout_marginTop="3dp">
 <TextView
     android:id="@+id/Respons"
@@ -50,7 +118,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+          android:layout_weight="1.1"
             android:gravity="center"
             android:text="@string/from_date"
             android:textColor="@color/text_view_color"
@@ -59,7 +127,7 @@
             android:id="@+id/date_editReport_cash"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="6"
+            android:layout_weight="1"
             android:background="@drawable/border_dark_blue"
             android:inputType="date"
             android:gravity="center"
@@ -69,7 +137,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="1.1"
             android:gravity="center"
             android:text="@string/to_date"
             android:textColor="@color/text_view_color"
@@ -78,7 +146,7 @@
             android:id="@+id/TOdate_editReport_cash"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="6"
+            android:layout_weight="1"
             android:background="@drawable/border_dark_blue"
             android:inputType="date"
             android:textSize="12sp"
@@ -88,24 +156,27 @@
 
 
         <Button
-                android:id="@+id/preview_cash_report"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight=".1"
+            android:id="@+id/preview_cash_report"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:layout_marginStart="4dp"
             android:layout_marginEnd="2dp"
-                android:background="@drawable/done_button"
-                android:text="@string/preview"
-                android:textColor="@color/white"
-                android:textSize="14sp" />
+            android:background="@drawable/done_button"
+            android:text="@string/preview"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
 
 
-    </TableRow>
+    </LinearLayout>
 
 
 
-        <TableRow
-
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="match_parent"
             android:background="@color/colorblue1"
             android:layout_marginTop="3dp">
 
@@ -120,16 +191,20 @@
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
-        </TableRow>
+        </LinearLayout>
 
-        <TableRow
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="match_parent"
             android:layout_marginTop="2dp"
             android:background="@color/layer3">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:gravity="center"
                 android:padding="1dp"
                 android:text="@string/cash_sale"
@@ -141,23 +216,26 @@
                 android:id="@+id/text_cash_sales"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="3"
+                android:layout_weight="1"
                 android:padding="1dp"
-
                 android:gravity="center"
                 android:textColor="@color/colorBlack"
                 android:textSize="12sp"
                 android:textStyle="bold" />
-        </TableRow>
+        </LinearLayout>
 
-        <TableRow
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="match_parent"
             android:layout_marginTop="2dp"
             android:background="@color/layer3">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:gravity="center"
                 android:padding="1dp"
                 android:text="@string/credit_sales"
@@ -169,22 +247,26 @@
                 android:id="@+id/text_credit_sales"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="3"
+                android:layout_weight="1"
                 android:padding="1dp"
                 android:gravity="center"
                 android:textColor="@color/colorBlack"
                 android:textSize="12sp"
                 android:textStyle="bold" />
-        </TableRow>
+        </LinearLayout>
 
-        <TableRow
+        <LinearLayout
+            android:layout_weight="1"
             android:layout_marginTop="2dp"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="match_parent"
             android:background="@color/layer3">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:gravity="center"
                 android:padding="1dp"
                 android:text="@string/returncash"
@@ -196,23 +278,27 @@
                 android:id="@+id/text_return_cash"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="3"
+                android:layout_weight="1"
                 android:padding="1dp"
                 android:gravity="center"
                 android:textColor="@color/colorBlack"
                 android:textSize="12sp"
                 android:textStyle="bold" />
 
-        </TableRow>
+        </LinearLayout>
 
-        <TableRow
+        <LinearLayout
+            android:layout_weight="1"
             android:layout_marginTop="2dp"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="match_parent"
             android:background="@color/layer3">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:gravity="center"
                 android:padding="1dp"
                 android:text="@string/returncridt"
@@ -224,23 +310,27 @@
                 android:id="@+id/text_return_cridt"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="3"
+                android:layout_weight="1"
                 android:padding="1dp"
                 android:gravity="center"
                 android:textColor="@color/colorBlack"
                 android:textSize="12sp"
                 android:textStyle="bold" />
 
-        </TableRow>
+        </LinearLayout>
 
-        <TableRow
+        <LinearLayout
+            android:layout_weight="1"
             android:layout_marginTop="2dp"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="match_parent"
             android:background="@color/layer3">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:gravity="center"
                 android:padding="1dp"
                 android:text="@string/total_sales"
@@ -252,16 +342,20 @@
                 android:id="@+id/text_total_sales"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="3"
+                android:layout_weight="1"
                 android:padding="1dp"
                 android:gravity="center"
                 android:textColor="@color/colorBlack"
                 android:textSize="12sp"
                 android:textStyle="bold" />
-        </TableRow>
+        </LinearLayout>
 
-        <TableRow
+        <LinearLayout
+            android:layout_weight="1"
             android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="match_parent"
             android:background="@color/colorblue1">
 
             <TextView
@@ -275,16 +369,20 @@
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
-        </TableRow>
+        </LinearLayout>
 
-        <TableRow
+        <LinearLayout
+            android:layout_weight="1"
             android:layout_marginTop="2dp"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="match_parent"
             android:background="@color/layer3">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:gravity="center"
                 android:padding="1dp"
                 android:text="@string/cash"
@@ -296,22 +394,26 @@
                 android:id="@+id/text_cash_PaymentReport"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="3"
+                android:layout_weight="1"
                 android:padding="1dp"
                 android:gravity="center"
                 android:textColor="@color/colorBlack"
                 android:textSize="12sp"
                 android:textStyle="bold" />
-        </TableRow>
+        </LinearLayout>
 
-        <TableRow
+        <LinearLayout
+            android:layout_weight="1"
             android:layout_marginTop="2dp"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="match_parent"
             android:background="@color/layer3">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:gravity="center"
                 android:padding="1dp"
                 android:text="@string/app_cheque"
@@ -323,22 +425,26 @@
                 android:id="@+id/text_cheque_paymentReport"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="3"
+                android:layout_weight="1"
                 android:padding="1dp"
                 android:textColor="@color/colorBlack"
                 android:textSize="12sp"
                 android:gravity="center"
                 android:textStyle="bold" />
-        </TableRow>
+        </LinearLayout>
 
-        <TableRow
+        <LinearLayout
+            android:layout_weight="1"
             android:layout_marginTop="2dp"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="match_parent"
             android:background="@color/layer3">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:gravity="center"
                 android:padding="1dp"
                 android:text="@string/netpayment"
@@ -350,16 +456,21 @@
                 android:id="@+id/text_net_paymentReport"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="3"
+                android:layout_weight="1"
                 android:padding="1dp"
                 android:gravity="center"
                 android:textColor="@color/colorBlack"
                 android:textSize="12sp"
                 android:textStyle="bold" />
-        </TableRow>
+        </LinearLayout>
 
-        <TableRow
+        <LinearLayout
+            android:layout_weight="1"
             android:layout_marginTop="5dp"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="match_parent"
             android:background="@color/colorblue1">
 
             <TextView
@@ -373,16 +484,20 @@
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
-        </TableRow>
+        </LinearLayout>
 
-        <TableRow
+        <LinearLayout
+            android:layout_weight="1"
             android:layout_marginTop="2dp"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="match_parent"
             android:background="@color/layer3">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:gravity="center"
                 android:padding="1dp"
                 android:text="@string/app_creditCard"
@@ -394,22 +509,26 @@
                 android:id="@+id/text_credit"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="3"
+                android:layout_weight="1"
                 android:padding="1dp"
                 android:gravity="center"
                 android:textColor="@color/colorBlack"
                 android:textSize="12sp"
                 android:textStyle="bold" />
-        </TableRow>
+        </LinearLayout>
 
-        <TableRow
+        <LinearLayout
+            android:layout_weight="1"
             android:layout_marginTop="2dp"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="match_parent"
             android:background="@color/layer3">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:gravity="center"
                 android:padding="1dp"
                 android:text="@string/total_cash"
@@ -421,16 +540,20 @@
                 android:id="@+id/text_total_cash"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="3"
+                android:layout_weight="1"
                 android:padding="1dp"
                 android:gravity="center"
                 android:textColor="@color/colorBlack"
                 android:textSize="12sp"
                 android:textStyle="bold" />
-        </TableRow>
+        </LinearLayout>
 
-        <TableRow
+        <LinearLayout
+            android:layout_weight="1"
             android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="match_parent"
             android:visibility="gone"
             android:background="@color/colorblue1">
 
@@ -446,9 +569,13 @@
                 android:textStyle="bold" />
 
 
-        </TableRow>
-        <TableRow
+        </LinearLayout>
+        <LinearLayout
             android:layout_marginTop="2dp"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="match_parent"
             android:visibility="gone"
             android:background="@color/layer3">
 
@@ -472,9 +599,12 @@
                 android:textColor="@color/text_view_color"
                 android:textSize="12sp"
                 android:textStyle="bold" />
-        </TableRow>
-        <TableRow
+        </LinearLayout>
+        <LinearLayout
             android:layout_marginTop="2dp"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="match_parent"
             android:visibility="gone"
             android:background="@color/layer3">
 
@@ -498,8 +628,15 @@
                 android:textColor="@color/text_view_color"
                 android:textSize="12sp"
                 android:textStyle="bold" />
-        </TableRow>
-    </TableLayout>
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
 
+        android:layout_width="match_parent"
+        android:layout_weight="4"
+        android:orientation="vertical"
+        android:layout_height="match_parent"
+        >
+    </LinearLayout>
 
 </LinearLayout>

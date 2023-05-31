@@ -124,6 +124,9 @@ public class adapterrequst extends RecyclerView.Adapter<adapterrequst.ViewHolder
         }else if (requestList.get(i).getRequest_type().equals("506")) {
             viewHolder.requestType.setText(context.getResources().getString(R.string.returnvoch_per));
 
+        }else if (requestList.get(i).getRequest_type().equals("5")) {
+            viewHolder.requestType.setText(context.getResources().getString(R.string.log_in_cus_outrange));
+
         }
 
 

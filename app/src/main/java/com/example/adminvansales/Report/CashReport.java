@@ -35,11 +35,13 @@ import com.example.adminvansales.RequstNotifaction;
 import com.example.adminvansales.model.CashReportModel;
 import com.example.adminvansales.PdfConverter;
 import com.example.adminvansales.R;
+import com.example.adminvansales.model.CustomerLogReportModel;
 import com.example.adminvansales.model.Payment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import static com.example.adminvansales.GlobelFunction.salesManInfosList;
@@ -66,6 +68,9 @@ public class CashReport extends AppCompatActivity {
     TextView  total,cashtotal;
     TextView  TOTAL_cash_sale,TOTAL_credit_sales,TOTAL_net_sales,TOTAL_paymentCash,TOTAL_paymentCheque,TOTAL_netpayment,
             TOTAL_credit_value,TOTAL_total_cash;
+
+    Comparator<CashReportModel> compareBy;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,6 +78,11 @@ public class CashReport extends AppCompatActivity {
         setContentView(R.layout.cash_report);
 
         initial();
+
+        compareBy
+                = Comparator.comparing(CashReportModel::getSalesManName);
+
+
     }
 
 
@@ -230,13 +240,15 @@ public class CashReport extends AppCompatActivity {
     };
 
     private File convertToPdf() {
+        cashReportList.sort(compareBy);
+
         PdfConverter pdf = new PdfConverter(CashReport.this);
         File file = pdf.exportListToPdf(cashReportList, "Cash Report", toDay, 2);
         return file;
     }
 
     private void convertToExcel() {
-
+        cashReportList.sort(compareBy);
         ExportToExcel exportToExcel = new ExportToExcel();
         exportToExcel.createExcelFile(CashReport.this, "CashReport.xls", 3, cashReportList);
         // return file;
@@ -324,7 +336,7 @@ public class CashReport extends AppCompatActivity {
 //              {
 //                  TempReports.addAll(cashReportList);
 //              }
-
+            cashReportList.sort(compareBy);
             payMentReportAdapter = new CashReportAdapter(CashReport.this, cashReportList);
             listCashReport.setAdapter(payMentReportAdapter);
             try {

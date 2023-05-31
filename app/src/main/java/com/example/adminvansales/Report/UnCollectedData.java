@@ -47,6 +47,7 @@ import com.example.adminvansales.LogIn;
 import com.example.adminvansales.MainActivity;
 import com.example.adminvansales.PlanSalesMan;
 import com.example.adminvansales.RequstNotifaction;
+import com.example.adminvansales.model.CashReportModel;
 import com.example.adminvansales.model.CustomerInfo;
 import com.example.adminvansales.model.PayMentReportModel;
 import com.example.adminvansales.model.Payment;
@@ -65,6 +66,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Locale;
 
@@ -97,12 +99,17 @@ TextView total,cust_select;
     public  static Dialog dialoglist,    dialog;
     public static   TextView customerAccountNo,customerAccountname;
     TextView fromDate, toDate;
+    Comparator<Payment> compareBy;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         new LocaleAppUtils().changeLayot(UnCollectedData.this);
         setContentView(R.layout.activity_un_collected_data);
         initialView();
+        compareBy
+                = Comparator.comparing(Payment::getDueDate);
+
    //  getPayment(); just to test
       findViewById(R.id.cust_selectclear)  .setOnClickListener(new View.OnClickListener() {
           @Override
@@ -111,6 +118,11 @@ TextView total,cust_select;
           }
       });
         importJason = new ImportData(UnCollectedData.this);
+        paymentChequesList.clear();
+        paymentArrayList.clear();
+        Log.e(" paymentArrayList3===", paymentArrayList.size() + "");
+        Log.e(" paymentChequesList===", paymentChequesList.size() + "");
+        importJason.getAllcheques("9999999999");
 
         preview_button_account.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -205,13 +217,25 @@ TextView total,cust_select;
 //    }
 
     private File convertToPdf() {
+        try {
+            paymentArrayList.sort(compareBy);
+        }
+        catch (Exception exception){
+
+        }
+
         PdfConverter pdf = new PdfConverter(UnCollectedData.this);
         File file = pdf.exportListToPdf(paymentArrayList, "UncollectedChequesReport", toDay, 5);
         return file;
     }
 
     private void convertToExcel() {
+        try {
+            paymentArrayList.sort(compareBy);
+        }
+        catch (Exception exception){
 
+        }
         ExportToExcel exportToExcel = new ExportToExcel();
         exportToExcel.createExcelFile(UnCollectedData.this, "UncollectedChequesReport.xls", 5, paymentArrayList);
 //        if(file!=null)
@@ -571,6 +595,12 @@ TextView total,cust_select;
         //     tableCheckData.removeAllViewsInLayout();
      String fromdate=fromDate.getText().toString();
         String todate=toDate.getText().toString();
+        try {
+            paymentArrayList.sort(compareBy);
+        }
+      catch (Exception exception){
+
+      }
         Log.e(" fillTable", "paymentArrayList=="+paymentArrayList.size()+"");
         try {
             for (int x = 0; x < paymentArrayList.size(); x++){

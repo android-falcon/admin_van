@@ -30,11 +30,14 @@ import com.example.adminvansales.Report.ReportsPopUpClass;
 import com.example.adminvansales.Report.UnCollectedData;
 import com.example.adminvansales.model.ItemReportModel;
 import com.example.adminvansales.model.ItemsRequsts;
+import com.example.adminvansales.model.PayMentReportModel;
 import com.example.adminvansales.model.Payment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
@@ -65,6 +68,7 @@ public class ItemReport extends AppCompatActivity {
     public static Spinner  spinner_kind_item, spinner_catg_item;
     public static  ArrayAdapter arrayAdapter, arrayAdapter2;
   EditText ItemnameTextView;
+    Comparator<ItemReportModel> compareBy;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +78,11 @@ public class ItemReport extends AppCompatActivity {
         databaseHandler = new DataBaseHandler(ItemReport.this);
 
         initial();
+      compareBy
+                = Comparator.comparing(ItemReportModel::getVoucherDate)
+                .thenComparing(ItemReportModel::getSalesName)
+                .thenComparing(ItemReportModel::getName);
+
         findViewById(R.id.excelConvert)  .setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -126,6 +135,8 @@ public class ItemReport extends AppCompatActivity {
         {
             linearMain.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         }
+
+
         ItemnameTextView=findViewById(R.id.ItemnameTextView);
         ItemnameTextView.addTextChangedListener(new TextWatcher() {
             @Override
@@ -145,10 +156,14 @@ public class ItemReport extends AppCompatActivity {
 
 
                     if (Filterd_itemReportList.size() == 0) {
+
+                       itemReportModelsList.sort(compareBy);
                     itemReportAdapter = new ItemReportAdapter(ItemReport.this, itemReportModelsList);
                     listItemReport.setAdapter(itemReportAdapter);
 
                     }else {
+                     Filterd_itemReportList.sort(compareBy);
+
                         itemReportAdapter = new ItemReportAdapter(ItemReport.this, Filterd_itemReportList);
                         listItemReport.setAdapter(itemReportAdapter);
 
@@ -159,10 +174,14 @@ public class ItemReport extends AppCompatActivity {
                     if (Filterd_itemReportList.size() == 0) {
                         for (int i = 0; i < itemReportModelsList.size(); i++)
                             if (itemReportModelsList.get(i).getName().trim().toLowerCase(Locale.ROOT).contains(ItemnameTextView.getText().toString().trim().toLowerCase(Locale.ROOT)))
-                            {   Searched_itemReportList.add(itemReportModelsList.get(i));
+                            {
+
+                                Searched_itemReportList.add(itemReportModelsList.get(i));
+                                Searched_itemReportList.sort(compareBy);
 
                                 itemReportAdapter = new ItemReportAdapter(ItemReport.this, Searched_itemReportList);
                                 listItemReport.setAdapter(itemReportAdapter);
+
                             }
 
 
@@ -175,6 +194,8 @@ public class ItemReport extends AppCompatActivity {
                             }
 
                     }
+                   Searched_itemReportList.sort(compareBy);
+
                     itemReportAdapter = new ItemReportAdapter(ItemReport.this, Searched_itemReportList);
                     listItemReport.setAdapter(itemReportAdapter);
                 }
@@ -203,6 +224,8 @@ public class ItemReport extends AppCompatActivity {
                                 if (itemReportModelsList.get(i).getItemNo().equals(ImportData.listAllItemReportModels.get(j).getItemNo()))
                                     if (ImportData.listAllItemReportModels.get(j).getItemK().equals(spinner_kind_item.getSelectedItem()))
                                         Filterd_itemReportList.add(itemReportModelsList.get(i));
+                        Filterd_itemReportList.sort(compareBy);
+
                         itemReportAdapter = new ItemReportAdapter(ItemReport.this, Filterd_itemReportList);
                         listItemReport.setAdapter(itemReportAdapter);
                         total.setText(globelFunction.convertToEnglish(String.  format("%.3f",(Filterd_itemReportList.stream().map(ItemReportModel::getTotal).mapToDouble(Double::parseDouble).sum()))));
@@ -218,6 +241,8 @@ public class ItemReport extends AppCompatActivity {
                                     if ( ImportData.listAllItemReportModels.get(j).getItemK().equals(spinner_kind_item.getSelectedItem())
                                             && ImportData.listAllItemReportModels.get(j).getItemG().equals(spinner_catg_item.getSelectedItem()))
                                         Filterd_itemReportList.add(itemReportModelsList.get(i));
+                       Filterd_itemReportList.sort(compareBy);
+
                         itemReportAdapter = new ItemReportAdapter(ItemReport.this, Filterd_itemReportList);
                         listItemReport.setAdapter(itemReportAdapter);
                         total.setText(globelFunction.convertToEnglish(String.  format("%.3f",(Filterd_itemReportList.stream().map(ItemReportModel::getTotal).mapToDouble(Double::parseDouble).sum()))));
@@ -226,6 +251,8 @@ public class ItemReport extends AppCompatActivity {
 
                     }
                 }else {
+                 itemReportModelsList.sort(compareBy);
+
                     itemReportAdapter = new ItemReportAdapter(ItemReport.this, itemReportModelsList);
                     listItemReport.setAdapter(itemReportAdapter);
                     total.setText(globelFunction.convertToEnglish(String.  format("%.3f",(itemReportModelsList.stream().map(ItemReportModel::getTotal).mapToDouble(Double::parseDouble).sum()))));
@@ -254,6 +281,9 @@ Log.e("spinner_catg_item",x+"");
                              if (itemReportModelsList.get(i).getItemNo().equals(ImportData.listAllItemReportModels.get(j).getItemNo()))
                                  if (ImportData.listAllItemReportModels.get(j).getItemG().equals(spinner_catg_item.getSelectedItem()))
                                      Filterd_itemReportList.add(itemReportModelsList.get(i));
+             Filterd_itemReportList.sort(compareBy);
+
+
                      itemReportAdapter = new ItemReportAdapter(ItemReport.this, Filterd_itemReportList);
                      listItemReport.setAdapter(itemReportAdapter);
                  total.setText(globelFunction.convertToEnglish(String.  format("%.3f",(Filterd_itemReportList.stream().map(ItemReportModel::getTotal).mapToDouble(Double::parseDouble).sum()))));
@@ -262,6 +292,9 @@ Log.e("spinner_catg_item",x+"");
 
 
              } else {
+                itemReportModelsList .sort(compareBy);
+
+
                  itemReportAdapter = new ItemReportAdapter(ItemReport.this, itemReportModelsList);
                  listItemReport.setAdapter(itemReportAdapter);
                  total.setText(globelFunction.convertToEnglish(String.  format("%.3f",(itemReportModelsList.stream().map(ItemReportModel::getTotal).mapToDouble(Double::parseDouble).sum()))));
@@ -457,7 +490,12 @@ Log.e("Exception==",exception.getMessage()+"");
     }
     public void fillItemAdapter() {
 
+//        Collections.sort(itemReportModelsList, ItemReportModel.comparedate);
+//        Collections.sort(itemReportModelsList, ItemReportModel.compareSaleManName);
+//        Collections.sort(itemReportModelsList, ItemReportModel.compareITEMNAME);
 
+
+        itemReportModelsList.sort(compareBy);
         itemReportAdapter = new ItemReportAdapter(ItemReport.this, itemReportModelsList);
         listItemReport.setAdapter(itemReportAdapter);
 
@@ -498,6 +536,9 @@ Log.e("Exception==",exception.getMessage()+"");
 
         PdfConverter pdf = new PdfConverter(ItemReport.this);
         File file;
+        Searched_itemReportList .sort(compareBy);
+        Filterd_itemReportList  .sort(compareBy);
+        itemReportModelsList.sort(compareBy);
     if(Searched_itemReportList.size()!=0)
          file = pdf.exportListToPdf(Searched_itemReportList, "ItemsReport", Today, 8);
     else      if(Filterd_itemReportList.size()!=0)      file = pdf.exportListToPdf(Filterd_itemReportList, "ItemsReport", Today, 8);
@@ -507,7 +548,9 @@ Log.e("Exception==",exception.getMessage()+"");
     }
 
     private void convertToExcel() {
-
+        Searched_itemReportList .sort(compareBy);
+        Filterd_itemReportList  .sort(compareBy);
+        itemReportModelsList.sort(compareBy);
         ExportToExcel exportToExcel = new ExportToExcel();
         if(Searched_itemReportList.size()!=0)
             exportToExcel.createExcelFile(ItemReport.this, "ItemsReport.xls", 8, Searched_itemReportList);

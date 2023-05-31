@@ -6,6 +6,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -24,6 +25,7 @@ import com.example.adminvansales.model.ListPriceOffer;
 import com.example.adminvansales.model.PayMentReportModel;
 import com.example.adminvansales.model.Payment;
 import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
@@ -36,6 +38,8 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
+import org.w3c.dom.Text;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -43,6 +47,7 @@ import java.io.IOException;
 import java.util.List;
 
 
+import static com.example.adminvansales.ImportData.cashReportList;
 import static com.itextpdf.text.Element.ALIGN_CENTER;
 
 public class PdfConverter {
@@ -145,7 +150,9 @@ public class PdfConverter {
             case 8:
                 tableContent = createItemsReport((List<ItemReportModel>) list);
                 break;
-
+            case 9:
+               tableContent = createNewCashReport((List<CashReportModel>) list);
+                break;
 
         }
         return tableContent;
@@ -238,7 +245,98 @@ public class PdfConverter {
         return pdfPTable;
 
     }
+    private PdfPTable createNewCashReport(List<CashReportModel> list) {
+        createPDF("NewCash_Report" + ".pdf");
+        PdfPTable pdfPTable = new PdfPTable(2);
+        pdfPTable.setWidthPercentage(100f);
+        pdfPTable.setRunDirection(PdfWriter.RUN_DIRECTION_LTR);
+        insertCell(pdfPTable, context.getString(R.string.sales_man_no), ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+        insertCell(pdfPTable, String.valueOf(list.get(0).getSalesManNo()), ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+        Paragraph paragraph=    new Paragraph(   context.getResources().getString(R.string.sales  ), arabicFont);
+        paragraph.setAlignment(ALIGN_CENTER);
+        PdfPCell cell9 = new PdfPCell(paragraph );
+        cell9.setHorizontalAlignment(ALIGN_CENTER);
+        cell9. setBackgroundColor(BaseColor.GRAY);
+        cell9.setColspan(2);
 
+
+        Paragraph paragraph2=    new Paragraph(    context.getResources().getString(R.string.payment  ), arabicFont);
+        paragraph.setAlignment(ALIGN_CENTER);
+        PdfPCell cell = new PdfPCell(paragraph2 );
+        cell.setHorizontalAlignment(ALIGN_CENTER);
+        cell. setBackgroundColor(BaseColor.GRAY);
+        cell.setColspan(2);
+
+        Paragraph paragraph3=    new Paragraph(    context.getResources().getString(R.string.app_creditCard  ), arabicFont);
+        paragraph.setAlignment(ALIGN_CENTER);
+        PdfPCell cell3 = new PdfPCell(paragraph3 );
+        cell3.setHorizontalAlignment(ALIGN_CENTER);
+        cell3. setBackgroundColor(BaseColor.GRAY);
+        cell3.setColspan(2);
+
+        insertCell(pdfPTable, context.getString(R.string.sales_man_name), ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+
+        insertCell(pdfPTable, String.valueOf(list.get(0).getSalesManName()), ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+        pdfPTable.addCell(cell9);
+        insertCell(pdfPTable, context.getString(R.string.cash_sale), ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+        insertCell(pdfPTable, String.valueOf(list.get(0).getTotalCash()), ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+        insertCell(pdfPTable, context.getResources().getString(R.string.credit_sales), ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+        insertCell(pdfPTable, String.valueOf(list.get(0).getTotalCredite()), ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+
+
+        insertCell(pdfPTable, context.getResources().getString(R.string.returncash), ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+        insertCell(pdfPTable, list.get(0).getRETURNDCASH()+"", ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+
+
+        insertCell(pdfPTable, context.getResources().getString(R.string.returncridt), ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+        insertCell(pdfPTable, list.get(0).getRETURNDCREDITE()+"", ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+        double returnCash=0;
+        double returncridt=0;
+        try {
+            returnCash= Double.parseDouble(cashReportList.get(0).getRETURNDCASH());
+            returncridt=Double.parseDouble(cashReportList.get(0).getRETURNDCREDITE());
+
+        }catch (Exception exception){
+            returnCash=0;
+            returncridt=0;
+            Log.e("exception==",exception.getMessage());
+        }
+        double netSalesT=Double.parseDouble(cashReportList.get(0).getTotalCash()) + Double.parseDouble(cashReportList.get(0).getTotalCredite())
+                -returnCash-returncridt;
+
+
+        insertCell(pdfPTable, context.getResources().getString(R.string.total_sales), ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+        insertCell(pdfPTable,  globelFunction.convertToEnglish(String. format("%.3f",netSalesT)), ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+
+
+        pdfPTable.addCell(cell);
+        insertCell(pdfPTable, context.getResources().getString(R.string.paymentCash), ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+        insertCell(pdfPTable, list.get(0).getPtotalCash()+"", ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+
+        insertCell(pdfPTable, context.getResources().getString(R.string.paymentCheque), ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+        insertCell(pdfPTable,list.get(0).getPtotalCredite(), ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+
+        double  TOTAL_netpaymentVal = Double.parseDouble(cashReportList.get(0).getPtotalCash()) + Double.parseDouble(cashReportList.get(0).getPtotalCredite());
+
+        insertCell(pdfPTable, context.getResources().getString(R.string.netpayment), ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+        insertCell(pdfPTable,globelFunction.convertToEnglish(String. format("%.3f",TOTAL_netpaymentVal)), ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+
+      //  pdfPTable.addCell( cell3) ;
+        insertCell(pdfPTable, context.getResources().getString(R.string.credit_value), ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+        insertCell(pdfPTable, list.get(0).getPtotalCrediteCard()+"", ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+
+        double TOTAL_total_cashVal = Double.parseDouble(cashReportList.get(0).getTotalCash()) + Double.parseDouble(cashReportList.get(0).getPtotalCash());
+
+        insertCell(pdfPTable, context.getResources().getString(R.string.total_cash), ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+
+        insertCell(pdfPTable,globelFunction.convertToEnglish(String. format("%.3f",TOTAL_total_cashVal)), ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+
+
+
+
+        return pdfPTable;
+
+    }
     private PdfPTable createPaymentReport(List<PayMentReportModel> list) {
         createPDF("Payment_Report" + ".pdf");
         PdfPTable pdfPTable = new PdfPTable(7);
@@ -371,7 +469,7 @@ public class PdfConverter {
     }
 
     private PdfPTable createAccountStatmentReport(List<Account__Statment_Model> list) {
-        createPDF("AccountStatmentAcount" + ".pdf");
+        createPDF("AccountStatment" + ".pdf");
         PdfPTable pdfPTable = new PdfPTable(6);
         pdfPTable.setWidthPercentage(100f);
         pdfPTable.setRunDirection(PdfWriter.RUN_DIRECTION_LTR);
@@ -400,7 +498,7 @@ public class PdfConverter {
 
     }
     private PdfPTable createItemsReport(List<ItemReportModel> list) {
-        createPDF("AccountStatmentAcount" + ".pdf");
+        createPDF("ItemsReport" + ".pdf");
         PdfPTable pdfPTable = new PdfPTable(6);
         pdfPTable.setWidthPercentage(100f);
         pdfPTable.setRunDirection(PdfWriter.RUN_DIRECTION_LTR);
@@ -414,13 +512,20 @@ public class PdfConverter {
 
         pdfPTable.setHeaderRows(1);
         for (int i = 0; i < list.size(); i++) {
+
             insertCell(pdfPTable, String.valueOf(list.get(i).getName()), ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
             insertCell(pdfPTable, String.valueOf(list.get(i).getVoucherDate()), ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
 
-            insertCell(pdfPTable, String.valueOf(list.get(i).getQty()), ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
-            insertCell(pdfPTable, String.valueOf(list.get(i).getUnitPrice()), ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
 
-            insertCell(pdfPTable, String.valueOf(list.get(i).getTotal()), ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+            if (Double.parseDouble(list.get(i).getQty()) % 1 != 0)
+                insertCell(pdfPTable, globelFunction.convertToEnglish((String.  format("%.3f",Double.parseDouble(list.get(i).getQty())))), ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+              //  holder.qty .setText(""+globelFunction.convertToEnglish((String.  format("%.3f",Double.parseDouble(itemsList.get(i).getQty())))));
+            else
+                insertCell(pdfPTable, String.valueOf(list.get(i).getQty()), ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+
+            insertCell(pdfPTable,  globelFunction.convertToEnglish((String.  format("%.3f",Double.parseDouble(list.get(i).getUnitPrice())))), ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
+
+            insertCell(pdfPTable,  globelFunction.convertToEnglish((String.  format("%.3f",Double.parseDouble(list.get(i).getTotal())))), ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
 
             insertCell(pdfPTable, String.valueOf(list.get(i).getSalesName()), ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
 

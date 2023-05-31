@@ -15,6 +15,7 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".Report.NewCashReport"
+            android:theme="@style/AppTheme.NoActionBar"
             android:exported="false" />
         <activity
             android:name=".SalesmanMaps_FirebaseActivity"

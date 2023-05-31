@@ -590,6 +590,6 @@ android:id="@+id/menuBtn"
         android:layout_gravity="start"
         android:visibility="visible"
         app:headerLayout="@layout/header_menu"
-        app:itemTextColor="@color/bule3"
+        app:itemTextColor="@color/colorblue_dark3"
         app:menu="@menu/main_menu" />
 </androidx.drawerlayout.widget.DrawerLayout>
