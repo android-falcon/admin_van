@@ -31,12 +31,18 @@ import java.io.IOException;
 import java.util.List;
 
 import jxl.Workbook;
+import jxl.format.Alignment;
+import jxl.format.Colour;
 import jxl.write.Label;
+import jxl.write.WritableCell;
+import jxl.write.WritableCellFormat;
+import jxl.write.WritableFont;
 import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
 import jxl.write.biff.RowsExceededException;
 
+import static com.example.adminvansales.ImportData.cashReportList;
 import static com.itextpdf.text.Element.ALIGN_CENTER;
 
 
@@ -127,6 +133,9 @@ public class ExportToExcel {
                     break;
                 case 8:
                     workbook =ItemsReport(workbook , (List<ItemReportModel>) list );
+                    break;
+                case 9:
+                    workbook = NewcashReport(workbook , (List<CashReportModel>) list );
                     break;
             }
 
@@ -338,6 +347,153 @@ public class ExportToExcel {
                 sheet.addCell(new Label(10, list.size()+2 , globelFunction.convertToEnglish(String.  format("%.3f",TOTAL_total_cashVal))) );
 
 
+
+            } catch (RowsExceededException e) {
+                e.printStackTrace();
+            } catch (WriteException e) {
+                e.printStackTrace();
+            }
+            workbook.write();
+            Toast.makeText(context, "Exported To Excel ", Toast.LENGTH_SHORT).show();
+            try {
+                workbook.close();
+            } catch (WriteException e) {
+                e.printStackTrace();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return workbook;
+
+    }
+    WritableWorkbook NewcashReport(WritableWorkbook workbook, List<CashReportModel> list) {
+
+        try {
+            WritableSheet sheet = workbook.createSheet("Sheet1", 0);//Excel sheet name. 0 represents first sheet
+            try {
+                sheet.addCell(new Label(0, 0, context.getString(R.string.sale_man_number)            )); // column and row
+                sheet.addCell(new Label(1, 0, list.get(0).getSalesManNo()+""));
+                sheet.addCell(new Label(0, 2, context.getString(R.string.sales_man_name   )                          )  );
+                sheet.addCell(new Label(1, 2,      list.get(0).getSalesManName()));
+                  ///1
+                WritableFont redFont = new WritableFont(WritableFont.ARIAL);
+                WritableCellFormat format = new WritableCellFormat();
+                format.setAlignment(Alignment.CENTRE);
+                WritableCell cell2 = new Label(0, 3,       context.getResources().getString(R.string.sales  ),format);;
+
+
+
+                redFont.setColour(Colour.WHITE);
+                WritableCellFormat coloredCellFormat = new WritableCellFormat(redFont);
+                coloredCellFormat.setBackground(Colour.BLUE);
+                cell2.setCellFormat(coloredCellFormat);
+
+                sheet.addCell(cell2);
+
+                // col , row, to col , to row
+
+                sheet.addCell(new Label(0, 4, context.getResources().getString(R.string.cash_sale  )  ) );
+                sheet.addCell(new Label(1, 4,  list.get(0).getTotalCash()+""));
+
+                sheet.addCell(new Label(0, 6, context.getResources().getString(R.string.credit_sales )   ));
+                sheet.addCell(new Label(1, 6,  list.get(0).getTotalCredite()+""));
+
+                sheet.addCell(new Label(0, 8, context.getResources().getString(R.string.returncash     )  ));
+                sheet.addCell(new Label(1, 8,  list.get(0).getRETURNDCASH()+""));
+
+                sheet.addCell(new Label(0, 10, context.getResources().getString(R.string.returncridt     )  ));
+                sheet.addCell(new Label(1, 10,  list.get(0).getRETURNDCREDITE()+""));
+                double returnCash=0;
+                double returncridt=0;
+                try {
+                    returnCash= Double.parseDouble(cashReportList.get(0).getRETURNDCASH());
+                    returncridt=Double.parseDouble(cashReportList.get(0).getRETURNDCREDITE());
+
+                }catch (Exception exception){
+                    returnCash=0;
+                    returncridt=0;
+                    Log.e("exception==",exception.getMessage());
+                }
+                double netSalesT=Double.parseDouble(cashReportList.get(0).getTotalCash()) + Double.parseDouble(cashReportList.get(0).getTotalCredite())
+                        -returnCash-returncridt;
+
+                sheet.addCell(new Label(0, 12, context.getResources().getString(R.string.total_sales     )  ));
+                sheet.addCell(new Label(1, 12,     globelFunction.convertToEnglish(String. format("%.3f",netSalesT))));
+
+                ///2
+                WritableCell cell3 = new Label(0, 13,       context.getResources().getString(R.string.payment  ),format);
+                cell3.setCellFormat(coloredCellFormat);
+
+                sheet.addCell(cell3);
+
+
+                sheet.addCell(new Label(0, 14, context.getResources().getString(R.string.paymentCash     )  ));
+                sheet.addCell(new Label(1, 14,  list.get(0).getPtotalCash()+""));
+
+
+        sheet.addCell(new Label(0, 16, context.getResources().getString(R.string.paymentCheque     )  ));
+                    sheet.addCell(new Label(1, 16,  list.get(0).getPtotalCredite()+""));
+
+                double  TOTAL_netpaymentVal = Double.parseDouble(cashReportList.get(0).getPtotalCash()) + Double.parseDouble(cashReportList.get(0).getPtotalCredite());
+
+                sheet.addCell(new Label(0, 18, context.getResources().getString(R.string.netpayment     )  ));
+                    sheet.addCell(new Label(1, 18,   globelFunction.convertToEnglish(String. format("%.3f",TOTAL_netpaymentVal))+""));
+
+
+//                 ///3
+                WritableCell cell = new Label(0, 19,       context.getResources().getString(R.string.app_creditCard  ),format);
+                cell.setCellFormat(coloredCellFormat);
+
+        //        sheet.addCell(cell);
+
+
+                sheet.addCell(new Label(0, 20, context.getResources().getString(R.string.credit_value     )  ));
+                    sheet.addCell(new Label(1, 20,  list.get(0).getPtotalCrediteCard()+""));
+
+                double TOTAL_total_cashVal = Double.parseDouble(cashReportList.get(0).getTotalCash()) + Double.parseDouble(cashReportList.get(0).getPtotalCash());
+
+                sheet.addCell(new Label(0, 22, context.getResources().getString(R.string.total_cash     )  ));
+                    sheet.addCell(new Label(1,  22,   globelFunction.convertToEnglish(String. format("%.3f",TOTAL_total_cashVal))+""));
+                sheet.mergeCells(0,3, 1, 3);// col , row, to col , to row
+                sheet.mergeCells(0,13,1, 13);
+               // sheet.mergeCells(0,19,1,19);
+//                sheet.addCell(new Label(3, 0, context.getResources().getString(R.string.cash_sale  )  ) );
+//                sheet.addCell(new Label(4, 0, context.getResources().getString(R.string.credit_sales )   ));
+//                sheet.addCell(new Label(5, 0, context.getResources().getString(R.string.returncash     )  ));
+//                sheet.addCell(new Label(6, 0, context.getResources().getString(R.string.returncridt     )  ));
+//                sheet.addCell(new Label(7, 0, context.getResources().getString(R.string.net_sales3     )  ));
+//                sheet.addCell(new Label(8, 0, context.getResources().getString(R.string.paymentCash     )  ));
+//                sheet.addCell(new Label(9, 0, context.getResources().getString(R.string.paymentCheque     )  ));
+//                sheet.addCell(new Label(10, 0, context.getResources().getString(R.string.netpayment     )  ));
+//                sheet.addCell(new Label(11, 0, context.getResources().getString(R.string.credit_value     )  ));
+//                sheet.addCell(new Label(12, 0, context.getResources().getString(R.string.total_cash     )  ));
+//
+//                sheet.mergeCells(0,1, 1, 1);// col , row, to col , to row
+//                double sum=0,nettotal=0,TOTAL_net_salesVal=0,TOTAL_netpaymentVal=0,TOTAL_total_cashVal=0;
+//                for (int i = 0; i < list.size(); i++) {
+//                    sheet.addCell(new Label(0, i + 2, list.get(i).getSalesManNo()+""));
+//                    sheet.addCell(new Label(2, i + 2,      list.get(i).getSalesManName()));
+//                    sheet.addCell(new Label(3, i + 2,  list.get(i).getTotalCash()+""));
+//                    sheet.addCell(new Label(4, i + 2,  list.get(i).getTotalCredite()+""));
+//                    sheet.addCell(new Label(5, i + 2,  list.get(i).getRETURNDCASH()+""));
+//                    sheet.addCell(new Label(6, i + 2,  list.get(i).getRETURNDCREDITE()+""));
+//                    sheet.addCell(new Label(7, i + 2,      list.get(i).getNetSale()));
+//                    sheet.addCell(new Label(8, i + 2,  list.get(i).getPtotalCash()+""));
+//
+//                    sheet.addCell(new Label(9, i + 2,  list.get(i).getPtotalCredite()+""));
+//                    sheet.addCell(new Label(10, i + 2,  list.get(i).getNetPay()+""));
+//                    sheet.addCell(new Label(11, i + 2,  list.get(i).getPtotalCrediteCard()+""));
+//                    sheet.addCell(new Label(12, i + 2,  list.get(i).getNetCash()+""));
+//
+//                    sheet.mergeCells(0,i + 2, 1, i + 2);// col , row, to col , to row
+//                    nettotal+=Double.parseDouble(list.get(i).getPtotalCredite())+Double.parseDouble(list.get(i).getPtotalCash());
+//                    TOTAL_net_salesVal+=Double.parseDouble(list.get(i).getTotalCash()) +Double.parseDouble(list.get(i).getTotalCredite());
+//                    TOTAL_netpaymentVal += Double.parseDouble(list.get(i).getPtotalCash())  +Double.parseDouble(list.get(i).getPtotalCredite());
+//                    TOTAL_total_cashVal  +=  Double.parseDouble(list.get(i).getTotalCash())+  Double.parseDouble(list.get(i).getPtotalCash());
+//
+//                }
+//
+//
 
             } catch (RowsExceededException e) {
                 e.printStackTrace();
@@ -659,9 +815,12 @@ public class ExportToExcel {
                 for (int i = 0; i < list.size(); i++) {
                     sheet.addCell(new Label(0, i + 2, list.get(i).getName()+""));
                     sheet.addCell(new Label(1, i + 2,      list.get(i).getVoucherDate()+""));
+                    if (Double.parseDouble(list.get(i).getQty()) % 1 != 0)
+                        sheet.addCell(new Label(2, i + 2, globelFunction.convertToEnglish((String.  format("%.3f",Double.parseDouble( list.get(i).getQty()))))));
+                    else
                     sheet.addCell(new Label(2, i + 2,  list.get(i).getQty()+""));
-                    sheet.addCell(new Label(3, i + 2,  list.get(i).getUnitPrice()+""));
-                    sheet.addCell(new Label(4, i + 2,  list.get(i).getTotal()+""));
+                    sheet.addCell(new Label(3, i + 2, globelFunction.convertToEnglish((String.  format("%.3f",Double.parseDouble( list.get(i).getUnitPrice()))))));
+                    sheet.addCell(new Label(4, i + 2, globelFunction.convertToEnglish((String.  format("%.3f",Double.parseDouble(  list.get(i).getTotal()))))));
                     sheet.addCell(new Label(5, i + 2,  list.get(i).getSalesName()+""));
 
 

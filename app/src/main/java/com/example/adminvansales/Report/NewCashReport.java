@@ -9,15 +9,20 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.adminvansales.ExportToExcel;
 import com.example.adminvansales.GlobelFunction;
 import com.example.adminvansales.ImportData;
 import com.example.adminvansales.LogIn;
+import com.example.adminvansales.PdfConverter;
 import com.example.adminvansales.R;
 import com.example.adminvansales.model.SalesManInfo;
+
+import java.io.File;
 
 import static com.example.adminvansales.ImportData.cashReportList;
 
@@ -26,16 +31,18 @@ public class NewCashReport extends AppCompatActivity {
     String toDay;
     GlobelFunction globelFunction;
     SalesManInfo info;
+    ImageButton excelConvert, pdfConvert;
  public static    TextView Respons;
     ImportData importData ;
     TextView cash_sal, credit_sale, total_sale,text_return_cash,text_return_cridt;
-    TextView cash_paymenttext, creditPaymenttext, nettext,total_cashtext,creditCard;
+    TextView cash_paymenttext, creditPaymenttext, nettext,total_cashtext,creditCard,salesman_name;
    Button previewButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_cash_report);
         date_editReport_cash=findViewById(R.id.date_editReport_cash);
+        salesman_name=findViewById(R.id.salesman_name);
         LinearLayout linearMain=findViewById(R.id.mainLayout);
         try{
             if(LogIn.languagelocalApp.equals("ar"))
@@ -96,10 +103,15 @@ public class NewCashReport extends AppCompatActivity {
         });
       info = (SalesManInfo) getIntent().getSerializableExtra("SalesManInfoL");
         Log.e("SalesManInfoL==", info.getSalesManNo()+"")  ;
+        salesman_name.setText(info.getSalesName()+"");
         globelFunction = new GlobelFunction(NewCashReport.this);
         toDay = globelFunction.DateInToday();
         date_editReport_cash.setText(toDay);
         TOdate_editReport_cash.setText(toDay);
+        excelConvert = findViewById(R.id.excelConvert);
+        pdfConvert = findViewById(R.id.pdfConvert);
+        excelConvert.setOnClickListener(onClick);
+        pdfConvert.setOnClickListener(onClick);
         date_editReport_cash.setOnClickListener(onClick);
         TOdate_editReport_cash.setOnClickListener(onClick);
         previewButton.setOnClickListener(onClick);
@@ -126,8 +138,12 @@ public class NewCashReport extends AppCompatActivity {
                     globelFunction.DateClick(TOdate_editReport_cash);
                     break;
 
-
-
+                case R.id.pdfConvert:
+                    convertToPdf();
+                    break;
+                case R.id.excelConvert:
+                    convertToExcel();
+                    break;
             }
 
         }
@@ -170,8 +186,8 @@ public class NewCashReport extends AppCompatActivity {
                 creditPaymenttext.setText(""+cashReportList.get(0).getPtotalCredite());
                 nettext.setText(""+TOTAL_netpaymentVal);
 
-                total_cashtext.setText(""+TOTAL_total_cashVal);
-                creditCard.setText(""+cashReportList.get(0).getTotalCredite());
+                total_cashtext.setText(""+globelFunction.convertToEnglish(String. format("%.3f",TOTAL_total_cashVal)));
+                creditCard.setText(""+cashReportList.get(0).getPtotalCrediteCard());
 
             }
         }catch (Exception exception){
@@ -180,4 +196,16 @@ public class NewCashReport extends AppCompatActivity {
 
     }
 
+    private File convertToPdf() {
+        PdfConverter pdf = new PdfConverter(NewCashReport.this);
+        File file = pdf.exportListToPdf(cashReportList, "NewCashReport", toDay, 9);
+        return file;
+    }
+
+    private void convertToExcel() {
+
+        ExportToExcel exportToExcel = new ExportToExcel();
+        exportToExcel.createExcelFile(NewCashReport.this, "NewCashReport.xls", 9, cashReportList);
+        // return file;
+    }
 }

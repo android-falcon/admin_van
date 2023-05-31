@@ -86,6 +86,9 @@ public class ItemReportAdapter extends BaseAdapter {
         holder.itemName .setText(""+itemsList.get(i).getName());
         holder.date .setText(""+itemsList.get(i).getVoucherDate());
 //        holder.salesName .setText(""+itemsList.get(i).getSalesName());
+        if (Double.parseDouble(itemsList.get(i).getQty()) % 1 != 0)
+        holder.qty .setText(""+globelFunction.convertToEnglish((String.  format("%.3f",Double.parseDouble(itemsList.get(i).getQty())))));
+       else
         holder.qty .setText(""+itemsList.get(i).getQty());
         holder.price .setText(globelFunction.convertToEnglish((String.  format("%.3f",Double.parseDouble(itemsList.get(i).getUnitPrice())))));
         holder.total.setText(""+globelFunction.convertToEnglish(String.  format("%.3f",Double.parseDouble(itemsList.get(i).getTotal()))));
