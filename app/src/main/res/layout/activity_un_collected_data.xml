@@ -325,11 +325,18 @@ android:layout_gravity="center"
 
     </LinearLayout>
 </LinearLayout>
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:layout_height="match_parent">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_weight="1">
+
 
 
 
@@ -346,18 +353,28 @@ android:layout_gravity="center"
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="52dp"
             android:background="#76C4FF"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:orientation="horizontal"
-            android:paddingHorizontal="12dp">
+        >
+
+            <TextView
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+
+                android:fontFamily="@font/alegreya_sans_bold"
+                android:gravity="center"
+                android:text="@string/customerName"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
 
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+
                 android:fontFamily="@font/alegreya_sans_bold"
                 android:gravity="center"
                 android:text="@string/app_bank_name"
@@ -365,9 +382,9 @@ android:layout_gravity="center"
                 android:textSize="15sp" />
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="70dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+
                 android:fontFamily="@font/alegreya_sans_bold"
                 android:gravity="center"
                 android:text="@string/check_number"
@@ -375,9 +392,9 @@ android:layout_gravity="center"
                 android:textSize="15sp" />
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+
                 android:fontFamily="@font/alegreya_sans_bold"
                 android:gravity="center"
                 android:text="@string/date"
@@ -385,9 +402,9 @@ android:layout_gravity="center"
                 android:textSize="15sp" />
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+
                 android:fontFamily="@font/alegreya_sans_bold"
                 android:gravity="center"
                 android:text="@string/app_amount2"
@@ -395,13 +412,32 @@ android:layout_gravity="center"
                 android:textSize="15sp" />
 
         </LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_margin="2dp"
+            android:visibility="gone"
+            android:layout_height="match_parent"
+            android:id="@+id/rec"/>
+<ScrollView
+    android:layout_width="match_parent"
+    android:scrollbars="vertical"
+
+    android:fillViewport="true"
+    android:layout_height="match_parent"
+    >
+
 
         <TableLayout
             android:id="@+id/TableCheckData"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:scrollbars="vertical"
             android:layout_margin="2dp"
+
             android:background="@color/layer7" />
+
+</ScrollView>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="52dp"
@@ -434,6 +470,8 @@ android:layout_gravity="center"
     </LinearLayout>
 
     </LinearLayout>
+
+    </HorizontalScrollView>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="52dp"

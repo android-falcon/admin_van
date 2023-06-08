@@ -432,7 +432,36 @@
                 android:gravity="center"
                 android:textStyle="bold" />
         </LinearLayout>
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_marginTop="2dp"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="match_parent"
+            android:background="@color/layer3">
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:padding="1dp"
+                android:text="@string/app_creditCard"
+                android:textColor="@color/colorblue1"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/text_credit"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="1dp"
+                android:gravity="center"
+                android:textColor="@color/colorBlack"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+        </LinearLayout>
         <LinearLayout
             android:layout_weight="1"
             android:layout_marginTop="2dp"
@@ -486,36 +515,7 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_weight="1"
-            android:layout_marginTop="2dp"
-            android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:layout_height="match_parent"
-            android:background="@color/layer3">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:gravity="center"
-                android:padding="1dp"
-                android:text="@string/app_creditCard"
-                android:textColor="@color/text_view_color"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/text_credit"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:padding="1dp"
-                android:gravity="center"
-                android:textColor="@color/colorBlack"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-        </LinearLayout>
 
         <LinearLayout
             android:layout_weight="1"
