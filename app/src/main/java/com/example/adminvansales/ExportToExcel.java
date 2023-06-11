@@ -43,6 +43,7 @@ import jxl.write.WriteException;
 import jxl.write.biff.RowsExceededException;
 
 import static com.example.adminvansales.ImportData.cashReportList;
+import static com.example.adminvansales.ImportData.listCustomer;
 import static com.itextpdf.text.Element.ALIGN_CENTER;
 
 
@@ -379,7 +380,7 @@ public class ExportToExcel {
                 WritableFont redFont = new WritableFont(WritableFont.ARIAL);
                 WritableCellFormat format = new WritableCellFormat();
                 format.setAlignment(Alignment.CENTRE);
-                WritableCell cell2 = new Label(0, 3,       context.getResources().getString(R.string.sales  ),format);;
+                WritableCell cell2 = new Label(0, 3,    context.getResources().getString(R.string.sales  ),format);;
 
 
 
@@ -431,29 +432,31 @@ public class ExportToExcel {
                 sheet.addCell(new Label(1, 14,  list.get(0).getPtotalCash()+""));
 
 
-        sheet.addCell(new Label(0, 16, context.getResources().getString(R.string.paymentCheque     )  ));
-                    sheet.addCell(new Label(1, 16,  list.get(0).getPtotalCredite()+""));
+        sheet.addCell(new Label(0, 15, context.getResources().getString(R.string.paymentCheque     )  ));
+                    sheet.addCell(new Label(1, 15,  list.get(0).getPtotalCredite()+""));
+
+
+
+                sheet.addCell(new Label(0,16, context.getResources().getString(R.string.credit_value     )  ));
+                sheet.addCell(new Label(1, 16,  list.get(0).getPtotalCrediteCard()+""));
 
                 double  TOTAL_netpaymentVal = Double.parseDouble(cashReportList.get(0).getPtotalCash()) + Double.parseDouble(cashReportList.get(0).getPtotalCredite());
 
-                sheet.addCell(new Label(0, 18, context.getResources().getString(R.string.netpayment     )  ));
-                    sheet.addCell(new Label(1, 18,   globelFunction.convertToEnglish(String. format("%.3f",TOTAL_netpaymentVal))+""));
+                sheet.addCell(new Label(0, 17, context.getResources().getString(R.string.netpayment     )  ));
+                    sheet.addCell(new Label(1, 17,   globelFunction.convertToEnglish(String. format("%.3f",TOTAL_netpaymentVal))+""));
 
 
 //                 ///3
-                WritableCell cell = new Label(0, 19,       context.getResources().getString(R.string.app_creditCard  ),format);
+                WritableCell cell = new Label(0, 18,       context.getResources().getString(R.string.app_creditCard  ),format);
                 cell.setCellFormat(coloredCellFormat);
 
         //        sheet.addCell(cell);
 
 
-                sheet.addCell(new Label(0, 20, context.getResources().getString(R.string.credit_value     )  ));
-                    sheet.addCell(new Label(1, 20,  list.get(0).getPtotalCrediteCard()+""));
-
                 double TOTAL_total_cashVal = Double.parseDouble(cashReportList.get(0).getTotalCash()) + Double.parseDouble(cashReportList.get(0).getPtotalCash());
 
-                sheet.addCell(new Label(0, 22, context.getResources().getString(R.string.total_cash     )  ));
-                    sheet.addCell(new Label(1,  22,   globelFunction.convertToEnglish(String. format("%.3f",TOTAL_total_cashVal))+""));
+                sheet.addCell(new Label(0, 19, context.getResources().getString(R.string.total_cash     )  ));
+                    sheet.addCell(new Label(1,  19,   globelFunction.convertToEnglish(String. format("%.3f",TOTAL_total_cashVal))+""));
                 sheet.mergeCells(0,3, 1, 3);// col , row, to col , to row
                 sheet.mergeCells(0,13,1, 13);
                // sheet.mergeCells(0,19,1,19);
@@ -646,19 +649,21 @@ public class ExportToExcel {
             WritableSheet sheet = workbook.createSheet("Sheet1", 0);//Excel sheet name. 0 represents first sheet
 
             try {
-                sheet.addCell(new Label(0, 0, context.getString(R.string.app_bank_name)            )); // column and row
-                sheet.addCell(new Label(1, 0, context.getString(R.string.check_number   )) );
+                sheet.addCell(new Label(0, 0, context.getString(R.string.customerName)));
+                        sheet.addCell(new Label(1, 0, context.getString(R.string.app_bank_name)            )); // column and row
+                sheet.addCell(new Label(2, 0, context.getString(R.string.check_number   )) );
 
-                sheet.addCell(new Label(2, 0, context.getString(R.string.chaequeDate   )) );
-                sheet.addCell(new Label(3, 0, context.getString(R.string.app_amount   )) );
+                sheet.addCell(new Label(3, 0, context.getString(R.string.chaequeDate   )) );
+                sheet.addCell(new Label(4, 0, context.getString(R.string.app_amount   )) );
 
-                sheet.mergeCells(0,1, 3, 1);// col , row, to col , to row
+                sheet.mergeCells(0,1, 4, 1);// col , row, to col , to row
 
                 for (int i = 0; i < list.size(); i++) {
-                    sheet.addCell(new Label(0, i + 2, list.get(i).getBank()+""));
-                    sheet.addCell(new Label(1, i + 2,      list.get(i).getCheckNumber()+""));
-                    sheet.addCell(new Label(2, i + 2,  list.get(i).getDueDate()+""));
-                    sheet.addCell(new Label(3, i + 2,  list.get(i).getAmount()+""));
+                    sheet.addCell(new Label(0, i + 2,  getCusromerName(list.get(i).getCustNumber())+""));
+                    sheet.addCell(new Label(1, i + 2, list.get(i).getBank()+""));
+                    sheet.addCell(new Label(2, i + 2,      list.get(i).getCheckNumber()+""));
+                    sheet.addCell(new Label(3, i + 2,  list.get(i).getDueDate()+""));
+                    sheet.addCell(new Label(4, i + 2,  list.get(i).getAmount()+""));
 
 
                     //sheet.mergeCells(0,i + 2, 1, i + 2);// col , row, to col , to row
@@ -850,5 +855,17 @@ public class ExportToExcel {
     }
 
 
+    private String getCusromerName(String num) {
+        Log.e("num==",num+"");
+        for (int i = 0; i < listCustomer.size(); i++){
 
+            if (num.equals(listCustomer.get(i).getCustomerNumber())) {
+
+                return listCustomer.get(i).getCustomerName();
+            }
+
+        }
+
+        return "";
+    }
 }

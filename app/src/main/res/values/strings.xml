@@ -150,6 +150,8 @@
     <string name="Plan">Plan</string>
     <string name="Location">Location</string>
     <string name="Notifications">Notifications</string>
+    <string name="CustomerAddedNotifications">Customer Added Notifications</string>
+
     <string name="Reports">Reports</string>
     <string name="addcustomerlocation">Add Customer Location</string>
     <string name="itemvisble">Item Visble</string>
@@ -348,7 +350,13 @@
     <string name="transwithoutvouch">#Transactions Without Vouchers</string>
     <string name="duration">duration</string>
     <string name="VOUCHERCOUNT">Voucher Count</string>
-
+    <string name="add_cust">Add Customer</string>
+    <string name="MarketName"> Market Name</string>
+    <string name="tele">Phone</string>
+    <string name="contactPerson">Contact Person</string>
+    <string name="app_done">Done</string>
+    <string name="address">Address</string>
+    <string name="reqired_filled">Reqired Filled Empty</string>
     <string-array name="app_paymentTypeList">
 
         <!--        <item>All</item>-->

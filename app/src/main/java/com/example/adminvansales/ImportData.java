@@ -81,9 +81,16 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
@@ -229,9 +236,9 @@ public  String headerDll="/Falcons/VAN.dll";
         }
 
     }
-    public void getAllcheques(String customerId) {
+    public void getAllcheques(String customerId,int falge) {
         try {
-
+            Log.e("falge==", "" + falge);
             SettingModel settingModel = new SettingModel();
             settingModel = databaseHandler.getAllSetting();
             ipAddress = settingModel.getIpAddress();
@@ -249,7 +256,7 @@ public  String headerDll="/Falcons/VAN.dll";
         if (!ipAddress.equals("") && !portSettings.equals("")) {
             paymentChequesList.clear();
             Log.e("getUnCollectedCheques", "*****");
-            new JSONTask_GetAllCheques(customerId).execute();
+            new JSONTask_GetAllCheques(customerId,falge).execute();
             //  new SyncRemark().execute();
         } else {
             Toast.makeText(main_context, "Check Ip Address", Toast.LENGTH_SHORT).show();
@@ -5004,9 +5011,11 @@ Log.e("URL_TO_HIT",URL_TO_HIT+"");
     private class JSONTask_GetAllCheques extends AsyncTask<String, String, String> {
 
         private String custId = "";
+        private int falge;
 
-        public JSONTask_GetAllCheques(String customerId) {
+        public JSONTask_GetAllCheques(String customerId,int falge) {
             this.custId = customerId;
+            this. falge=falge;
         }
 
         @Override
@@ -5097,7 +5106,6 @@ Log.e("URL_TO_HIT",URL_TO_HIT+"");
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-
             JSONObject result = null;
             String impo = "";
             pdPayments.dismissWithAnimation();
@@ -5105,6 +5113,7 @@ Log.e("URL_TO_HIT",URL_TO_HIT+"");
             paymentChequesList.clear();
             if (s != null) {
                 if (s.contains("VHFNo")) {
+
                     try {
                         Payment requestDetail;
                         JSONArray requestArray = null;
@@ -5125,7 +5134,28 @@ Log.e("URL_TO_HIT",URL_TO_HIT+"");
                             //
 
                             requestDetail.setDueDate(infoDetail.get("DueDate").toString());
-                            requestDetail.setBank("Jordan Bank");
+                          //  requestDetail.setBank("Jordan Bank");
+                            Log.e("DueDate===",infoDetail.get("DueDate").toString());
+
+
+//                            DateFormat inputFormat = new SimpleDateFormat("yyyy/MM/dd");
+//                            DateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy");
+//                            String startDateStrNewFormat="";
+//                            Date date = null;;
+//                            try {
+//                                date = inputFormat.parse(infoDetail.get("DueDate").toString());
+//                                 startDateStrNewFormat = outputFormat.format(date);
+//                                requestDetail.setDueDate(startDateStrNewFormat);
+//                            } catch (ParseException e) {
+//                                e.printStackTrace();
+//                                requestDetail.setDueDate(infoDetail.get("DueDate").toString());
+//                            }
+
+
+                            requestDetail.setDueDate(infoDetail.get("DueDate").toString());
+                            requestDetail.setBank(infoDetail.get("PAYEENAME").toString());
+                            requestDetail.setCustNumber(infoDetail.get("AccCodeF").toString());
+                            requestDetail.setCustName(infoDetail.get("AccNameAF").toString());
                             try {
                                 requestDetail.setAmount(infoDetail.get("CAmount").toString());
 
@@ -5140,7 +5170,11 @@ Log.e("URL_TO_HIT",URL_TO_HIT+"");
 
                         }
                      if (paymentChequesList.size() != 0) {
+                         Log.e("paymentChequesList===",paymentChequesList.size()+"");
+
+                        if( falge==1)
                             resultData.setText("payment");
+                         else   resultData.setText("paywithoutDate");
 
                         }
                      else   resultData.setText("not");

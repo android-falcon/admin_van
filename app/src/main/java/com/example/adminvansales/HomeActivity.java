@@ -148,12 +148,7 @@ public class HomeActivity extends AppCompatActivity
 
                                 return true;
 
-                            case R.id.action_reports:
 
-                                ReportsPopUpClass popUpClass = new ReportsPopUpClass();
-                                popUpClass.showPopupWindow(item.getActionView(), HomeActivity.this);
-
-                                return true;
 
                             case R.id.action_location:
                               startActivity(new Intent(getApplicationContext(), SalesmanMaps_FirebaseActivity.class));
@@ -163,6 +158,11 @@ public class HomeActivity extends AppCompatActivity
                             case R.id.action_notifications:
 
                                 startActivity(new Intent(getApplicationContext(), RequstNotifaction.class));
+                                overridePendingTransition(0, 0);
+                                return true;
+                            case R.id.action_notifications2:
+
+                                startActivity(new Intent(getApplicationContext(), AddedCustomersNotifaction.class));
                                 overridePendingTransition(0, 0);
 
                                 return true;

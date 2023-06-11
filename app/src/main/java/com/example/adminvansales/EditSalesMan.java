@@ -108,10 +108,10 @@ public class EditSalesMan extends AppCompatActivity {
 
                                 return true;
 
-                            case R.id.action_reports:
+                            case R.id.action_notifications2:
 
-                                ReportsPopUpClass popUpClass = new ReportsPopUpClass();
-                                popUpClass.showPopupWindow(item.getActionView(), EditSalesMan.this);
+                                startActivity(new Intent(getApplicationContext(), AddedCustomersNotifaction.class));
+                                overridePendingTransition(0, 0);
 
                                 return true;
 

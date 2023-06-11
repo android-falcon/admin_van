@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="400dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:paddingEnd="3dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        >
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:paddingTop="3dp"
+            android:layout_width="match_parent">
+            <de.hdodenhof.circleimageview.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/activitys_ImageView"
+                android:layout_width="100dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center|top"
+                android:clickable="true"
+                android:src="@drawable/addcustomer"
+                app:civ_border_color="@color/colorPrimaryDark"
+                app:civ_border_width="1dp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/add_cust"
+                android:gravity="center|start"
+                android:textStyle="bold"
+                android:padding="3dp"
+                android:textColor="@color/colorblue1"
+                android:textSize="22sp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:visibility="gone"
+            android:background="@color/colorblue1"
+            android:orientation="vertical" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:paddingTop="2dp"
+            android:layout_width="match_parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_weight="2"
+                android:layout_height="match_parent"
+                android:text="@string/customerName"
+                android:textColor="@color/text_view_color"
+                android:textSize="14sp"
+                android:gravity="center"
+                android:textStyle="bold"
+                />
+
+            <EditText
+                android:id="@+id/custEditText"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:padding="3dp"
+                android:paddingEnd="3dp"
+                android:imeOptions="actionNext"
+                android:textSize="14sp"
+                android:inputType="text"
+                android:background="@drawable/back_border_edit"
+                android:textColor="@color/add_button" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:paddingTop="2dp"
+            android:visibility="gone"
+            android:layout_width="match_parent">
+
+            <TextView
+
+                android:layout_width="match_parent"
+                android:layout_weight="2"
+                android:layout_height="match_parent"
+                android:text="@string/MarketName"
+                android:textColor="@color/text_view_color"
+                android:textSize="14sp"
+                android:gravity="center"
+                android:textStyle="bold"
+                />
+
+            <EditText
+                android:id="@+id/MarketName"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:padding="3dp"
+                android:paddingEnd="3dp"
+                android:imeOptions="actionNext"
+                android:textSize="14sp"
+                android:inputType="text"
+                android:background="@drawable/back_border_edit"
+                android:textColor="@color/add_button" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingTop="2dp"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_weight="2"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/address"
+                android:layout_gravity="center_vertical"
+
+                android:textStyle="bold"
+                android:textColor="@color/text_view_color"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/addressEditText"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+
+                android:padding="3dp"
+                android:textSize="14sp"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:background="@drawable/back_border_edit"
+                android:textColor="@color/add_button" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingTop="2dp"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_weight="2"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/tele"
+                android:inputType="number"
+                android:layout_gravity="center_vertical"
+
+                android:textStyle="bold"
+                android:textColor="@color/text_view_color"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/phoneEditText"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:paddingEnd="3dp"
+                android:padding="3dp"
+                android:textSize="14sp"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:background="@drawable/back_border_edit"
+                android:textColor="@color/add_button" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingTop="2dp"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_weight="2"
+                android:layout_height="match_parent"
+
+                android:text="@string/contactPerson"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textColor="@color/text_view_color"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/person_contactEditText"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+
+
+                android:textSize="14sp"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:background="@drawable/back_border_edit"
+                android:textColor="@color/add_button" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingTop="2dp"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_weight="2"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/remark"
+                android:layout_gravity="center_vertical"
+
+                android:textStyle="bold"
+                android:textColor="@color/text_view_color"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/remarkEditText"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:padding="3dp"
+                android:paddingEnd="3dp"
+                android:textSize="14sp"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:background="@drawable/back_border_edit"
+                android:textColor="@color/add_button" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:orientation="horizontal"
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:layout_weight="1"
+                android:id="@+id/linearButtons"
+
+                android:gravity="center"
+                android:padding="5dp">
+
+
+                <Button
+                    android:id="@+id/AcceptButton"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+
+                    android:layout_weight="1"
+                    android:fontFamily="serif"
+                    android:background="@drawable/accept_btn"
+                    android:padding="2dp"
+                    android:text="@string/accept"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:elevation="2dp"
+                    app:autoSizeMaxTextSize="16sp"
+                    app:autoSizeMinTextSize="14sp"
+                    app:autoSizeStepGranularity="2sp"
+                    app:autoSizeTextType="uniform" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/RejectButton"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_login"
+                    android:padding="2dp"
+                    android:text="@string/Reject"
+                    android:fontFamily="serif"
+                    android:textColor="@color/colorblue_dark3"
+                    android:textSize="18sp"
+                    android:elevation="2dp"
+                    android:textStyle="bold"
+                    app:autoSizeMaxTextSize="16sp"
+                    app:autoSizeMinTextSize="12sp"
+                    app:autoSizeStepGranularity="2sp"
+                    app:autoSizeTextType="uniform" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

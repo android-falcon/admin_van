@@ -410,7 +410,7 @@ Log.e("Exception==",exception.getMessage()+"");
 
         BottomNavigationView bottom_navigation = findViewById(R.id.bottom_navigation);
 
-        bottom_navigation.setSelectedItemId(R.id.action_reports);
+
 
         bottom_navigation.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -425,10 +425,10 @@ Log.e("Exception==",exception.getMessage()+"");
 
                                 return true;
 
-                            case R.id.action_reports:
+                            case R.id.action_notifications2:
 
-                                ReportsPopUpClass popUpClass = new ReportsPopUpClass();
-                                popUpClass.showPopupWindow(item.getActionView(), ItemReport.this);
+                                startActivity(new Intent(getApplicationContext(), AddedCustomersNotifaction.class));
+                                overridePendingTransition(0, 0);
 
                                 return true;
 

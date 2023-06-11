@@ -174,7 +174,6 @@ public class PaymentDetailsReport extends AppCompatActivity  {
 
         bottom_navigation = findViewById(R.id.bottom_navigation);
 
-        bottom_navigation.setSelectedItemId(R.id.action_reports);
 
         bottom_navigation.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -189,12 +188,7 @@ public class PaymentDetailsReport extends AppCompatActivity  {
 
                                 return true;
 
-                            case R.id.action_reports:
 
-                                ReportsPopUpClass popUpClass = new ReportsPopUpClass();
-                                popUpClass.showPopupWindow(item.getActionView(), PaymentDetailsReport.this);
-
-                                return true;
 
                             case R.id.action_location:
 

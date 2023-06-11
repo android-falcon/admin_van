@@ -37,9 +37,12 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.example.adminvansales.Adapters.CustomersListAdapter;
+import com.example.adminvansales.Adapters.uncollectAdapter;
 import com.example.adminvansales.ExportToExcel;
 import com.example.adminvansales.GlobelFunction;
 import com.example.adminvansales.ImportData;
@@ -100,6 +103,7 @@ TextView total,cust_select;
     public static   TextView customerAccountNo,customerAccountname;
     TextView fromDate, toDate;
     Comparator<Payment> compareBy;
+    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,8 +111,7 @@ TextView total,cust_select;
         new LocaleAppUtils().changeLayot(UnCollectedData.this);
         setContentView(R.layout.activity_un_collected_data);
         initialView();
-        compareBy
-                = Comparator.comparing(Payment::getDueDate);
+    compareBy = Comparator.comparing(Payment::getDueDate).thenComparing(Payment::getCheckNumber);
 
    //  getPayment(); just to test
       findViewById(R.id.cust_selectclear)  .setOnClickListener(new View.OnClickListener() {
@@ -122,7 +125,7 @@ TextView total,cust_select;
         paymentArrayList.clear();
         Log.e(" paymentArrayList3===", paymentArrayList.size() + "");
         Log.e(" paymentChequesList===", paymentChequesList.size() + "");
-        importJason.getAllcheques("9999999999");
+        importJason.getAllcheques("9999999999",2);
 
         preview_button_account.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,13 +138,13 @@ TextView total,cust_select;
                     Log.e(" paymentArrayList3===", paymentArrayList.size() + "");
                     Log.e(" paymentChequesList===", paymentChequesList.size() + "");
                     importJason.getUnCollectedCheques(customerId);
-                    importJason.getAllcheques(customerId);
+                    importJason.getAllcheques(customerId,1);
                 } else {
                     paymentChequesList.clear();
                     paymentArrayList.clear();
                     Log.e(" paymentArrayList3===", paymentArrayList.size() + "");
                     Log.e(" paymentChequesList===", paymentChequesList.size() + "");
-                    importJason.getAllcheques("9999999999");
+                    importJason.getAllcheques("9999999999",1);
                 }
 //
             }
@@ -217,12 +220,7 @@ TextView total,cust_select;
 //    }
 
     private File convertToPdf() {
-        try {
-            paymentArrayList.sort(compareBy);
-        }
-        catch (Exception exception){
 
-        }
 
         PdfConverter pdf = new PdfConverter(UnCollectedData.this);
         File file = pdf.exportListToPdf(paymentArrayList, "UncollectedChequesReport", toDay, 5);
@@ -230,12 +228,7 @@ TextView total,cust_select;
     }
 
     private void convertToExcel() {
-        try {
-            paymentArrayList.sort(compareBy);
-        }
-        catch (Exception exception){
 
-        }
         ExportToExcel exportToExcel = new ExportToExcel();
         exportToExcel.createExcelFile(UnCollectedData.this, "UncollectedChequesReport.xls", 5, paymentArrayList);
 //        if(file!=null)
@@ -269,6 +262,8 @@ TextView total,cust_select;
         {
             linearMain.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         }
+        recyclerView= findViewById(R.id.rec);
+        recyclerView.setLayoutManager(new LinearLayoutManager(UnCollectedData.this));
         globelFunction = new GlobelFunction(UnCollectedData.this);
         fromDate = findViewById(R.id.from_date_r);
         toDate = findViewById(R.id.to_date_r);
@@ -306,17 +301,35 @@ TextView total,cust_select;
                         recivedAmount_text.setText(unCollectlList.get(0).getRECVD().toString());
                         paidAmountText.setText(unCollectlList.get(0).getPAIDAMT().toString());
                     }
-                    if (s.toString().equals("payment")) {
-                        //    Log.e(" paymentArrayList5===", paymentArrayList.size()+"");
+                    if(s.toString().equals("paywithoutDate")){
                         paymentArrayList.clear();
                         paymentArrayList.addAll(paymentChequesList);
+
+                        Log.e(" paymentArrayList88===", paymentArrayList.size() + "");
+
+                        //Collections.sort(paymentArrayList,Payment.comparedate);
+
+                        fillTable(2);
+
+                    }
+                  else  if (s.toString().equals("payment")) {
+                  Log.e(" paymentArrayList5===", paymentArrayList.size()+"");
+                        paymentArrayList.clear();
+                        paymentArrayList.addAll(paymentChequesList);
+
                         Log.e(" paymentArrayList5===", paymentArrayList.size() + "");
-                        fillTable();
+
+                    //    Collections.sort(paymentArrayList,Payment.comparedate);
+
+                        fillTable(1);
+
                     } else {
                         Log.e(" paymentArrayList1===", paymentArrayList.size() + "");
                         paymentArrayList.clear();
                         Log.e(" paymentArrayList2===", paymentArrayList.size() + "");
-                        fillTable();
+
+
+                        fillTable(1);
                     }
                 }
 
@@ -341,7 +354,7 @@ TextView total,cust_select;
 
         BottomNavigationView bottom_navigation = findViewById(R.id.bottom_navigation);
 
-        bottom_navigation.setSelectedItemId(R.id.action_reports);
+
 
         bottom_navigation.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -356,10 +369,10 @@ TextView total,cust_select;
 
                                 return true;
 
-                            case R.id.action_reports:
+                            case R.id.action_notifications2:
 
-                                ReportsPopUpClass popUpClass = new ReportsPopUpClass();
-                                popUpClass.showPopupWindow(item.getActionView(), UnCollectedData.this);
+                                startActivity(new Intent(getApplicationContext(), RequstNotifaction.class));
+                                overridePendingTransition(0, 0);
 
                                 return true;
 
@@ -565,20 +578,20 @@ TextView total,cust_select;
     }
 
     private void getPayment() {
-        Payment data = new Payment();
-        data.setBank("Arab Bank");
-        data.setDueDate("13/02/2023");
-        data.setCheckNumber(20210210);
-        data.setAmount("2500");
-
-        paymentArrayList.add(data);
-        data.setBank("Arab Bank");
-        data.setDueDate("13/03/2023");
-        data.setCheckNumber(20210210);
-        data.setAmount("25200");
-        paymentArrayList.add(data);
-        paymentArrayList.add(data);
-        fillTable();
+//        Payment data = new Payment();
+//        data.setBank("Arab Bank");
+//        data.setDueDate("13/02/2023");
+//        data.setCheckNumber(20210210);
+//        data.setAmount("2500");
+//
+//        paymentArrayList.add(data);
+//        data.setBank("Arab Bank");
+//        data.setDueDate("13/03/2023");
+//        data.setCheckNumber(20210210);
+//        data.setAmount("25200");
+//        paymentArrayList.add(data);
+//        paymentArrayList.add(data);
+        fillTable(1);
 
     }
 
@@ -588,37 +601,118 @@ TextView total,cust_select;
         finish();
     }
 
-    private void fillTable() {
+    private void fillTable(int flage) {
         Log.e(" fillTable", "fillTable");
         TableRow row = null;
         tableCheckData.removeAllViews();
         //     tableCheckData.removeAllViewsInLayout();
      String fromdate=fromDate.getText().toString();
         String todate=toDate.getText().toString();
-        try {
-            paymentArrayList.sort(compareBy);
-        }
-      catch (Exception exception){
 
-      }
         Log.e(" fillTable", "paymentArrayList=="+paymentArrayList.size()+"");
-        try {
-            for (int x = 0; x < paymentArrayList.size(); x++){
-                String  date=paymentArrayList.get(x).getDueDate();
-                if(      (formatDate(date).after(formatDate(fromdate)) || formatDate(date).equals(formatDate(fromdate)))
-                        &&
-                        (formatDate(date).before(formatDate(todate)) || formatDate(date).equals(formatDate(todate))))
-                {}
-                else {
-                    paymentArrayList.remove(x);
-                }
-            }
-        }catch (Exception exception){
+        if(flage!=2){
+            try {
 
+
+                for (int x = 0; x < paymentArrayList.size(); x++){
+                    String  date=paymentArrayList.get(x).getDueDate();
+                    if(      (formatDate(date).after(formatDate(fromdate)) ||
+                            formatDate(date).equals(formatDate(fromdate)))
+                            &&
+                            (formatDate(date).before(formatDate(todate)) ||
+                                    formatDate(date).equals(formatDate(todate))))
+                    {}
+                    else {
+                        paymentArrayList.remove(x);
+                        x--;
+                    }
+                }
+            }catch (Exception exception){
+
+            }
         }
+
 
         Log.e(" fillTable22", "paymentArrayList=="+paymentArrayList.size()+"");
         for (int n = 0; n < paymentArrayList.size(); n++) {
+
+
+            row = new TableRow(this);
+      row.setPadding(12, 5, 12, 5);
+
+            if (n % 2 == 0)
+                row.setBackgroundColor(ContextCompat.getColor(this, R.color.layer3));
+            else
+                row.setBackgroundColor(ContextCompat.getColor(this, R.color.layer7));
+
+
+
+            for (int i = 0; i < 5; i++) {
+
+                String[] record = {getCusromerName(paymentArrayList.get(n).getCustNumber()),paymentArrayList.get(n).getBank(), (paymentArrayList.get(n).getCheckNumber() + ""),
+                        paymentArrayList.get(n).getDueDate(),
+                        globelFunction.convertToEnglish(String. format("%.3f",Double.parseDouble((paymentArrayList.get(n).getAmount()))))
+
+                };
+
+                TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
+                lp.gravity=Gravity.CENTER;
+                row.setLayoutParams(lp);
+
+                TextView textView = new TextView(this);
+                textView.setText(record[i]);
+                textView.setTextColor(ContextCompat.getColor(this, R.color.new_dark_blue));
+                textView.setGravity(Gravity.CENTER);
+
+                TableRow.LayoutParams lp2 = new TableRow.LayoutParams(150, TableRow.LayoutParams.MATCH_PARENT,1.0f);
+                if(i==0)lp2 = new TableRow.LayoutParams(150, TableRow.LayoutParams.MATCH_PARENT,1.0f);
+
+             else  if(i==1) lp2 = new TableRow.LayoutParams(150, TableRow.LayoutParams.MATCH_PARENT,1.0f);
+             else  if(i==2) lp2 = new TableRow.LayoutParams(70, TableRow.LayoutParams.MATCH_PARENT,1.0f);
+             else  if(i==3) lp2 = new TableRow.LayoutParams(100, TableRow.LayoutParams.MATCH_PARENT,1.0f);
+             else  if(i==4) lp2 = new TableRow.LayoutParams(100, TableRow.LayoutParams.MATCH_PARENT,1.0f);
+                lp2.gravity=Gravity.CENTER;
+                textView.setLayoutParams(lp2);
+                 row.addView(textView);
+            }
+            tableCheckData.addView(row);
+        }
+
+      total.setText(globelFunction.convertToEnglish(String.  format("%.3f",paymentArrayList.stream().map(Payment::getAmount).mapToDouble(Double::parseDouble).sum())));
+    }
+    private void fillTable2() {
+        Log.e(" fillTable", "fillTable");
+        TableRow row = null;
+        tableCheckData.removeAllViews();
+        //     tableCheckData.removeAllViewsInLayout();
+        String fromdate=fromDate.getText().toString();
+        String todate=toDate.getText().toString();
+
+        Log.e(" fillTable", "paymentChequesList=="+paymentChequesList.size()+"");
+        try {
+
+
+            for (int x = 0; x < paymentChequesList.size(); x++){
+                String  date=paymentChequesList.get(x).getDueDate();
+                if(      (formatDate(date).after(formatDate(fromdate)) ||
+                        formatDate(date).equals(formatDate(fromdate)))
+                        &&
+                        (formatDate(date).before(formatDate(todate)) ||
+                                formatDate(date).equals(formatDate(todate))))
+                {}
+                else {
+                    paymentChequesList.remove(x);
+                    x--;
+                }
+            }
+        }catch (Exception exception){
+            Log.e(" exception", "exception=="+exception.getMessage()+"");
+        }
+
+        Log.e(" fillTable22", "paymentArrayList=="+paymentChequesList.size()+"");
+        for (int n = 0; n < paymentChequesList.size(); n++) {
+
+
             row = new TableRow(this);
             row.setPadding(12, 5, 12, 5);
 
@@ -627,11 +721,13 @@ TextView total,cust_select;
             else
                 row.setBackgroundColor(ContextCompat.getColor(this, R.color.layer7));
 
+
+
             for (int i = 0; i < 4; i++) {
 
-                String[] record = {paymentArrayList.get(n).getBank(), (paymentArrayList.get(n).getCheckNumber() + ""),
-                        paymentArrayList.get(n).getDueDate(),
-                        globelFunction.convertToEnglish(String. format("%.3f",Double.parseDouble((paymentArrayList.get(n).getAmount()))))};
+                String[] record = {paymentChequesList.get(n).getBank(), (paymentChequesList.get(n).getCheckNumber() + ""),
+                        paymentChequesList.get(n).getDueDate(),
+                        globelFunction.convertToEnglish(String. format("%.3f",Double.parseDouble((paymentChequesList.get(n).getAmount()))))};
 
                 TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
                 row.setLayoutParams(lp);
@@ -649,8 +745,36 @@ TextView total,cust_select;
             tableCheckData.addView(row);
         }
 
-      total.setText(globelFunction.convertToEnglish(String.  format("%.3f",paymentArrayList.stream().map(Payment::getAmount).mapToDouble(Double::parseDouble).sum())));
+        total.setText(globelFunction.convertToEnglish(String.  format("%.3f",paymentChequesList.stream().map(Payment::getAmount).mapToDouble(Double::parseDouble).sum())));
     }
+    private void fillTable3() {
+        try {
+
+            String fromdate=fromDate.getText().toString();
+            String todate=toDate.getText().toString();
+
+            for (int x = 0; x < paymentChequesList.size(); x++){
+                String  date=paymentChequesList.get(x).getDueDate();
+                if(      (formatDate(date).after(formatDate(fromdate)) ||
+                        formatDate(date).equals(formatDate(fromdate)))
+                        &&
+                        (formatDate(date).before(formatDate(todate)) ||
+                                formatDate(date).equals(formatDate(todate))))
+                {}
+                else {
+                    paymentChequesList.remove(x);
+                    x--;
+                }
+            }
+        }catch (Exception exception){
+            Log.e(" exception", "exception=="+exception.getMessage()+"");
+        }
+
+      //  Collections.sort(paymentChequesList,Payment.comparedate);
+        recyclerView.setAdapter(new uncollectAdapter(paymentChequesList,UnCollectedData.this));
+        total.setText(globelFunction.convertToEnglish(String.  format("%.3f",paymentChequesList.stream().map(Payment::getAmount).mapToDouble(Double::parseDouble).sum())));
+    }
+
     public Date formatDate(String date) throws ParseException {
 
         String myFormat = "dd/MM/yyyy"; //In which you need put here
@@ -658,4 +782,18 @@ TextView total,cust_select;
         Date d = sdf.parse(date);
         return d;
     }
+    private String getCusromerName(String num) {
+        Log.e("num==",num+"");
+        for (int i = 0; i < listCustomer.size(); i++){
+
+            if (num.equals(listCustomer.get(i).getCustomerNumber())) {
+
+                return listCustomer.get(i).getCustomerName();
+            }
+
+        }
+
+        return "";
+    }
+
 }
