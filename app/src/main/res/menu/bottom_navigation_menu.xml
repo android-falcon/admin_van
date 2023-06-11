@@ -10,13 +10,6 @@
         android:iconTint="@color/white"
         android:title="@string/Plan" />
 
-    <item
-        android:id="@+id/action_reports"
-        android:enabled="true"
-        android:visible="false"
-        android:icon="@drawable/chart"
-        android:iconTint="@color/white"
-        android:title="@string/Reports" />
 
     <item
         android:id="@+id/action_location"
@@ -38,5 +31,12 @@
         android:icon="@drawable/ic_baseline_add_task_24"
         android:iconTint="@color/white"
         android:title="@string/addtraget" />
+    <item
+        android:id="@+id/action_notifications2"
+        android:enabled="true"
+        android:visible="true"
+        android:icon="@drawable/ic_baseline_person_add_24"
+        android:iconTint="@color/white"
+        android:title="@string/CustomerAddedNotifications" />
 
 </menu>

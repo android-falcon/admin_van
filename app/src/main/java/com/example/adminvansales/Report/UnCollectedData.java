@@ -354,7 +354,7 @@ TextView total,cust_select;
 
         BottomNavigationView bottom_navigation = findViewById(R.id.bottom_navigation);
 
-        bottom_navigation.setSelectedItemId(R.id.action_reports);
+
 
         bottom_navigation.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -369,10 +369,10 @@ TextView total,cust_select;
 
                                 return true;
 
-                            case R.id.action_reports:
+                            case R.id.action_notifications2:
 
-                                ReportsPopUpClass popUpClass = new ReportsPopUpClass();
-                                popUpClass.showPopupWindow(item.getActionView(), UnCollectedData.this);
+                                startActivity(new Intent(getApplicationContext(), RequstNotifaction.class));
+                                overridePendingTransition(0, 0);
 
                                 return true;
 

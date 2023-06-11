@@ -18,6 +18,7 @@ import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.adminvansales.DataBaseHandler;
+import com.example.adminvansales.Interface.CustomerDao;
 import com.example.adminvansales.R;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.ChildEventListener;
@@ -40,7 +41,7 @@ public class MyServicesForNotification  extends Service {
 
     Timer timer;
     DatabaseReference databaseReference;
-
+    DatabaseReference CustomersdatabaseReference;
     double v1,v2;
     public static String  Firebase_ipAddress;
     DataBaseHandler mHandler;
@@ -66,7 +67,7 @@ public class MyServicesForNotification  extends Service {
         FirebaseApp.initializeApp(MyServicesForNotification.this);
         FirebaseDatabase dbroot = FirebaseDatabase.getInstance();
 databaseReference = dbroot.getReference(RequstTest.class.getSimpleName()).child(Firebase_ipAddress);
-
+        CustomersdatabaseReference = dbroot.getReference(NewAddedCustomer.class.getSimpleName()).child(Firebase_ipAddress);
         allTaskInFireBasewithoutnotify();
         Log.e(TAG, "onCreate() , service started..."+id);
 
@@ -76,6 +77,7 @@ databaseReference = dbroot.getReference(RequstTest.class.getSimpleName()).child(
         //requestLocationUpdates();
 
         allTaskInFireBase();
+        allCustomersTaskInFireBase();
         onDestroy();
         Log.e(TAG, "onStartCommand() , service started..."+id);
 
@@ -111,9 +113,12 @@ databaseReference = dbroot.getReference(RequstTest.class.getSimpleName()).child(
     public void onTaskRemoved(Intent rootIntent) {
         super.onTaskRemoved(rootIntent);
         allTaskInFireBase();
+        allCustomersTaskInFireBase();
         Log.e(TAG, "In onTaskRemoved");
     }
     void allTaskInFireBase() {
+
+
         FirebaseDatabase dbroot = FirebaseDatabase.getInstance();
         databaseReference = dbroot.getReference(RequstTest.class.getSimpleName()).child(Firebase_ipAddress);
 
@@ -134,6 +139,31 @@ databaseReference = dbroot.getReference(RequstTest.class.getSimpleName()).child(
 
 
     }
+    void allCustomersTaskInFireBase() {
+        Log.e(TAG, "allCustomersTaskInFireBase");
+        getCustomerslistofdata("");
+//        FirebaseDatabase dbroot = FirebaseDatabase.getInstance();
+//        databaseReference = dbroot.getReference(NewAddedCustomer.class.getSimpleName()).child(Firebase_ipAddress);
+//
+//        ValueEventListener valueEventListener = new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+//                    String key = ds.getKey();
+//                    Log.e("key==",key+"");
+//                    getCustomerslistofdata(key);
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {}
+//        };
+//        databaseReference.addListenerForSingleValueEvent(valueEventListener);
+
+
+    }
+
+
     void allTaskInFireBasewithoutnotify() {
         FirebaseDatabase dbroot = FirebaseDatabase.getInstance();
         databaseReference = dbroot.getReference(RequstTest.class.getSimpleName()).child(Firebase_ipAddress);
@@ -222,6 +252,74 @@ databaseReference = dbroot.getReference(RequstTest.class.getSimpleName()).child(
             }
         };
         databaseReference.child(key).addChildEventListener(childEventListener);
+    }
+    private void getCustomerslistofdata(String key) {
+        Log.e("getCustomerslistofdata==", "getlistofdata");
+        ChildEventListener childEventListener = new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
+                Log.e("getCustomerslistofdata", "onChildAdded:" + dataSnapshot.getKey());
+
+                // A new comment has been added, add it to the displayed list
+                try {
+                    NewAddedCustomer addedCustomer = dataSnapshot.getValue(NewAddedCustomer.class);
+                    if(addedCustomer!=null) {
+
+                            String salmanname = addedCustomer.getSalesMan();
+                        Log.e("displayNotification", "displayNotification:" + dataSnapshot.getKey());
+                            displayNotification(MyServicesForNotification.this, "New Added Customer Requst From " + salmanname, "");
+
+
+
+                    }
+                }catch (Exception e){
+                    Log.e("Exception", "Exception:" + e.getMessage());
+                }
+
+                // ...
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String previousChildName) {
+                Log.e("onChildAdded", "onChildChanged:" + dataSnapshot.getKey());
+
+                // A comment has changed, use the key to determine if we are displaying this
+                // comment and if so displayed the changed comment.
+
+                // ...
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                Log.e("onChildAdded", "onChildRemoved:" + dataSnapshot.getKey());
+
+                // A comment has changed, use the key to determine if we are displaying this
+                // comment and if so remove it.
+
+
+                // ...
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String previousChildName) {
+                Log.e("onChildAdded", "onChildMoved:" + dataSnapshot.getKey());
+
+                // A comment has changed position, use the key to determine if we are
+                // displaying this comment and if so move it.
+//                RequstTest movedComment = dataSnapshot.getValue(RequstTest.class);
+//                String commentKey = dataSnapshot.getKey();
+//                requstsArrayAdapter.add(movedComment);
+//                filladapter();
+                // ...
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e("onChildAdded", "postComments:onCancelled", databaseError.toException());
+
+            }
+        };
+        CustomersdatabaseReference.addChildEventListener(childEventListener);
     }
     private void getlistofdatawithoutnotify(String key) {
         Log.e("getlistofdata==", "getlistofdata");
@@ -319,10 +417,10 @@ databaseReference = dbroot.getReference(RequstTest.class.getSimpleName()).child(
             assert notificationManager != null;
             notificationManager.createNotificationChannel(notificationChannel);
 
-
+            Log.e("Channel_id", "Channel_id:");
         } else {
             // Returns null for pre-O (26) devices.
-
+            Log.e("else", "else:");
         }
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context,channelId)
                 .setColor(ContextCompat.getColor(context, R.color.colorblue_dark))
@@ -339,8 +437,84 @@ databaseReference = dbroot.getReference(RequstTest.class.getSimpleName()).child(
         managerCompat.notify(1,mBuilder.build());
 
 
+        Log.e("end", "end:");
+
+
+    }
+
+
+    void allCustomersTaskInFireBasewithoutnotify() {
+        FirebaseDatabase dbroot = FirebaseDatabase.getInstance();
+        databaseReference = dbroot.getReference(NewAddedCustomer.class.getSimpleName()).child(Firebase_ipAddress);
+
+        ValueEventListener valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                    String key = ds.getKey();
+                    Log.e("key==",key+"");
+                    getlistofCustomerdatawithoutnotify(key);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        };
+        databaseReference.addListenerForSingleValueEvent(valueEventListener);
+
+
+    }
+    private void getlistofCustomerdatawithoutnotify(String key) {
+        Log.e("getlistofCustomerdatawithoutnotify==", "getlistofdata");
+        ChildEventListener childEventListener = new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
+                Log.e("onChildAdded", "onChildAdded:" + dataSnapshot.getKey());
+
+                // A new comment has been added, add it to the displayed list
+                try {
+                    NewAddedCustomer addedCustomer = dataSnapshot.getValue(NewAddedCustomer.class);
+                    if(addedCustomer!=null) {
+
+                            String salmanname = addedCustomer.getSalesMan();
+
+                    }
+                }catch (Exception e){
+                    Log.e("Exception", "Exception:" + e.getMessage());
+                }
+
+                // ...
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String previousChildName) {
+                Log.e("onChildAdded", "onChildChanged:" + dataSnapshot.getKey());
+
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                Log.e("onChildAdded", "onChildRemoved:" + dataSnapshot.getKey());
 
 
 
+
+                // ...
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String previousChildName) {
+                Log.e("onChildAdded", "onChildMoved:" + dataSnapshot.getKey());
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e("onChildAdded", "postComments:onCancelled", databaseError.toException());
+
+            }
+        };
+        CustomersdatabaseReference.child(key).addChildEventListener(childEventListener);
     }
 }

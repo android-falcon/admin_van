@@ -79,6 +79,13 @@
     <string name="cash">كاش</string>
     <string name="netpayment">م. الدفعات </string>
     <string name="credit_value">Credit Card</string>
+    <string name="MarketName"> اسم المحل</string>
+    <string name="add_cust">إضافة عميل</string>
+    <string name="tele">الهاتف</string>
+    <string name="contactPerson">التواصل </string>
+    <string name="app_done">تم</string>
+    <string name="address">العنوان</string>
+    <string name="reqired_filled">حقل اجباري فارغ </string>
     <string name="total_cash">م. النقد </string>
     <string name="pay">الدفع</string>
     <string name="paymentCash">م.دفعات نقدية</string>
@@ -150,6 +157,7 @@
     <string name="Plan">الخطة</string>
     <string name="Location">الموقع</string>
     <string name="Notifications">الاشعارات</string>
+    <string name="CustomerAddedNotifications">اشعارات إضافة العملاء</string>
     <string name="Reports">التقارير</string>
     <string name="addcustomerlocation">اضافة موقع عميل</string>
     <string name="itemvisble">اخفاء المواد</string>

@@ -14,9 +14,12 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".Report.NewCashReport"
-            android:theme="@style/AppTheme.NoActionBar"
+            android:name=".AddedCustomersNotifaction"
             android:exported="false" />
+        <activity
+            android:name=".Report.NewCashReport"
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".SalesmanMaps_FirebaseActivity"
             android:exported="false" />

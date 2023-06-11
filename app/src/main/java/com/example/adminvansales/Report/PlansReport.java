@@ -117,7 +117,7 @@ public class PlansReport extends AppCompatActivity {
         locationRBtn= findViewById(R.id.locationRBtn);
         BottomNavigationView bottom_navigation = findViewById(R.id.bottom_navigation);
 
-        bottom_navigation.setSelectedItemId(R.id.action_reports);
+
 
         bottom_navigation.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -131,11 +131,10 @@ public class PlansReport extends AppCompatActivity {
                                 overridePendingTransition(0, 0);
 
                                 return true;
+                            case R.id.action_notifications2:
 
-                            case R.id.action_reports:
-
-                                ReportsPopUpClass popUpClass = new ReportsPopUpClass();
-                                popUpClass.showPopupWindow(item.getActionView(), PlansReport.this);
+                                startActivity(new Intent(getApplicationContext(), RequstNotifaction.class));
+                                overridePendingTransition(0, 0);
 
                                 return true;
 

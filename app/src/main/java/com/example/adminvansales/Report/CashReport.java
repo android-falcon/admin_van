@@ -23,6 +23,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.adminvansales.Adapters.CashReportAdapter;
+import com.example.adminvansales.AddedCustomersNotifaction;
 import com.example.adminvansales.DataBaseHandler;
 import com.example.adminvansales.ExportToExcel;
 import com.example.adminvansales.GlobelFunction;
@@ -166,7 +167,7 @@ public class CashReport extends AppCompatActivity {
 
         BottomNavigationView bottom_navigation = findViewById(R.id.bottom_navigation);
 
-        bottom_navigation.setSelectedItemId(R.id.action_reports);
+
 
         bottom_navigation.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -181,10 +182,11 @@ public class CashReport extends AppCompatActivity {
 
                                 return true;
 
-                            case R.id.action_reports:
+                            case R.id.action_notifications2:
 
-                                ReportsPopUpClass popUpClass = new ReportsPopUpClass();
-                                popUpClass.showPopupWindow(item.getActionView(), CashReport.this);
+                                startActivity(new Intent(getApplicationContext(), AddedCustomersNotifaction.class));
+                                overridePendingTransition(0, 0);
+
 
                                 return true;
 

@@ -8,10 +8,12 @@ import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.adminvansales.Interface.CustomerDao;
 import com.example.adminvansales.Report.RequstReport;
 import com.example.adminvansales.model.CommissionTarget;
 import com.example.adminvansales.model.CustomerInfo;
 import com.example.adminvansales.model.ItemsRequsts;
+import com.example.adminvansales.model.NewAddedCustomer;
 import com.example.adminvansales.model.Password;
 import com.example.adminvansales.model.Plan_SalesMan_model;
 import com.example.adminvansales.model.Request;
@@ -36,6 +38,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -46,16 +49,18 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 import static com.example.adminvansales.GroupOffer.addList;
 import static com.example.adminvansales.HomeActivity.editPassword;
 import static com.example.adminvansales.ImportData.offerGroupModels;
+import static com.example.adminvansales.LogIn.contextG;
 import static com.example.adminvansales.LogIn.ipAddress;
 import static com.example.adminvansales.LogIn.portSettings;
 import static com.example.adminvansales.Report.ListOfferReport.control;
 
 public class ExportData {
     SweetAlertDialog pdRepRev,pdSweetAlertDialog,pdSweetAlertDialog2;
-    private JSONArray jsonArrayComm_Target,jsonArrayTarget,jsonArraysalesman,jsonArrayadmins,passwordjsonArray,RequstsjsonArray,VanRequstsjsonArray,UpdateloadvanArray;
+    private JSONArray jsonArrayAddedCustomer,jsonArrayComm_Target,jsonArrayTarget,jsonArraysalesman,jsonArrayadmins,passwordjsonArray,RequstsjsonArray,VanRequstsjsonArray,UpdateloadvanArray;
     JSONObject Comm_Targetobject,Targetobject,addsalesmanobject,addadminsmanobject,passwordobject,Requstobject,VanRequstsjsonobject,Updateloadvanobject;
     private DataBaseHandler databaseHandler;
     private JSONArray jsonArrayRequest;
+    JSONObject vouchersObject;
     private String URL_TO_HIT ;
     public static  SweetAlertDialog pd,pdValidation,pdValidationDialog;
     GlobelFunction globelFunction;
@@ -67,6 +72,8 @@ public class ExportData {
     Context main_context;
     int flag=0;
     ArrayList<Integer> listIdUpdate=new ArrayList();
+
+    SweetAlertDialog pdVoucher=null;
     public ExportData(Context context) {
         databaseHandler = new DataBaseHandler(context);
         this.main_context=context;
@@ -197,6 +204,7 @@ public class ExportData {
             e.printStackTrace();
         }
     }
+
     private void  getCommissionTargetObject(List<CommissionTarget>targetDetalisList) {
         jsonArrayComm_Target = new JSONArray();
         for (int i = 0; i < targetDetalisList.size(); i++)
@@ -3668,4 +3676,302 @@ public class ExportData {
         }
 
     }
+    public  void startExportCustomer(ArrayList<NewAddedCustomer>addedCustomer,Context context){
+
+
+        exportAddedCustomer(addedCustomer, context);
+    }
+    private void exportAddedCustomer(ArrayList<NewAddedCustomer>addedCustomer,Context context) {// 9
+        Log.e("exportAddedCustomer" , "exportAddedCustomer");
+        jsonArrayAddedCustomer = new JSONArray();
+        for (int i = 0; i < addedCustomer.size(); i++)
+        {
+            JSONObject obj = new JSONObject();
+            try {
+                obj.put("CUSTOMERNAME", addedCustomer.get(i).getCustName());
+                obj.put("REMARK", addedCustomer.get(i).getRemark());
+                obj.put("LATITUDE", addedCustomer.get(i).getLatitude());
+                obj.put("LONGITUDE", addedCustomer.get(i).getLongtitude());
+                obj.put("SALESMAN", addedCustomer.get(i).getSalesMan());
+                obj.put("ISPOSTED", "0");
+                obj.put("SALESMANNO", addedCustomer.get(i).getSalesmanNo());
+                obj.put("MOBILE", addedCustomer.get(i).getTELEPHONE());
+
+            } catch (JSONException e) {
+                Log.e("Tag" , "JSONException");
+            }
+
+            jsonArrayAddedCustomer.put(obj);
+        }
+        try {
+            vouchersObject=new JSONObject();
+            vouchersObject.put("JSN",jsonArrayAddedCustomer);
+//            Log.e("getAddedCustomer","JSN"+jsonArrayAddedCustomer.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+
+        new JSONTaskDelphiAddedCustomer(addedCustomer.get(0).getTELEPHONE(), context).execute();
+
+    }
+//    private class JSONTaskDelphiAddedCustomer extends AsyncTask<String, String, String> {
+//        private String JsonResponse = null;
+//        private HttpURLConnection urlConnection = null;
+//        private BufferedReader reader = null;
+//        SweetAlertDialog pdItem=null;
+//String requstid;
+//
+//        public JSONTaskDelphiAddedCustomer(String requstid) {
+//            this.requstid = requstid;
+//        }
+//
+//        @Override
+//        protected void onPreExecute() {
+//            super.onPreExecute();
+//
+//
+//
+//        }
+//
+//        @Override
+//        protected String doInBackground(String... params) {
+//
+//            BufferedReader reader = null;
+//
+//            String  JsonResponse="",link="";
+//
+//
+//            try {
+//                link = "http://"+ipAddress.trim()+":" + portSettings.trim() + headerDll.trim()+"/ExportADDED_CUSTOMERS";
+//                Log.e("tagexPORT", "Added==Jsonlink"+link);
+//
+//            } catch (Exception e) {
+//                pdVoucher.dismiss();
+//                Toast.makeText(contextG, R.string.fillip, Toast.LENGTH_SHORT).show();
+//            }
+//
+//            try {
+//                HttpClient client = new DefaultHttpClient();
+//                HttpPost request = new HttpPost();
+//                try {
+//                    request.setURI(new URI(link));
+//                } catch (URISyntaxException e) {
+//                    e.printStackTrace();
+//                    Toast.makeText(context, "Please check internet connection", Toast.LENGTH_SHORT).show();
+//
+//                }
+//
+//                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+//                nameValuePairs.add(new BasicNameValuePair("CONO", CONO.trim()));
+//                nameValuePairs.add(new BasicNameValuePair("JSONSTR", vouchersObject.toString().trim()));
+//                Log.e("nameValuePairs","added=_JSONSTR"+vouchersObject.toString().trim());
+//
+//
+//                request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+//
+//
+//                HttpResponse response = client.execute(request);
+//
+//
+//                BufferedReader in = new BufferedReader(new
+//                        InputStreamReader(response.getEntity().getContent()));
+//
+//                StringBuffer sb = new StringBuffer("");
+//                String line = "";
+//
+//                while ((line = in.readLine()) != null) {
+//                    sb.append(line);
+//                }
+//
+//                in.close();
+//
+//
+//                JsonResponse = sb.toString();
+//                Log.e("JsonResponse", "ExporVoucher" + JsonResponse);
+//
+//
+//
+//                //*******************************************
+//
+//
+//            } catch (Exception e) {
+//                Toast.makeText(context, "Please check internet connection", Toast.LENGTH_SHORT).show();
+//
+//            }
+//            return JsonResponse;
+//
+//
+//        }
+//
+//
+//        @Override
+//        protected void onPostExecute( String result) {
+//            super.onPostExecute(result);
+////            progressDialog.dismiss();
+//            pdVoucher.dismissWithAnimation();
+//
+//            if (result != null && !result.equals("")) {
+//                Log.e("ExportAddedCustomer",""+result.toString());
+//
+//
+//                if(result.contains("Saved Successfully")) {
+//
+//globelFunction.showSweetDialog(contextG,1,contextG.getResources().getString(R.string.saveSuccessfuly),"");
+//
+//                Toast.makeText(contextG, contextG.getResources().getString(R.string.saveSuccessfuly), Toast.LENGTH_SHORT).show();
+//                    CustomerDao customerDao=new CustomerDao(contextG);
+//                    customerDao.deleteRequst(requstid);
+//                }else {
+//                    Toast.makeText(contextG, "Error in Saving  Customer ="+result, Toast.LENGTH_LONG).show();
+//
+//
+//
+//                }
+//
+//
+//            } else {
+//
+//                Toast.makeText(contextG, "Error in Saving  Customer ="+result, Toast.LENGTH_LONG).show();
+//
+//
+//            }
+//
+//         }
+//    }
+    private class JSONTaskDelphiAddedCustomer extends AsyncTask<String, String, String> {
+        private String JsonResponse = null;
+        private HttpURLConnection urlConnection = null;
+        private BufferedReader reader = null;
+        SweetAlertDialog pdItem=null;
+        String requstid;
+    Context context;
+
+        public JSONTaskDelphiAddedCustomer(String requstid, Context context) {
+            this.requstid = requstid;
+            this. context=context;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            String do_ = "my";
+            pdSweetAlertDialog= new SweetAlertDialog(main_context, SweetAlertDialog.PROGRESS_TYPE);
+            pdSweetAlertDialog.getProgressHelper().setBarColor(Color.parseColor("#FDD835"));
+            pdSweetAlertDialog.setTitleText(main_context.getResources().getString(R.string.process));
+            pdSweetAlertDialog.setCancelable(false);
+            pdSweetAlertDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+//            ipAddress = "";
+            try {
+
+
+                if (!ipAddress.equals("")) {
+                    http://localhost:8085/ADMAddSalesMan?CONO=295
+                    URL_TO_HIT = "http://" + ipAddress+":"+portSettings +  headerDll.trim() +"/ExportADDED_CUSTOMERS";
+
+
+                    Log.e("URL_TO_HI",URL_TO_HIT);
+
+
+                }
+
+
+            } catch (Exception e) {
+                pdSweetAlertDialog.dismiss();
+            }
+
+            try {
+
+                String JsonResponse = null;
+                HttpClient client = new DefaultHttpClient();
+                HttpPost request = new HttpPost();
+                try {
+                    request.setURI(new URI(URL_TO_HIT));
+                } catch (URISyntaxException e) {
+                    pdSweetAlertDialog.dismiss();
+                    e.printStackTrace();
+                }
+
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+                nameValuePairs.add(new BasicNameValuePair("CONO", CONO));
+                nameValuePairs.add(new BasicNameValuePair("JSONSTR",vouchersObject.toString().trim()));
+
+
+                request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+
+
+                HttpResponse response = client.execute(request);
+
+
+                BufferedReader in = new BufferedReader(new
+                        InputStreamReader(response.getEntity().getContent()));
+
+                StringBuffer sb = new StringBuffer("");
+                String line = "";
+
+                while ((line = in.readLine()) != null) {
+                    sb.append(line);
+                }
+
+                in.close();
+
+
+                JsonResponse = sb.toString();
+                Log.e("tag_requestState", "JsonResponse\t" + JsonResponse);
+
+                return JsonResponse;
+
+
+            }//org.apache.http.conn.HttpHostConnectException: Connection to http://10.0.0.115 refused
+            catch (HttpHostConnectException ex) {
+                ex.printStackTrace();
+//                progressDialog.dismiss();
+                pdSweetAlertDialog.dismiss();
+                Handler h = new Handler(Looper.getMainLooper());
+                h.post(new Runnable() {
+                    public void run() {
+
+                        Toast.makeText(main_context, "Ip Connection Failed ", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
+                return null;
+            } catch (Exception e) {
+                e.printStackTrace();
+                pdSweetAlertDialog.dismiss();
+//                progressDialog.dismiss();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            pdSweetAlertDialog.dismiss();
+            Log.e("onPostExecute", "==\t" + s);
+            if (s != null) {
+                if (s.contains("Saved Successfully")) {
+                    GlobelFunction.showSweetDialog(context,1,context.getResources().getString(R.string.saveSuccessfuly),"");
+                    CustomerDao customerDao=new CustomerDao(contextG);
+             customerDao.deleteRequst(requstid);
+                }else{
+                    Toast.makeText(context, "not added", Toast.LENGTH_SHORT).show();
+
+                }
+//                progressDialog.dismiss();
+            }else{
+                Toast.makeText(context, "not added", Toast.LENGTH_SHORT).show();
+
+            }
+        }
+
+    }
+
 }
