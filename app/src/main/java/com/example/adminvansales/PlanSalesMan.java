@@ -78,7 +78,7 @@ public class PlanSalesMan extends AppCompatActivity {
     public ArrayList<CustomerInfo> listSelectedCustomer = new ArrayList<CustomerInfo>();
     public ArrayList<CustomerInfo> listCustomer_SalesNo = new ArrayList<CustomerInfo>();
     public ArrayList<CustomerInfo> listCustomer_spair = new ArrayList<CustomerInfo>();
-    int NumOfDayWeek;
+    int NumOfDayWeek=0;
     public ArrayList<AreaModel> listOfArea = new ArrayList<>();
     public static int orderType = 0;
     public StringBuilder allAreaPlan;
@@ -223,6 +223,7 @@ public class PlanSalesMan extends AppCompatActivity {
 
             importData.IIs_getCustomerInfo(0);
         }
+        NumOfDayWeek=   mtrl_calendar_days_of_week.getSelectedItemPosition()+1;
         saveButton = findViewById(R.id.saveButton);
         saveButton.setOnClickListener(v -> {
 
@@ -744,7 +745,12 @@ public class PlanSalesMan extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String salesNum = salesManInfosList.get(position).getSalesManNo();
-                importData.getPlan(salesNum, fromDate.getText().toString(),0);
+                NumOfDayWeek=   mtrl_calendar_days_of_week.getSelectedItemPosition()+1;
+                if(LogIn.PlanTYPE==0)  importData.getPlan(salesNum, fromDate.getText().toString(),0);
+                else
+                    importData.getPlan(salesNum, NumOfDayWeek+"", 0);
+
+
 
             }
 

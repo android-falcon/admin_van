@@ -66,6 +66,9 @@ public class ItemVisibleAdapter extends RecyclerView.Adapter<ItemVisibleAdapter.
 
 
 
+        if(  holder.itemInfoBinding.selectCustomerCheckbox.isChecked()==true)
+            inventorylist.get(holder.getAdapterPosition()).setVISIBLE(1);
+        else inventorylist.get(holder.getAdapterPosition()).setVISIBLE(0);
         holder.itemInfoBinding.selectCustomerCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {

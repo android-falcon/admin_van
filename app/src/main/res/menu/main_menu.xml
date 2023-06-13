@@ -77,7 +77,7 @@
         app:showAsAction="always" />
     <item
         android:id="@+id/plansReport"
-        android:visible="false"
+        android:visible="true"
         android:title="@string/plans_report"
         app:showAsAction="always" />
 

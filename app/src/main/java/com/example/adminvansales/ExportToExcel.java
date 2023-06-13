@@ -372,9 +372,9 @@ public class ExportToExcel {
         try {
             WritableSheet sheet = workbook.createSheet("Sheet1", 0);//Excel sheet name. 0 represents first sheet
             try {
-                sheet.addCell(new Label(0, 0, context.getString(R.string.sale_man_number)            )); // column and row
+                sheet.addCell(new Label(0, 0, context.getString(R.string.sale_man_number)  )); // column and row
                 sheet.addCell(new Label(1, 0, list.get(0).getSalesManNo()+""));
-                sheet.addCell(new Label(0, 2, context.getString(R.string.sales_man_name   )                          )  );
+                sheet.addCell(new Label(0, 2, context.getString(R.string.sales_man_name   )  )  );
                 sheet.addCell(new Label(1, 2,      list.get(0).getSalesManName()));
                   ///1
                 WritableFont redFont = new WritableFont(WritableFont.ARIAL);

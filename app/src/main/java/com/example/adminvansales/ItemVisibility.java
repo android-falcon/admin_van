@@ -242,12 +242,13 @@ ImportData importData;
 //        myBinding.progressBar.setVisibility(View.GONE);
 //        myBinding.itemRecycler.setVisibility(View.VISIBLE);
 
-        if (itemInfos.size() != 0) {
+//        clearSelected();
+//        if (itemInfos.size() != 0) {
             myBinding.progressBar.setVisibility(View.GONE);
             ItemVisibleAdapter adapter = new ItemVisibleAdapter(itemInfos, this);
             myBinding.itemRecycler.setAdapter(adapter);
 
-        }
+//        }
 //        myBinding.progressBar.setVisibility(View.GONE);
 
 
@@ -377,7 +378,14 @@ ImportData importData;
         for (int i = 0; i < allItemsList.size(); i++) {
             allItemsList.get(i).setVISIBLE(0);
         }
+//        clearAllLists();
         displayData(allItemsList);
+    }
+
+    private void clearAllLists() {
+        listFilterItem.clear();
+//        allItemsList,
+                listSelectItems.clear();
     }
 
     private void sweetSaved(String message) {
