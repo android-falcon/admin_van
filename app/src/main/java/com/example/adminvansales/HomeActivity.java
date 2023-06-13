@@ -5,6 +5,8 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,10 +16,13 @@ import com.example.adminvansales.Report.RequstReport;
 import com.example.adminvansales.Report.TargetReport;
 import com.example.adminvansales.model.LocaleAppUtils;
 
+import android.Manifest;
 import android.app.ActivityManager;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
@@ -80,10 +85,11 @@ public class HomeActivity extends AppCompatActivity
     DataBaseHandler databaseHandler;
    BottomNavigationView bottom_navigation;
    TextView menuBtn,acc_statments;
-
+    boolean mLocationPermissionGranted=false;
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
     private ActionBarDrawerToggle toggle;
+    private static final int REQUEST_LOCATION_PERMISSION = 3;
     private NavigationView navigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,7 +118,14 @@ public class HomeActivity extends AppCompatActivity
         databaseHandler=new DataBaseHandler(HomeActivity.this);
 
 
+        LocationManager   locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {// Not granted permission
 
+            ActivityCompat.requestPermissions(this, new String[]
+                    {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION_PERMISSION);
+
+        }
 
 
 
@@ -837,5 +850,34 @@ public class HomeActivity extends AppCompatActivity
             }
         }
         return false;
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String permissions[],
+                                           @NonNull int[] grantResults) {
+
+        Log.e("onRequestPermissionsResult", "onRequestPermissionsResult");
+        mLocationPermissionGranted = false;
+//        switch (requestCode) {
+//            case PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
+        // If request is cancelled, the result arrays are empty.
+        if (grantResults.length > 0
+                && grantResults[0] == PackageManager.PERMISSION_GRANTED
+
+        ) {
+            if (ContextCompat.checkSelfPermission(HomeActivity.this,
+                    Manifest.permission.ACCESS_FINE_LOCATION)
+                    == PackageManager.PERMISSION_GRANTED) {
+                Log.e("Location", "granted updates");
+                Log.e("LocationIn","GoToMain 2");
+                //Request location updates:
+//                        locationPermissionRequest.
+//                        locationManager.requestLocationUpdates(provider, 400, 1, (LocationListener) this);
+            }
+
+            mLocationPermissionGranted = true;
+        }
+//            }
+//        }
     }
 }

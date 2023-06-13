@@ -359,6 +359,8 @@
     <string name="transwithoutvouch">#الحركات دون إجراء فواتير</string>
     <string name="duration">المدة</string>
     <string name="VOUCHERCOUNT"> عدد الفواتير</string>
+    <string name="maxD"> السقف المقترح للذمم</string>
+    <string name="showMap"> عرض الموقع على الخريطة</string>
     <string-array name="app_paymentTypeList">
         <!--        <item>All</item>-->
         <item>كاش</item>

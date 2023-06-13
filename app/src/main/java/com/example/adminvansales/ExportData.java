@@ -66,8 +66,8 @@ public class ExportData {
     GlobelFunction globelFunction;
     SweetAlertDialog pdValidationAdd;
     SweetAlertDialog pdValidationUpdate;
- public  String headerDll="/Falcons/VAN.dll";
-//public  String headerDll="";
+ //public  String headerDll="/Falcons/VAN.dll";
+public  String headerDll="";
     public  String CONO="";
     Context main_context;
     int flag=0;
@@ -3696,6 +3696,8 @@ public class ExportData {
                 obj.put("ISPOSTED", "0");
                 obj.put("SALESMANNO", addedCustomer.get(i).getSalesmanNo());
                 obj.put("MOBILE", addedCustomer.get(i).getTELEPHONE());
+                obj.put("MaxD", Double.parseDouble(addedCustomer.get(i).getMaxD()));
+                obj.put("MaxC", 0);
 
             } catch (JSONException e) {
                 Log.e("Tag" , "JSONException");
@@ -3901,7 +3903,7 @@ public class ExportData {
                 List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
                 nameValuePairs.add(new BasicNameValuePair("CONO", CONO));
                 nameValuePairs.add(new BasicNameValuePair("JSONSTR",vouchersObject.toString().trim()));
-
+Log.e("JSONSTR=",vouchersObject.toString().trim()+"");
 
                 request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
 

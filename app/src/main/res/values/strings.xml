@@ -357,6 +357,10 @@
     <string name="app_done">Done</string>
     <string name="address">Address</string>
     <string name="reqired_filled">Reqired Filled Empty</string>
+    <string name="maxD"> Max Debit</string>
+    <string name="showMap"> Show Location in Map</string>
+
+
     <string-array name="app_paymentTypeList">
 
         <!--        <item>All</item>-->

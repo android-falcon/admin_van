@@ -750,6 +750,7 @@ public class PlanSalesMan extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String salesNum = salesManInfosList.get(position).getSalesManNo();
                 Log.e("onItemSelected",""+salesNum);
+
                 importData.getPlan(salesNum, fromDate.getText().toString(),0);
 
             }
