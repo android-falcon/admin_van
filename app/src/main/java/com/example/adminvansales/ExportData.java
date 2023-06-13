@@ -3696,8 +3696,16 @@ public  String headerDll="";
                 obj.put("ISPOSTED", "0");
                 obj.put("SALESMANNO", addedCustomer.get(i).getSalesmanNo());
                 obj.put("MOBILE", addedCustomer.get(i).getTELEPHONE());
-                obj.put("MaxD", Double.parseDouble(addedCustomer.get(i).getMaxD()));
-                obj.put("MaxC", 0);
+
+                if( addedCustomer.get(i).getMaxD()==null)
+                    addedCustomer.get(i).setMaxD("0");
+                
+                if(!addedCustomer.get(i).getMaxD().equals(""))
+                obj.put("MAXD", addedCustomer.get(i).getMaxD()+"");
+                else
+                    obj.put("MAXD", "0");
+
+                obj.put("MAXC", "0");
 
             } catch (JSONException e) {
                 Log.e("Tag" , "JSONException");

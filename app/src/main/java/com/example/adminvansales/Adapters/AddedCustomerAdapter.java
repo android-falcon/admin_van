@@ -334,8 +334,13 @@ public class AddedCustomerAdapter  extends RecyclerView.Adapter<AddedCustomerAda
                                                     }).setCancelButton(context.getResources().getString(R.string.cancel), new SweetAlertDialog.OnSweetClickListener() {
                                                         @Override
                                                         public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                                            cutmer_lat=  Double.parseDouble(requestList.get(i).getLatitude());
-                                                            cutmer_long= Double.parseDouble(requestList.get(i).getLongtitude());
+                                                            try {
+                                                                cutmer_lat=  Double.parseDouble(requestList.get(i).getLatitude());
+                                                                cutmer_long= Double.parseDouble(requestList.get(i).getLongtitude());
+                                                            }catch (Exception exception){
+                                                                cutmer_lat=0;
+                                                                cutmer_long=0;
+                                                            }
                                                             sweetAlertDialog.dismissWithAnimation();
                                                         }
                                                     })
@@ -366,6 +371,13 @@ public class AddedCustomerAdapter  extends RecyclerView.Adapter<AddedCustomerAda
         contactPerson.setText(requestList.get(i).getCONTACT_PERSON()+"");
         MarketName.setText(requestList.get(i).getMarketName()+"");
         Log.e("hereadd==",add+"");
+        try {
+            cutmer_lat=  Double.parseDouble(requestList.get(i).getLatitude());
+            cutmer_long= Double.parseDouble(requestList.get(i).getLongtitude());
+        }catch (Exception exception){
+            cutmer_lat=0;
+            cutmer_long=0;
+        }
 
         Maxd.setText(requestList.get(i).getMaxD()+"");
 
@@ -404,10 +416,10 @@ public class AddedCustomerAdapter  extends RecyclerView.Adapter<AddedCustomerAda
                     NewAddedCustomer addedCustomer = new NewAddedCustomer(
                             addCus.getText().toString(),
                             remark.getText().toString(),
-                            requestList.get(i).getLatitude()+""
-                            ,    requestList.get(i).getLongtitude()+"",
-                            requestList.get(i).getSalesmanNo(),
+                            cutmer_lat+""
+                            ,    cutmer_long+"",
                             requestList.get(i).getSalesMan(),
+                            requestList.get(i).getSalesmanNo(),
                             "0",
                             address.getText().toString(),
                             telephone.getText().toString(),
@@ -415,7 +427,7 @@ public class AddedCustomerAdapter  extends RecyclerView.Adapter<AddedCustomerAda
                             MarketName.getText().toString(),
                             requestList.get(i).getDate(),
                             requestList.get(i).getTime(),
-                            requestList.get(i).getMaxD() );
+                            Maxd.getText().toString().trim() );
 
                     dialog.dismiss();
 
